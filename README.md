@@ -222,7 +222,7 @@ Every price on the site comes from the live TikoHub listing at
 
 | | |
 |---|---|
-| Early bird delegate | KES 5,800 (until 31 Aug) |
+| Early bird delegate | KES 5,800 (until the [early-bird deadline](#dates)) |
 | Standard delegate | KES 6,800 |
 | Student, with ID | KES 2,000 |
 | Papers call ticket | KES 6,800 |
@@ -238,7 +238,7 @@ should not have to email and wait two days.
 
 1. **There is no Standard Delegate Pass on TikoHub.** The flyer and this
    site both promise KES 6,800 from 1 September; the only 6,800 item is the
-   Papers Call ticket. Create it before 31 August.
+   Papers Call ticket. Create it before the [early-bird deadline](#dates).
 2. **The sponsorship `includes` bullets are drafts.** Names and prices are
    real; the inclusion lists were written to be plausible. A sponsor paying
    KES 1,000,000 will expect every line, so confirm them with Mike.
@@ -271,4 +271,4 @@ Three behaviours worth knowing:
   Being asked to close the same thing on every page is what makes these
   hated. Clear that key to see it again while testing.
 - **It removes itself when the deadline passes** rather than showing zeros.
-  Nothing to change on 31 August.
+  Nothing to change on the day — see [Dates](#dates).
