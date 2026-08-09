@@ -6,7 +6,12 @@ University of Nairobi.
 ## Stack
 
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind v4 · static export.
-Same stack as JuaPath, so no context switch.
+
+Partly shared with JuaPath — React 19, TypeScript and Tailwind carry over,
+so components and styling read the same. The framework does not: JuaPath is
+Vite + React Router + shadcn/ui, this is Next.js App Router. Routing, the
+bundler, the build output and the deploy config are all different, so do not
+carry assumptions across on any of those.
 
 `output: 'export'` means `npm run build` emits plain HTML to `out/`. There is
 no server at runtime — the whole site is files on a CDN, which is what
