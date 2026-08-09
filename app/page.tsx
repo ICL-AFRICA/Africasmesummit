@@ -277,16 +277,29 @@ export default function Page() {
             <h2 className="h-lg text-3xl sm:text-4xl max-w-2xl">
               Convened alongside
             </h2>
+            {/* Every logo file is the same 400x192 canvas with the mark
+                already optically balanced inside it, so this one rule sizes
+                all nine and the balance survives every breakpoint. */}
             <ul className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px bg-rule border border-rule">
               {PARTNERS.map((p) => (
-                <li key={p} className="bg-card h-24 flex items-center justify-center px-4 text-center">
-                  <span className="text-[16px] text-ink/55 font-medium">{p}</span>
+                <li key={p.name} className="bg-card h-32 flex items-center justify-center px-5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.logo}
+                    alt={p.name}
+                    width={400}
+                    height={192}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full max-w-[190px] h-auto"
+                  />
                 </li>
               ))}
+              {/* Nine logos leave one empty slot at 2 columns and one at 5,
+                  and none at 3. Without this the gap shows the grid's own
+                  rule colour through and reads as a missing partner. */}
+              <li aria-hidden="true" className="bg-card h-32 block sm:hidden lg:block" />
             </ul>
-            <p className="mt-5 font-mono text-[12px] text-ink/40">
-              Partner logos to replace this text grid.
-            </p>
           </div>
         </section>
 

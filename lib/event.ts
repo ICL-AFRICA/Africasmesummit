@@ -255,16 +255,31 @@ export const FAQ = [
   { q: "Is there a group rate?", a: "Yes, for four or more from the same organisation. Ask on the contact page and we will send you a code." },
 ] as const;
 
+/**
+ * Partners, in the order they appear on the homepage.
+ *
+ * `logo` files are built from the supplied originals by the pipeline
+ * described in README under "Partner logos". They are all 400x192 WebP with
+ * transparency, each scaled to roughly equal optical area rather than equal
+ * height — nine logos ranging from a 5.6:1 wordmark to a 0.66:1 crest look
+ * nothing alike if you match their heights. Because every file is the same
+ * size, one CSS rule sizes all of them and the balance holds at every
+ * breakpoint. Drop in a replacement at the same dimensions and it will sit
+ * correctly without touching the markup.
+ *
+ * `name` is the accessible name, so it must read as the organisation would
+ * write it.
+ */
 export const PARTNERS = [
-  "Government of Kenya",
-  "Sverige",
-  "University of Nairobi",
-  "Sustainable World Corporation",
-  "Children's Mission",
-  "Access",
-  "Mount Kenya University",
-  "ASSEK",
-  "Zetech University",
+  { name: "Government of Kenya",           logo: "/img/partners/government-of-kenya.webp" },
+  { name: "Sverige",                       logo: "/img/partners/sverige.webp" },
+  { name: "University of Nairobi",         logo: "/img/partners/university-of-nairobi.webp" },
+  { name: "Sustainable World Corporation", logo: "/img/partners/sustainable-world-corporation.webp" },
+  { name: "Children's Mission",            logo: "/img/partners/childrens-mission.webp" },
+  { name: "Access",                        logo: "/img/partners/access.webp" },
+  { name: "Mount Kenya University",        logo: "/img/partners/mount-kenya-university.webp" },
+  { name: "ASSEK",                         logo: "/img/partners/assek.webp" },
+  { name: "Zetech University",             logo: "/img/partners/zetech-university.webp" },
 ] as const;
 
 /**

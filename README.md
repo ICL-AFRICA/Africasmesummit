@@ -81,7 +81,6 @@ from it.
 ## Still to add
 
 - [ ] Speaker headshots — replace the PHOTO wells in `app/page.tsx`
-- [ ] Partner logos — currently set as text in `lib/event.ts`
 - [ ] Confirmed agenda — `AGENDA` is indicative, marked as such on the page
 - [ ] Photos from a previous ICL conference (social proof section)
 - [ ] 301 redirect from ichooselife.global/sustainable-business-summit
@@ -97,6 +96,61 @@ The signature element is the pairing rule: a hairline broken by a gold
 diamond, used only where the page joins the two sides of the summit's
 thesis — 7.4M enterprises and 13 universities. It is not decoration and
 should not be used on single items.
+
+## Partner logos
+
+Nine logos, from nine sources, in three file formats, with aspect ratios from
+5.6:1 (the Mount Kenya wordmark) to 0.66:1 (the Zetech crest). Dropped into a
+grid as supplied they look like nine unrelated screenshots. `PARTNERS` in
+`lib/event.ts` carries the name and the file; the files are built by
+`scripts/build-partner-logos.py`.
+
+What that script does, and why each step is there:
+
+- **Knocks out the background by flood-filling inward from the edges**, not by
+  replacing white globally. Four of the nine arrived as JPEG or flat PNG on
+  white. A global white-to-transparent rule would have punched holes through
+  the gaps in the Access sunburst and the counters of the ASSEK letterforms.
+- **Trims using a bounding box that holds 99.9% of the ink mass**, rather than
+  the outright extremes, so a stray compression speck at the edge does not
+  inflate the box and shrink the logo.
+- **Deletes sliver components** — anything at most 6px on its short side and
+  at least 50px on its long one. The Zetech JPEG has a 6×552 line down one
+  edge, which survived everything else. This is deliberately a *shape* rule
+  and not a size one: ASSEK has 604 separate components and Mount Kenya keeps
+  40% of its ink in small ones, so any "drop small parts" threshold would eat
+  real logo. Verified against all nine — it matches that one line and nothing
+  else.
+- **Scales each to equal optical _area_, not equal height.** Matching heights
+  is the usual mistake and it makes a wide wordmark tower over a crest.
+- **Centres everything on one shared 400×192 canvas**, so all nine files are
+  the same size, one CSS rule sizes them, and the balance holds at every
+  breakpoint.
+
+To replace one: drop the new file in at 400×192 with transparency and nothing
+else changes. To rebuild from new originals:
+
+```bash
+python3 scripts/build-partner-logos.py ~/path/to/originals
+```
+
+It writes a `_sheet.png` contact sheet next to the output — look at that
+before shipping, because the optical balance is a judgement call and the ink
+statistics it prints do not capture it.
+
+The originals are not in the repo; they are third-party brand assets. The
+filenames the script expects are listed in it.
+
+**Left in full colour deliberately.** The speaker wall is greyscale with
+colour on hover, and the same treatment would unify these nine more strongly
+— but partner marks are often governed by someone else's brand rules, and
+desaturating a government coat of arms is not a call to make unilaterally. If
+you want it, it is one `grayscale` class on the `img`, matching `.portrait`.
+
+**Two are as good as their source allows, not as good as they should be.**
+The University of Nairobi crest came as a 250×302 GIF and Zetech as a 362×552
+JPEG. Both are near their native resolution already, so they soften on a
+retina screen. Ask both universities for an SVG or a large PNG.
 
 ## Pages
 

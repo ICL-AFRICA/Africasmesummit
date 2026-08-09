@@ -226,7 +226,6 @@ one has more search history — so it will outrank you for your own name.
 
 **Not blocking:**
 
-- [ ] Partner logos as images — currently a text grid in `PARTNERS`
 - [ ] Sharper speaker headshots. The current ones were extracted from the
       printed flyer: adequate, not sharp. Ask each speaker for the original
       and drop it into `public/img/` with the same filename.
