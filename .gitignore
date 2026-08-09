@@ -3,3 +3,6 @@ node_modules/
 out/
 .DS_Store
 *.log
+
+# TypeScript incremental build cache — created by `npx tsc`
+tsconfig.tsbuildinfo

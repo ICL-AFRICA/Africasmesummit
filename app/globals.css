@@ -218,3 +218,23 @@ body {
   .hero-drift-d { animation: none; }
   .hero-track { transform: translate3d(0, -12%, 0); }
 }
+
+/* ── Mobile navigation panel ───────────────────────────────────────────
+   A short fade and 10px settle, not a slide across the screen. The rest
+   of this page holds still on purpose — the only motion is colour
+   returning to a portrait on hover — and a full-height panel flying in
+   from the edge would be the loudest thing on the site.
+
+   Exit is instant: an enter transition reads as the panel arriving, an
+   exit transition just delays the page you asked for.                    */
+@keyframes nav-panel-in {
+  from { opacity: 0; transform: translate3d(0, -10px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.nav-panel { animation: nav-panel-in 180ms ease-out; }
+
+/* Stated explicitly rather than left to the blanket rule above, so that
+   deleting the blanket rule cannot silently reintroduce movement here. */
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel { animation: none; }
+}

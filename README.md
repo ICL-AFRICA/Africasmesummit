@@ -16,7 +16,7 @@ carry assumptions across on any of those.
 `output: 'export'` means `npm run build` emits plain HTML to `out/`. There is
 no server at runtime — the whole site is files on a CDN, which is what
 actually survives a traffic spike when the link goes out to a newsletter.
-Only the countdown ships JavaScript.
+Only the countdown, the forms and the mobile menu ship JavaScript.
 
 ## Run it
 
@@ -165,8 +165,15 @@ state: zero broken links, zero missing anchors. The only `mailto:` left is
 the direct email address offered alongside each form, which is a choice
 rather than a fallback.
 
-The top nav collapses below 1024px. Every page is reachable from the
-footer, which is on every page, so nothing is stranded on a phone.
+Below 1024px the top nav is replaced by a hamburger opening a full-screen
+panel — see `components/MobileNav.tsx`. Before that existed, the five inner
+pages were reachable on a phone only by scrolling to the footer, which this
+file previously described as sufficient. It was not: a nav that requires
+scrolling past the entire page is not navigation.
+
+The ticket button stays in the bar at every width and is never behind the
+menu. Someone who arrived ready to buy should not have to open a menu to
+find the thing they came for.
 
 ## Dates
 

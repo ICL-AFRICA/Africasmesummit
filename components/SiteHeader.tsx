@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MobileNav from "@/components/MobileNav";
 import { EVENT } from "@/lib/event";
 
 /**
@@ -44,15 +45,18 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
             </Link>
           ))}
         </nav>
-        <a
-          href={EVENT.ticketUrl}
-          className="bg-ink text-white px-4 sm:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
-        >
-          Get ticket
-        </a>
+        <div className="flex items-center gap-1 sm:gap-2 flex-none">
+          {/* Hamburger sits left of the ticket button, and only the nav
+              collapses — the ticket action is never behind a menu. */}
+          <MobileNav nav={NAV} current={current} />
+          <a
+            href={EVENT.ticketUrl}
+            className="bg-ink text-white px-4 sm:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
+          >
+            Get ticket
+          </a>
+        </div>
       </div>
-      {/* Nav collapses on small screens — these pages are reachable from the
-          footer, which is always present, so nothing is stranded. */}
     </header>
   );
 }
