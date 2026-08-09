@@ -179,6 +179,43 @@ one has more search history — so it will outrank you for your own name.
 - [ ] **Privacy page reviewed by ICL.** It makes claims about data handling
       that need to be true.
 
+**Dated — 1 September, and two separate things land on it:**
+
+- [ ] **Redeploy the site on or after 00:00, 1 September.** Not optional, and
+      not the same as the countdown.
+
+      Which ticket tier the site quotes — every "Get a ticket" button, the
+      search-result description and the structured data Google reads — is
+      decided when the site is **built**, not when someone visits it. This is
+      a static export: `npm run build` writes finished HTML and that HTML is
+      what sits on the CDN. The early-bird deadline passing does not reach
+      into a file that was written in August. Nothing changes on its own.
+
+      So on 1 September, with no redeploy, every ticket button on the site
+      still reads **KES 5,800** — a price that expired at midnight — and will
+      keep reading it until someone builds the site again.
+
+      The fix is not an edit. Push anything to `main` and Vercel rebuilds,
+      the build sees the deadline has passed, and every one of those places
+      switches to KES 6,800 together. An empty commit is enough:
+
+      ```bash
+      git commit --allow-empty -m "Rebuild for standard rate" && git push
+      ```
+
+      Then load the site and confirm a ticket button reads KES 6,800.
+
+      (The countdown and the early-bird bar are different — those run in the
+      visitor's browser and genuinely do remove themselves at the deadline
+      with nothing deployed. That is why this one is easy to miss.)
+
+- [ ] **The Standard Delegate Pass must exist on TikoHub by the same
+      moment.** See the first blocking item above. These two collide: the
+      redeploy makes every button advertise KES 6,800, and if that ticket
+      still does not exist on TikoHub, the site now sends people to a
+      checkout with nothing at that price. Doing one without the other is
+      worse than doing neither. Create the pass first, then redeploy.
+
 **Yours:**
 
 - [ ] `FORM_ENDPOINT` set, test submission received

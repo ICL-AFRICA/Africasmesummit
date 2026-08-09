@@ -258,9 +258,27 @@ Audited against the built HTML rather than the source. Current state:
 **Why the structured data matters more than the copy here.** A dated event
 is eligible for Google's event results — a card with the date, venue and
 ticket price directly in the search listing. That needs `BusinessEvent`
-with a valid `offers` block, which is wired to `EARLY_BIRD_ENDS` so the
-advertised price window is never stale. The `FAQPage` block makes the seven
-homepage questions eligible for expandable rich results.
+with a valid `offers` block. The `FAQPage` block makes the seven homepage
+questions eligible for expandable rich results.
+
+**What the `offers` block actually derives, and what that does not buy you.**
+This paragraph previously said the block was wired to `EARLY_BIRD_ENDS` so
+the advertised price window is never stale. That was only ever half true:
+`validThrough` was derived, but the price itself was the literal string
+`"5800"` typed into `app/layout.tsx`. Google was being handed a hardcoded
+number next to a derived date.
+
+`price`, `priceCurrency` and `validThrough` now all derive from the active
+tier in `lib/event.ts`, alongside the ticket buttons and the meta
+description, so nothing can disagree with anything else.
+
+Derived is not the same as live. The site is a static export, so the tier is
+chosen when the site is **built**. The deadline passing does not change HTML
+already on the CDN — see the 1 September item in `SETUP.md`. Until the site
+is rebuilt after the deadline, the structured data keeps advertising the
+early-bird price, and it will be as wrong as everything else on the page.
+Wrong in one place rather than several is the improvement here; it is not
+self-healing.
 
 **The OG image (`public/og.jpg`) is generated, not hand-made.** Regenerate
 it if the headline or date changes. It matters more than usual here:
@@ -316,6 +334,17 @@ the space available:
 `components/TicketTicker.tsx` is **desktop only**. On a phone a floating card
 covers a third of the viewport and competes with the content it is trying to
 sell; the top bar does the same job in 48px.
+
+**The ticker is also homepage-only, and that is deliberate — considered and
+rejected, not an oversight.** `PageShell` does not include it, so on a
+desktop inner page, once the top bar has scrolled away there is no CTA
+fixed to the screen. That is not the same gap as the phone one that produced
+the sticky header, and it does not want the same fix. The seven `PageShell`
+pages are short, they are reached deliberately rather than landed on cold,
+and each one already ends with a ticket button. Putting a dismissible
+floating card on all seven would solve a problem they do not have and add an
+element someone has to close on every page. Please do not re-add it as a
+bug fix.
 
 The two carry different copy, because they have different space. The bar on
 a phone reads `KES 5,800 · 22d left` — the price and the urgency, nothing
