@@ -31,8 +31,11 @@ npm run build    # static HTML in ./out
 Vercel: import the repo, framework preset Next.js, no env vars needed.
 Point africasmesummit.com at it. Any static host works — `out/` is portable.
 
-Node is pinned to 22 in `.nvmrc`. Without it Vercel picks its own default,
-which moves.
+Node 24, pinned in two places because they do different jobs. **`engines.node`
+in `package.json` is the one that reaches Vercel** — Vercel reads that (or the
+Node.js Version dropdown in Project Settings), and does not read `.nvmrc`.
+`.nvmrc` only tells a local version manager which version to use, so on its
+own it pins nothing about a deploy. Change both together or they drift.
 
 ### Security headers
 
