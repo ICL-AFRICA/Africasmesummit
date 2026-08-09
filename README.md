@@ -31,6 +31,36 @@ npm run build    # static HTML in ./out
 Vercel: import the repo, framework preset Next.js, no env vars needed.
 Point africasmesummit.com at it. Any static host works — `out/` is portable.
 
+Node is pinned to 22 in `.nvmrc`. Without it Vercel picks its own default,
+which moves.
+
+### Security headers
+
+`vercel.json` sets four: HSTS, `X-Frame-Options: DENY`, `nosniff` and a
+referrer policy. They are in `vercel.json` rather than `next.config.mjs`
+because `headers()` is a server feature and does nothing under
+`output: 'export'`.
+
+The set is adapted from JuaPath's. Four of its rules were deliberately
+dropped, because a static brochure site is not an authenticated SPA:
+
+- **The SPA rewrite** (everything → `/index.html`). JuaPath is client-routed
+  and needs it. This site has real HTML per route; the rewrite would serve
+  the wrong page.
+- **`Cache-Control: no-store` on HTML.** Correct for a logged-in app showing
+  per-user data. Here it would defeat the CDN caching that is the entire
+  reason this is a static export.
+- **The CSP.** JuaPath's enumerates Supabase, Google Analytics and
+  ElevenLabs. None exist here, and a copied allowlist is worse than none —
+  it looks reviewed without being true. Worth writing from scratch later.
+- **HSTS `preload`.** The header alone does nothing until you submit the
+  domain at hstspreload.org, and removal takes months. `max-age` plus
+  `includeSubDomains` gives the protection without the one-way door. Add
+  `preload` if you deliberately choose to submit.
+
+`vercel.json` is strict JSON — no comments, and Vercel rejects unknown
+top-level keys, so this is the note that would otherwise sit in the file.
+
 ## Editing content
 
 **Everything is in `lib/event.ts`.** Dates, prices, speakers, tracks, agenda,
