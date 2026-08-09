@@ -17,6 +17,7 @@ primary, which is what makes the set read as community rather than product.
 """
 
 import math, os
+import sys, pathlib
 
 MARIGOLD = "#E3A428"
 CLAY     = "#C6553F"
@@ -25,7 +26,53 @@ PALM     = "#4F9367"
 INK      = "#191539"
 PAPER    = "#FBF8F3"
 
-OUT = "/home/claude/asm/public/logo"
+# Output directory. Defaults to public/logo/ relative to the repo root, which
+# is where these SVGs are served from; pass a path to write elsewhere (used to
+# diff a regeneration against what is committed).
+#
+# This was previously an absolute path from the machine these were first
+# written on, which meant they could not run anywhere else.
+OUT = sys.argv[1] if len(sys.argv) > 1 else str(
+    pathlib.Path(__file__).resolve().parent.parent / "public" / "logo")
+
+# ── cairo check, before anything is written ──────────────────────────────
+# map-mark-tight.svg is cropped to the mark's RENDERED ink, which means
+# rasterising it, which means cairo. Checked up front rather than two thirds
+# of the way through, so a missing library cannot leave a half-written set
+# of assets behind.
+#
+# The failure this produces by default is a wall of dlopen errors that says
+# nothing about the actual cause, so it is spelled out here.
+try:
+    import cairosvg  # noqa: F401
+except Exception as exc:                                    # pragma: no cover
+    sys.exit(f"""
+generate-overlap.py needs cairo, and it is not loadable.
+
+  {type(exc).__name__}: {str(exc).splitlines()[0]}
+
+This is usually NOT a missing cairo. On an Apple Silicon Mac the usual cause
+is the interpreter, not the library:
+
+  * Homebrew installs cairo to /opt/homebrew/lib, which is not on the default
+    dynamic-loader search path.
+  * The fix would normally be DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib —
+    but macOS System Integrity Protection strips every DYLD_* variable from
+    SIP-protected binaries, and /usr/bin/python3 is one. So the variable
+    silently does nothing.
+  * Preloading the dylib by absolute path does not help either: cairocffi
+    does its own dlopen by soname and ignores what is already loaded.
+
+The way out is an interpreter that is not SIP-protected:
+
+    brew install python
+    /opt/homebrew/bin/python3 -m pip install cairosvg pillow
+    /opt/homebrew/bin/python3 scripts/generate-overlap.py
+
+Nothing has been written. The committed SVGs are untouched — and for
+map-mark-tight.svg the committed copy is authoritative; see docs/logo.md.
+""")
+
 os.makedirs(OUT, exist_ok=True)
 FONT = ("-apple-system, BlinkMacSystemFont, 'Archivo', 'Helvetica Neue', "
         "Arial, sans-serif")
@@ -104,8 +151,13 @@ def svg(w,h,body,bg=None):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
             f'viewBox="0 0 {w} {h}">{back}{body}</svg>')
 
-def write(n,c):
-    open(f"{OUT}/{n}.svg","w").write(c); print(f"  {n}.svg")
+def write(n, c):
+    # `with`, not open(...).write(...): the bare form truncates the file the
+    # moment it is opened, so anything that raises before the write leaves a
+    # zero-byte asset behind. It also leaks the handle.
+    with open(f"{OUT}/{n}.svg", "w") as f:
+        f.write(c)
+    print(f"  {n}.svg")
 
 def wordmark(x,y,size,colour,accent):
     return (f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" '
@@ -182,7 +234,15 @@ def build_tight(size, uid_extra=""):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{vw:.2f}" height="{vh:.2f}" '
             f'viewBox="{vx:.2f} {vy:.2f} {vw:.2f} {vh:.2f}">{inner}</svg>')
 
-open(f"{OUT}/map-mark-tight.svg","w").write(build_tight(130, uid_extra="t"))
+# Build first, THEN open. Python evaluates open() before the argument to
+# write(), so the original one-liner truncated map-mark-tight.svg to zero
+# bytes and only then ran build_tight() — which raises on any machine
+# without a working cairo. That destroyed the file the header lockup
+# depends on. Two statements, and the file is only touched once the
+# replacement exists.
+_tight_svg = build_tight(130, uid_extra="t")
+with open(f"{OUT}/map-mark-tight.svg", "w") as f:
+    f.write(_tight_svg)
 print("  map-mark-tight.svg")
 
 # Flat single-colour fallback for embroidery, stamps and anything below 56px

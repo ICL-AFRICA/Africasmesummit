@@ -23,9 +23,17 @@ LEGIBILITY
 """
 
 import math, os, random
+import sys, pathlib
 
 INK, GOLD, PAPER = "#14113A", "#C99A2E", "#FFFFFF"
-OUT = "/home/claude/asm/public/logo"
+# Output directory. Defaults to public/logo/ relative to the repo root, which
+# is where these SVGs are served from; pass a path to write elsewhere (used to
+# diff a regeneration against what is committed).
+#
+# This was previously an absolute path from the machine these were first
+# written on, which meant they could not run anywhere else.
+OUT = sys.argv[1] if len(sys.argv) > 1 else str(
+    pathlib.Path(__file__).resolve().parent.parent / "public" / "logo")
 os.makedirs(OUT, exist_ok=True)
 FONT = ("-apple-system, BlinkMacSystemFont, 'Archivo', 'Helvetica Neue', "
         "Arial, sans-serif")
@@ -144,7 +152,12 @@ def svg(w, h, body, bg=None):
             f'viewBox="0 0 {w} {h}">{back}{body}</svg>')
 
 def write(n, c):
-    open(f"{OUT}/{n}.svg", "w").write(c); print(f"  {n}.svg")
+    # `with`, not open(...).write(...): the bare form truncates the file the
+    # moment it is opened, so anything that raises before the write leaves a
+    # zero-byte asset behind. It also leaks the handle.
+    with open(f"{OUT}/{n}.svg", "w") as f:
+        f.write(c)
+    print(f"  {n}.svg")
 
 def wordmark(x, y, size, colour, accent):
     return (f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="{size}" '

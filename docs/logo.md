@@ -81,8 +81,8 @@ different typeface.
 
 ## Regenerating
 
-    python3 generate-network.py    # the network set
-    python3 generate.py            # the solid set
+    python3 scripts/generate-network.py    # the network set
+    python3 scripts/generate.py            # the solid set
 
 Geometry is defined once in each, so changing the seam, the lattice density
 or the colours propagates to every variant.
@@ -126,7 +126,8 @@ on dark.
 the fields stay distinguishable where individual dots would have merged —
 but the coastline detail is gone by 40px.
 
-Regenerate with `python3 generate-overlap.py`.
+Regenerate with `python3 scripts/generate-overlap.py` — but read
+"Regenerating" at the end of this file first.
 
 ---
 
@@ -143,3 +144,67 @@ with one:
 
 They are not meant to coexist. Pick one, and keep the split diamond as the
 small-size fallback for favicons and embroidery whichever you choose.
+
+---
+
+## Regenerating
+
+The three generators live in `scripts/`, not in `public/logo/` beside their
+output. Anything under `public/` is copied into `out/` and served, so while
+they sat there `africasmesummit.com/logo/generate-overlap.py` resolved.
+
+```bash
+python3 scripts/generate.py            # the solid split-diamond set
+python3 scripts/generate-network.py    # the network set
+python3 scripts/generate-overlap.py    # the overlapping-fields set
+```
+
+Each writes to `public/logo/` by default; pass a directory to write elsewhere,
+which is how you diff a regeneration against what is committed before
+overwriting anything.
+
+`generate.py` and `generate-network.py` are deterministic and reproduce their
+output byte-for-byte. The `random` import in `generate-network.py` looks like
+a problem and is not — it is seeded, `random.Random(11)`.
+
+### `map-mark-tight.svg` cannot currently be regenerated here
+
+**The committed copy is authoritative. If your regenerated version differs
+from it, the committed one is right and yours is wrong.**
+
+That file is the tight crop used by the header and footer lockups, cropped to
+the mark's *rendered* ink rather than its polygon bounds — which is what makes
+the 8px gap in the lockup measure 8px instead of 26px. Producing it means
+rasterising the mark, which means cairo, and cairo is not loadable from the
+system Python on this machine:
+
+- Homebrew installs cairo to `/opt/homebrew/lib`, which is not on the default
+  dynamic-loader search path.
+- `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` would normally fix that, but
+  System Integrity Protection strips every `DYLD_*` variable from
+  SIP-protected binaries, and `/usr/bin/python3` is one. The variable is
+  silently ignored.
+- Preloading the dylib by absolute path does not help either — `cairocffi`
+  does its own `dlopen` by soname.
+
+`generate-overlap.py` checks for this up front and exits before writing
+anything, so a missing cairo cannot leave you with a half-written set. To
+actually run it you need an interpreter that is not SIP-protected:
+
+```bash
+brew install python
+/opt/homebrew/bin/python3 -m pip install cairosvg pillow
+/opt/homebrew/bin/python3 scripts/generate-overlap.py
+```
+
+Even then, expect the output to differ. The crop is measured off a raster, so
+a different cairo version can move it by a pixel. That is a rendering
+difference, not a correction. Diff into a scratch directory first, and do not
+overwrite `map-mark-tight.svg` unless you have a specific reason and have
+checked the lockup spacing afterwards.
+
+Historical note: this file used to be written by
+`open(path, "w").write(build_tight(...))`. Python opens — and therefore
+truncates — before evaluating the argument, so on any machine without cairo
+that line destroyed the asset and then raised. It is two statements now, and
+all three generators write through `with` blocks.

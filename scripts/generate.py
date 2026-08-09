@@ -26,12 +26,20 @@ OUTPUT
 """
 
 import os
+import sys, pathlib
 
 INK   = "#14113A"
 GOLD  = "#C99A2E"
 PAPER = "#FFFFFF"
 
-OUT = "/home/claude/asm/public/logo"
+# Output directory. Defaults to public/logo/ relative to the repo root, which
+# is where these SVGs are served from; pass a path to write elsewhere (used to
+# diff a regeneration against what is committed).
+#
+# This was previously an absolute path from the machine these were first
+# written on, which meant they could not run anywhere else.
+OUT = sys.argv[1] if len(sys.argv) > 1 else str(
+    pathlib.Path(__file__).resolve().parent.parent / "public" / "logo")
 os.makedirs(OUT, exist_ok=True)
 
 # Geometry: a diamond of side S centred on (cx, cy), split by a seam of

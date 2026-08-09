@@ -153,3 +153,37 @@ semibold — three clear levels, one colour.
 
 On paper the muted grey `#6E6884` is fine and still in use. The rule is
 specific to reversed type.
+
+## Other organisations' marks are not ours to restyle
+
+**Partner logos on the site stay in full colour. This was considered and
+rejected, not overlooked — please do not "fix" it.**
+
+The site desaturates photography on purpose. Speaker portraits render
+greyscale and return to colour on hover, and the hero mosaic is duotoned into
+the ink. That rule does real work: five headshots arriving from five sources
+at five different qualities look deliberate in one tone rather than mismatched.
+
+The nine partner logos are exactly the same shape of problem — nine sources,
+three file formats, wildly different colour temperature — so the same
+treatment is the obvious next step. It is still the wrong one, for a reason
+that has nothing to do with how it looks.
+
+**The duotone rule applies to photography we control.** We commissioned it or
+licensed it, and how it is graded is our call. A partner's logo is their
+asset, governed by their brand guidelines, and a great many of those
+guidelines prohibit recolouring, tinting or desaturating the mark outright.
+Applying a house treatment to someone else's identity is not a style choice
+we get to make on their behalf.
+
+That goes double for the Government of Kenya coat of arms. It is a state
+emblem, its use is a matter of permission rather than taste, and desaturating
+it to tidy up a logo wall is not ours to do.
+
+So the wall is slightly louder than the rest of the page, and that is the
+correct trade. The consistency was bought elsewhere instead — every logo is
+scaled to equal optical area on a shared canvas, which is what actually makes
+a mixed set read as a group. Colour was never the thing doing that work.
+
+If a specific partner tells us in writing that a mono treatment is fine, treat
+that as applying to their mark alone. It is not a precedent for the wall.

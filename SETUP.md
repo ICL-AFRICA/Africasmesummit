@@ -252,6 +252,11 @@ written. Every label, both countdowns and the schema.org offer derive from
 it. When it passes on 31 August the ticker and the bar remove themselves —
 nothing to deploy on the day.
 
-**The brand:** `public/logo/` holds every logo variant plus the generator
-scripts. `BRAND.md` in that folder has the palette, the type rules and the
-spacing rules. Read it before making anything new.
+**The brand:** `public/logo/` holds every logo variant, and
+`public/logo/BRAND.md` has the palette, the type rules and the spacing rules.
+Read it before making anything new.
+
+The generator scripts live in `scripts/`, not beside their output — anything
+under `public/` is copied to `out/` and served, so while they sat there they
+were downloadable from the live domain. `docs/logo.md` explains what each one
+draws and how to run it.
