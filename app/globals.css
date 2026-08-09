@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/*
+  Africa SME Summit — design system.
+
+  Photography carries this page; the interface gets out of its way.
+  A near-monochrome indigo field plus a single accent taken from the
+  printed poster's gold — the same two colours as the printed campaign. No gradients, no shadows, no rounded corners, no ornament. Every
+  rule is a hairline. If something needs emphasis it gets scale or space,
+  not colour.
+
+  One deliberate rule: the speaker wall renders greyscale. Partly because a
+  wall of faces is stronger than a grid of cards, and partly for a practical
+  reason — headshots will arrive from five sources at five different
+  qualities, and greyscale makes mismatched photography look intentional.
+*/
+@theme {
+  /* ── Brand palette ───────────────────────────────────────────────────
+     Four colours of equal weight, plus an ink and a paper.
+
+     The architecture follows Google's: four hues spread far apart (10°,
+     40°, 141°, 213° — gaps of 30/101/72, near-identical to Google's
+     40/100/72) at similar luminance, so none dominates and the set reads
+     as a group rather than a lead colour with three assistants.
+
+     The colours themselves are earth-derived rather than primary. Three of
+     the four are warm; only indigo is cool, and it is outnumbered three to
+     one — roughly the ratio of people to institutions in the room. That is
+     what makes the set feel like a community instead of a product.
+
+     ROTATE, DO NOT RANK. Sections and cards take colours in sequence. The
+     moment one becomes "the brand colour" the idea collapses.              */
+
+  --color-marigold:  #E3A428;   /* enterprise — the ticket action           */
+  --color-clay:      #C6553F;   /* markets, craft — urgency and deadlines   */
+  --color-indigo:    #3F6FA8;   /* capital and institutions                 */
+  --color-palm:      #4F9367;   /* growth — universities and research       */
+
+  /* Text-safe variants. The field colours above are for areas, not words:
+     marigold is 2.06:1 on paper. Text always uses these.                   */
+  --color-marigold-t: #8A5E0E;  /* 5.4:1 on paper  */
+  --color-clay-t:     #A33C28;  /* 6.1:1           */
+  --color-indigo-t:   #2E5382;  /* 7.4:1           */
+  --color-palm-t:     #2F6B47;  /* 6.0:1           */
+
+  --color-ink:    #191539;      /* all body text, and the dark fields       */
+  --color-raise:  #221D4A;      /* raised surface on ink                    */
+  --color-line:   #332C63;      /* hairline on ink                          */
+  --color-paper:  #FBF8F3;      /* the page — warm off-white, not white     */
+  --color-card:   #FFFFFF;      /* cards on paper                           */
+  --color-rule:   #E6E0D6;      /* hairline on paper                        */
+  --color-grey:   #6E6884;      /* muted text on paper (5.9:1)              */
+  --color-mist:   #CBC7DC;      /* muted text on ink — 11.5:1. The old value
+                                   passed AA at 7.2:1 but read washed out at
+                                   16px. Contrast maths is a floor, not a
+                                   target, and reversed type needs headroom. */
+
+  /* kept so existing utilities resolve; gold is now marigold */
+  --color-gold:    #E3A428;
+  --color-white:   #FFFFFF;
+  --color-off:     #221D4A;
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-size: 16px;           /* base — nothing on the page goes below this
+                                except tracked uppercase labels at 12px */
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One family, three jobs — the type system is weight and scale, not a
+   decorative display face paired with a body face. */
+.h-xl { font-weight: 500; letter-spacing: -0.035em; line-height: 0.96; }
+.h-lg { font-weight: 500; letter-spacing: -0.028em; line-height: 1.06; }
+.h-sm { font-weight: 500; letter-spacing: -0.015em; line-height: 1.2; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;        /* 12px — was 10px, which is not readable */
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Body copy. 1.65 line-height rather than 1.55: longer measure needs more
+   leading, and light-on-dark needs more still. */
+.lede { font-weight: 400; line-height: 1.65; letter-spacing: -0.005em; }
+
+/* Speaker wall: portraits are duotoned into the indigo so the photography
+   belongs to the palette instead of sitting on top of it. Colour returns on
+   hover — the only motion on the page, and it earns its keep because a face
+   lighting up when you point at it is worth more than any scroll animation.
+
+   The duotone also does practical work: five headshots will arrive from five
+   sources at five different qualities, and a single tone makes mismatched
+   photography look deliberate. */
+.portrait { filter: grayscale(1) contrast(1.06); transition: filter 450ms ease; }
+.portrait-tint { position: relative; }
+.portrait-tint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  mix-blend-mode: color;
+  opacity: 0.75;
+  transition: opacity 450ms ease;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .portrait-tint:hover .portrait { filter: grayscale(0) contrast(1); }
+  .portrait-tint:hover::after { opacity: 0; }
+}
+
+.outline-type {
+  -webkit-text-stroke: 1.5px var(--color-white);
+  color: transparent;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+@media (max-width: 640px) { .outline-type { -webkit-text-stroke-width: 1px; } }
+
+:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Hero mosaic ───────────────────────────────────────────────────────
+   Three columns of photography drifting at different speeds. Everything
+   here is a compositor-only transform: no layout, no paint, no JS.        */
+
+.hero-grid {
+  position: absolute;
+  inset: -8% -2%;               /* overscan so no edge is ever visible */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);   /* two columns on a phone —
+                                              three is too busy at 390px */
+  gap: 8px;
+}
+@media (min-width: 640px)  { .hero-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } }
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
+
+/* Columns beyond the count the breakpoint shows are hidden rather than
+   wrapped, so the grid never reflows into a ragged second row. */
+.hero-col:nth-child(n+3) { display: none; }
+@media (min-width: 640px)  { .hero-col:nth-child(3) { display: block; } }
+@media (min-width: 1024px) { .hero-col:nth-child(4) { display: block; } }
+
+.hero-col { overflow: hidden; }
+
+.hero-track {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  will-change: transform;
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  background: var(--color-raise);
+}
+
+/* Each column runs to exactly -50% so the duplicated list loops seamlessly.
+   Long durations: this should read as drift, not motion. */
+@keyframes drift-up   { from { transform: translate3d(0, 0, 0); }    to { transform: translate3d(0, -50%, 0); } }
+@keyframes drift-down { from { transform: translate3d(0, -50%, 0); } to { transform: translate3d(0, 0, 0); } }
+
+.hero-drift-a { animation: drift-up   78s linear infinite; }
+.hero-drift-b { animation: drift-down 96s linear infinite; }
+.hero-drift-c { animation: drift-up   86s linear infinite; }
+.hero-drift-d { animation: drift-down 110s linear infinite; }
+
+/* Duotone: pulls the photography into the indigo so sixteen different
+   white balances read as one set, and so the headline never fights it. */
+.hero-tint {
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  mix-blend-mode: color;
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+/* Scrim: guarantees headline contrast whatever frame is behind it. */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* bottom: guarantees headline contrast whatever frame is behind it */
+    linear-gradient(to top, var(--color-ink) 3%, rgba(25,21,57,0.35) 46%, rgba(25,21,57,0) 72%),
+    /* top: the nav and the early-bird bar sit here and must always read */
+    linear-gradient(to bottom, rgba(25,21,57,0.92) 0%, rgba(25,21,57,0.55) 12%, rgba(25,21,57,0) 26%),
+    radial-gradient(130% 85% at 18% 92%, rgba(25,21,57,0.9) 0%, rgba(25,21,57,0) 62%);
+}
+
+/* Vestibular safety. A moving background is one of the worst offenders,
+   so this stops it completely rather than merely slowing it down. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-drift-a,
+  .hero-drift-b,
+  .hero-drift-c,
+  .hero-drift-d { animation: none; }
+  .hero-track { transform: translate3d(0, -12%, 0); }
+}
