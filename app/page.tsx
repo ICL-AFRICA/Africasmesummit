@@ -39,7 +39,10 @@ export default function Page() {
       <main>
         {/* ── Hero: photography does the work ───────────────────────── */}
         <section className="relative bg-ink">
-          <div className="relative h-[86vh] min-h-[560px] w-full overflow-hidden">
+          {/* Height and floor both shrink by the header's flow height below
+              lg, so the headline keeps the position it had when the header
+              overlaid the hero rather than sitting above it. */}
+          <div className="relative h-[calc(86vh-var(--header-flow))] min-h-[calc(560px-var(--header-flow))] w-full overflow-hidden">
             <HeroMosaic />
             <div className="absolute inset-x-0 bottom-0">
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-10 sm:pb-14">

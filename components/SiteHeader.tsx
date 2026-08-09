@@ -18,7 +18,33 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
   overlay?: boolean; current?: string; barOnMobile?: boolean;
 }) {
   return (
-    <header className={overlay ? `absolute ${barOnMobile ? "top-11 sm:top-0" : "top-11"} inset-x-0 z-40 bg-paper/95 backdrop-blur` : "bg-paper border-b border-rule"}>
+    /* Sticky below lg, static at lg and up.
+
+       On a phone the header is the only persistent ticket CTA there is: the
+       early-bird bar scrolls away and the floating ticker is desktop-only, so
+       before this the whole phone experience had a buy button at the very top
+       of the document and nowhere else. At lg the ticker already does that
+       job, and a pinned bar there only costs vertical space.
+
+       The early-bird bar deliberately does NOT stick. Two pinned elements
+       would eat ~19% of a 390x780 viewport, and the site's own rule is one
+       urgency mechanism per screen. The bar is dismissible and disappears at
+       the deadline; the header is permanent. The bar scrolls away under it.
+
+       Background stays fully opaque, not the bg-paper/95 used for the desktop
+       overlay: at lg that translucency sits over a still hero, but a sticky
+       bar below lg passes over photography, ink sections and body copy, and
+       95% paper over the ink field turns the wordmark to mud. The overlay
+       treatment is kept at lg, where it was designed to work. */
+    <header
+      className={
+        overlay
+          ? `sticky top-0 z-40 bg-paper border-b border-rule lg:absolute lg:inset-x-0 lg:border-b-0 lg:bg-paper/95 lg:backdrop-blur ${
+              barOnMobile ? "lg:top-0" : "lg:top-11"
+            }`
+          : "sticky top-0 z-40 bg-paper border-b border-rule lg:static"
+      }
+    >
       <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 sm:py-5 flex items-center justify-between gap-4">
         {/* Lockup: mark on the left, name stacked in three lines beside it.
             Stacking the name lets each line sit at a readable size instead

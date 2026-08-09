@@ -65,6 +65,24 @@
 }
 
 
+/* Flow height of the header.
+
+   Below lg the header is sticky, which means it sits IN the flow and pushes
+   what follows down by its own height. At lg it goes back to overlaying the
+   hero and takes no flow space at all, hence 0.
+
+   The homepage hero subtracts this from its height so the headline lands in
+   exactly the same place it did when the header floated free. Without it the
+   hero is pushed down bodily and the headline drops below the fold on a
+   375x667 phone — measured at 11px clipped before this existed.
+
+   These are measured values, not guesses: 97px below 640 (62px mark + py-4),
+   118px from 640 (76px mark + py-5). If the mark or the padding in
+   SiteHeader changes, remeasure. */
+:root { --header-flow: 97px; }
+@media (min-width: 640px)  { :root { --header-flow: 118px; } }
+@media (min-width: 1024px) { :root { --header-flow: 0px; } }
+
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {

@@ -175,6 +175,21 @@ The ticket button stays in the bar at every width and is never behind the
 menu. Someone who arrived ready to buy should not have to open a menu to
 find the thing they came for.
 
+The header is `sticky top-0` below lg and static at lg and up. On a phone it
+is the only persistent ticket CTA there is — the early-bird bar scrolls away
+and the floating ticker is desktop-only — so before this, a phone had a buy
+button at the very top of the document and nowhere else. At lg the ticker
+already does that job.
+
+The bar does not stick. Two pinned elements cost about a fifth of a 390×780
+screen, and one urgency mechanism per screen is the rule. It scrolls away
+under the header.
+
+Because a sticky header sits in the flow, it pushes the homepage hero down by
+its own height. `--header-flow` in `globals.css` carries that height and the
+hero subtracts it, so the headline lands where it always did. Remeasure it if
+the mark size or the header padding changes.
+
 ## Dates
 
 `EARLY_BIRD_ENDS` in `lib/event.ts` is the only place the deadline is
