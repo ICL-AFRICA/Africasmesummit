@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT } from "@/lib/event";
+import { EVENT, TICKET_CTA } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Contact — ${EVENT.name} ${EVENT.year}`,
@@ -80,7 +80,7 @@ export default function Contact() {
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Ready to book?</p>
           <div className="mt-6">
-            <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
           </div>
         </div>
       </section>

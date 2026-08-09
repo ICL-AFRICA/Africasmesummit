@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, TRACKS, PAPERS_TICKET } from "@/lib/event";
+import { EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Call for papers — ${EVENT.name} ${EVENT.year}`,
@@ -97,7 +97,7 @@ export default function Papers() {
       <section>
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <div className="flex flex-wrap justify-center gap-3">
-            <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
             <Btn href="/contact" tone="onDark" internal>Ask a question</Btn>
           </div>
         </div>

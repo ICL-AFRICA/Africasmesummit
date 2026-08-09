@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Btn from "@/components/Btn";
-import { EVENT } from "@/lib/event";
+import { EVENT, TICKET_CTA } from "@/lib/event";
 
 /**
  * Navigation below 1024px.
@@ -172,7 +172,7 @@ export default function MobileNav({
 
           <div className="flex-none border-t border-rule px-5 sm:px-8 py-6">
             <Btn href={EVENT.ticketUrl} tone="gold" className="w-full justify-center">
-              Get a ticket — KES 5,800
+              {TICKET_CTA}
             </Btn>
           </div>
         </div>

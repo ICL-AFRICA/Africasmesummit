@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, SPONSOR_TIERS } from "@/lib/event";
+import { EVENT, SPONSOR_TIERS, TICKET_CTA } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Become a partner — ${EVENT.name} ${EVENT.year}`,
@@ -92,7 +92,7 @@ export default function Partner() {
           <p className="lede text-white">Looking for an exhibition stand instead?</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Btn href="/exhibit" tone="onDark" internal>Book a stand</Btn>
-            <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
           </div>
         </div>
       </section>

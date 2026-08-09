@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EVENT } from "@/lib/event";
+import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EARLY_BIRD_PRICE, EVENT } from "@/lib/event";
 
 /**
  * The early-bird bar. Pinned to the top, present on every scroll position,
@@ -38,10 +38,10 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
         {/* Two messages, not one truncated one. A phone has room for the
             price and the days left; a laptop has room for the sentence. */}
         <p className="font-medium sm:hidden whitespace-nowrap">
-          KES 5,800 · <span className="font-mono tabular-nums">{days}d</span> left
+          {EARLY_BIRD_PRICE} · <span className="font-mono tabular-nums">{days}d</span> left
         </p>
         <p className="font-medium hidden sm:block truncate">
-          {`Early bird — KES 5,800. Ends ${EARLY_BIRD_LABEL}.`}
+          {`Early bird — ${EARLY_BIRD_PRICE}. Ends ${EARLY_BIRD_LABEL}.`}
         </p>
         <div className="flex items-center gap-3 sm:gap-4 flex-none">
           <p className="font-mono tabular-nums hidden sm:block">

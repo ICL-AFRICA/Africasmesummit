@@ -6,10 +6,7 @@ import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import {
-  EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS,
-  EARLY_BIRD_LABEL,
-} from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -74,7 +71,7 @@ export default function Page() {
               forward — in one room, in one day.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-3">
-              <Btn href={EVENT.ticketUrl}>Get a ticket — KES 5,800</Btn>
+              <Btn href={EVENT.ticketUrl}>{TICKET_CTA}</Btn>
               <Btn href="/partner" tone="outline" internal>Become a partner</Btn>
               <Btn href="/exhibit" tone="outline" internal>Book a stand</Btn>
             </div>
@@ -115,7 +112,7 @@ export default function Page() {
           </div>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 flex flex-wrap justify-center gap-3">
             <Btn href="/speakers" tone="onDark" internal>View all speakers</Btn>
-            <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
           </div>
         </section>
 
@@ -173,7 +170,7 @@ export default function Page() {
                 </div>
               ))}
               <div className="bg-ink p-8 flex items-end">
-                <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+                <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               </div>
             </div>
           </div>
@@ -315,7 +312,7 @@ export default function Page() {
               {EVENT.dateLabel} · {EVENT.venue}, University of Nairobi
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+              <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               <Btn href="/exhibit" tone="onDark" internal>Book a stand</Btn>
             </div>
           </div>

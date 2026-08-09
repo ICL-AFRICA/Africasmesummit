@@ -4,7 +4,7 @@ import Btn from "@/components/Btn";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, SPEAKERS, PHOTOS } from "@/lib/event";
+import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Speakers — ${EVENT.name} ${EVENT.year}`,
@@ -80,7 +80,7 @@ export default function Speakers() {
               {EVENT.venue}, University of Nairobi
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+              <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               <Btn href="/" tone="onDark" internal>Back to the summit</Btn>
             </div>
           </div>

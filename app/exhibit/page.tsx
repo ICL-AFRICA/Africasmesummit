@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, STAND_OPTIONS } from "@/lib/event";
+import { EVENT, STAND_OPTIONS, TICKET_CTA } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
@@ -91,7 +91,7 @@ export default function Exhibit() {
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Attending rather than exhibiting?</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Btn href={EVENT.ticketUrl} tone="gold">Get a ticket — KES 5,800</Btn>
+            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
             <Btn href="/partner" tone="onDark" internal>Become a partner</Btn>
           </div>
         </div>

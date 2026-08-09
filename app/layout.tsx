@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
-import { EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ } from "@/lib/event";
+import {
+  EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ,
+  ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN,
+} from "@/lib/event";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://africasmesummit.com"),
   title: `${EVENT.name} ${EVENT.year} — ${EVENT.dateShort}, Nairobi`,
+  // Tier name as well as price, so the sentence stays true after the early
+  // bird ends: "Early bird from KES 5,800" becomes "Standard from KES 6,800"
+  // rather than advertising an expired rate. Same length as before, which
+  // matters — this is the search snippet.
   description:
-    "One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. 30 September 2026, University of Nairobi. Early bird from KES 5,800.",
+    `One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. 30 September 2026, University of Nairobi. ${ACTIVE_TICKET.tier} from ${TICKET_PRICE}.`,
   keywords: [
     "SME conference Kenya",
     "SME summit Nairobi",
@@ -63,8 +70,8 @@ const eventJsonLd = {
   })),
   offers: {
     "@type": "Offer",
-    price: "5800",
-    priceCurrency: "KES",
+    price: TICKET_PRICE_PLAIN,
+    priceCurrency: ACTIVE_TICKET.currency,
     url: EVENT.ticketUrl,
     availability: "https://schema.org/InStock",
     validThrough: EARLY_BIRD_ENDS.slice(0, 10),

@@ -89,6 +89,60 @@ export const TICKETS = [
 ] as const;
 
 /**
+ * The ticket price, derived — never typed anywhere else.
+ *
+ * These live here rather than beside EARLY_BIRD_LABEL only because they read
+ * from TICKETS, which is declared above them.
+ *
+ * ── Which tier is quoted, and the one thing to know about it ─────────────
+ *
+ * TICKET_CTA follows the deadline: early bird until EARLY_BIRD_ENDS, standard
+ * after it. Quoting 5,800 on 1 September would advertise a price that has
+ * expired, which is worse than any alternative here.
+ *
+ * BUT: this site is a static export, so the line below runs at BUILD time,
+ * not in the visitor's browser. The deployed HTML carries whatever was true
+ * when it was built. Passing the deadline does NOT change a page already on
+ * the CDN — only a rebuild does.
+ *
+ * So unlike the countdown and the early-bird bar, which are client-side and
+ * genuinely need nothing done on the day, THIS NEEDS A REDEPLOY ON OR AFTER
+ * 1 SEPTEMBER. Any push to main does it; there is nothing to edit. Until then
+ * every ticket button still reads 5,800.
+ *
+ * Making it client-side instead was the alternative and was rejected: it
+ * would put JavaScript on ten static buttons and let the most important
+ * price on the site visibly change after paint.
+ */
+const EARLY_BIRD_ACTIVE = Date.now() < new Date(EARLY_BIRD_ENDS).getTime();
+
+/** The tier the site should be quoting right now. */
+export const ACTIVE_TICKET = EARLY_BIRD_ACTIVE ? TICKETS[0] : TICKETS[1];
+
+/** "KES 5,800" — the currently correct price, for prose. */
+export const TICKET_PRICE = `${ACTIVE_TICKET.currency} ${ACTIVE_TICKET.price}`;
+
+/** "5800" — digits only, for the schema.org offer. */
+export const TICKET_PRICE_PLAIN = ACTIVE_TICKET.price.replace(/,/g, "");
+
+/**
+ * "Get a ticket — KES 5,800". The label on every ticket button on the site.
+ *
+ * One string in one place, because a landing page whose ticket button says
+ * one price in the hero and another in the footer stops being believed.
+ */
+export const TICKET_CTA = `Get a ticket — ${TICKET_PRICE}`;
+
+/**
+ * "KES 5,800" — always the early-bird price, whatever the date.
+ *
+ * Separate from TICKET_PRICE on purpose: this is for copy that names the
+ * early bird explicitly ("Early bird — KES 5,800"), where the standard price
+ * would make the sentence contradict itself.
+ */
+export const EARLY_BIRD_PRICE = `${TICKETS[0].currency} ${TICKETS[0].price}`;
+
+/**
  * Titles exactly as they appear on the printed poster.
  *
  * IMPORTANT — the `bio` lines below are drafts written only from each
