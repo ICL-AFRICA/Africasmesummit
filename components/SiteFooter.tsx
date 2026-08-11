@@ -46,15 +46,17 @@ export default function SiteFooter() {
         </div>
 
         <div>
+          {/* Two lines only, by request. The venue block and the "Contact
+              page →" link that used to sit here are gone; /contact is still
+              reachable from the "Take part" column above (Propose a session,
+              Group bookings), so the no-dead-ends rule still holds. */}
           <p className="eyebrow text-marigold mb-3">Get in touch</p>
-          <p><a href={`mailto:${EVENT.email}`} className="hover:text-white transition-colors">{EVENT.email}</a></p>
-          {EVENT.phone.map((p) => <p key={p}>{p}</p>)}
-          <p className="mt-4">{EVENT.venue}</p>
-          <p>University of Nairobi, Main Campus</p>
-          <p>{EVENT.city}</p>
-          <Link href="/contact" className="mt-3 inline-block text-white hover:text-marigold transition-colors">
-            Contact page →
-          </Link>
+          <p>
+            <a href={`mailto:${EVENT.conferenceEmail}`} className="hover:text-white transition-colors">
+              {EVENT.conferenceEmail}
+            </a>
+          </p>
+          <p>{EVENT.conferencePhone}</p>
         </div>
       </div>
 

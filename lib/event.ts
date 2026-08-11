@@ -17,6 +17,21 @@ export const EVENT = {
   venueDetail: "University of Nairobi, Main Campus",
   city: "Nairobi, Kenya",
   ticketUrl: "https://tikohub.com/events/562",
+  /* TWO SETS OF CONTACT DETAILS, ON PURPOSE. Do not collapse them.
+
+     `conferenceEmail` / `conferencePhone` are the summit team's own line,
+     on the convening organisation's live domain. They are what the footer
+     and the contact page publish, because they reach a real inbox today.
+
+     `email` / `phone` are the original site-wide details. `email` is still
+     a PLACEHOLDER — see SETUP.md step 7, it has to be created before
+     launch — and it is what the enquiry form falls back to, and what the
+     exhibit, partner and privacy pages print. Changing the form's fallback
+     is a separate decision from changing what the footer advertises, which
+     is why these did not get merged. */
+  conferenceEmail: "conference@ichooselife.or.ke",
+  conferencePhone: "0724 255822",
+
   phone: ["0717 605151", "0724 255822"],
   email: "info@africasmesummit.com",
   host: "I Choose Life – Africa",
