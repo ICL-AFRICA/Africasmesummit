@@ -112,29 +112,24 @@ body {
    leading, and light-on-dark needs more still. */
 .lede { font-weight: 400; line-height: 1.65; letter-spacing: -0.005em; }
 
-/* Speaker wall: portraits are duotoned into the indigo so the photography
-   belongs to the palette instead of sitting on top of it. Colour returns on
-   hover — the only motion on the page, and it earns its keep because a face
-   lighting up when you point at it is worth more than any scroll animation.
+/* Speaker wall: portraits carry their own colour, and go black and white on
+   hover. That is the reverse of how this started — the wall was duotoned
+   into the indigo by default and lit up in colour when you pointed at it —
+   and the reversal is deliberate, so please do not "restore" it.
 
-   The duotone also does practical work: five headshots will arrive from five
-   sources at five different qualities, and a single tone makes mismatched
-   photography look deliberate. */
-.portrait { filter: grayscale(1) contrast(1.06); transition: filter 450ms ease; }
+   The cost is real and worth naming: seven headshots from seven sources sit
+   on seven different backgrounds, and a single tone was what made that look
+   deliberate rather than mismatched. Full colour gives that up. What it buys
+   is that a face reads as a face on first sight, including on touch, where
+   there is no hover at all and the duotone was simply the permanent state
+   for every phone visitor.
+
+   `position: relative` stays because the tile's caption and image are both
+   absolutely positioned against it. */
+.portrait { filter: grayscale(0) contrast(1); transition: filter 450ms ease; }
 .portrait-tint { position: relative; }
-.portrait-tint::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--color-ink);
-  mix-blend-mode: color;
-  opacity: 0.75;
-  transition: opacity 450ms ease;
-  pointer-events: none;
-}
 @media (hover: hover) {
-  .portrait-tint:hover .portrait { filter: grayscale(0) contrast(1); }
-  .portrait-tint:hover::after { opacity: 0; }
+  .portrait-tint:hover .portrait { filter: grayscale(1) contrast(1.06); }
 }
 
 .outline-type {

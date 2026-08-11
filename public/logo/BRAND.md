@@ -159,10 +159,17 @@ specific to reversed type.
 **Partner logos on the site stay in full colour. This was considered and
 rejected, not overlooked — please do not "fix" it.**
 
-The site desaturates photography on purpose. Speaker portraits render
-greyscale and return to colour on hover, and the hero mosaic is duotoned into
-the ink. That rule does real work: five headshots arriving from five sources
-at five different qualities look deliberate in one tone rather than mismatched.
+The site treats photography as ours to grade. The hero mosaic is duotoned
+into the ink, and speaker portraits carry their own colour and go black and
+white on hover.
+
+That last one is the reverse of how the wall started. Portraits were
+greyscale by default and lit up in colour when you pointed at them, which
+made seven headshots from seven sources on seven different backgrounds look
+deliberate rather than mismatched. Full colour gives that up, and the wall is
+noticeably less unified for it. What it buys is a face that reads as a face
+on first sight — including on touch, where there is no hover at all and the
+duotone was simply the permanent state for every phone visitor.
 
 The nine partner logos are exactly the same shape of problem — nine sources,
 three file formats, wildly different colour temperature — so the same
