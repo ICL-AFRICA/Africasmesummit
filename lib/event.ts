@@ -145,10 +145,20 @@ export const EARLY_BIRD_PRICE = `${TICKETS[0].currency} ${TICKETS[0].price}`;
 /**
  * Titles exactly as they appear on the printed poster.
  *
- * IMPORTANT — the `bio` lines below are drafts written only from each
- * speaker's stated role and organisation. Nothing here is researched
- * biography. Send each person their own line for approval before launch,
- * and replace with what they send back.
+ * `bio` is an array of paragraphs, not a string. Five of the seven are
+ * supplied biographies that run to two and three paragraphs, and joining
+ * them into one block would run twelve lines without a break.
+ *
+ * IMPORTANT — two bios are still drafts. Susan Ndungu and Henry Yatich were
+ * written only from a stated role and organisation; nothing in them is
+ * researched biography and neither may be presented as fact about a named
+ * individual. They are marked `draft: true` below. Send each person their
+ * own line for approval before launch and replace it with what comes back.
+ *
+ * The other five came from the speakers themselves via
+ * `Marketing/speaker-bios-cleaned.md` and are reproduced verbatim — do not
+ * copy-edit someone's approved biography, including the American spellings,
+ * without asking them first.
  */
 export const SPEAKERS = [
   {
@@ -157,7 +167,10 @@ export const SPEAKERS = [
     role: "Head of SME Banking",
     org: "NCBA Bank",
     topic: "Finance, Capital & Investment",
-    bio: "Susan leads SME banking at NCBA, one of the largest lenders to small and medium enterprises in Kenya. Her session covers what a bank is actually looking at when a small business applies for credit — and the parts of an application owners most often get wrong.",
+    draft: true,
+    bio: [
+      "Susan leads SME banking at NCBA, one of the largest lenders to small and medium enterprises in Kenya. Her session covers what a bank is actually looking at when a small business applies for credit — and the parts of an application owners most often get wrong.",
+    ],
   },
   {
     slug: "mike-mutungi",
@@ -165,7 +178,11 @@ export const SPEAKERS = [
     role: "Founder & CEO",
     org: "I Choose Life – Africa",
     topic: "Kenya Entrepreneurship Ecosystem",
-    bio: "Mike founded I Choose Life – Africa, which works across health, education and enterprise for young people aged 10 to 34, and convenes this summit. He speaks on connecting classrooms, universities and industry so that what young people learn leads somewhere.",
+    draft: false,
+    bio: [
+      "Eng. Mike Mutungi is Founder and CEO of I Choose Life – Africa (ICL) and Chairman of the Association of Startup and SME Enablers of Kenya (ASSEK). He holds a Bachelor of Science in Geospatial and Space Technology from the University of Nairobi and a Master of Divinity from NIST.",
+      "For over 20 years, Mike has designed programs spanning health, education, economic empowerment, leadership and governance, and institutional strengthening. He currently chairs the NGOs Network (HENNET) and sits on the boards of several organizations, including Planning Interiors and Jiinue Microcredit. He has overseen the development of strategic plans for programs and organizations across Africa, Europe, and the Middle East, and is the author of Kenya Mpya: Selecting and Holding Leaders to Account.",
+    ],
   },
   {
     slug: "michael-maddy",
@@ -173,7 +190,12 @@ export const SPEAKERS = [
     role: "CRO and Co-Founder",
     org: "Fleet Planner",
     topic: "Market access & Cross-border trade",
-    bio: "Michael co-founded Fleet Planner and leads its revenue function. His session is on building a commercial operation that can sell beyond its home market — pricing, channels, and the decisions that make cross-border trade viable for a small team.",
+    draft: false,
+    bio: [
+      "Michael Maddy is Chief Revenue Officer and Co-Founder of Fleet Planner, a Kenya-based logistics technology company using AI to transform fleet management and supply chain operations across East Africa. The platform improves fleet efficiency, real-time logistics visibility, and operational optimization. In his role, Michael leads revenue growth, market expansion, and customer adoption across a diverse portfolio of logistics and transport clients.",
+      "He brings cross-industry experience spanning fintech, healthtech, mortgage banking, and logistics, and has driven business development, strategic partnerships, and market-entry initiatives with global organizations including Wells Fargo, Boeing, and Warner Bros. Discovery, with a focus on systems integration and operational efficiency.",
+      "Michael is recognized for his expertise in technology commercialization, revenue strategy, and logistics innovation. He holds a Master's degree and a Bachelor of Science in Education, and serves as a lecturer at Africa International University (AIU).",
+    ],
   },
   {
     slug: "henry-yatich",
@@ -181,7 +203,10 @@ export const SPEAKERS = [
     role: "Principal, Graduate Studies",
     org: "Mount Kenya University",
     topic: "Industry and Academia collaboration",
-    bio: "Henry leads graduate studies at Mount Kenya University. He speaks on how a business puts a university research team on a live problem, what the university needs in return, and why most industry–academia partnerships fail before they start.",
+    draft: true,
+    bio: [
+      "Henry leads graduate studies at Mount Kenya University. He speaks on how a business puts a university research team on a live problem, what the university needs in return, and why most industry–academia partnerships fail before they start.",
+    ],
   },
   {
     slug: "victor-sila",
@@ -189,9 +214,54 @@ export const SPEAKERS = [
     role: "Founder",
     org: "JuaPath",
     topic: "Adopting AI and Technology",
-    bio: "Victor built JuaPath, a voice-first AI tutor now running in Kenyan secondary schools. His session is a practical read on adopting AI in a small business this year — what is worth the money, what is not, and what it takes to make any of it stick.",
+    draft: false,
+    bio: [
+      "Victor Sila is a Kenyan-born, San Francisco-based product builder and Founder of JuaPath, a voice-first, kid-safe AI learning platform for K–12 students. He has helped deploy AI shopping assistance at scale — at Amazon, he worked on Rufus, an AI shopping assistant that reached over 300 million customers and drove nearly $12 billion in incremental annualized sales. He currently leads AI-powered search experiences at Walmart, including the Sparky assistant.",
+      "In Kenya, JuaPath is running a live pilot across six schools with 600 Grade 12 students, focused on math, reading, and science exam readiness, built to function in low-connectivity environments. Victor believes the fastest path to AI-powered jobs is AI-powered skills, and brings a practical, on-the-ground perspective to help MSMEs and Kenya build the talent, trust, and economic value a strong national AI framework makes possible.",
+    ],
+  },
+  {
+    slug: "hilda-muteshi",
+    name: "Dr. Hilda Muteshi",
+    role: "Design & Inclusive Business Modeling Expert",
+    org: "SUS-AFRIC",
+    topic: "Market access & Cross-border trade",
+    draft: false,
+    bio: [
+      "Dr. Hilda Muteshi is an expert in design and inclusive business modeling, holding a PhD in Business Administration (Marketing) and an MBA in Marketing. With more than 15 years of experience across the private sector and development, including 10 years in cross-sector research and consultancy, she focuses on human-centered and behavioral design, creating inclusive business models and scalable solutions that improve livelihoods, create jobs, and increase income for the Base of the Pyramid, while empowering youth and women economically.",
+      "Dr. Muteshi has led projects funded by GIZ, UNHCR, the EU, FCDO, FAO, BMZ, and GFFO, building the capacity of local structures to improve community resilience. She currently serves as lead consultant for lean innovation and entrepreneurship on the Somali Women Market Access Challenge, and previously worked as a public innovation consultant for the GovTech Kenya Innovation Challenge. She is committed to applied research, using co-creation and evidence-based, user-centric design thinking to build sustainable, shared-prosperity models across Africa.",
+    ],
+  },
+  {
+    slug: "salome-ayugi",
+    name: "Salome Ayugi",
+    role: "Associate Director, Special Projects & Kenya Operations",
+    org: "Sinapis",
+    topic: "Kenya Entrepreneurship Ecosystem",
+    draft: false,
+    bio: [
+      "Salome Ayugi serves as Associate Director of Special Projects and Kenya Operations at Sinapis, where she leads strategic partnerships, manages multi-country initiatives, and oversees operations across Kenya. She brings over 9 years of experience supporting startup growth, investment readiness, and business acceleration programs, including her prior role as Sinapis's Kenya Country Manager, where she managed large-scale entrepreneurship programs and drove regional strategy.",
+      "Salome holds a Bachelor's degree in Communication and Media Technology from Maseno University, with project management and leadership training from the Kenya Institute of Project Management and Strathmore Business School. She contributes to the startup ecosystem through mentorship, governance, and leadership, currently serving as Board Vice Chairperson of the Association of Startup and SME Enablers of Kenya (ASSEK).",
+    ],
   },
 ] as const;
+
+/**
+ * The line-up count, written out, for the prose that counts the speakers.
+ *
+ * Three headlines say how many people are on the programme. Hardcoding the
+ * word is how the copy ends up claiming five when the array holds seven —
+ * the roster has already changed twice. Derive it and the sentence cannot
+ * drift from the data.
+ */
+const COUNT_WORDS = [
+  "zero", "one", "two", "three", "four", "five", "six",
+  "seven", "eight", "nine", "ten", "eleven", "twelve",
+] as const;
+
+export const SPEAKER_COUNT = COUNT_WORDS[SPEAKERS.length] ?? String(SPEAKERS.length);
+export const SPEAKER_COUNT_CAP =
+  SPEAKER_COUNT.charAt(0).toUpperCase() + SPEAKER_COUNT.slice(1);
 
 export const TRACKS = [
   { n: "01", name: "Finance, Capital & Investment", line: "Where the money actually is, and what lenders need to see from you." },
@@ -292,9 +362,14 @@ export const PARTNERS = [
  * image appears on every build and review.
  */
 export const PHOTOS = {
-  /* Speaker headshots are extracted from the printed flyer at 800x1000.
-     They are adequate but not ideal — ask each speaker for the original
-     file and drop it in with the same name for a sharper result.
+  /* Speaker headshots, 800x1000, INDEXED IN THE SAME ORDER AS `SPEAKERS`.
+     Adding a speaker without adding a photo at the matching index puts the
+     wrong face under a person's name, so change the two together.
+
+     1-5 are extracted from the printed flyer. They are adequate but not
+     ideal — ask each speaker for the original file and drop it in with the
+     same name for a sharper result. 6 and 7 are supplied originals, cropped
+     to 4:5 by `scripts/build-speaker-headshots.py`.
 
      hero.jpg and floor.jpg are still placeholders. Replace with photography
      from last year's conference — same filenames, no code change needed.
@@ -310,6 +385,8 @@ export const PHOTOS = {
     "/img/speaker-3.jpg",
     "/img/speaker-4.jpg",
     "/img/speaker-5.jpg",
+    "/img/speaker-6.jpg",
+    "/img/speaker-7.jpg",
   ],
   floor: "/img/floor.jpg",
 } as const;

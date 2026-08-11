@@ -52,9 +52,11 @@ it — do not fix it in passing.
 
 ## Outstanding — needs someone other than Claude
 
-- **Speaker bios in `lib/event.ts` are drafts.** Each was written from that
-  person's job title and organisation only. Nothing in them is researched
-  biography and nothing may be presented as fact about a named individual.
-  Every speaker must approve their own line before launch.
+- **Two speaker bios in `lib/event.ts` are still drafts** — Susan Ndungu and
+  Henry Yatich, both marked `draft: true`. Each was written from that person's
+  job title and organisation only. Nothing in them is researched biography and
+  nothing may be presented as fact about a named individual. Both must approve
+  their own line before launch. The other five are supplied biographies,
+  reproduced verbatim from `Marketing/speaker-bios-cleaned.md`.
 - **Sponsorship tier inclusions are drafts.** Names and prices are real.
 - **No Standard Delegate Pass exists on TikoHub yet** — see `SETUP.md`.

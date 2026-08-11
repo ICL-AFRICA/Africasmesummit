@@ -159,7 +159,7 @@ retina screen. Ask both universities for an SVG or a large PNG.
 
 The homepage carries the speaker wall but no biographies. That is
 deliberate: every paragraph between the hero and the ticket block delays
-the decision, and five bios would add roughly a screen and a half. Anyone
+the decision, and seven bios would add several screens. Anyone
 who wants depth clicks through; anyone who wants a ticket is not slowed
 down.
 
@@ -176,13 +176,33 @@ because of the space available at 390px.
 
 ## Speaker biographies — read before launch
 
-The `bio` field on each speaker in `lib/event.ts` is a **draft written only
-from that person's stated role and organisation**. Nothing in them is
-researched biography and nothing should be treated as fact about a named
-individual.
+`bio` is an **array of paragraphs**, and each speaker carries a `draft` flag.
 
-Send each speaker their own line and replace it with what they send back.
-This is the one item in the repo that must not ship unreviewed.
+Five of the seven are supplied biographies, reproduced verbatim from
+`Marketing/speaker-bios-cleaned.md` and marked `draft: false`. They are
+someone's own words about themselves — do not copy-edit them, including the
+American spellings, without asking that person first.
+
+Two are still marked **`draft: true`**: Susan Ndungu and Henry Yatich. Both
+were **written only from that person's stated role and organisation**.
+Nothing in them is researched biography and nothing should be treated as
+fact about a named individual. Send each of those two their own line and
+replace it with what they send back. This is the one item in the repo that
+must not ship unreviewed.
+
+## Speaker photographs
+
+`PHOTOS.speakers` in `lib/event.ts` is **positional — index N is `SPEAKERS[N]`**.
+Adding a speaker without adding a photo at the matching index puts the wrong
+face under a person's name, so the two always change together.
+
+All seven are 800x1000. `speaker-1` to `speaker-5` are flyer extracts and are
+softer than they should be; ask those five for their originals. `speaker-6`
+and `speaker-7` are supplied originals, cropped to 4:5 by
+`scripts/build-speaker-headshots.py` — crop boxes are hand-set per photograph
+and are exactly 800x1000, so neither image is resampled. The sources live
+outside the repo; the script prints what it did and refuses a crop that falls
+outside the source.
 
 ## Site map
 

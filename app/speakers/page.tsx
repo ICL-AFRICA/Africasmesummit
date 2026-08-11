@@ -4,7 +4,7 @@ import Btn from "@/components/Btn";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA } from "@/lib/event";
+import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, SPEAKER_COUNT_CAP } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Speakers — ${EVENT.name} ${EVENT.year}`,
@@ -31,8 +31,8 @@ export default function Speakers() {
               The people you came to meet
             </h1>
             <p className="lede mt-7 text-white max-w-2xl text-[18px]">
-              Five sessions, one day, and enough time between them to actually
-              get to the person who ran the one you needed.
+              {SPEAKER_COUNT_CAP} speakers, one day, and enough time between
+              the sessions to actually get to the person you came for.
             </p>
           </div>
         </section>
@@ -56,9 +56,15 @@ export default function Speakers() {
                   <p className="text-[16px] text-white mt-3">{s.role}</p>
                   <p className="text-[16px] text-white font-medium">{s.org}</p>
 
-                  <p className="lede mt-8 text-[17px] sm:text-[18px] text-white max-w-2xl">
-                    {s.bio}
-                  </p>
+                  {/* Supplied bios run to three paragraphs; the two drafts
+                      are a single one. Same markup handles both. */}
+                  <div className="mt-8 max-w-2xl space-y-5">
+                    {s.bio.map((para, n) => (
+                      <p key={n} className="lede text-[17px] sm:text-[18px] text-white">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
 
                   <div className="mt-8 pt-6 border-t border-line max-w-2xl">
                     <p className="eyebrow text-white mb-2">Speaking on</p>
@@ -74,7 +80,7 @@ export default function Speakers() {
         <section>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24 text-center">
             <h2 className="h-lg text-white text-3xl sm:text-5xl max-w-2xl mx-auto">
-              All five, one room, thirty September.
+              All {SPEAKER_COUNT}, one room, thirty September.
             </h2>
             <p className="lede mt-5 text-white">
               {EVENT.venue}, University of Nairobi

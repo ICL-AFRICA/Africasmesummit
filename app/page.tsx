@@ -6,7 +6,7 @@ import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA } from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -87,10 +87,15 @@ export default function Page() {
             <p className="eyebrow text-white mb-5">On stage</p>
             <h2 className="h-lg text-white text-4xl sm:text-5xl">The people you came to meet</h2>
             <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
-              Five names, one room, and a whole day to get to them.
+              {SPEAKER_COUNT_CAP} names, one room, and a whole day to get to them.
             </p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3">
+          {/* Four across at lg, not three: seven speakers plus the closing
+              tile is eight, which fills two rows exactly. At three it left a
+              hole in the last row, and the tiles are edge to edge with no
+              gaps, so a hole shows as a bare ink rectangle. Adding or
+              removing a speaker means checking this number again. */}
+          <div className="grid grid-cols-2 lg:grid-cols-4">
             {SPEAKERS.map((s, i) => (
               <SpeakerCard
                 key={s.slug}
