@@ -409,13 +409,13 @@ export const PHOTOS = {
      same name for a sharper result. 6 and 7 are supplied originals, cropped
      to 4:5 by `scripts/build-speaker-headshots.py`.
 
-     hero.jpg and floor.jpg are still placeholders. Replace with photography
-     from last year's conference — same filenames, no code change needed.
+     floor.jpg is still a placeholder — it sits behind the closing section at
+     25% opacity. Replace it with photography from last year's conference
+     under the same filename and no code changes.
 
-     For quick Unsplash comps while you wait for the real photos, swap any
-     value for a seeded Picsum URL, e.g.
-       hero: "https://picsum.photos/seed/asm-hero/2000/1125"                */
-  hero: "/img/hero.jpg",
+     For a quick comp while you wait for the real photo, swap the value for a
+     seeded Picsum URL, e.g.
+       floor: "https://picsum.photos/seed/asm-floor/1600/900"                */
   heroVideo: "",           // drop last year's edit here — <video> takes over
   speakers: [
     "/img/speaker-1.jpg",
