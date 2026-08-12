@@ -222,8 +222,7 @@ export const SPEAKERS = [
     topic: "Industry and Academia collaboration",
     draft: false,
     bio: [
-      "Dr. Henry Yatich is Principal of the College of Graduate Studies and Research at Mount Kenya University and a Senior Management Science Research Fellow at its School of Business and Economics. His research focuses on inclusive employability, entrepreneurship, and innovation, with an emphasis on bridging university-business linkages and knowledge transfer in Kenya. He brings extensive experience in quantitative and qualitative research, particularly in evaluating business ecosystems and start-up innovation, and has presented at international forums including the British Council's Going Global and the Academy of Management.",
-      "He currently leads Kenya's coordination of the ACCESS project (2020–2029), advancing entrepreneurship training and industry partnerships through design thinking, and serves as Co-PI on the Africa Meets Bavaria project (2024–2026) with UnternehmerTUM, strengthening innovation hubs across Africa. He has authored several book chapters on graduate employability and university-industry service learning.",
+      "Dr. Henry Yatich is a senior research fellow and the Principal, College of Graduate Studies and Research at Mount Kenya University specializing in research governance and innovation management. He is a Certified Innovation Manager with over 15 years of experience in leading high-impact donor-funded projects, with focus on university-business linkages, employability, and SME growth. He has been recognized for Improving the quality of business education by Association to Advance Collegiate Schools of Business (AACSB) and awarded the Leading EU-AU Research and Innovation Success Story-2024 by Strengthening the Europe-Africa Digital Ecosystem (SEADE) under the ACCESS project 2020-2029.",
     ],
   },
   {
