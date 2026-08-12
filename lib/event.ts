@@ -280,6 +280,27 @@ export const SPEAKER_COUNT = COUNT_WORDS[SPEAKERS.length] ?? String(SPEAKERS.len
 export const SPEAKER_COUNT_CAP =
   SPEAKER_COUNT.charAt(0).toUpperCase() + SPEAKER_COUNT.slice(1);
 
+const countWord = (n: number): string => COUNT_WORDS[n] ?? String(n);
+const countWordCap = (n: number): string => {
+  const w = countWord(n);
+  return w.charAt(0).toUpperCase() + w.slice(1);
+};
+
+/**
+ * Delegate passes included with each exhibition booth.
+ *
+ * Declared here, above both the places that talk about it, because this is
+ * precisely where the site contradicted itself: the FAQ promised every
+ * exhibitor two passes while the Corporate booth promised four, so anyone
+ * who paid KES 50,000 and then read the FAQ was told they got half of what
+ * they had bought.
+ *
+ * The booth bullets and the FAQ answer both derive from these numbers now.
+ * Change one here and both sentences follow. Do not type "two" or "four"
+ * into either place again.
+ */
+export const BOOTH_PASSES = { startup: 2, corporate: 4 } as const;
+
 export const TRACKS = [
   { n: "01", name: "Finance, Capital & Investment", line: "Where the money actually is, and what lenders need to see from you." },
   { n: "02", name: "Market access & Cross-border trade", line: "Getting your product past the county line and across the border." },
@@ -336,7 +357,7 @@ export const FAQ = [
   { q: "Is lunch included?", a: "Yes. Every ticket includes lunch and refreshments through the day." },
   { q: "Can I send a colleague instead?", a: "Yes. Tickets are transferable up to 48 hours before the summit — send us both names on the contact page." },
   { q: "Is there parking at the University of Nairobi?", a: "Parking is available on the Main Campus. Arrive by 08:00, as spaces fill before the opening keynote." },
-  { q: "Do exhibitors need a separate ticket?", a: "The exhibitor package includes two delegate passes. Additional team members need standard tickets." },
+  { q: "Do exhibitors need a separate ticket?", a: `Exhibition booths include delegate passes — ${countWord(BOOTH_PASSES.startup)} with the Startup booth and ${countWord(BOOTH_PASSES.corporate)} with the Corporate booth. Additional team members need standard tickets.` },
   { q: "Will I get a certificate?", a: "Yes. Certificates of participation are issued to all delegates at the close." },
   { q: "How do I submit a paper?", a: "Submit an abstract on the call for papers page — it lists the tracks and the review timeline." },
   { q: "Is there a group rate?", a: "Yes, for four or more from the same organisation. Ask on the contact page and we will send you a code." },
@@ -510,7 +531,7 @@ export const STAND_OPTIONS = [
     includes: [
       "Booth for the full day",
       "Your products on the lunchtime gallery walk",
-      "Two delegate passes",
+      `${countWordCap(BOOTH_PASSES.startup)} delegate passes`,
       "Listed in the delegate pack",
     ],
   },
@@ -520,7 +541,7 @@ export const STAND_OPTIONS = [
     includes: [
       "Larger booth on the main circulation route",
       "Your products on the lunchtime gallery walk",
-      "Four delegate passes",
+      `${countWordCap(BOOTH_PASSES.corporate)} delegate passes`,
       "Listed in the delegate pack and on the website",
     ],
   },

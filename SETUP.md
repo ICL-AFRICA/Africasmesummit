@@ -185,9 +185,11 @@ one has more search history — so it will outrank you for your own name.
 - [ ] **Exhibition booth inclusions confirmed.** Same problem as the
       sponsorship tiers and not previously flagged: `STAND_OPTIONS` prices
       match TikoHub, the bullets are not from any rate card.
-- [ ] **How many delegate passes an exhibitor gets.** The FAQ says the
-      exhibitor package includes two; the Corporate booth says four. One of
-      them is wrong.
+- [x] **How many delegate passes an exhibitor gets.** Resolved: two with the
+      Startup booth, four with the Corporate booth. The FAQ used to promise
+      every exhibitor two. Both the booth bullets and the FAQ answer now
+      derive from `BOOTH_PASSES` in `lib/event.ts`, so they cannot disagree
+      again.
 - [ ] **Privacy page reviewed by ICL.** It makes claims about data handling
       that need to be true.
 
