@@ -169,13 +169,25 @@ one has more search history — so it will outrank you for your own name.
       site both promise KES 6,800 from 1 September. The only 6,800 item on
       TikoHub is the Papers Call ticket, a different product. As things
       stand, anyone arriving on 1 September has nothing to buy.
-- [ ] **Speaker bios approved.** Each `bio` in `lib/event.ts` was drafted
-      from that person's job title and organisation only. Nothing in them is
-      researched biography. Send each speaker their own line and replace it
-      with what comes back.
+- [x] **Speaker bios approved.** Done. All seven `bio` entries in
+      `lib/event.ts` are now the speakers' own words, supplied via
+      `Marketing/speaker-bios-cleaned.md` and marked `draft: false`. A
+      speaker added later with a bio drafted from a job title must be marked
+      `draft: true` and approved before launch.
 - [ ] **Sponsorship inclusions confirmed with Mike.** Tier names and prices
-      come from TikoHub and are correct; what each tier *includes* is a
-      draft. Someone paying KES 1,000,000 will expect every line.
+      are verified against the TikoHub listing and correct; what each tier
+      *includes* is a draft. The TikoHub listing carries no inclusions for
+      any package, so it cannot settle them — the sponsorship deck is what
+      is needed. `/partner` marks the bullets indicative via
+      `SPONSOR_INCLUDES_NOTE` in the meantime; delete that note once the
+      real inclusions land. Someone paying KES 1,000,000 will expect every
+      line.
+- [ ] **Exhibition booth inclusions confirmed.** Same problem as the
+      sponsorship tiers and not previously flagged: `STAND_OPTIONS` prices
+      match TikoHub, the bullets are not from any rate card.
+- [ ] **How many delegate passes an exhibitor gets.** The FAQ says the
+      exhibitor package includes two; the Corporate booth says four. One of
+      them is wrong.
 - [ ] **Privacy page reviewed by ICL.** It makes claims about data handling
       that need to be true.
 
@@ -226,9 +238,11 @@ one has more search history — so it will outrank you for your own name.
 
 **Not blocking:**
 
-- [ ] Sharper speaker headshots. The current ones were extracted from the
-      printed flyer: adequate, not sharp. Ask each speaker for the original
-      and drop it into `public/img/` with the same filename.
+- [ ] Sharper speaker headshots for five of the seven. `speaker-1` to
+      `speaker-5` are extracted from the printed flyer: adequate, not sharp.
+      Ask those five for the original and drop it into `public/img/` with the
+      same filename. `speaker-6` and `speaker-7` are supplied originals and
+      need nothing.
 - [ ] Photography from a previous ICL conference to replace the stock hero
       images in `public/img/hero/`
 - [ ] Confirmed agenda — `AGENDA` is marked indicative on the page
