@@ -524,6 +524,79 @@ export const SPONSOR_TIERS = [
 export const SPONSOR_INCLUDES_NOTE =
   "Tiers, prices and availability are confirmed. The inclusions listed under each tier are indicative — we agree the final package with you in writing before anything is committed.";
 
+/**
+ * Press release, issued 12 August 2026.
+ *
+ * DO NOT TEMPLATE LIVE VALUES INTO THIS. Everywhere else on the site, a
+ * price or a date must derive from the constants above — that rule exists so
+ * the site cannot contradict itself. Here it is inverted: a press release is
+ * a dated document that went out to journalists. If `EARLY_BIRD_LABEL` were
+ * interpolated into the body, the release would silently rewrite itself on
+ * 1 September and no longer match the copy anyone was sent.
+ *
+ * So the prose is frozen and the numbers are literal, on purpose.
+ * `PRESS_RELEASE.checked` records what was true when it was written, so a
+ * reader can see whether the release has aged.
+ *
+ * Frozen from the moment it is sent, not from the moment it is written. Four
+ * details were corrected against `SPEAKERS` and `EVENT` before issue: Susan
+ * Ndungu's employer, Henry Yatich's title, the venue's full name, and the
+ * omission of the convener from the speaker list. Once journalists have the
+ * text, corrections mean a second release with its own date — editing a
+ * quote someone has already filed is how a newsroom stops trusting you.
+ */
+export const PRESS_RELEASE = {
+  kicker: "For immediate release",
+  dateline: "NAIROBI, KENYA — August 12, 2026",
+  headline:
+    "Africa SME Summit Will Bring Capital, Academia, and Enterprise Into the Same Room This September",
+  standfirst:
+    "Kenya has 7.4 million small businesses. On September 30, the people who can help them grow will meet them halfway.",
+  /* What the body asserts, as at the issue date. Check against the live
+     constants before sending; do not rewrite the body to match. */
+  checked: { earlyBird: "5,800", standard: "6,800", earlyBirdEnds: "August 31, 2026" },
+  body: [
+    "The Africa SME Summit, a new one-day convening for Kenya's small business economy, will take place September 30, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. The summit is convened by I Choose Life – Africa in partnership with the University of Nairobi, and brings investors, banks, universities, and government together with the enterprises they exist to serve — for one day, in one room.",
+    "Kenya is home to 7.4 million micro, small, and medium enterprises. Most of them operate informally, cut off from capital, from markets beyond their own county, and from the research being done about them at universities down the road. The Africa SME Summit was built to close that distance.",
+    "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market access and cross-border trade, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
+    "Confirmed speakers include Susan Ndungu, Head of SME Banking at NCBA Bank Kenya; Michael Maddy, CRO and Co-Founder of Fleet Planner; Dr. Henry K. Yatich, Principal of the College of Graduate Studies and Research at Mount Kenya University; Dr. Hilda Muteshi of SUS-AFRIC; Salome Ayugi, Associate Director at Sinapis; Victor Sila, founder of the AI learning platform JuaPath, who leads the summit's AI and Technology track; and Eng. Mike Mutungi, who convenes the summit and speaks on strengthening Kenya's entrepreneurship ecosystem.",
+    "Attendees will leave with more than information: mentor and investor matching within their track, templates and tools they can put to use immediately, and access to a papers call for those doing original research on the sector. The summit's institutional partners include the University of Nairobi, Mount Kenya University, Zetech University, and the Association of Startup and SME Enablers of Kenya (ASSEK), alongside county and international partners.",
+  ],
+  quotes: [
+    {
+      text: "We kept seeing the same gap from every direction. A bank with capital to lend and no pipeline of ready businesses. A university with research no one in industry has seen. A business owner with a good idea and no way into either room. This summit puts all four in one room, on purpose, for one day.",
+      who: "Eng. Mike Mutungi",
+      role: "Founder and CEO of I Choose Life – Africa, and convener of the summit",
+    },
+    {
+      text: "Every SME owner I talk to has already heard that AI matters. What they don't have is fifteen minutes with someone who's actually shipped it. This track isn't theory. It's what to use, what to ignore, and what to do Monday morning.",
+      who: "Victor Sila",
+      role: "Founder of JuaPath, previously building AI shopping systems at Amazon and Walmart",
+    },
+  ],
+  tickets:
+    "Early-bird tickets are KES 5,800 through August 31, 2026, rising to KES 6,800 from September 1. Registration is open now at africasmesummit.com.",
+  about: [
+    {
+      h: "About Africa SME Summit",
+      p: "The Africa SME Summit is a one-day convening in Nairobi, Kenya, bringing together small and medium enterprises, investors, financial institutions, universities, and government to close the gap between Kenya's 7.4 million SMEs and the capital, markets, and research that can help them grow. The inaugural summit takes place September 30, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. Learn more at africasmesummit.com.",
+    },
+    {
+      h: "About I Choose Life – Africa",
+      p: "I Choose Life – Africa (ICL) is a Kenyan organization working across health, education, and economic empowerment for young people. Founded and led by Eng. Mike Mutungi, ICL convenes the Africa SME Summit in partnership with the University of Nairobi.",
+    },
+  ],
+} as const;
+
+/** Media contact. The phone is EVENT.phone[0] in international form. */
+export const PRESS_CONTACT = {
+  name: "Ian Muiga Wangari",
+  org: "I Choose Life – Africa",
+  email: "ian.wangari@ichooselife.or.ke",
+  phone: "(+254) 717 605 151",
+  address: "Nine Planets Apartments HSE No. S3, Nairobi",
+} as const;
+
 /** Exhibition booths, priced as listed on TikoHub. */
 export const STAND_OPTIONS = [
   {

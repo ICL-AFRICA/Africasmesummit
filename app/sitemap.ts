@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/exhibit`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/papers`,   lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/contact`,  lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE}/press`,    lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/privacy`,  lastModified: now, changeFrequency: "yearly",  priority: 0.1 },
   ];
 }

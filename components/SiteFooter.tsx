@@ -39,7 +39,7 @@ export default function SiteFooter() {
           <ul className="space-y-1.5">
             {[["Become a partner", "/partner"], ["Book a stand", "/exhibit"],
               ["Call for papers", "/papers"], ["Propose a session", "/contact"],
-              ["Group bookings", "/contact"]].map(([l, h]) => (
+              ["Group bookings", "/contact"], ["Press", "/press"]].map(([l, h]) => (
               <li key={l}><Link href={h} className="hover:text-white transition-colors">{l}</Link></li>
             ))}
           </ul>
