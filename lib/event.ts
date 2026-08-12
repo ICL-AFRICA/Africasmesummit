@@ -391,13 +391,14 @@ export const PARTNERS = [
 ] as const;
 
 /**
- * Placeholder photography.
+ * Site photography.
  *
- * Lorem Picsum serves real Unsplash photographs from a stable, seeded URL,
- * so the layout can be reviewed with actual images rather than grey boxes.
- * Every one of these is a placeholder — replace with photography from last
- * year's conference before launch. Seeds are deterministic, so the same
- * image appears on every build and review.
+ * Every key here is rendered by something. Do not add one speculatively —
+ * `hero` and `heroVideo` both sat here unused, the second promising a video
+ * hero that was never built, and the instructions attached to them described
+ * work that would have changed nothing on the page.
+ *
+ * The seven headshots are real. `floor` is the one placeholder left.
  */
 export const PHOTOS = {
   /* Speaker headshots, 800x1000, INDEXED IN THE SAME ORDER AS `SPEAKERS`.
@@ -416,7 +417,6 @@ export const PHOTOS = {
      For a quick comp while you wait for the real photo, swap the value for a
      seeded Picsum URL, e.g.
        floor: "https://picsum.photos/seed/asm-floor/1600/900"                */
-  heroVideo: "",           // drop last year's edit here — <video> takes over
   speakers: [
     "/img/speaker-1.jpg",
     "/img/speaker-2.jpg",
