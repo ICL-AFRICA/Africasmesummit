@@ -85,6 +85,21 @@ from it.
 - [ ] Photos from a previous ICL conference (social proof section)
 - [ ] 301 redirect from ichooselife.global/sustainable-business-summit
 
+## Working documents
+
+Drafts that need a person rather than a commit. They live in the repo so the
+open questions travel with the code instead of sitting in someone's inbox.
+
+- `docs/email-to-mike.md` — the five open items needing Mike's decision:
+  the Standard Delegate Pass on TikoHub, the dead `info@` mailbox, the
+  sponsorship and booth inclusions, and original headshots for five speakers.
+- `docs/privacy-review-notes.md` — a technical audit of what the site
+  actually does, set against what `/privacy` claims, for ICL to review and
+  sign off. Includes eight questions only ICL can answer.
+- `docs/logo.md` — how the mark is built.
+
+`SETUP.md` holds the launch checklist these feed.
+
 ## Design notes
 
 Palette derives from the printed poster so web and print read as one
