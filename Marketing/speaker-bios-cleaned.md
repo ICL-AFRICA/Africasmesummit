@@ -44,3 +44,21 @@ Dr. Muteshi has led projects funded by GIZ, UNHCR, the EU, FCDO, FAO, BMZ, and G
 Salome Ayugi serves as Associate Director of Special Projects and Kenya Operations at Sinapis, where she leads strategic partnerships, manages multi-country initiatives, and oversees operations across Kenya. She brings over 9 years of experience supporting startup growth, investment readiness, and business acceleration programs, including her prior role as Sinapis's Kenya Country Manager, where she managed large-scale entrepreneurship programs and drove regional strategy.
 
 Salome holds a Bachelor's degree in Communication and Media Technology from Maseno University, with project management and leadership training from the Kenya Institute of Project Management and Strathmore Business School. She contributes to the startup ecosystem through mentorship, governance, and leadership, currently serving as Board Vice Chairperson of the Association of Startup and SME Enablers of Kenya (ASSEK).
+
+---
+
+## Susan Ndungu
+**Head of SME Banking, NCBA Bank Kenya**
+
+Susan Ndungu is Head of SME Banking at NCBA Bank Kenya, bringing over 20 years of banking experience with a focus on solutioning for micro, small, medium, and corporate businesses.
+
+She leads the development and execution of strategies to empower small and medium-sized enterprises across Kenya, with an approach centered on sustainable growth, tailored financial solutions, and a deep understanding of local market dynamics to drive resilience within the SME sector. Susan currently oversees 100 branches and more than 100 branch relationship managers who champion the SME banking agenda across the network.
+
+---
+
+## Dr. Henry K. Yatich
+**Principal, College of Graduate Studies and Research, Mount Kenya University**
+
+Dr. Henry Yatich is Principal of the College of Graduate Studies and Research at Mount Kenya University and a Senior Management Science Research Fellow at its School of Business and Economics. His research focuses on inclusive employability, entrepreneurship, and innovation, with an emphasis on bridging university-business linkages and knowledge transfer in Kenya. He brings extensive experience in quantitative and qualitative research, particularly in evaluating business ecosystems and start-up innovation, and has presented at international forums including the British Council's Going Global and the Academy of Management.
+
+He currently leads Kenya's coordination of the ACCESS project (2020–2029), advancing entrepreneurship training and industry partnerships through design thinking, and serves as Co-PI on the Africa Meets Bavaria project (2024–2026) with UnternehmerTUM, strengthening innovation hubs across Africa. He has authored several book chapters on graduate employability and university-industry service learning.

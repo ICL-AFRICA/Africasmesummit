@@ -164,27 +164,28 @@ export const EARLY_BIRD_PRICE = `${TICKETS[0].currency} ${TICKETS[0].price}`;
  * supplied biographies that run to two and three paragraphs, and joining
  * them into one block would run twelve lines without a break.
  *
- * IMPORTANT — two bios are still drafts. Susan Ndungu and Henry Yatich were
- * written only from a stated role and organisation; nothing in them is
- * researched biography and neither may be presented as fact about a named
- * individual. They are marked `draft: true` below. Send each person their
- * own line for approval before launch and replace it with what comes back.
- *
- * The other five came from the speakers themselves via
- * `Marketing/speaker-bios-cleaned.md` and are reproduced verbatim — do not
+ * All seven bios now come from the speakers themselves, via
+ * `Marketing/speaker-bios-cleaned.md`, and are reproduced verbatim — do not
  * copy-edit someone's approved biography, including the American spellings,
  * without asking them first.
+ *
+ * `draft` stays even though every entry is now `false`. It is the flag that
+ * says whether a line is that person's own words or something written for
+ * them, and a speaker added later with a bio drafted from a job title must
+ * be marked `draft: true` and approved before launch. Nothing published may
+ * assert biography about a named individual that they have not signed off.
  */
 export const SPEAKERS = [
   {
     slug: "susan-ndungu",
     name: "Ms. Susan Ndungu",
     role: "Head of SME Banking",
-    org: "NCBA Bank",
+    org: "NCBA Bank Kenya",
     topic: "Finance, Capital & Investment",
-    draft: true,
+    draft: false,
     bio: [
-      "Susan leads SME banking at NCBA, one of the largest lenders to small and medium enterprises in Kenya. Her session covers what a bank is actually looking at when a small business applies for credit — and the parts of an application owners most often get wrong.",
+      "Susan Ndungu is Head of SME Banking at NCBA Bank Kenya, bringing over 20 years of banking experience with a focus on solutioning for micro, small, medium, and corporate businesses.",
+      "She leads the development and execution of strategies to empower small and medium-sized enterprises across Kenya, with an approach centered on sustainable growth, tailored financial solutions, and a deep understanding of local market dynamics to drive resilience within the SME sector. Susan currently oversees 100 branches and more than 100 branch relationship managers who champion the SME banking agenda across the network.",
     ],
   },
   {
@@ -215,12 +216,13 @@ export const SPEAKERS = [
   {
     slug: "henry-yatich",
     name: "Dr. Henry K. Yatich",
-    role: "Principal, Graduate Studies",
+    role: "Principal, College of Graduate Studies and Research",
     org: "Mount Kenya University",
     topic: "Industry and Academia collaboration",
-    draft: true,
+    draft: false,
     bio: [
-      "Henry leads graduate studies at Mount Kenya University. He speaks on how a business puts a university research team on a live problem, what the university needs in return, and why most industry–academia partnerships fail before they start.",
+      "Dr. Henry Yatich is Principal of the College of Graduate Studies and Research at Mount Kenya University and a Senior Management Science Research Fellow at its School of Business and Economics. His research focuses on inclusive employability, entrepreneurship, and innovation, with an emphasis on bridging university-business linkages and knowledge transfer in Kenya. He brings extensive experience in quantitative and qualitative research, particularly in evaluating business ecosystems and start-up innovation, and has presented at international forums including the British Council's Going Global and the Academy of Management.",
+      "He currently leads Kenya's coordination of the ACCESS project (2020–2029), advancing entrepreneurship training and industry partnerships through design thinking, and serves as Co-PI on the Africa Meets Bavaria project (2024–2026) with UnternehmerTUM, strengthening innovation hubs across Africa. He has authored several book chapters on graduate employability and university-industry service learning.",
     ],
   },
   {

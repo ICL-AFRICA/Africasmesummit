@@ -178,17 +178,17 @@ because of the space available at 390px.
 
 `bio` is an **array of paragraphs**, and each speaker carries a `draft` flag.
 
-Five of the seven are supplied biographies, reproduced verbatim from
+All seven are supplied biographies, reproduced verbatim from
 `Marketing/speaker-bios-cleaned.md` and marked `draft: false`. They are
 someone's own words about themselves — do not copy-edit them, including the
 American spellings, without asking that person first.
 
-Two are still marked **`draft: true`**: Susan Ndungu and Henry Yatich. Both
-were **written only from that person's stated role and organisation**.
-Nothing in them is researched biography and nothing should be treated as
-fact about a named individual. Send each of those two their own line and
-replace it with what they send back. This is the one item in the repo that
-must not ship unreviewed.
+The flag stays even though nothing is currently `true`. It records whether a
+line is that person's own words or something written for them. **A speaker
+added later with a bio drafted from a job title must be marked
+`draft: true`** and approved by that person before launch — nothing
+published may assert biography about a named individual who has not signed
+it off. That is the one rule here that must not be quietly dropped.
 
 ## Speaker photographs
 
