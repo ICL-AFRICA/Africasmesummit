@@ -80,9 +80,15 @@ from it.
 
 ## Still to add
 
-- [ ] Speaker headshots — replace the PHOTO wells in `app/page.tsx`
-- [ ] Confirmed agenda — `AGENDA` is indicative, marked as such on the page
-- [ ] Photos from a previous ICL conference (social proof section)
+- [ ] Sharper originals for `speaker-1` to `speaker-5`. All seven headshots
+      are in place; those five are flyer extracts and soft on a retina
+      screen. `speaker-6` and `speaker-7` are supplied originals and need
+      nothing. Tracked with the rest of the launch work in `SETUP.md`.
+- [ ] Confirmed agenda — `AGENDA` is indicative, and the page says so
+      beneath the list
+- [ ] Photography from a previous ICL conference to replace
+      `public/img/floor.jpg`, the placeholder sitting behind the closing
+      section at 25% opacity
 - [ ] 301 redirect from ichooselife.global/sustainable-business-summit
 
 ## Working documents
