@@ -52,5 +52,9 @@ it — do not fix it in passing.
 
 ## Outstanding — needs someone other than Claude
 
-- **Sponsorship tier inclusions are drafts.** Names and prices are real.
+- **Sponsorship tier inclusions are drafts.** Tier names and prices are
+  verified against the live TikoHub listing; the `includes` bullets are not
+  from a rate card. `/partner` marks them indicative via
+  `SPONSOR_INCLUDES_NOTE` until the real sponsorship document arrives —
+  delete that note when it does.
 - **No Standard Delegate Pass exists on TikoHub yet** — see `SETUP.md`.

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, SPONSOR_TIERS, TICKET_CTA } from "@/lib/event";
+import { EVENT, SPONSOR_TIERS, SPONSOR_INCLUDES_NOTE, TICKET_CTA } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Become a partner — ${EVENT.name} ${EVENT.year}`,
@@ -21,6 +21,14 @@ export default function Partner() {
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <p className="eyebrow text-white mb-5">What partners get</p>
+          {/* The inclusions below are drafts. Saying so here is the whole
+              point — it sits above the grid rather than under it, because a
+              caveat a sponsor reads after the price and the Book button has
+              not done its job. Remove with SPONSOR_INCLUDES_NOTE once the
+              rate card lands. */}
+          <p className="lede text-[16px] text-white max-w-2xl mb-8">
+            {SPONSOR_INCLUDES_NOTE}
+          </p>
           <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
             {SPONSOR_TIERS.map((t) => (
               <div key={t.tier} className={`p-7 sm:p-8 flex flex-col ${t.featured ? "bg-raise" : "bg-ink"}`}>

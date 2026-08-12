@@ -432,12 +432,16 @@ export const REASONS = [
 export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
 
 /**
- * Sponsorship packages. Names and prices come from the live TikoHub listing
- * and are correct.
+ * Sponsorship packages. Tier names and prices are verified against the live
+ * TikoHub listing — all four match to the shilling.
  *
  * The `includes` bullets are DRAFTS — written to be plausible, not taken
- * from a rate card. Confirm every line with Mike before launch: a sponsor
- * paying KES 1,000,000 on the strength of this list will expect all of it.
+ * from a rate card. The TikoHub listing carries no inclusions for any
+ * package, only a name and a price, so it cannot settle them either.
+ *
+ * Until they come from the real sponsorship document, /partner says so out
+ * loud via SPONSOR_INCLUDES_NOTE. A sponsor paying KES 1,000,000 on the
+ * strength of a bulleted list under a Book button will expect all of it.
  */
 export const SPONSOR_TIERS = [
   {
@@ -484,6 +488,19 @@ export const SPONSOR_TIERS = [
     ],
   },
 ] as const;
+
+/**
+ * Shown directly above the tier grid on /partner, because the `includes`
+ * bullets above are drafts and the page publishes them under a price and a
+ * Book button.
+ *
+ * DELETE THIS — and the line that renders it — the moment the inclusions
+ * come from the real rate card. It is scaffolding for an unfinished fact,
+ * not a permanent disclaimer, and leaving it up once the packages are
+ * confirmed makes a settled offer read as provisional.
+ */
+export const SPONSOR_INCLUDES_NOTE =
+  "Tiers, prices and availability are confirmed. The inclusions listed under each tier are indicative — we agree the final package with you in writing before anything is committed.";
 
 /** Exhibition booths, priced as listed on TikoHub. */
 export const STAND_OPTIONS = [
