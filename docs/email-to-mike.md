@@ -1,9 +1,18 @@
 # Email to Mike — open items needing his decision
 
-Draft, not yet sent. Every item below was verified against the repo and the
-TikoHub listing at the time of writing; if you send this later, re-check the
-dates. Tracked alongside `privacy-review-notes.md`, which covers the one open
-item that is ICL's rather than Mike's.
+**Sent 12 August 2026. Awaiting reply.** Kept as the record of what was asked
+and when, so the four items can be chased against a date rather than a memory.
+
+Every item was verified against the repo and the TikoHub listing before
+sending. Item 1 is the one with a deadline: early bird closes 31 August, so
+the Standard Delegate Pass has to exist on TikoHub before 1 September.
+
+Tracked alongside `privacy-review-notes.md`, which covers the open items that
+are ICL's rather than Mike's. `SETUP.md` holds the launch checklist both feed.
+
+**Answers land here.** When Mike replies, record the outcome under each item
+rather than deleting it — a sent email with no recorded answer is how an
+open question quietly becomes a forgotten one.
 
 ---
 

@@ -98,7 +98,8 @@ open questions travel with the code instead of sitting in someone's inbox.
 
 - `docs/email-to-mike.md` — the four open items needing Mike's decision:
   the Standard Delegate Pass on TikoHub, the sponsorship and booth
-  inclusions, and original headshots for five speakers.
+  inclusions, and original headshots for five speakers. **Sent 12 August
+  2026**; record his answers under each item as they come back.
 - `docs/privacy-review-notes.md` — a technical audit of what the site
   actually does, set against what `/privacy` claims, for ICL to review and
   sign off. Includes eight questions only ICL can answer.
