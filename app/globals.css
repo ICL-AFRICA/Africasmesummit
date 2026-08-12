@@ -61,7 +61,10 @@
   --color-off:     #221D4A;
 
   --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* Self-hosted by next/font — see app/layout.tsx. The variable it sets
+     carries its own metric-matched fallback, so this never reaches for a
+     copy of IBM Plex Mono installed on the visitor's machine. */
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
 

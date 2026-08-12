@@ -1,9 +1,32 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono } from "next/font/google";
 import {
   EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ,
   ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN,
 } from "@/lib/event";
 import "./globals.css";
+
+/**
+ * The only webfont the site actually uses.
+ *
+ * `next/font` downloads it at build time and serves it from our own origin,
+ * so a visitor's browser never contacts Google. That is the point: the
+ * previous <link> to fonts.googleapis.com sent every visitor's IP address
+ * and user agent to Google on every page view, before they had interacted
+ * with anything, and the privacy page could not honestly claim otherwise.
+ *
+ * It also fetched Fraunces and Public Sans, which nothing on the site ever
+ * referenced — three families downloaded, one used. Those two are gone.
+ *
+ * Body and heading type is unaffected: `--font-sans` asks for Archivo, which
+ * has never been loaded here, so it resolves to system-ui exactly as before.
+ */
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-plex-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://africasmesummit.com"),
@@ -90,14 +113,8 @@ const faqJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-KE">
+    <html lang="en-KE" className={plexMono.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         <meta name="theme-color" content="#171442" />
         <script
           type="application/ld+json"
