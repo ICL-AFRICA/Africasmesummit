@@ -107,9 +107,14 @@ pass it to sponsors, exhibitors or partners without asking you first."*
   staff have not been briefed on is worse than none.
 - Consider whether a notice at the venue entrance is also wanted.
 
-**"Getting in touch"** — points at `info@africasmesummit.com`.
+**"Getting in touch"** — points at `conference@ichooselife.or.ke`.
 
-- **This address does not exist.** See §4.
+- **Resolved.** This used to name `info@africasmesummit.com`, which was never
+  created, so the one route the page offered for exercising data rights went
+  nowhere. The site now uses the ICL address throughout and it reaches a real
+  inbox.
+- Still worth deciding *who inside ICL* monitors it for data requests — see
+  question 7.
 
 ---
 
@@ -142,15 +147,11 @@ None of these are drafting errors; they are decisions nobody has made yet.
 
 ## 4. Two things to fix before launch, regardless
 
-**The rights contact is a dead address.** The page tells people to email
-`info@africasmesummit.com` to see, correct or delete their data. That mailbox
-does not exist. Right now, the one route the page offers for exercising data
-rights goes nowhere.
-
-Either create the mailbox, or point this page at
-`conference@ichooselife.or.ke`, which is already live and is what the footer
-and contact page now use. This is the same open item flagged separately for
-the ticketing deadline.
+**~~The rights contact is a dead address.~~ Fixed.** The page pointed at
+`info@africasmesummit.com`, which was never created — so the one route it
+offered for exercising data rights went nowhere. The whole site now uses
+`conference@ichooselife.or.ke`, which reaches a real inbox. Left on the record
+here because it was the most serious item in these notes.
 
 **The page publicly labels itself a draft.** At the bottom it reads
 *"Draft — to be reviewed by I Choose Life – Africa before launch."* That is
@@ -171,8 +172,8 @@ Answers to these are enough to finish the page.
 4. What does TikoHub actually pass to ICL, and may we name and link them?
 5. Can the "no sharing with sponsors without asking" promise be kept as
    written?
-6. Create `info@africasmesummit.com`, or move the page to
-   `conference@ichooselife.or.ke`?
+6. ~~Create `info@africasmesummit.com`, or move to the ICL address?~~
+   **Done — the site now uses `conference@ichooselife.or.ke` throughout.**
 7. Who inside ICL receives access/correction/deletion requests?
 8. Will the registration desk have a workable photography opt-out?
 9. ~~Does ICL want to keep loading fonts from Google?~~ **Done — fonts are

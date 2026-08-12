@@ -143,11 +143,19 @@ DNS takes ten minutes to a few hours. HTTPS is automatic once it resolves.
 
 ## Step 7 — Email on the domain
 
-The site tells people to write to `info@africasmesummit.com`. That address
-has to exist before launch.
+**Nothing to do here.** The site writes to `conference@ichooselife.or.ke`, on
+the convening organisation's existing domain, so no new mailbox is needed for
+launch.
 
-Google Workspace is about $6/user/month. A free forwarding rule at your
-registrar sending `info@` to an inbox someone already reads is fine to start.
+This used to say `info@africasmesummit.com` had to be created before launch.
+That address was never made, and until it was replaced it was reached from
+two places that matter — the enquiry form's failure message and the privacy
+page's contact for exercising data rights.
+
+If a summit-branded address is wanted later, Google Workspace is about
+$6/user/month, and a forwarding rule at the registrar pointing `info@` at an
+inbox someone already reads is free. Only change `EVENT.email` once the
+mailbox actually receives mail.
 
 ---
 
@@ -233,7 +241,8 @@ one has more search history — so it will outrank you for your own name.
 **Yours:**
 
 - [ ] `FORM_ENDPOINT` set, test submission received
-- [ ] `info@africasmesummit.com` receiving mail
+- [x] Contact address reaches a real inbox — the site uses
+      `conference@ichooselife.or.ke`; no new mailbox needed
 - [ ] Every page opened on a real phone
 - [ ] 301 from the old ICL page
 - [ ] Sitemap submitted in Google Search Console

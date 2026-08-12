@@ -17,23 +17,24 @@ export const EVENT = {
   venueDetail: "University of Nairobi, Main Campus",
   city: "Nairobi, Kenya",
   ticketUrl: "https://tikohub.com/events/562",
-  /* TWO SETS OF CONTACT DETAILS, ON PURPOSE. Do not collapse them.
+  /* ONE email address for the whole site — the summit team's own, on the
+     convening organisation's live domain.
 
-     `conferenceEmail` / `conferencePhone` are the summit team's own line,
-     on the convening organisation's live domain. They are what the footer
-     and the contact page publish, because they reach a real inbox today.
+     It replaced `info@africasmesummit.com`, which was only ever aspirational
+     and never created. That placeholder was reached from two places that
+     matter: the enquiry form's failure message, shown at the moment someone
+     is already struggling to get through, and the privacy page's contact for
+     seeing, correcting or deleting personal data. Both pointed at a mailbox
+     that did not exist.
 
-     `email` / `phone` are the original site-wide details. `email` is still
-     a PLACEHOLDER — see SETUP.md step 7, it has to be created before
-     launch — and it is what the enquiry form falls back to, and what the
-     exhibit, partner and privacy pages print. Changing the form's fallback
-     is a separate decision from changing what the footer advertises, which
-     is why these did not get merged. */
-  conferenceEmail: "conference@ichooselife.or.ke",
+     Phone is still two entries, which is deliberate but not sacred.
+     `conferencePhone` is the single number the footer and contact page
+     publish; `phone` is the pair the exhibit and partner pages print, and
+     the form quotes `phone[0]`. Collapse them if one number everywhere is
+     wanted — nothing depends on there being two. */
+  email: "conference@ichooselife.or.ke",
   conferencePhone: "0724 255822",
-
   phone: ["0717 605151", "0724 255822"],
-  email: "info@africasmesummit.com",
   host: "I Choose Life – Africa",
 } as const;
 

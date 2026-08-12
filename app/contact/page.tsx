@@ -24,8 +24,8 @@ export default function Contact() {
             <div className="grid gap-10 sm:grid-cols-2">
               <div>
                 <p className="eyebrow text-marigold mb-3">Email</p>
-                <a href={`mailto:${EVENT.conferenceEmail}`} className="text-white text-[16px] hover:text-marigold-t transition-colors">
-                  {EVENT.conferenceEmail}
+                <a href={`mailto:${EVENT.email}`} className="text-white text-[16px] hover:text-marigold-t transition-colors">
+                  {EVENT.email}
                 </a>
                 <p className="text-[16px] text-white mt-2">We reply within two working days.</p>
               </div>

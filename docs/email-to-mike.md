@@ -8,7 +8,7 @@ item that is ICL's rather than Mike's.
 ---
 
 **To:** Mike Mutungi
-**Subject:** Five things I need from you for the summit site — two are time-bound
+**Subject:** Four things I need from you for the summit site — one is time-bound
 
 Mike,
 
@@ -16,8 +16,8 @@ The site is in good shape: all seven speaker bios are now the speakers' own
 words, the new headshots are in, and every price on the site matches the
 TikoHub listing to the shilling.
 
-Five things left that I can't resolve from my side. The first two have dates
-attached; the rest can follow.
+Four things left that I can't resolve from my side. The first has a date on
+it; the rest can follow.
 
 ---
 
@@ -36,20 +36,7 @@ One thing to check: the Papers Call ticket is also 6,800. Please make sure
 the standard delegate pass is created as its own ticket and not confused
 with that one.
 
-**2. Does `info@africasmesummit.com` exist yet?** *(same deadline, ideally)*
-
-If someone's enquiry form submission fails, the site tells them to email
-that address. It doesn't resolve today, so that's a dead end at the exact
-moment someone is already having trouble reaching us.
-
-Two ways to close it — either create the mailbox (a forwarding rule at the
-registrar is fine), or tell me to point the site at
-`conference@ichooselife.or.ke`, which is already on the footer and contact
-page. Either works; I just need to know which.
-
----
-
-**3. The sponsorship inclusions — this is the big one.**
+**2. The sponsorship inclusions — this is the big one.**
 
 The bullet lists under Platinum, Gold, Silver and Bronze on the partner page
 are placeholder text written when the site was built. They were never taken
@@ -67,12 +54,12 @@ list will expect every line of it, so I'd rather publish the real thing.
 prospective sponsors?** I'll put the inclusions in verbatim and remove the
 caveat.
 
-**4. Same question for the two exhibition booths.**
+**3. Same question for the two exhibition booths.**
 
 Startup (KES 30,000) and Corporate (KES 50,000) have the same problem — the
 prices are confirmed, the inclusions aren't sourced from anything.
 
-**5. Original headshots for five of the speakers.**
+**4. Original headshots for five of the speakers.**
 
 Susan Ndungu, Mike Mutungi (you), Michael Maddy, Henry Yatich and Victor
 Sila are currently extracted from the printed flyer. They're acceptable but
@@ -88,8 +75,8 @@ Also still open from the launch checklist, less urgent: the privacy page
 needs an ICL review before launch, and the agenda is still marked indicative
 on the page pending the confirmed programme.
 
-Nothing here blocks the site staying up as it is. Items 1 and 2 are the ones
-with a date on them.
+Nothing here blocks the site staying up as it is. Item 1 is the only one with
+a date on it.
 
 Thanks,
 Sila

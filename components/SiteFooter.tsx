@@ -52,8 +52,8 @@ export default function SiteFooter() {
               Group bookings), so the no-dead-ends rule still holds. */}
           <p className="eyebrow text-marigold mb-3">Get in touch</p>
           <p>
-            <a href={`mailto:${EVENT.conferenceEmail}`} className="hover:text-white transition-colors">
-              {EVENT.conferenceEmail}
+            <a href={`mailto:${EVENT.email}`} className="hover:text-white transition-colors">
+              {EVENT.email}
             </a>
           </p>
           <p>{EVENT.conferencePhone}</p>
