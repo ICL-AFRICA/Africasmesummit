@@ -34,7 +34,9 @@ export default function Page() {
       <TicketTicker />
 
       {/* ── Nav ──────────────────────────────────────────────────────── */}
-      <SiteHeader overlay barOnMobile />
+      {/* current="/" so the new Home link marks itself on the page it points
+          at, the same as every other nav item. */}
+      <SiteHeader overlay barOnMobile current="/" />
 
       <main>
         {/* ── Hero: photography does the work ───────────────────────── */}
