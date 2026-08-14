@@ -127,7 +127,11 @@ export default function Page() {
         </section>
 
         {/* ── Tracks over a photograph ──────────────────────────────── */}
-        <section id="tracks" className="relative bg-ink">
+        {/* The hairline earns its keep here specifically: this section and
+            the speaker wall above it are both bg-ink, so without it the two
+            read as one long dark run. Everywhere else on the site a section
+            boundary is drawn by the field changing colour. */}
+        <section id="tracks" className="relative bg-ink border-t border-line">
           <div className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={PHOTOS.floor} alt="" className="w-full h-full object-cover opacity-25" />
