@@ -126,6 +126,28 @@ export default function Page() {
           </div>
         </section>
 
+        {/* ── Tracks over a photograph ──────────────────────────────── */}
+        <section id="tracks" className="relative bg-ink">
+          <div className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={PHOTOS.floor} alt="" className="w-full h-full object-cover opacity-25" />
+          </div>
+          <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
+            <Head eyebrow="Six tracks" dark>Pick what your business actually needs</Head>
+            <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {TRACKS.map((t, i) => (
+                <div key={t.n} className="border-t border-line pt-5">
+                  <p className={`font-mono text-[12px] mb-3 ${
+                    ["text-marigold","text-clay","text-indigo","text-palm","text-marigold","text-clay"][i]
+                  }`}>{t.n}</p>
+                  <h3 className="h-sm text-white text-lg">{t.name}</h3>
+                  <p className="lede mt-2.5 text-[16px] text-white">{t.line}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Three paths ───────────────────────────────────────────── */}
         <section id="why" className="bg-paper">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
@@ -202,28 +224,6 @@ export default function Page() {
             <p className="mt-6 font-mono text-[12px] text-ink/45">
               Indicative. Final programme published in September.
             </p>
-          </div>
-        </section>
-
-        {/* ── Tracks over a photograph ──────────────────────────────── */}
-        <section id="tracks" className="relative bg-ink">
-          <div className="absolute inset-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={PHOTOS.floor} alt="" className="w-full h-full object-cover opacity-25" />
-          </div>
-          <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Head eyebrow="Six tracks" dark>Pick what your business actually needs</Head>
-            <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {TRACKS.map((t, i) => (
-                <div key={t.n} className="border-t border-line pt-5">
-                  <p className={`font-mono text-[12px] mb-3 ${
-                    ["text-marigold","text-clay","text-indigo","text-palm","text-marigold","text-clay"][i]
-                  }`}>{t.n}</p>
-                  <h3 className="h-sm text-white text-lg">{t.name}</h3>
-                  <p className="lede mt-2.5 text-[16px] text-white">{t.line}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
