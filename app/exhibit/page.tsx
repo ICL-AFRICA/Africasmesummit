@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, STAND_OPTIONS, TICKET_CTA } from "@/lib/event";
+import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
-  description: "Exhibition stands at the Africa SME Summit, 30 September 2026, University of Nairobi. Show your product to buyers, banks, universities and county government.",
+  description:
+    `Exhibition stands at the Africa SME Summit, ${DATE_LONG}, University of Nairobi. Show your product to buyers, banks, universities and county government.`,
   alternates: { canonical: "https://africasmesummit.com/exhibit" },
 };
 

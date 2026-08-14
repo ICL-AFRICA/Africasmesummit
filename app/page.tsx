@@ -6,7 +6,7 @@ import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP } from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -65,7 +65,7 @@ export default function Page() {
         {/* ── The statement ─────────────────────────────────────────── */}
         <section className="bg-card">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-32 text-center">
-            <p className="eyebrow text-ink/45 mb-6">One day, thirty September</p>
+            <p className="eyebrow text-ink/45 mb-6">One day, {DATE_DAY_MONTH}</p>
             <h2 className="h-lg text-4xl sm:text-6xl lg:text-[4.2rem] max-w-4xl mx-auto">
               7.4 million enterprises.<br />One of them is yours.
             </h2>
@@ -189,7 +189,7 @@ export default function Page() {
         {/* ── Agenda ────────────────────────────────────────────────── */}
         <section id="agenda" className="bg-card">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Head eyebrow="The running order">30 September, hour by hour</Head>
+            <Head eyebrow="The running order">{DATE_DAY_MONTH}, hour by hour</Head>
             <ul className="mt-14 border-t border-rule">
               {AGENDA.map((a) => (
                 <li key={a.time} className="grid grid-cols-[4rem_1fr] sm:grid-cols-[8rem_1fr_16rem] gap-4 sm:gap-10 py-6 border-b border-rule items-baseline">

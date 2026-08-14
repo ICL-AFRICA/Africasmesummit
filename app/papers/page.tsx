@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA } from "@/lib/event";
+import { EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Call for papers — ${EVENT.name} ${EVENT.year}`,
-  description: "Call for papers for the Africa SME Summit, 30 September 2026. Open to academics and practitioners across six tracks, from SME finance to market access.",
+  description:
+    `Call for papers for the Africa SME Summit, ${DATE_LONG}. Open to academics and practitioners across six tracks, from SME finance to market access.`,
   alternates: { canonical: "https://africasmesummit.com/papers" },
 };
 
 const STEPS = [
   { n: "01", t: "Submit an abstract", d: "Up to 400 words, naming the track it belongs to and what the work shows." },
   { n: "02", t: "Review", d: "The committee reads every submission and replies within three weeks." },
-  { n: "03", t: "Present", d: "Accepted papers are presented in their track on 30 September." },
+  { n: "03", t: "Present", d: `Accepted papers are presented in their track on ${DATE_DAY_MONTH}.` },
   { n: "04", t: "Publish", d: "Selected papers go into the post-summit proceedings." },
 ];
 

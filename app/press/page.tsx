@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
-import { EVENT, PRESS_RELEASE, PRESS_CONTACT, TICKET_CTA } from "@/lib/event";
+import { EVENT, PRESS_RELEASE, PRESS_CONTACT, TICKET_CTA, DATE_LONG } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Press — ${EVENT.name} ${EVENT.year}`,
   description:
-    "Press release and media contact for the Africa SME Summit, 30 September 2026 at the University of Nairobi. Convened by I Choose Life – Africa.",
+    `Press release and media contact for the Africa SME Summit, ${DATE_LONG} at the University of Nairobi. Convened by I Choose Life – Africa.`,
   alternates: { canonical: "https://africasmesummit.com/press" },
 };
 
@@ -26,6 +26,17 @@ export default function Press() {
               document rather than a landing page, and a journalist reads it
               top to bottom — measure matters more than fill. */}
           <article className="max-w-[46rem]">
+            {/* Revision notice, above the release rather than under it. A
+                journalist holding the 12 August text needs to know the date
+                moved before they read a word of the body — and clay is the
+                site's colour for "this is about time", so it belongs here. */}
+            {R.revised && (
+              <div className="mb-10 border-l-2 border-clay pl-6">
+                <p className="eyebrow text-clay">Updated {R.revised.date}</p>
+                <p className="lede mt-3 text-[17px] text-white">{R.revised.note}</p>
+              </div>
+            )}
+
             <p className="eyebrow text-marigold">{R.kicker}</p>
 
             <h2 className="h-lg text-white text-3xl sm:text-4xl mt-6">

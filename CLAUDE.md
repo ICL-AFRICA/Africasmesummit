@@ -1,7 +1,7 @@
 # Africa SME Summit
 
-Marketing site for a one-day conference, 30 September 2026, University of
-Nairobi. Next.js 15 static export, Tailwind v4, on Vercel. No database, no
+Marketing site for a one-day conference, Thursday 15 October 2026, University
+of Nairobi. Next.js 15 static export, Tailwind v4, on Vercel. No database, no
 server, no env vars.
 
 ## Read before changing anything
@@ -17,6 +17,10 @@ server, no env vars.
 - **`EARLY_BIRD_ENDS` is the single source for the deadline.** Every label,
   both countdowns and the schema.org offer derive from it. Never write the
   date anywhere else — the page this replaced drifted precisely that way.
+- **`DATE_ISO` is the single source for the conference date.** Same rule,
+  learned the hard way: when the summit moved from 30 September to 15
+  October the date had to be hunted out of fifteen places. It now derives
+  everywhere, including the search descriptions. Never type it again.
 - **Nothing below 16px** except `.eyebrow` labels at 12px.
 - **No muted greys and no opacity on text over dark backgrounds.** Hierarchy
   on dark comes from size and weight. On paper `#6E6884` is fine.

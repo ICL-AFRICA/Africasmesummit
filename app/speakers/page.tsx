@@ -4,12 +4,12 @@ import Btn from "@/components/Btn";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, SPEAKER_COUNT_CAP } from "@/lib/event";
+import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, SPEAKER_COUNT_CAP, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Speakers — ${EVENT.name} ${EVENT.year}`,
   description:
-    "Speakers at the Africa SME Summit, 30 September 2026: SME banking at NCBA, cross-border trade, industry-academia collaboration and AI adoption for small business.",
+    `Speakers at the Africa SME Summit, ${DATE_LONG}: SME banking at NCBA, cross-border trade, industry-academia collaboration and AI adoption for small business.`,
   alternates: { canonical: "https://africasmesummit.com/speakers" },
 };
 
@@ -80,7 +80,7 @@ export default function Speakers() {
         <section>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24 text-center">
             <h2 className="h-lg text-white text-3xl sm:text-5xl max-w-2xl mx-auto">
-              All {SPEAKER_COUNT}, one room, thirty September.
+              All {SPEAKER_COUNT}, one room, {DATE_DAY_MONTH}.
             </h2>
             <p className="lede mt-5 text-white">
               {EVENT.venue}, University of Nairobi

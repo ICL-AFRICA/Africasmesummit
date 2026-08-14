@@ -6,13 +6,33 @@
  * value here and it changes everywhere on the site at once.
  */
 
+/**
+ * The one date. Every way the site says it derives from this line.
+ *
+ * The summit moved from 30 September to Thursday 15 October 2026, and the
+ * move is what proved the point: the old date had been typed out in fifteen
+ * separate places — three fields here, four headings, six search
+ * descriptions and two docs — every one of which had to be found by hand.
+ * That is precisely the drift this file exists to prevent, and the date had
+ * quietly become the worst offender in it.
+ *
+ * Change DATE_ISO and the whole site follows: labels, headings, search
+ * snippets and the schema.org start and end times.
+ */
+const DATE_ISO = "2026-10-15";
+const DAY = new Date(`${DATE_ISO}T09:00:00+03:00`);
+const fmtDate = (o: Intl.DateTimeFormatOptions) =>
+  DAY.toLocaleDateString("en-GB", { timeZone: "Africa/Nairobi", ...o });
+
 export const EVENT = {
   name: "Africa SME Summit",
   year: 2026,
   tagline: "Accelerating business growth through industry–academia collaboration",
-  dateISO: "2026-09-30",
-  dateLabel: "Wednesday 30 September 2026",
-  dateShort: "30 Sept 2026",
+  dateISO: DATE_ISO,
+  /* en-GB puts a comma after the weekday; the house style has never had one. */
+  dateLabel: fmtDate({ weekday: "long", day: "numeric", month: "long", year: "numeric" })
+    .replace(",", ""),
+  dateShort: fmtDate({ day: "numeric", month: "short", year: "numeric" }),
   venue: "Chandaria Centre for Performing Arts",
   venueDetail: "University of Nairobi, Main Campus",
   city: "Nairobi, Kenya",
@@ -38,8 +58,18 @@ export const EVENT = {
   host: "I Choose Life – Africa",
 } as const;
 
+/** "15 October" — for prose that names the day without the year. */
+export const DATE_DAY_MONTH = fmtDate({ day: "numeric", month: "long" });
+
+/** "15 October 2026" — for search descriptions and anywhere the year is wanted. */
+export const DATE_LONG = fmtDate({ day: "numeric", month: "long", year: "numeric" });
+
 /** Early bird closes 31 Aug 2026, 23:59 East Africa Time (UTC+3).
-    This must match the printed flyer. It does. */
+    This must match the printed flyer. It does.
+
+    NOTE: with the summit moved to 15 October, the early bird now closes 45
+    days before the day rather than 30. Nobody has asked for it to move and
+    the printed flyer still says 31 August, so it stays. */
 export const EARLY_BIRD_ENDS = "2026-08-31T23:59:00+03:00";
 
 /** Derived label — never type the deadline anywhere else. The old ICL page
@@ -546,16 +576,23 @@ export const SPONSOR_INCLUDES_NOTE =
  */
 export const PRESS_RELEASE = {
   kicker: "For immediate release",
+  /* Set when the issued text has to change. Rendered above the release so a
+     journalist holding the original can see what moved and when. Clear it
+     only when a genuinely new release replaces this one. */
+  revised: {
+    date: "14 August 2026",
+    note: "The summit date has moved. It now takes place Thursday 15 October 2026, not 30 September. The dates in the release below have been updated; nothing else has changed.",
+  },
   dateline: "NAIROBI, KENYA — August 12, 2026",
   headline:
-    "Africa SME Summit Will Bring Capital, Academia, and Enterprise Into the Same Room This September",
+    "Africa SME Summit Will Bring Capital, Academia, and Enterprise Into the Same Room This October",
   standfirst:
-    "Kenya has 7.4 million small businesses. On September 30, the people who can help them grow will meet them halfway.",
+    "Kenya has 7.4 million small businesses. On October 15, the people who can help them grow will meet them halfway.",
   /* What the body asserts, as at the issue date. Check against the live
      constants before sending; do not rewrite the body to match. */
-  checked: { earlyBird: "5,800", standard: "6,800", earlyBirdEnds: "August 31, 2026" },
+  checked: { earlyBird: "5,800", standard: "6,800", earlyBirdEnds: "August 31, 2026", eventDate: "October 15, 2026" },
   body: [
-    "The Africa SME Summit, a new one-day convening for Kenya's small business economy, will take place September 30, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. The summit is convened by I Choose Life – Africa in partnership with the University of Nairobi, and brings investors, banks, universities, and government together with the enterprises they exist to serve — for one day, in one room.",
+    "The Africa SME Summit, a new one-day convening for Kenya's small business economy, will take place October 15, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. The summit is convened by I Choose Life – Africa in partnership with the University of Nairobi, and brings investors, banks, universities, and government together with the enterprises they exist to serve — for one day, in one room.",
     "Kenya is home to 7.4 million micro, small, and medium enterprises. Most of them operate informally, cut off from capital, from markets beyond their own county, and from the research being done about them at universities down the road. The Africa SME Summit was built to close that distance.",
     "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market access and cross-border trade, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
     "Confirmed speakers include Susan Ndungu, Head of SME Banking at NCBA Bank Kenya; Michael Maddy, CRO and Co-Founder of Fleet Planner; Dr. Henry K. Yatich, Principal of the College of Graduate Studies and Research at Mount Kenya University; Dr. Hilda Muteshi of SUS-AFRIC; Salome Ayugi, Associate Director at Sinapis; Victor Sila, founder of the AI learning platform JuaPath, who leads the summit's AI and Technology track; and Eng. Mike Mutungi, who convenes the summit and speaks on strengthening Kenya's entrepreneurship ecosystem.",
@@ -578,7 +615,7 @@ export const PRESS_RELEASE = {
   about: [
     {
       h: "About Africa SME Summit",
-      p: "The Africa SME Summit is a one-day convening in Nairobi, Kenya, bringing together small and medium enterprises, investors, financial institutions, universities, and government to close the gap between Kenya's 7.4 million SMEs and the capital, markets, and research that can help them grow. The inaugural summit takes place September 30, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. Learn more at africasmesummit.com.",
+      p: "The Africa SME Summit is a one-day convening in Nairobi, Kenya, bringing together small and medium enterprises, investors, financial institutions, universities, and government to close the gap between Kenya's 7.4 million SMEs and the capital, markets, and research that can help them grow. The inaugural summit takes place October 15, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. Learn more at africasmesummit.com.",
     },
     {
       h: "About I Choose Life – Africa",

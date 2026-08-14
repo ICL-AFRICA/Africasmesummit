@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
-import {
-  EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ,
-  ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN,
-} from "@/lib/event";
+import { EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG } from "@/lib/event";
 import "./globals.css";
 
 /**
@@ -36,7 +33,7 @@ export const metadata: Metadata = {
   // rather than advertising an expired rate. Same length as before, which
   // matters — this is the search snippet.
   description:
-    `One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. 30 September 2026, University of Nairobi. ${ACTIVE_TICKET.tier} from ${TICKET_PRICE}.`,
+    `One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. ${DATE_LONG}, University of Nairobi. ${ACTIVE_TICKET.tier} from ${TICKET_PRICE}.`,
   keywords: [
     "SME conference Kenya",
     "SME summit Nairobi",
