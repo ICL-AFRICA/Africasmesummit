@@ -26,17 +26,6 @@ export default function Press() {
               document rather than a landing page, and a journalist reads it
               top to bottom — measure matters more than fill. */}
           <article className="max-w-[46rem]">
-            {/* Revision notice, above the release rather than under it. A
-                journalist holding the 12 August text needs to know the date
-                moved before they read a word of the body — and clay is the
-                site's colour for "this is about time", so it belongs here. */}
-            {R.revised && (
-              <div className="mb-10 border-l-2 border-clay pl-6">
-                <p className="eyebrow text-clay">Updated {R.revised.date}</p>
-                <p className="lede mt-3 text-[17px] text-white">{R.revised.note}</p>
-              </div>
-            )}
-
             <p className="eyebrow text-marigold">{R.kicker}</p>
 
             <h2 className="h-lg text-white text-3xl sm:text-4xl mt-6">

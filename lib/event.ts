@@ -67,9 +67,10 @@ export const DATE_LONG = fmtDate({ day: "numeric", month: "long", year: "numeric
 /** Early bird closes 31 Aug 2026, 23:59 East Africa Time (UTC+3).
     This must match the printed flyer. It does.
 
-    NOTE: with the summit moved to 15 October, the early bird now closes 45
-    days before the day rather than 30. Nobody has asked for it to move and
-    the printed flyer still says 31 August, so it stays. */
+    The summit moved to 15 October and this deliberately did not move with
+    it: the deadline now falls 45 days before the day rather than 30.
+    Confirmed 14 August — the reprinted flyers carry 31 August too, so the
+    two stay in step. */
 export const EARLY_BIRD_ENDS = "2026-08-31T23:59:00+03:00";
 
 /** Derived label — never type the deadline anywhere else. The old ICL page
@@ -576,14 +577,10 @@ export const SPONSOR_INCLUDES_NOTE =
  */
 export const PRESS_RELEASE = {
   kicker: "For immediate release",
-  /* Set when the issued text has to change. Rendered above the release so a
-     journalist holding the original can see what moved and when. Clear it
-     only when a genuinely new release replaces this one. */
-  revised: {
-    date: "14 August 2026",
-    note: "The summit date has moved. It now takes place Thursday 15 October 2026, not 30 September. The dates in the release below have been updated; nothing else has changed.",
-  },
-  dateline: "NAIROBI, KENYA — August 12, 2026",
+  /* The issue date, and it must be the day the release actually goes out.
+     Still unsent as of 14 August. If it slips further, move this — a release
+     whose dateline predates the facts in it reads as recycled. */
+  dateline: "NAIROBI, KENYA — August 14, 2026",
   headline:
     "Africa SME Summit Will Bring Capital, Academia, and Enterprise Into the Same Room This October",
   standfirst:
