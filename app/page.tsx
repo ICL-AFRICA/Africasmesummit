@@ -145,7 +145,10 @@ export default function Page() {
                     ["text-marigold","text-clay","text-indigo","text-palm","text-marigold","text-clay"][i]
                   }`}>{t.n}</p>
                   <h3 className="h-sm text-white text-lg">{t.name}</h3>
-                  <p className="lede mt-2.5 text-[16px] text-white">{t.line}</p>
+                  {/* Track 02 has no description yet — see TRACKS. A name on
+                      its own reads as incomplete; the old line left in place
+                      would have read as wrong. */}
+                  {t.line && <p className="lede mt-2.5 text-[16px] text-white">{t.line}</p>}
                 </div>
               ))}
             </div>

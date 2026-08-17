@@ -241,7 +241,7 @@ export const SPEAKERS = [
     name: "Mr. Michael Maddy",
     role: "CRO and Co-Founder",
     org: "Fleet Planner",
-    topic: "Market access & Cross-border trade",
+    topic: "Market Acquisition, retention & growth",
     draft: false,
     bio: [
       "Michael Maddy is Chief Revenue Officer and Co-Founder of Fleet Planner, a Kenya-based logistics technology company using AI to transform fleet management and supply chain operations across East Africa. The platform improves fleet efficiency, real-time logistics visibility, and operational optimization. In his role, Michael leads revenue growth, market expansion, and customer adoption across a diverse portfolio of logistics and transport clients.",
@@ -277,7 +277,7 @@ export const SPEAKERS = [
     name: "Dr. Hilda Muteshi",
     role: "Design & Inclusive Business Modeling Expert",
     org: "SUS-AFRIC",
-    topic: "Market access & Cross-border trade",
+    topic: "Market Acquisition, retention & growth",
     draft: false,
     bio: [
       "Dr. Hilda Muteshi is an expert in design and inclusive business modeling, holding a PhD in Business Administration (Marketing) and an MBA in Marketing. With more than 15 years of experience across the private sector and development, including 10 years in cross-sector research and consultancy, she focuses on human-centered and behavioral design, creating inclusive business models and scalable solutions that improve livelihoods, create jobs, and increase income for the Base of the Pyramid, while empowering youth and women economically.",
@@ -338,7 +338,15 @@ export const BOOTH_PASSES = { startup: 2, corporate: 4 } as const;
 
 export const TRACKS = [
   { n: "01", name: "Finance, Capital & Investment", line: "Where the money actually is, and what lenders need to see from you." },
-  { n: "02", name: "Market access & Cross-border trade", line: "Getting your product past the county line and across the border." },
+  /* Renamed from "Market access & Cross-border trade" to match the 14 August
+     programme. The old line described getting a product across a border,
+     which is a different subject, so it went.
+
+     This replacement is written from the track's name rather than from a
+     session brief — it says what "acquisition, retention and growth" plainly
+     means and promises nothing about content. Correct it with whoever owns
+     the track; it is the one line on this page not taken from a source. */
+  { n: "02", name: "Market Acquisition, retention & growth", line: "Finding customers, keeping the ones you have, and growing what each is worth." },
   { n: "03", name: "Talent & Human Resource acquisition with safeguarding", line: "Hiring well, and the safeguarding duties that come with it." },
   { n: "04", name: "Adopting AI and Technology", line: "What is worth adopting this year for growth and efficiency, and what is noise." },
   { n: "05", name: "Industry and Academia collaboration", line: "Putting a university research team on a problem in your business." },
@@ -633,7 +641,7 @@ export const PRESS_RELEASE = {
   body: [
     "The Africa SME Summit, a new one-day convening for Kenya's small business economy, will take place October 15, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. The summit is convened by I Choose Life – Africa in partnership with the University of Nairobi, and brings investors, banks, universities, and government together with the enterprises they exist to serve — for one day, in one room.",
     "Kenya is home to 7.4 million micro, small, and medium enterprises. Most of them operate informally, cut off from capital, from markets beyond their own county, and from the research being done about them at universities down the road. The Africa SME Summit was built to close that distance.",
-    "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market access and cross-border trade, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
+    "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market acquisition, retention and growth, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
     "Confirmed speakers include Susan Ndungu, Head of SME Banking at NCBA Bank Kenya; Michael Maddy, CRO and Co-Founder of Fleet Planner; Dr. Henry K. Yatich, Principal of the College of Graduate Studies and Research at Mount Kenya University; Dr. Hilda Muteshi of SUS-AFRIC; Salome Ayugi, Associate Director at Sinapis; Victor Sila, founder of the AI learning platform JuaPath, who leads the summit's AI and Technology track; and Eng. Mike Mutungi, who convenes the summit and speaks on strengthening Kenya's entrepreneurship ecosystem.",
     "Attendees will leave with more than information: mentor and investor matching within their track, templates and tools they can put to use immediately, and access to a papers call for those doing original research on the sector. The summit's institutional partners include the University of Nairobi, Mount Kenya University, Zetech University, and the Association of Startup and SME Enablers of Kenya (ASSEK), alongside county and international partners.",
   ],
