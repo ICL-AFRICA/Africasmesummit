@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
-import { EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG } from "@/lib/event";
+import {
+  EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END,
+} from "@/lib/event";
 import "./globals.css";
 
 /**
@@ -66,8 +68,8 @@ const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "BusinessEvent",
   name: `${EVENT.name} ${EVENT.year}`,
-  startDate: `${EVENT.dateISO}T08:00:00+03:00`,
-  endDate: `${EVENT.dateISO}T17:30:00+03:00`,
+  startDate: `${EVENT.dateISO}T${AGENDA_START}:00+03:00`,
+  endDate: `${EVENT.dateISO}T${AGENDA_END}:00+03:00`,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {

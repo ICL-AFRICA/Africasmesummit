@@ -378,20 +378,58 @@ export const BENEFITS = [
 
 /** Indicative running order — replace with the confirmed programme. */
 export const AGENDA = [
-  { time: "08:00", title: "Registration & morning networking", note: "Exhibition stands open" },
-  { time: "09:00", title: "Opening keynote", note: "The state of Kenya's SME sector" },
-  { time: "10:00", title: "Industry–academia panel", note: "How research reaches an enterprise" },
-  { time: "11:00", title: "Track sessions — first round", note: "Six parallel tracks" },
-  { time: "13:00", title: "Lunch & gallery walk", note: "Products on display" },
-  { time: "14:00", title: "Track sessions — second round", note: "Six parallel tracks" },
-  { time: "15:30", title: "Business pitch forum", note: "Enterprises meet capital" },
-  { time: "17:00", title: "Closing & networking", note: "Communiqué and next steps" },
+  { time: "07:30", title: "Arrival and registration", note: "" },
+  { time: "09:00", title: "National and East Africa anthems", note: "" },
+  { time: "09:05", title: "Opening prayer", note: "" },
+  { time: "09:10", title: "Introductions and acknowledgements", note: "" },
+  { time: "09:20", title: "Welcome remarks", note: "" },
+  { time: "09:30", title: "Panel: accelerating business growth through industry–academia collaboration", note: "" },
+  { time: "10:15", title: "Accelerating Africa's business growth through the Quadra Helix", note: "" },
+  { time: "10:35", title: "Keynote address", note: "" },
+  { time: "10:45", title: "Guest of Honour", note: "" },
+  { time: "11:00", title: "Launches", note: "JuaPath research study · Jiinue Business Accelerator platform · SLP Project baseline report · SWC 2027" },
+  { time: "11:20", title: "Photo session", note: "" },
+  { time: "11:30", title: "Tea break", note: "" },
+  { time: "12:00", title: "Parallel sessions", note: "The six tracks, plus the University Chancellors and Industry Roundtable" },
+  { time: "12:45", title: "SEALS Training launch", note: "" },
+  { time: "13:00", title: "Lunch", note: "" },
+  { time: "14:00", title: "Networking, deal making and poster presentations", note: "" },
+  { time: "16:00", title: "Africa SME Award 2026 winners presentation", note: "" },
+  { time: "17:00", title: "Closing remarks", note: "" },
+  { time: "17:30", title: "Closing prayers and departure", note: "" },
 ] as const;
+
+/**
+ * Where the running order came from, and how sure it is.
+ *
+ * Rendered under the agenda. The programme above is transcribed from
+ * "SME Conference Program - 14.08.2026", which is a real running order
+ * rather than the invented placeholder it replaced — but nobody has called
+ * it final, and it predates the move to 15 October. Say what it is and when
+ * it was written, rather than either claiming it is confirmed or calling it
+ * indicative when it plainly is not.
+ */
+export const AGENDA_SOURCE = "Programme as at 14 August 2026. Times may still move.";
+
+/**
+ * When the day starts and ends, taken from the running order itself.
+ *
+ * The schema.org event times and the parking answer in the FAQ both used to
+ * carry their own hardcoded 08:00, from the placeholder agenda that had
+ * registration at eight. The real programme opens at 07:30, so both were
+ * wrong the moment it landed. Derived here so the next programme change
+ * carries them along.
+ */
+export const AGENDA_START = AGENDA[0].time;
+export const AGENDA_END = AGENDA[AGENDA.length - 1].time;
 
 export const FAQ = [
   { q: "Is lunch included?", a: "Yes. Every ticket includes lunch and refreshments through the day." },
   { q: "Can I send a colleague instead?", a: "Yes. Tickets are transferable up to 48 hours before the summit — send us both names on the contact page." },
-  { q: "Is there parking at the University of Nairobi?", a: "Parking is available on the Main Campus. Arrive by 08:00, as spaces fill before the opening keynote." },
+  /* Times here derive from AGENDA rather than being typed: registration opens
+     at its first entry, and the answer used to say "before the opening
+     keynote", which the real programme does not contain. */
+  { q: "Is there parking at the University of Nairobi?", a: `Parking is available on the Main Campus. Registration opens at ${AGENDA_START}, and spaces fill through the morning — come early.` },
   { q: "Do exhibitors need a separate ticket?", a: `Exhibition booths include delegate passes — ${countWord(BOOTH_PASSES.startup)} with the Startup booth and ${countWord(BOOTH_PASSES.corporate)} with the Corporate booth. Additional team members need standard tickets.` },
   { q: "Will I get a certificate?", a: "Yes. Certificates of participation are issued to all delegates at the close." },
   { q: "How do I submit a paper?", a: "Submit an abstract on the call for papers page — it lists the tracks and the review timeline." },

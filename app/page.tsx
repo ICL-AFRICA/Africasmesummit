@@ -6,7 +6,7 @@ import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH } from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -221,12 +221,17 @@ export default function Page() {
                 <li key={a.time} className="grid grid-cols-[4rem_1fr] sm:grid-cols-[8rem_1fr_16rem] gap-4 sm:gap-10 py-6 border-b border-rule items-baseline">
                   <span className="font-mono text-[16px] text-ink/45">{a.time}</span>
                   <span className="h-sm text-lg sm:text-2xl">{a.title}</span>
-                  <span className="col-start-2 sm:col-start-3 text-[16px] text-ink/55">{a.note}</span>
+                  {/* Most items in the real programme are a time and a title
+                      and nothing else. Rendering an empty third column left a
+                      stray grid cell on every one of them. */}
+                  {a.note && (
+                    <span className="col-start-2 sm:col-start-3 text-[16px] text-ink/55">{a.note}</span>
+                  )}
                 </li>
               ))}
             </ul>
             <p className="mt-6 font-mono text-[12px] text-ink/45">
-              Indicative. Final programme published in September.
+              {AGENDA_SOURCE}
             </p>
           </div>
         </section>
