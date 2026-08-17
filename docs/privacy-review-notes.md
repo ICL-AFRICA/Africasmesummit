@@ -107,12 +107,14 @@ pass it to sponsors, exhibitors or partners without asking you first."*
   staff have not been briefed on is worse than none.
 - Consider whether a notice at the venue entrance is also wanted.
 
-**"Getting in touch"** — points at `conference@ichooselife.or.ke`.
+**"Getting in touch"** — points at `sharon@africasmesummit.com`.
 
-- **Resolved.** This used to name `info@africasmesummit.com`, which was never
-  created, so the one route the page offered for exercising data rights went
-  nowhere. The site now uses the ICL address throughout and it reaches a real
-  inbox.
+- **Was broken, now needs one check.** The page originally named
+  `info@africasmesummit.com`, which was never created, so the one route it
+  offered for exercising data rights went nowhere. It has since moved twice
+  and now points at `sharon@africasmesummit.com`. The domain has MX records
+  and accepts mail — but **send a test to that exact address and confirm it
+  arrives**, because this is the address a data subject is told to use.
 - Still worth deciding *who inside ICL* monitors it for data requests — see
   question 7.
 
@@ -150,8 +152,9 @@ None of these are drafting errors; they are decisions nobody has made yet.
 **~~The rights contact is a dead address.~~ Fixed.** The page pointed at
 `info@africasmesummit.com`, which was never created — so the one route it
 offered for exercising data rights went nowhere. The whole site now uses
-`conference@ichooselife.or.ke`, which reaches a real inbox. Left on the record
-here because it was the most serious item in these notes.
+`sharon@africasmesummit.com`. The domain accepts mail; confirm the alias
+itself delivers. Left on the record because it was the most serious item in
+these notes, and because the address has now changed twice.
 
 **The page publicly labels itself a draft.** At the bottom it reads
 *"Draft — to be reviewed by I Choose Life – Africa before launch."* That is
@@ -172,8 +175,9 @@ Answers to these are enough to finish the page.
 4. What does TikoHub actually pass to ICL, and may we name and link them?
 5. Can the "no sharing with sponsors without asking" promise be kept as
    written?
-6. ~~Create `info@africasmesummit.com`, or move to the ICL address?~~
-   **Done — the site now uses `conference@ichooselife.or.ke` throughout.**
+6. Has anyone sent a test message to `sharon@africasmesummit.com` and seen
+   it arrive? The site now sends every enquiry and every data-rights request
+   there.
 7. Who inside ICL receives access/correction/deletion requests?
 8. Will the registration desk have a workable photography opt-out?
 9. ~~Does ICL want to keep loading fonts from Google?~~ **Done — fonts are

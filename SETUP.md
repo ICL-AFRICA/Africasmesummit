@@ -143,19 +143,23 @@ DNS takes ten minutes to a few hours. HTTPS is automatic once it resolves.
 
 ## Step 7 — Email on the domain
 
-**Nothing to do here.** The site writes to `conference@ichooselife.or.ke`, on
-the convening organisation's existing domain, so no new mailbox is needed for
-launch.
+The site writes to `sharon@africasmesummit.com`. The domain has MX records
+(Porkbun forwarding), so it accepts mail.
 
-This used to say `info@africasmesummit.com` had to be created before launch.
-That address was never made, and until it was replaced it was reached from
-two places that matter — the enquiry form's failure message and the privacy
-page's contact for exercising data rights.
+**Confirm that specific alias delivers before launch.** Send a test to it
+from an address outside the organisation and check it arrives. MX records
+prove the domain accepts mail; they say nothing about whether a forwarding
+rule exists for `sharon@` in particular.
 
-If a summit-branded address is wanted later, Google Workspace is about
-$6/user/month, and a forwarding rule at the registrar pointing `info@` at an
-inbox someone already reads is free. Only change `EVENT.email` once the
-mailbox actually receives mail.
+This matters more than it sounds. The site originally shipped with
+`info@africasmesummit.com`, which was never created, and it was reached from
+the two places that could least afford a dead address: the enquiry form's
+failure message, shown to someone already struggling to get through, and the
+privacy page's contact for seeing, correcting or deleting personal data. It
+then ran on `conference@ichooselife.or.ke` for three days before moving here.
+
+If the forwarding proves unreliable, Google Workspace is about $6/user/month
+on the domain, or point `EVENT.email` back at an ICL address.
 
 ---
 
@@ -241,8 +245,9 @@ one has more search history — so it will outrank you for your own name.
 **Yours:**
 
 - [ ] `FORM_ENDPOINT` set, test submission received
-- [x] Contact address reaches a real inbox — the site uses
-      `conference@ichooselife.or.ke`; no new mailbox needed
+- [ ] **Test that `sharon@africasmesummit.com` actually delivers.** The site
+      sends every enquiry, data-rights request and form fallback there. The
+      domain accepts mail; the alias is unverified.
 - [ ] Every page opened on a real phone
 - [ ] 301 from the old ICL page
 - [ ] Sitemap submitted in Google Search Console

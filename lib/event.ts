@@ -37,22 +37,26 @@ export const EVENT = {
   venueDetail: "University of Nairobi, Main Campus",
   city: "Nairobi, Kenya",
   ticketUrl: "https://tikohub.com/events/562",
-  /* ONE email address for the whole site — the summit team's own, on the
-     convening organisation's live domain.
+  /* ONE email address for the whole site. Everything that invites a reply
+     uses it: the footer, the contact page, the exhibit and partner pages,
+     the privacy page's contact for exercising data rights, and the enquiry
+     form's failure message.
 
-     It replaced `info@africasmesummit.com`, which was only ever aspirational
-     and never created. That placeholder was reached from two places that
-     matter: the enquiry form's failure message, shown at the moment someone
-     is already struggling to get through, and the privacy page's contact for
-     seeing, correcting or deleting personal data. Both pointed at a mailbox
-     that did not exist.
+     BEFORE CHANGING IT, CONFIRM THE MAILBOX RECEIVES MAIL. This has already
+     gone wrong once: the site shipped with `info@africasmesummit.com`, which
+     was only ever aspirational and was never created, so the two places that
+     could least afford a dead address — the form's failure path and the
+     privacy page's data-rights contact — both pointed at nothing.
+     africasmesummit.com now has MX records (Porkbun forwarding), which means
+     the domain accepts mail; it does not prove any particular alias in front
+     of the @ has been set up.
 
      Phone is still two entries, which is deliberate but not sacred.
      `conferencePhone` is the single number the footer and contact page
      publish; `phone` is the pair the exhibit and partner pages print, and
      the form quotes `phone[0]`. Collapse them if one number everywhere is
      wanted — nothing depends on there being two. */
-  email: "conference@ichooselife.or.ke",
+  email: "sharon@africasmesummit.com",
   conferencePhone: "0724 255822",
   phone: ["0717 605151", "0724 255822"],
   host: "I Choose Life – Africa",
