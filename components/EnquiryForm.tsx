@@ -11,7 +11,10 @@ import { FORM_ENDPOINT, EVENT } from "@/lib/event";
  * confirmation in place. When it is not set the same form falls back to
  * opening a pre-filled email — slower and lossier, but never a dead end.
  */
-type Field = { name: string; label: string; type?: string; required?: boolean; options?: string[] };
+/* `hidden` carries a value the person chose elsewhere on the page — the
+   stand picked off the floor plan — into the submission without occupying a
+   row in the form. It renders no label, so it is skipped in the map below. */
+type Field = { name: string; label: string; type?: string; required?: boolean; options?: string[]; value?: string };
 
 export default function EnquiryForm({
   subject, fields, cta = "Send enquiry",
@@ -67,6 +70,9 @@ export default function EnquiryForm({
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       {fields.map((f) => (
+        f.type === "hidden" ? (
+          <input key={f.name} type="hidden" name={f.name} value={f.value ?? ""} readOnly />
+        ) : (
         <div key={f.name}>
           <label htmlFor={f.name} className="eyebrow text-white block mb-2">
             {f.label}{f.required && <span className="text-marigold-t"> *</span>}
@@ -84,6 +90,7 @@ export default function EnquiryForm({
             <input id={f.name} name={f.name} type={f.type || "text"} required={f.required} className={input} />
           )}
         </div>
+        )
       ))}
 
       {/* Honeypot — bots fill it, people never see it. */}

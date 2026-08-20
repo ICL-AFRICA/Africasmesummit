@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
-import EnquiryForm from "@/components/EnquiryForm";
+import StandBooking from "@/components/StandBooking";
 import Btn from "@/components/Btn";
 import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
 
@@ -58,33 +58,28 @@ export default function Exhibit() {
         </div>
       </section>
 
+      {/* Reserve a stand. The plan is the picker, so this section runs full
+          width rather than the two-column split it used before — thirty-one
+          stands over two floors do not fit in half a page. */}
       <section className="border-b border-line">
-        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-2">
-          <div>
-            <p className="eyebrow text-white mb-5">Reserve a stand</p>
-            <h2 className="h-lg text-white text-3xl sm:text-4xl">What are you bringing?</h2>
-            <p className="lede mt-5 text-white text-[16px] max-w-md">
-              Stands are allocated in the order enquiries arrive. We will confirm
-              availability within two working days.
-            </p>
-            <div className="mt-8 pt-8 border-t border-line text-[16px] text-white space-y-1">
-              <p className="text-white">Or reach us directly</p>
-              <p>{EVENT.email}</p>
-              {EVENT.phone.map((p) => <p key={p}>{p}</p>)}
-            </div>
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
+          <p className="eyebrow text-white mb-5">Reserve a stand</p>
+          <h2 className="h-lg text-white text-3xl sm:text-4xl">Choose your spot in the hall</h2>
+          <p className="lede mt-5 text-white text-[17px] max-w-2xl">
+            Thirty-one stands across the two floors. Pick the one you want and
+            tell us what you are bringing — stands are allocated in the order
+            enquiries arrive, and we confirm within two working days.
+          </p>
+
+          <div className="mt-12">
+            <StandBooking />
           </div>
-          <EnquiryForm
-            subject="Exhibition stand enquiry — Africa SME Summit 2026"
-            cta="Reserve a stand"
-            fields={[
-              { name: "name", label: "Your name", required: true },
-              { name: "business", label: "Business name", required: true },
-              { name: "email", label: "Email", type: "email", required: true },
-              { name: "phone", label: "Phone", required: true },
-              { name: "stand", label: "Which booth", options: [...STAND_OPTIONS.map((s) => s.name), "Not sure yet"] },
-              { name: "showing", label: "What will you be showing?", type: "textarea", required: true },
-            ]}
-          />
+
+          <div className="mt-12 pt-8 border-t border-line text-[16px] text-white space-y-1 max-w-2xl">
+            <p>Or reach us directly</p>
+            <p>{EVENT.email}</p>
+            {EVENT.phone.map((p) => <p key={p}>{p}</p>)}
+          </div>
         </div>
       </section>
 
