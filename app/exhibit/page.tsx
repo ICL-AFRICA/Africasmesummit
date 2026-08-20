@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG } from "@/lib/event";
+import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
@@ -41,7 +41,7 @@ export default function Exhibit() {
                   ))}
                 </ul>
                 <a
-                  href={EVENT.ticketUrl}
+                  href={BOOKING_URL}
                   className={`mt-8 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-all ${
                     i === 0 ? "bg-gold text-ink hover:brightness-110"
                             : "border border-line text-white hover:border-gold hover:text-marigold-t"}`}

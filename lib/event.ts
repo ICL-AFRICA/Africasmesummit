@@ -62,6 +62,22 @@ export const EVENT = {
   host: "I Choose Life – Africa",
 } as const;
 
+/**
+ * The booking step on TikoHub, rather than the event page.
+ *
+ * Used by the four sponsorship tiers and the two exhibition booths, which
+ * are all being bought rather than browsed — one click closer to paying.
+ * `EVENT.ticketUrl` stays the destination for the general "Get a ticket"
+ * buttons, which are aimed at people still deciding.
+ *
+ * ONE URL, not six. The six links supplied for the tiers and booths were
+ * identical, so TikoHub has no per-package deep link: every button lands on
+ * the same page and the buyer still picks their item from the list there.
+ * Six fields holding one value is how a set of links drifts apart, so this
+ * is a single constant, derived so the event id is written once.
+ */
+export const BOOKING_URL = `${EVENT.ticketUrl}/booking`;
+
 /** "15 October" — for prose that names the day without the year. */
 export const DATE_DAY_MONTH = fmtDate({ day: "numeric", month: "long" });
 

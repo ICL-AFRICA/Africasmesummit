@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, SPONSOR_TIERS, SPONSOR_INCLUDES_NOTE, TICKET_CTA, DATE_LONG } from "@/lib/event";
+import { EVENT, SPONSOR_TIERS, SPONSOR_INCLUDES_NOTE, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Become a partner — ${EVENT.name} ${EVENT.year}`,
@@ -49,7 +49,7 @@ export default function Partner() {
                   ))}
                 </ul>
                 <a
-                  href={EVENT.ticketUrl}
+                  href={BOOKING_URL}
                   className={`mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-all ${
                     t.featured ? "bg-gold text-ink hover:brightness-110"
                                : "border border-line text-white hover:border-gold hover:text-marigold-t"}`}
