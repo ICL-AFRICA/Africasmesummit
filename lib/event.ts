@@ -356,10 +356,10 @@ export const TRACKS = [
 /** Three buyers, three reasons. The old page spoke to one. */
 export const PATHS = [
   {
-    who: "Business owners",
-    lead: "You run an SME",
-    body: "Meet the person who runs SME banking at NCBA. Put a university research team on a problem in your business. Show your product to four county governments in one afternoon.",
-    points: ["Capital and market access", "Research support at no cost to you", "Buyers, banks and county government in one room"],
+    who: "Corporates & county",
+    lead: "You serve the SME sector",
+    body: "This is where the businesses you are trying to reach spend the day. Exhibit, speak, or sponsor a track — and meet enterprises already screened through the ICL programme.",
+    points: ["Exhibition and speaking slots", "Profile to 10,000+ across ICL platforms", "Direct access to screened enterprises"],
   },
   {
     who: "Universities",
@@ -368,10 +368,10 @@ export const PATHS = [
     points: ["Papers call and publishing", "Student placement into real businesses", "Industry partners for ongoing research"],
   },
   {
-    who: "Corporates & county",
-    lead: "You serve the SME sector",
-    body: "This is where the businesses you are trying to reach spend the day. Exhibit, speak, or sponsor a track — and meet enterprises already screened through the ICL programme.",
-    points: ["Exhibition and speaking slots", "Profile to 10,000+ across ICL platforms", "Direct access to screened enterprises"],
+    who: "Business owners",
+    lead: "You run an SME",
+    body: "Meet the person who runs SME banking at NCBA. Put a university research team on a problem in your business. Show your product to four county governments in one afternoon.",
+    points: ["Capital and market access", "Research support at no cost to you", "Buyers, banks and county government in one room"],
   },
 ] as const;
 
