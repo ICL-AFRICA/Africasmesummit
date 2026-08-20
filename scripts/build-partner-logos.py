@@ -39,6 +39,11 @@ TARGET_INK = 11500.0
 MAGIC = (255, 0, 255)
 
 FILES = {
+    # The convener leads the row. Supplied at 3508x2480 with alpha; the mark
+    # is a navy roundel with a white dove inside it, which is exactly the case
+    # knockout_white's edge-seeded flood fill exists for — a global
+    # white-to-transparent rule would delete the bird.
+    "i-choose-life":                  "ichooselife_logo.png",
     "government-of-kenya":            "Coat_of_arms_of_Kenya_(Official).svg.webp",
     "sverige":                        "Sverige.png",
     "university-of-nairobi":          "univesity_Of_nairobi.gif",
@@ -47,7 +52,10 @@ FILES = {
     "access":                         "access_logo.jpg",
     "mount-kenya-university":         "Mount-Kenya-University-Logo.png",
     "assek":                          "assel.jpeg",
-    "zetech-university":              "zetech.jpeg",
+    # Supplied by the university, Aug 2026: the vertical RGB lockup at
+    # 1224x1193 with real alpha, replacing a 362x552 JPEG that was already at
+    # its native resolution and soft on retina. README asked for exactly this.
+    "zetech-university":              "Zetech University Logo_Vert RGB (5).png",
 }
 
 

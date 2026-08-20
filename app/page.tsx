@@ -314,10 +314,14 @@ export default function Page() {
                   />
                 </li>
               ))}
-              {/* Nine logos leave one empty slot at 2 columns and one at 5,
-                  and none at 3. Without this the gap shows the grid's own
-                  rule colour through and reads as a missing partner. */}
-              <li aria-hidden="true" className="bg-card h-32 block sm:hidden lg:block" />
+              {/* Ten logos divide exactly by 2 and by 5, and leave two empty
+                  slots at 3. That is the reverse of the nine-logo case this
+                  replaced, which needed a filler at 2 and 5 but not at 3 —
+                  so the count and these classes have to change together.
+                  Without them the gap shows the grid's own rule colour
+                  through and reads as a missing partner. */}
+              <li aria-hidden="true" className="bg-card h-32 hidden sm:block lg:hidden" />
+              <li aria-hidden="true" className="bg-card h-32 hidden sm:block lg:hidden" />
             </ul>
           </div>
         </section>

@@ -460,6 +460,10 @@ export const FAQ = [
  * write it.
  */
 export const PARTNERS = [
+  /* The convener leads. Everything below it is a partner alongside; ICL is
+     the organisation doing the convening, so it reads first rather than
+     alphabetically or by tier. */
+  { name: "I Choose Life – Africa",        logo: "/img/partners/i-choose-life.webp" },
   { name: "Government of Kenya",           logo: "/img/partners/government-of-kenya.webp" },
   { name: "Sverige",                       logo: "/img/partners/sverige.webp" },
   { name: "University of Nairobi",         logo: "/img/partners/university-of-nairobi.webp" },

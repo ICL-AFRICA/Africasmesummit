@@ -89,8 +89,10 @@ from it.
       are in place; those five are flyer extracts and soft on a retina
       screen. `speaker-6` and `speaker-7` are supplied originals and need
       nothing. Tracked with the rest of the launch work in `SETUP.md`.
-- [ ] Confirmed agenda — `AGENDA` is indicative, and the page says so
-      beneath the list
+- [ ] Confirmed agenda. `AGENDA` is the real running order transcribed from
+      "SME Conference Program - 14.08.2026", but nobody has called it final,
+      so the page says "Programme as at 14 August 2026. Times may still
+      move." Confirm it and that line comes off.
 - [ ] Photography from a previous ICL conference to replace
       `public/img/floor.jpg`, the placeholder sitting behind the closing
       section at 25% opacity
@@ -126,8 +128,8 @@ should not be used on single items.
 
 ## Partner logos
 
-Nine logos, from nine sources, in three file formats, with aspect ratios from
-5.6:1 (the Mount Kenya wordmark) to 0.66:1 (the Zetech crest). Dropped into a
+Nine logos, from nine sources, in four file formats, with aspect ratios from
+5.6:1 (the Mount Kenya wordmark) to 0.83:1 (the Nairobi crest). Dropped into a
 grid as supplied they look like nine unrelated screenshots. `PARTNERS` in
 `lib/event.ts` carries the name and the file; the files are built by
 `scripts/build-partner-logos.py`.
@@ -142,12 +144,13 @@ What that script does, and why each step is there:
   the outright extremes, so a stray compression speck at the edge does not
   inflate the box and shrink the logo.
 - **Deletes sliver components** — anything at most 6px on its short side and
-  at least 50px on its long one. The Zetech JPEG has a 6×552 line down one
-  edge, which survived everything else. This is deliberately a *shape* rule
+  at least 50px on its long one. It was written for a 6×552 scan line down
+  the edge of the old Zetech JPEG, which survived everything else; since
+  Zetech supplied a clean PNG the rule fires on nothing and is kept as a
+  guard for the next scanned source. This is deliberately a *shape* rule
   and not a size one: ASSEK has 604 separate components and Mount Kenya keeps
   40% of its ink in small ones, so any "drop small parts" threshold would eat
-  real logo. Verified against all nine — it matches that one line and nothing
-  else.
+  real logo.
 - **Scales each to equal optical _area_, not equal height.** Matching heights
   is the usual mistake and it makes a wide wordmark tower over a crest.
 - **Centres everything on one shared 400×192 canvas**, so all nine files are
@@ -174,10 +177,17 @@ colour on hover, and the same treatment would unify these nine more strongly
 desaturating a government coat of arms is not a call to make unilaterally. If
 you want it, it is one `grayscale` class on the `img`, matching `.portrait`.
 
-**Two are as good as their source allows, not as good as they should be.**
-The University of Nairobi crest came as a 250×302 GIF and Zetech as a 362×552
-JPEG. Both are near their native resolution already, so they soften on a
-retina screen. Ask both universities for an SVG or a large PNG.
+**One is as good as its source allows, not as good as it should be.**
+The University of Nairobi crest came as a 250×302 GIF, near its native
+resolution already, so it softens on a retina screen. Ask for an SVG or a
+large PNG.
+
+Zetech was the other one and is now fixed: the university supplied the
+vertical RGB lockup at 1224×1193 with real alpha. It is a taller shape than
+the JPEG it replaced, so it clamps on height rather than reaching the ink
+target — it sits second-lightest in the row, above Mount Kenya. The overall
+spread is unchanged at 2.32×, which is set by Mount Kenya and the Kenyan coat
+of arms, not by Zetech.
 
 ## Pages
 
