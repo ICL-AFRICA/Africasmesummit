@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
-import { EVENT, TRACKS, SPEAKERS, PHOTOS, TICKET_CTA, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
+import { EVENT, TRACKS, TRACK_EXTRAS, SPEAKERS, PHOTOS, TICKET_CTA, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `The six tracks — ${EVENT.name} ${EVENT.year}`,
@@ -30,6 +30,7 @@ export default function Tracks() {
            speakers' own `topic`, so a track cannot claim someone the speaker
            page does not. Four of the six have nobody confirmed yet, and say
            nothing rather than "TBC". */
+        const extra = TRACK_EXTRAS[t.slug];
         const speaking = SPEAKERS
           .map((s, idx) => ({ ...s, photo: PHOTOS.speakers[idx] }))
           .filter((s) => s.topic === t.name);
@@ -68,6 +69,41 @@ export default function Tracks() {
                           </li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+
+                  {/* Track-specific detail. Only one track has this, and the
+                      shape is deliberately problem-then-tool: the arrow is
+                      the whole argument, since the objection to AI in a small
+                      business is never "what does it do", it is "what does it
+                      fix for me". */}
+                  {extra && (
+                    <div className={`mt-8 pt-7 border-t-2 ${RULE[i]}`}>
+                      <p className="eyebrow text-white mb-5">{extra.intro}</p>
+                      <ul className="grid gap-px bg-line border border-line sm:grid-cols-2">
+                        {extra.useCases.map((u) => (
+                          <li key={u.n} className="bg-ink p-6 flex flex-col">
+                            <p className={`font-mono text-[12px] ${ACCENT[i]}`}>{u.n}</p>
+                            <h3 className="h-sm text-white text-lg mt-3">{u.name}</h3>
+                            <p className="mt-3 text-[16px] font-light text-white">{u.fixes}</p>
+                            <p className="mt-4 pt-4 border-t border-line text-[16px] text-white flex gap-2.5">
+                              <span className={`flex-none ${ACCENT[i]}`} aria-hidden="true">→</span>
+                              <span className="lede">{u.tools}</span>
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* The memorable bit, and the reason to be in the room
+                          rather than read the list — so it is given its own
+                          weight instead of becoming a fifth card. */}
+                      <div className={`mt-8 border-l-2 pl-6 ${RULE[i]}`}>
+                        <p className="eyebrow text-white mb-2">{extra.note.lead}</p>
+                        <p className="lede text-[18px] text-white">{extra.note.body}</p>
+                        <p className="mt-3 text-[16px] font-light text-white">
+                          Live, with {extra.note.who}.
+                        </p>
+                      </div>
                     </div>
                   )}
 

@@ -444,10 +444,10 @@ export const TRACKS = [
     who: "MSMEs that want AI to save them time and money — not another buzzword.",
     format: "Demo + panel",
     outcomes: [
-      "Specific, affordable AI tools you can adopt this week, not theory",
+      "Four specific AI use cases you can try before you leave the room — not theory",
       "A live demo of at least one tool built for the Kenyan MSME context",
+      "Three questions to run any new tool through, so you stop chasing hype and only adopt tools that pay for themselves",
       "The data protection basics you need before adopting any new tech",
-      "A realistic read on ROI: what to expect, and on what timeline",
     ],
   },
   {
@@ -832,6 +832,62 @@ export const STAND_OPTIONS = [
     ],
   },
 ] as const;
+
+/**
+ * Detail that belongs to one track rather than all six.
+ *
+ * Kept out of TRACKS on purpose. `who`, `outcomes` and `format` are things
+ * every track has — track 02's were simply unknown for a while. A named list
+ * of tools is not: it exists because of how this particular session is being
+ * run. Giving the other five an empty `useCases` array to keep the shape
+ * uniform would be inventing a field they do not have.
+ *
+ * The tools are named by the speaker and reproduced as supplied. They are
+ * claims about third-party products on a public page, so change them only
+ * with whoever is presenting.
+ */
+type TrackExtra = {
+  intro: string;
+  useCases: { n: string; name: string; fixes: string; tools: string }[];
+  note: { lead: string; body: string; who: string };
+};
+
+export const TRACK_EXTRAS: Record<string, TrackExtra> = {
+  "adopting-ai-technology": {
+    intro: "Four use cases, with named tools",
+    useCases: [
+      {
+        n: "01",
+        name: "Customer response",
+        fixes: "Orders and questions lost in an unread WhatsApp inbox",
+        tools: "WhatsApp Business (free) + Meta AI catalog tools draft replies to common questions — you still review and hit send",
+      },
+      {
+        n: "02",
+        name: "Marketing content",
+        fixes: "No time or budget for an agency",
+        tools: "Canva AI design tools turn one product photo into a shot, poster, and social post; ChatGPT or Claude (free tier) write captions and descriptions from a one-line product description",
+      },
+      {
+        n: "03",
+        name: "Financial records",
+        fixes: "Cash problems discovered only after they're a crisis",
+        tools: "Google Sheets + your own M-Pesa/bank statement export, reviewed for 15 minutes a week, turns transaction history into a simple cash-in/cash-out picture",
+      },
+      {
+        n: "04",
+        name: "Access to finance",
+        fixes: "Cash-only income is invisible to lenders",
+        tools: "A clean, consistent digital transaction trail (M-Pesa/bank + formal registration) is increasingly what lenders and investors score first — this is the same data investor-matching tracks are built to reward",
+      },
+    ],
+    note: {
+      lead: "Before you adopt anything",
+      body: "A simple three-question filter, walked through live — the kind of thing that sounds obvious once you hear it, and saves most businesses from buying tools they didn't need.",
+      who: "Victor Sila",
+    },
+  },
+};
 
 /**
  * The hall, and every stand in it.
