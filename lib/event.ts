@@ -78,6 +78,27 @@ export const EVENT = {
  */
 export const BOOKING_URL = `${EVENT.ticketUrl}/booking`;
 
+/**
+ * "University of Nairobi" — the campus qualifier dropped.
+ *
+ * `venueDetail` is "University of Nairobi, Main Campus", which is right on a
+ * directions line and too long for a share preview or the OG card. Both
+ * derive the short form the same way; `scripts/build-og.mjs` applies the same
+ * rule when it reads venueDetail out of this file.
+ */
+export const VENUE_SHORT = EVENT.venueDetail.replace(/,.*$/, "");
+
+/**
+ * The line under the title when someone shares the link.
+ *
+ * Leads with the date on purpose. The share card carries the date only inside
+ * the picture, so a client that does not load images — or loads it slowly —
+ * showed the summit's name and its tagline and no date at all. This is the
+ * text half of the same fact.
+ */
+export const SHARE_DESCRIPTION =
+  `${EVENT.dateLabel} · ${VENUE_SHORT}. ${EVENT.tagline}`;
+
 /** "15 October" — for prose that names the day without the year. */
 export const DATE_DAY_MONTH = fmtDate({ day: "numeric", month: "long" });
 

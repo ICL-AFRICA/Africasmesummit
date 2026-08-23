@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {
-  EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END,
+  EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END, SHARE_DESCRIPTION,
 } from "@/lib/event";
 import "./globals.css";
 
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: `${EVENT.name} ${EVENT.year}`,
-    description: EVENT.tagline,
+    description: SHARE_DESCRIPTION,
     url: "https://africasmesummit.com",
     siteName: EVENT.name,
     locale: "en_KE",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${EVENT.name} ${EVENT.year}`,
-    description: EVENT.tagline,
+    description: SHARE_DESCRIPTION,
     images: [OG_IMAGE],
   },
   icons: { icon: "/icon.png", apple: "/apple-icon.png" },
