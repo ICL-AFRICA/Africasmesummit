@@ -4,6 +4,20 @@ import {
 } from "@/lib/event";
 import "./globals.css";
 
+/**
+ * The share card, with a cache key on the end.
+ *
+ * WhatsApp, LinkedIn and Facebook cache an OG image against its URL and hold
+ * it for a long time. og.jpg keeps its filename when the card is rebuilt, so
+ * without this those platforms would go on serving the old picture — the one
+ * with the old date — and the fix would be invisible exactly where it
+ * matters. The key is the event date, so it changes if and only if the thing
+ * printed on the card changes.
+ *
+ * Rebuild the picture itself with `node scripts/build-og.mjs`.
+ */
+const OG_IMAGE = `/og.jpg?v=${EVENT.dateISO}`;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://africasmesummit.com"),
   title: `${EVENT.name} ${EVENT.year} — ${EVENT.dateShort}, Nairobi`,
@@ -27,13 +41,13 @@ export const metadata: Metadata = {
     siteName: EVENT.name,
     locale: "en_KE",
     type: "website",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${EVENT.name} ${EVENT.year}` }],
+  images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${EVENT.name} ${EVENT.year}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${EVENT.name} ${EVENT.year}`,
     description: EVENT.tagline,
-    images: ["/og.jpg"],
+    images: [OG_IMAGE],
   },
   icons: { icon: "/icon.png", apple: "/apple-icon.png" },
   alternates: { canonical: "https://africasmesummit.com" },
@@ -60,7 +74,7 @@ const eventJsonLd = {
     name: EVENT.host,
     url: "https://ichooselife.global",
   },
-  image: ["https://africasmesummit.com/og.jpg"],
+  image: [`https://africasmesummit.com${OG_IMAGE}`],
   performer: SPEAKERS.map((s) => ({
     "@type": "Person",
     name: s.name.replace(/^(Ms\.|Mr\.|Dr\.|Eng\.)\s+/, ""),
