@@ -1,5 +1,60 @@
 @import "tailwindcss";
 
+/* ── The one webfont ─────────────────────────────────────────────────────
+   IBM Plex Mono, vendored. Four files, 38KB, of which a browser fetches the
+   one or two subsets it needs.
+
+   Served from our own origin, so a visitor never contacts Google — that is
+   the privacy position the /privacy page depends on and it has not changed.
+   What changed is WHERE the files come from. This used to go through
+   `next/font/google`, which downloads at build time instead of in the
+   browser; same privacy result, but it made `npm run build` depend on
+   reaching Google, and the build broke the first time that fetch timed out.
+   A brochure site should build on a train. The files are committed.
+
+   Regenerate with the URL Google serves for a modern browser:
+     curl -A "<a desktop Chrome UA>" \
+       "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+   and keep only the latin and latin-ext subsets — the site has no Cyrillic
+   or Vietnamese copy, and shipping those was 60% of the bytes.
+
+   One thing lost in the move: next/font generated a metric-matched fallback
+   so nothing shifted while the font loaded. `font-display: swap` on 12px
+   mono labels is a small enough reflow to accept rather than hand-tune. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-500-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+
 /*
   Africa SME Summit — design system.
 
@@ -61,10 +116,8 @@
   --color-off:     #221D4A;
 
   --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  /* Self-hosted by next/font — see app/layout.tsx. The variable it sets
-     carries its own metric-matched fallback, so this never reaches for a
-     copy of IBM Plex Mono installed on the visitor's machine. */
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  /* Vendored above, so this names the family directly. */
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 
