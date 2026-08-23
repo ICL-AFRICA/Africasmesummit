@@ -245,7 +245,7 @@ export const SPEAKERS = [
     name: "Eng. Mike Mutungi",
     role: "Founder & CEO",
     org: "I Choose Life – Africa",
-    topic: "Kenya Entrepreneurship Ecosystem",
+    topic: "Kenya Entrepreneurship Ecosystem strengthening",
     draft: false,
     bio: [
       "Eng. Mike Mutungi is Founder and CEO of I Choose Life – Africa (ICL) and Chairman of the Association of Startup and SME Enablers of Kenya (ASSEK). He holds a Bachelor of Science in Geospatial and Space Technology from the University of Nairobi and a Master of Divinity from NIST.",
@@ -305,7 +305,7 @@ export const SPEAKERS = [
     name: "Salome Ayugi",
     role: "Associate Director, Special Projects & Kenya Operations",
     org: "Sinapis",
-    topic: "Kenya Entrepreneurship Ecosystem",
+    topic: "Kenya Entrepreneurship Ecosystem strengthening",
     draft: false,
     bio: [
       "Salome Ayugi serves as Associate Director of Special Projects and Kenya Operations at Sinapis, where she leads strategic partnerships, manages multi-country initiatives, and oversees operations across Kenya. She brings over 9 years of experience supporting startup growth, investment readiness, and business acceleration programs, including her prior role as Sinapis's Kenya Country Manager, where she managed large-scale entrepreneurship programs and drove regional strategy.",
@@ -352,21 +352,109 @@ const countWordCap = (n: number): string => {
  */
 export const BOOTH_PASSES = { startup: 2, corporate: 4 } as const;
 
+/**
+ * The six tracks, and what each one is for.
+ *
+ * `name` is the linking key: a speaker's `topic` matches it exactly, which is
+ * how /tracks lists who is on each track without a second copy of that
+ * mapping. Change a name here and change the matching topics with it.
+ *
+ * `who` / `outcomes` / `format` come from the supplied track copy. Anything
+ * that copy marked unconfirmed is simply absent rather than shown as a
+ * placeholder — no half-questions in front of a delegate. That is why track
+ * 02 carries none of them: its copy described cross-border trade, which is a
+ * different subject from the name the running order gives it, so publishing
+ * those outcomes here would have described the wrong session.
+ *
+ * The doc also asked for a "preview this track" webinar link on each. None
+ * exist yet, so none are rendered.
+ */
 export const TRACKS = [
-  { n: "01", name: "Finance, Capital & Investment", line: "Where the money actually is, and what lenders need to see from you." },
-  /* Renamed from "Market access & Cross-border trade" to match the 14 August
-     programme. The old line described getting a product across a border,
-     which is a different subject, so it went.
-
-     This replacement is written from the track's name rather than from a
-     session brief — it says what "acquisition, retention and growth" plainly
-     means and promises nothing about content. Correct it with whoever owns
-     the track; it is the one line on this page not taken from a source. */
-  { n: "02", name: "Market Acquisition, retention & growth", line: "Finding customers, keeping the ones you have, and growing what each is worth." },
-  { n: "03", name: "Talent & Human Resource acquisition with safeguarding", line: "Hiring well, and the safeguarding duties that come with it." },
-  { n: "04", name: "Adopting AI and Technology", line: "What is worth adopting this year for growth and efficiency, and what is noise." },
-  { n: "05", name: "Industry and Academia collaboration", line: "Putting a university research team on a problem in your business." },
-  { n: "06", name: "Kenya Entrepreneurship Ecosystem strengthening", line: "The policy, the funds, and the institutions you should know by name." },
+  {
+    n: "01", slug: "finance-capital-investment",
+    name: "Finance, Capital & Investment",
+    line: "Where the money actually is, and what lenders need to see from you.",
+    who: "Business owners ready to raise capital, or fix the finances they already have.",
+    format: "Panel discussion + Q&A",
+    outcomes: [
+      "A clear map of Kenya's financing options today — grants, debt, equity, and digital lending — and which one actually fits your stage",
+      "What investors and lenders are really evaluating before they say yes",
+      "The financing mistakes that quietly stall growth-stage businesses, and how to avoid them",
+    ],
+  },
+  {
+    /* Named by the 14 August programme. The site called it "Market access &
+       Cross-border trade" before that, and the copy supplied for it has twice
+       been about exporting — which reads like a contradiction until you take
+       "Market Acquisition" to mean acquiring MARKETS rather than customers.
+       Under that reading the name and the content agree, and this is the same
+       track it always was under a longer name. `line` was rewritten to match:
+       it previously described winning and keeping customers, which was a
+       guess made from the name alone and the wrong one. */
+    n: "02", slug: "market-acquisition-retention-growth",
+    name: "Market Acquisition, retention & growth",
+    line: "Getting your product past the county line and across the border, and building the partners to keep it there.",
+    who: "Businesses ready to expand beyond their local market, especially within the East African region.",
+    format: "Panel discussion + Q&A",
+    outcomes: [
+      "Opportunities and requirements under AfCFTA and EAC trade frameworks",
+      "Export documentation, compliance, and logistics essentials",
+      "Case studies of Kenyan SMEs that successfully scaled cross-border",
+      "Building distributor and partner networks abroad",
+    ],
+  },
+  {
+    n: "03", slug: "talent-human-resource-safeguarding",
+    name: "Talent & Human Resource acquisition with safeguarding",
+    line: "Hiring well, and the safeguarding duties that come with it.",
+    who: "Owners and HR leads building a team faster than their systems can keep up.",
+    format: "Workshop",
+    outcomes: [
+      "Recruitment and retention strategies built for growing businesses, not established ones",
+      "How to embed safeguarding into HR policy from day one — not bolt it on later",
+      "How to hire fast without compromising protection for staff and vulnerable stakeholders",
+      "What a values-driven workplace culture actually looks like in practice, not on paper",
+    ],
+  },
+  {
+    n: "04", slug: "adopting-ai-technology",
+    name: "Adopting AI and Technology",
+    line: "What is worth adopting this year for growth and efficiency, and what is noise.",
+    who: "MSMEs that want AI to save them time and money — not another buzzword.",
+    format: "Demo + panel",
+    outcomes: [
+      "Specific, affordable AI tools you can adopt this week, not theory",
+      "A live demo of at least one tool built for the Kenyan MSME context",
+      "The data protection basics you need before adopting any new tech",
+      "A realistic read on ROI: what to expect, and on what timeline",
+    ],
+  },
+  {
+    n: "05", slug: "industry-academia-collaboration",
+    name: "Industry and Academia collaboration",
+    line: "Putting a university research team on a problem in your business.",
+    who: "Entrepreneurs, researchers, and institutions ready to turn research into revenue.",
+    format: "Panel discussion",
+    outcomes: [
+      "How MSMEs can tap into university research, talent pipelines, and innovation hubs",
+      "Concrete examples of industry-academia partnerships that have worked in Kenya",
+      "Where the real doors are — internships, incubation, applied-research partnerships",
+      "Confirmed academic partners: Mount Kenya University",
+    ],
+  },
+  {
+    n: "06", slug: "entrepreneurship-ecosystem-strengthening",
+    name: "Kenya Entrepreneurship Ecosystem strengthening",
+    line: "The policy, the funds, and the institutions you should know by name.",
+    who: "MSMEs and stakeholders who want a seat at the table where policy gets made.",
+    format: "Panel discussion",
+    outcomes: [
+      "Who's actually shaping MSME policy right now, and how to reach them",
+      "The real gaps in Kenya's support ecosystem, and what's being done to close them",
+      "How to engage the policy processes that affect your business, instead of just reacting to them",
+      "Where government, private sector, and development partners are — and aren't — coordinating",
+    ],
+  },
 ] as const;
 
 /** Three buyers, three reasons. The old page spoke to one. */

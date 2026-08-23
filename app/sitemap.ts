@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${BASE}/`,         lastModified: now, changeFrequency: "weekly",  priority: 1.0 },
     { url: `${BASE}/speakers`, lastModified: now, changeFrequency: "weekly",  priority: 0.9 },
+    { url: `${BASE}/tracks`,   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/partner`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/exhibit`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/papers`,   lastModified: now, changeFrequency: "monthly", priority: 0.7 },

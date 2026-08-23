@@ -140,16 +140,43 @@ export default function Page() {
             <Head eyebrow="Six tracks" dark>Pick what your business actually needs</Head>
             <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {TRACKS.map((t, i) => (
-                <div key={t.n} className="border-t border-line pt-5">
+                /* The whole card is the link, so the target is the card and
+                   not a five-word tail. The top rule takes the track's colour
+                   and thickens on hover — the only thing that moves, which is
+                   enough to say "this is clickable" without decoration. */
+                <Link
+                  key={t.n}
+                  href={`/tracks#track-${i + 1}`}
+                  /* Whole class strings, never `hover:${colour}`. Tailwind
+                     only generates what it can read literally in the source,
+                     so an interpolated variant compiles to nothing — which is
+                     exactly what happened here: marigold worked and the other
+                     three silently did not. */
+                  className={`group block border-t-2 pt-5 transition-colors ${
+                    ["border-line hover:border-marigold",
+                     "border-line hover:border-clay",
+                     "border-line hover:border-indigo",
+                     "border-line hover:border-palm",
+                     "border-line hover:border-marigold",
+                     "border-line hover:border-clay"][i]
+                  }`}
+                >
                   <p className={`font-mono text-[12px] mb-3 ${
                     ["text-marigold","text-clay","text-indigo","text-palm","text-marigold","text-clay"][i]
                   }`}>{t.n}</p>
-                  <h3 className="h-sm text-white text-lg">{t.name}</h3>
+                  <h3 className="h-sm text-white text-lg group-hover:text-marigold transition-colors">{t.name}</h3>
                   {/* Track 02 has no description yet — see TRACKS. A name on
                       its own reads as incomplete; the old line left in place
                       would have read as wrong. */}
                   {t.line && <p className="lede mt-2.5 text-[16px] text-white">{t.line}</p>}
-                </div>
+                  {/* The line that helps someone self-select, which is the
+                      most useful thing the track copy added. */}
+                  {t.who && <p className="mt-3 text-[16px] font-light text-white">{t.who}</p>}
+                  <p className="mt-4 text-[16px] text-marigold">
+                    What you will leave with{" "}
+                    <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+                  </p>
+                </Link>
               ))}
             </div>
           </div>
