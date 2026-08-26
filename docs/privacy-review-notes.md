@@ -30,16 +30,23 @@ site with no database and no server. What each form collects:
 | Exhibit | name, business name, email, phone, booth choice, what you'll show |
 | Papers | name, institution, email, track, paper title, abstract |
 
-**No tracking of any kind.** Confirmed: no Google Analytics, no Meta pixel,
-no advertising tags, no consent-management script. The only two scripts on
-the page are schema.org structured data for search engines. This is a
-genuinely clean position and worth stating on the page rather than leaving
-implied.
+**Advertising tracking — added 26 August 2026.** The site now loads the
+**Meta Pixel** (id 1700326121192587) on every page. It requests
+`connect.facebook.net`, sets Meta's cookies, and reports a page view on first
+load and again on each in-site navigation. There is still no Google
+Analytics, no other advertising tag, and **no consent-management script** —
+see the new question 10.
 
-**No cookies.** One item is stored on the visitor's own device: a browser
-localStorage key `asm-ticker-dismissed`, which remembers that someone closed
-the early-bird banner so it does not reappear. Functional only, no identifier,
-never leaves the device.
+Until this date the site made no third-party requests at all, and these notes
+said so as their strongest finding. That is no longer true and the sections
+below have been rewritten rather than annotated.
+
+**Cookies.** Meta's pixel sets its own cookies (`_fbp`, and `_fbc` if someone
+arrives from a Facebook ad) to recognise a returning browser. Separately, one
+item is stored on the visitor's own device: a localStorage key
+`asm-ticker-dismissed`, which remembers that someone closed the early-bird
+banner. That one is functional only, carries no identifier and never leaves
+the device.
 
 **Fonts — resolved since these notes were first drafted.** The site used to
 load three typefaces from `fonts.googleapis.com` and `fonts.gstatic.com`,
@@ -132,10 +139,11 @@ None of these are drafting errors; they are decisions nobody has made yet.
 - **Legal basis** for processing — consent, legitimate interest, or contract
   — is not stated for any of the three uses (replying, delegate list, summit
   organisation).
-- **Cross-border transfer.** Formspree and Vercel are both outside Kenya.
-  The DPA has specific requirements for transfers abroad, and the page is
-  silent on both. (Google was a third such transfer until the fonts were
-  moved in-house; that one is now closed.)
+- **Cross-border transfer.** Formspree, Vercel and now **Meta** are all
+  outside Kenya, and Meta is the one that matters most — it receives
+  behavioural data, not just a form or a log line. The DPA has specific
+  requirements for transfers abroad. `/privacy` now names all three; whether
+  naming them is sufficient is the legal question.
 - **Third parties are not named.** Formspree in particular processes every
   enquiry and is invisible in the current text.
 - **Local storage** is not mentioned. Minor and functional, but disclosed by
@@ -183,16 +191,22 @@ Answers to these are enough to finish the page.
 9. ~~Does ICL want to keep loading fonts from Google?~~ **Done — fonts are
    now self-hosted and no visitor data goes to Google.** No decision needed;
    noted here so the change is on the record for the review.
+10. **The Meta Pixel fires on page load, for everyone, before anyone has
+    agreed to anything.** Disclosure is now on `/privacy`. The open question
+    is whether the DPA requires *consent* — a banner that holds the pixel
+    until someone accepts — rather than disclosure after the fact. This is
+    the one item on this list that changes what the site does, not just what
+    it says. Nobody has been asked yet.
 
 ---
 
 ## 6. Worth saying out loud on the page
 
-The site runs no analytics, no advertising pixels and no tracking cookies,
-and since the fonts moved in-house it makes **no third-party requests at all**
-when a page loads. Verified in a browser with the network recorded: the only
-host contacted is the site's own.
+~~The site runs no analytics, no advertising pixels and no tracking cookies.~~
 
-That is unusual, and it is a stronger assurance than most privacy notices can
-give. The current page does not mention any of it, and it is the best thing
-this notice has to say.
+**This section is withdrawn.** It was the strongest thing this notice had to
+say, and the Meta Pixel ended it on 26 August 2026. Left visible rather than
+deleted so the review has an accurate history: for a period this site made no
+third-party requests at all, that was verified in a browser, and it was given
+up deliberately for advertising measurement. If the pixel is ever removed,
+this is the claim that becomes available again.

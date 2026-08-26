@@ -10,15 +10,30 @@ export const metadata: Metadata = {
 
 /* A privacy page is not optional once you run Google or Meta ads — both
    platforms require one before they will approve a campaign. This is a
-   plain-language draft and should be reviewed by ICL before launch. */
+   plain-language draft and should be reviewed by ICL before launch.
+
+   REWRITTEN 26 AUGUST 2026, when the Meta Pixel was added. Before that the
+   site made no third-party requests at all and this page could say so. It
+   cannot now, and the sections below have to keep pace with what the site
+   actually loads — if a tracker is ever added or removed, this text changes
+   in the same commit. A privacy notice that describes the wrong site is
+   worse than a short one. */
 const SECTIONS = [
   {
     h: "What we collect",
-    p: "When you fill in a form on this site we receive the name, email, phone number and message you entered. We do not collect anything else from this website.",
+    p: `When you fill in a form on this site we receive what you typed into it — your name, your email, a phone number, an organisation or institution where the form asks for one, and your message. Separately, an advertising tool described below records that a page was visited. Beyond those two things, this website collects nothing about you.`,
+  },
+  {
+    h: "Advertising and measurement",
+    p: `This site loads the Meta Pixel, a piece of Facebook's advertising technology. It tells Meta which pages were viewed and sets cookies in your browser so that Meta can recognise the same browser again. We use it to measure whether our advertising is reaching people and to show the summit to people like those already interested. It runs on every page. You can stop it: block third-party cookies or trackers in your browser, use an ad or tracker blocker, or adjust what Meta is allowed to do with your activity in your Facebook or Instagram ad settings. Nothing on this site stops working if you do.`,
   },
   {
     h: "What we do with it",
-    p: "We use it to reply to you and to organise the summit. If you register for a ticket, the ticketing provider handles that transaction under its own terms and we receive your name and contact details for the delegate list.",
+    p: `We use what you send us to reply to you and to organise the summit. If you register for a ticket, that transaction happens on TikoHub under its own terms and we receive your name and contact details for the delegate list. Payment details never reach this website.`,
+  },
+  {
+    h: "Who else sees it",
+    p: `Three companies process information on our behalf, all of them outside Kenya: Formspree receives form submissions, Vercel hosts the site and keeps standard server logs including IP addresses, and Meta receives the page-view information described above. Ticketing is handled by TikoHub.`,
   },
   {
     h: "What we do not do",

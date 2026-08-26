@@ -660,6 +660,20 @@ export const REASONS = [
 ] as const;
 
 /**
+ * Meta Pixel.
+ *
+ * The id is config, not content, but it lives here for the same reason
+ * everything else does: one file to look in. Empty string disables the pixel
+ * entirely — `components/MetaPixel.tsx` renders nothing without it, which is
+ * how you turn tracking off for a preview deploy without deleting code.
+ *
+ * NOTE: this is the first third-party request the site makes. /privacy tells
+ * visitors the site runs no tracking; that claim does not survive this and
+ * has to be rewritten before launch. See docs/privacy-review-notes.md.
+ */
+export const META_PIXEL_ID = "1700326121192587";
+
+/**
  * Form endpoint.
  *
  * The site is a static export, so there is no server to receive a form POST.
