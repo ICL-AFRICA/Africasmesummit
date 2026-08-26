@@ -4,6 +4,51 @@ Marketing site for a one-day conference, Thursday 15 October 2026, University
 of Nairobi. Next.js 15 static export, Tailwind v4, on Vercel. No database, no
 server, no env vars.
 
+## Stack and toolchain
+
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind v4 · deployed on
+Vercel.
+
+**Node 24, pinned in two places that do different jobs.** `.nvmrc` says `24`
+and only tells a local version manager what to use — on its own it pins
+nothing about a deploy. `engines.node` in `package.json` says `24.x` and **is
+the one Vercel reads** (that, or the Node.js Version dropdown in Project
+Settings). Change both together or they drift.
+
+**`output: 'export'` is set** in `next.config.mjs`, alongside
+`images: { unoptimized: true }` and `trailingSlash: true`. A migration off
+static export is planned but **has not happened** — until it does, treat the
+static constraints as real: no server at runtime, no runtime env vars, no
+image optimisation, and security headers live in `vercel.json` because
+`headers()` does nothing under `output: 'export'`.
+
+## Brand tokens
+
+Defined as CSS custom properties in the `@theme` block of `app/globals.css`.
+`Marketing/AFRICA-SME-SUMMIT-BRAND.md` and `public/logo/BRAND.md` carry the
+reasoning; these are the values.
+
+| Token | Hex | |
+|---|---|---|
+| `--color-paper` | `#FBF8F3` | the page, warm off-white |
+| `--color-ink` | `#191539` | body text and the dark fields |
+| `--color-marigold` | `#E3A428` | enterprise — the ticket action |
+| `--color-clay` | `#C6553F` | urgency and deadlines |
+| `--color-indigo` | `#3F6FA8` | capital and institutions |
+| `--color-palm` | `#4F9367` | growth — universities and research |
+
+**Type is Archivo plus IBM Plex Mono**, matching the brand doc. `--font-sans`
+is Archivo, `--font-mono` is IBM Plex Mono.
+
+**But `--font-sans` declares "Archivo" and nothing ever loads it**, so every
+heading and every paragraph on the site currently renders in `system-ui`. Only
+IBM Plex Mono is actually served — vendored as four woff2 files in
+`public/fonts/`, with `@font-face` rules at the top of `app/globals.css`. It is
+deliberately NOT `next/font`: that fetches from Google at build time, which
+made `npm run build` fail whenever the network was unavailable. Do not
+reintroduce it. If Archivo should genuinely be loaded, that is a sitewide
+typography change and needs a visual pass, not a one-line fix.
+
 ## Read before changing anything
 
 - `README.md` — architecture, SEO, the hero animation, the ticker
@@ -28,6 +73,20 @@ server, no env vars.
   reserved for the early-bird deadline, so red always means time is running out.
 - **The ticket action always reads "Get a ticket — KES 5,800"**, every page,
   every section. The nav is the one exception, for space at 390px.
+- **Track anchors are positional, not slug-based.** `/tracks` renders
+  `#track-1` … `#track-6` from the array index, so **reordering `TRACKS`
+  silently repoints every inbound link** — including any live paid ad or
+  printed QR code pointing at a track. Reorder only with the links updated in
+  the same commit.
+- **A track finds its speakers by exact string match** — `t.name === s.topic`.
+  There is no fuzzy matching and no second mapping to keep in sync, which is
+  the point; it also means renaming a track without changing the matching
+  `topic` values silently empties its speaker list. This has already bitten
+  once: `"Kenya Entrepreneurship Ecosystem"` against a track named
+  `"…Ecosystem strengthening"`.
+- **`trailingSlash: true`**, so internal links emit with the slash before the
+  hash — `/tracks/#track-4`, not `/tracks#track-4`. Worth knowing when
+  grepping the built HTML for a link, or writing a redirect.
 - **`npm run build` must pass before committing.**
 
 ## How to work here
