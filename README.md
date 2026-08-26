@@ -312,7 +312,9 @@ Change the constant and every one of them follows. This is deliberate: the
 page it replaces drifted out of sync precisely because the same date was
 typed in several places.
 
-Current value: **31 August 2026, 23:59 EAT** — matching the printed flyer.
+Current value: **15 September 2026, 23:59 EAT**. Extended from 31 August on
+26 August so a live deadline falls inside the paid campaign window. **The
+printed flyer still says 31 August** and is stale until reprinted.
 
 ## The hero animation
 
@@ -385,7 +387,7 @@ description, so nothing can disagree with anything else.
 
 Derived is not the same as live. The site is a static export, so the tier is
 chosen when the site is **built**. The deadline passing does not change HTML
-already on the CDN — see the 1 September item in `SETUP.md`. Until the site
+already on the CDN — see the 16 September item in `SETUP.md`. Until the site
 is rebuilt after the deadline, the structured data keeps advertising the
 early-bird price, and it will be as wrong as everything else on the page.
 Wrong in one place rather than several is the improvement here; it is not
@@ -426,7 +428,7 @@ should not have to email and wait two days.
 **Two things needing attention:**
 
 1. **There is no Standard Delegate Pass on TikoHub.** The flyer and this
-   site both promise KES 6,800 from 1 September; the only 6,800 item is the
+   site both promise KES 6,800 from 16 September; the only 6,800 item is the
    Papers Call ticket. Create it before the [early-bird deadline](#dates).
 2. **The sponsorship `includes` bullets are drafts.** Names and prices are
    real; the inclusion lists were written to be plausible. A sponsor paying

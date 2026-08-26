@@ -105,14 +105,24 @@ export const DATE_DAY_MONTH = fmtDate({ day: "numeric", month: "long" });
 /** "15 October 2026" — for search descriptions and anywhere the year is wanted. */
 export const DATE_LONG = fmtDate({ day: "numeric", month: "long", year: "numeric" });
 
-/** Early bird closes 31 Aug 2026, 23:59 East Africa Time (UTC+3).
-    This must match the printed flyer. It does.
+/** Early bird closes 15 Sept 2026, 23:59 East Africa Time (UTC+3).
+    Independent of DATE_ISO on purpose — the deadline and the summit date
+    move separately, and have.
 
-    The summit moved to 15 October and this deliberately did not move with
-    it: the deadline now falls 45 days before the day rather than 30.
-    Confirmed 14 August — the reprinted flyers carry 31 August too, so the
-    two stay in step. */
-export const EARLY_BIRD_ENDS = "2026-08-31T23:59:00+03:00";
+    Extended from 31 August on 26 August 2026, so that a live deadline sits
+    inside the paid campaign window rather than expiring before the spend
+    starts. A countdown to a date that has already passed sells nothing.
+
+    TWO THINGS THIS DATE NO LONGER MATCHES, both outside the repo:
+
+      - The printed flyer says 31 August. Until it is reprinted, print and
+        web disagree about when the price rises.
+      - The press release dated 14 August says "through August 31, 2026,
+        rising to KES 6,800 from September 1". It is stale and is NOT edited
+        here: a release is a dated document, and correcting one that has gone
+        out means issuing a second release, not rewriting the first. See
+        PRESS_RELEASE below. */
+export const EARLY_BIRD_ENDS = "2026-09-15T23:59:00+03:00";
 
 /** Derived label — never type the deadline anywhere else. The old ICL page
     drifted because the date lived in several places at once. */
@@ -129,9 +139,10 @@ export const STANDARD_FROM = new Date(
  * Delegate tickets, matching what is actually purchasable on TikoHub.
  *
  * WARNING: there is currently no Standard Delegate Pass on the ticketing
- * page. The printed flyer promises KES 6,800 from 1 September, and the only
+ * page. The site promises KES 6,800 from 16 September (the flyer still says
+ * 1 September, and is stale until reprinted), and the only
  * 6,800 item on TikoHub is the Papers Call ticket, which is a different
- * thing. Create the standard pass before 31 August, or the site will be
+ * thing. Create the standard pass before 15 September, or the site will be
  * advertising a ticket nobody can buy.
  */
 export const TICKETS = [
@@ -185,7 +196,7 @@ export const TICKETS = [
  * ── Which tier is quoted, and the one thing to know about it ─────────────
  *
  * TICKET_CTA follows the deadline: early bird until EARLY_BIRD_ENDS, standard
- * after it. Quoting 5,800 on 1 September would advertise a price that has
+ * after it. Quoting 5,800 on 16 September would advertise a price that has
  * expired, which is worse than any alternative here.
  *
  * BUT: this site is a static export, so the line below runs at BUILD time,
@@ -195,7 +206,7 @@ export const TICKETS = [
  *
  * So unlike the countdown and the early-bird bar, which are client-side and
  * genuinely need nothing done on the day, THIS NEEDS A REDEPLOY ON OR AFTER
- * 1 SEPTEMBER. Any push to main does it; there is nothing to edit. Until then
+ * 16 SEPTEMBER. Any push to main does it; there is nothing to edit. Until then
  * every ticket button still reads 5,800.
  *
  * Making it client-side instead was the alternative and was rejected: it
@@ -741,7 +752,7 @@ export const SPONSOR_INCLUDES_NOTE =
  * the site cannot contradict itself. Here it is inverted: a press release is
  * a dated document that went out to journalists. If `EARLY_BIRD_LABEL` were
  * interpolated into the body, the release would silently rewrite itself on
- * 1 September and no longer match the copy anyone was sent.
+ * 16 September and no longer match the copy anyone was sent.
  *
  * So the prose is frozen and the numbers are literal, on purpose.
  * `PRESS_RELEASE.checked` records what was true when it was written, so a

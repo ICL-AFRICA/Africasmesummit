@@ -178,9 +178,9 @@ one has more search history — so it will outrank you for your own name.
 **Blocking — these need someone other than you:**
 
 - [ ] **Create the Standard Delegate Pass on TikoHub.** The flyer and this
-      site both promise KES 6,800 from 1 September. The only 6,800 item on
+      site both promise KES 6,800 from 16 September. The only 6,800 item on
       TikoHub is the Papers Call ticket, a different product. As things
-      stand, anyone arriving on 1 September has nothing to buy.
+      stand, anyone arriving on 16 September has nothing to buy.
 - [x] **Speaker bios approved.** Done. All seven `bio` entries in
       `lib/event.ts` are now the speakers' own words, supplied via
       `Marketing/speaker-bios-cleaned.md` and marked `draft: false`. A
@@ -205,9 +205,9 @@ one has more search history — so it will outrank you for your own name.
 - [ ] **Privacy page reviewed by ICL.** It makes claims about data handling
       that need to be true.
 
-**Dated — 1 September, and two separate things land on it:**
+**Dated — 16 September, and two separate things land on it:**
 
-- [ ] **Redeploy the site on or after 00:00, 1 September.** Not optional, and
+- [ ] **Redeploy the site on or after 00:00, 16 September.** Not optional, and
       not the same as the countdown.
 
       Which ticket tier the site quotes — every "Get a ticket" button, the
@@ -217,7 +217,7 @@ one has more search history — so it will outrank you for your own name.
       what sits on the CDN. The early-bird deadline passing does not reach
       into a file that was written in August. Nothing changes on its own.
 
-      So on 1 September, with no redeploy, every ticket button on the site
+      So on 16 September, with no redeploy, every ticket button on the site
       still reads **KES 5,800** — a price that expired at midnight — and will
       keep reading it until someone builds the site again.
 
@@ -279,7 +279,7 @@ Live in about 60 seconds.
 
 **Dates especially:** `EARLY_BIRD_ENDS` is the only place the deadline is
 written. Every label, both countdowns and the schema.org offer derive from
-it. When it passes on 31 August the ticker and the bar remove themselves —
+it. When it passes on 15 September the ticker and the bar remove themselves —
 nothing to deploy on the day.
 
 **The brand:** `public/logo/` holds every logo variant, and
