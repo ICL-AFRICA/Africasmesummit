@@ -63,13 +63,23 @@ export const EVENT = {
 } as const;
 
 /**
- * The booking step on TikoHub, rather than the event page.
+ * Where the sponsorship tiers and the exhibition booths send people.
  *
- * ONE URL, not six: the links supplied for the tiers and booths were
- * identical, so TikoHub has no per-package deep link. Derived so the event id
- * is written once.
+ * A literal, not derived. It used to be `${EVENT.ticketUrl}/booking`, which
+ * skipped the event page and landed on TikoHub's booking step — one click
+ * closer to paying for someone who had already chosen. This slug has no
+ * /booking path (it 404s), so that shortcut is gone: these buttons now land
+ * on the event page, the same place the general "Get a ticket" buttons go,
+ * reached by a different URL.
+ *
+ * Both URLs are live and serve the same event — /events/562 and this slug —
+ * so the two constants are aliases rather than different destinations. If the
+ * extra click matters, https://tikohub.com/events/562/booking still works.
+ *
+ * The odd-looking "sme-s" is correct: the listing is titled "Africa SME's
+ * Summit". Verified — the tidier africa-sme-summit returns 404.
  */
-export const BOOKING_URL = `${EVENT.ticketUrl}/booking`;
+export const BOOKING_URL = "https://tikohub.com/events/africa-sme-s-summit";
 
 /**
  * "University of Nairobi" — the campus qualifier dropped.
