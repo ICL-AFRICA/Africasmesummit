@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+import ConsentChoice from "@/components/ConsentChoice";
 import { EVENT } from "@/lib/event";
 
 export const metadata: Metadata = {
@@ -12,8 +13,9 @@ export const metadata: Metadata = {
    platforms require one before they will approve a campaign. This is a
    plain-language draft and should be reviewed by ICL before launch.
 
-   REWRITTEN 26 AUGUST 2026, when the Meta Pixel was added. Before that the
-   site made no third-party requests at all and this page could say so. It
+   REWRITTEN 26 AUGUST 2026 for the Meta Pixel, and again on 31 August when
+   the LinkedIn Insight Tag joined it. Before that the site made no
+   third-party requests at all and this page could say so. It
    cannot now, and the sections below have to keep pace with what the site
    actually loads — if a tracker is ever added or removed, this text changes
    in the same commit. A privacy notice that describes the wrong site is
@@ -25,7 +27,17 @@ const SECTIONS = [
   },
   {
     h: "Advertising and measurement",
-    p: `This site loads the Meta Pixel, a piece of Facebook's advertising technology. It tells Meta which pages were viewed and sets cookies in your browser so that Meta can recognise the same browser again. We use it to measure whether our advertising is reaching people and to show the summit to people like those already interested. It runs on every page. You can stop it: block third-party cookies or trackers in your browser, use an ad or tracker blocker, or adjust what Meta is allowed to do with your activity in your Facebook or Instagram ad settings. Nothing on this site stops working if you do.`,
+    p: `This site loads two advertising tools: the Meta Pixel, from Facebook, \
+and the LinkedIn Insight Tag. Both tell their companies which pages were \
+viewed and set cookies in your browser so they can recognise the same browser \
+again. We use them to measure whether our advertising is reaching people and \
+to show the summit to people like those already interested. Both run on every \
+page. \
+\
+You can stop them: block third-party cookies or trackers in your browser, use \
+an ad or tracker blocker, or adjust what Meta and LinkedIn are allowed to do \
+with your activity in your Facebook, Instagram and LinkedIn ad settings. \
+Nothing on this site stops working if you do.`,
   },
   {
     h: "What we do with it",
@@ -33,7 +45,7 @@ const SECTIONS = [
   },
   {
     h: "Who else sees it",
-    p: `Three companies process information on our behalf, all of them outside Kenya: Formspree receives form submissions, Vercel hosts the site and keeps standard server logs including IP addresses, and Meta receives the page-view information described above. Ticketing is handled by TikoHub.`,
+    p: `Four companies process information on our behalf, all of them outside Kenya: Formspree receives form submissions, Vercel hosts the site and keeps standard server logs including IP addresses, and Meta and LinkedIn each receive the page-view information described above. Ticketing is handled by TikoHub.`,
   },
   {
     h: "What we do not do",
@@ -70,6 +82,7 @@ export default function Privacy() {
                 <p className="lede mt-3 text-[17px] text-white">{s.p}</p>
               </div>
             ))}
+            <ConsentChoice />
             <p className="mt-8 font-mono text-[12px] text-white">
               Draft — to be reviewed by {EVENT.host} before launch.
             </p>

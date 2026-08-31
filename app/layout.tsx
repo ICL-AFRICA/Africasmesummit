@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import MetaPixel from "@/components/MetaPixel";
+import Analytics from "@/components/Analytics";
 import {
-  EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END, SHARE_DESCRIPTION, META_PIXEL_ID,
+EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END, SHARE_DESCRIPTION,
 } from "@/lib/event";
 import "./globals.css";
 
@@ -118,20 +118,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
-        <MetaPixel />
-        {/* The supplied <noscript> fallback, verbatim. It is a plain <img>
-            rather than next/image on purpose: it must be a real request the
-            moment the markup parses, with no JavaScript involved at all. */}
-        <noscript>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            alt=""
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
-          />
-        </noscript>
+        {/* Consent, and the two trackers behind it. The <noscript> beacons
+            that used to sit here are gone on purpose: they fire without
+            JavaScript, and a visitor without JavaScript cannot be shown a
+            consent bar or answer it. A beacon that cannot be refused is not
+            compatible with asking. */}
+        <Analytics />
       </body>
     </html>
   );

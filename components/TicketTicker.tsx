@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EVENT } from "@/lib/event";
+import { readConsent, subscribeConsent } from "@/lib/consent";
 
 const KEY = "asm-ticker-dismissed";
 
@@ -25,7 +26,19 @@ export default function TicketTicker() {
   const [closed, setClosed] = useState(true);
   const [shown, setShown] = useState(false);
 
+  /* Wait for the consent bar to be answered before appearing. Both are
+     pinned to the bottom of the viewport, and this site's rule is one pinned
+     element at a time — two would also put a countdown and a cookie choice
+     in front of someone simultaneously, which is how a page starts feeling
+     like it is haggling. */
+  const [decided, setDecided] = useState<boolean | undefined>(undefined);
   useEffect(() => {
+    setDecided(readConsent() !== null);
+    return subscribeConsent((v) => setDecided(v !== null));
+  }, []);
+
+  useEffect(() => {
+    if (!decided) return;
     try {
       if (localStorage.getItem(KEY) === "1") return;
     } catch { /* private mode — just show it */ }
@@ -38,7 +51,7 @@ export default function TicketTicker() {
     tick();
     const id = setInterval(tick, 1000);
     return () => { clearInterval(id); clearTimeout(reveal); };
-  }, [target]);
+  }, [decided, target]);
 
   function dismiss() {
     setShown(false);

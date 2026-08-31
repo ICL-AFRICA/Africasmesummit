@@ -65,16 +65,9 @@ export const EVENT = {
 /**
  * The booking step on TikoHub, rather than the event page.
  *
- * Used by the four sponsorship tiers and the two exhibition booths, which
- * are all being bought rather than browsed — one click closer to paying.
- * `EVENT.ticketUrl` stays the destination for the general "Get a ticket"
- * buttons, which are aimed at people still deciding.
- *
- * ONE URL, not six. The six links supplied for the tiers and booths were
- * identical, so TikoHub has no per-package deep link: every button lands on
- * the same page and the buyer still picks their item from the list there.
- * Six fields holding one value is how a set of links drifts apart, so this
- * is a single constant, derived so the event id is written once.
+ * ONE URL, not six: the links supplied for the tiers and booths were
+ * identical, so TikoHub has no per-package deep link. Derived so the event id
+ * is written once.
  */
 export const BOOKING_URL = `${EVENT.ticketUrl}/booking`;
 
@@ -415,14 +408,6 @@ export const TRACKS = [
     ],
   },
   {
-    /* Named by the 14 August programme. The site called it "Market access &
-       Cross-border trade" before that, and the copy supplied for it has twice
-       been about exporting — which reads like a contradiction until you take
-       "Market Acquisition" to mean acquiring MARKETS rather than customers.
-       Under that reading the name and the content agree, and this is the same
-       track it always was under a longer name. `line` was rewritten to match:
-       it previously described winning and keeping customers, which was a
-       guess made from the name alone and the wrong one. */
     n: "02", slug: "market-acquisition-retention-growth",
     name: "Market Acquisition, retention & growth",
     line: "Getting your product past the county line and across the border, and building the partners to keep it there.",
@@ -672,6 +657,19 @@ export const REASONS = [
  * has to be rewritten before launch. See docs/privacy-review-notes.md.
  */
 export const META_PIXEL_ID = "1700326121192587";
+
+/**
+ * LinkedIn Insight Tag partner id, from Campaign Manager → Analytics →
+ * Insight Tag.
+ *
+ * Blank disables the tag entirely — `components/LinkedInInsight.tsx` renders
+ * nothing and the site makes no LinkedIn request — which is how a preview
+ * deploy runs without it.
+ *
+ * Never guess this value. A wrong partner id sends this site's traffic into
+ * somebody else's advertising account, and nothing here would look broken.
+ */
+export const LINKEDIN_PARTNER_ID = "9923012";
 
 /**
  * Form endpoint.

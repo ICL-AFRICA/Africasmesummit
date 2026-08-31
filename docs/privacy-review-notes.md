@@ -30,12 +30,15 @@ site with no database and no server. What each form collects:
 | Exhibit | name, business name, email, phone, booth choice, what you'll show |
 | Papers | name, institution, email, track, paper title, abstract |
 
-**Advertising tracking — added 26 August 2026.** The site now loads the
-**Meta Pixel** (id 1700326121192587) on every page. It requests
-`connect.facebook.net`, sets Meta's cookies, and reports a page view on first
-load and again on each in-site navigation. There is still no Google
-Analytics, no other advertising tag, and **no consent-management script** —
-see the new question 10.
+**Advertising tracking — two tags, added 26 and 31 August 2026.** The site
+loads the **Meta Pixel** (id 1700326121192587) and the **LinkedIn Insight
+Tag** (partner id 9923012) on every page. Meta requests
+`connect.facebook.net`, sets its cookies, and reports a page view on first
+load and again on each in-site navigation. LinkedIn requests
+`snap.licdn.com` and beacons to `px.ads.linkedin.com`, and reports only the
+page someone lands on — it has no documented way to report later navigations.
+There is still no Google Analytics and **no consent-management script** — see
+question 10.
 
 Until this date the site made no third-party requests at all, and these notes
 said so as their strongest finding. That is no longer true and the sections
@@ -191,12 +194,13 @@ Answers to these are enough to finish the page.
 9. ~~Does ICL want to keep loading fonts from Google?~~ **Done — fonts are
    now self-hosted and no visitor data goes to Google.** No decision needed;
    noted here so the change is on the record for the review.
-10. **The Meta Pixel fires on page load, for everyone, before anyone has
-    agreed to anything.** Disclosure is now on `/privacy`. The open question
+10. **Both advertising tags fire on page load, for everyone, before anyone
+    has agreed to anything.** Disclosure is now on `/privacy`. The open question
     is whether the DPA requires *consent* — a banner that holds the pixel
     until someone accepts — rather than disclosure after the fact. This is
     the one item on this list that changes what the site does, not just what
-    it says. Nobody has been asked yet.
+    it says, and it now covers two trackers rather than one. Nobody has been
+    asked yet.
 
 ---
 
