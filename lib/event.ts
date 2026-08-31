@@ -282,7 +282,7 @@ export const SPEAKERS = [
     name: "Mr. Michael Maddy",
     role: "CRO and Co-Founder",
     org: "Fleet Planner",
-    topic: "Market Acquisition, retention & growth",
+    topic: "Market access & Cross-border trade",
     draft: false,
     bio: [
       "Michael Maddy is Chief Revenue Officer and Co-Founder of Fleet Planner, a Kenya-based logistics technology company using AI to transform fleet management and supply chain operations across East Africa. The platform improves fleet efficiency, real-time logistics visibility, and operational optimization. In his role, Michael leads revenue growth, market expansion, and customer adoption across a diverse portfolio of logistics and transport clients.",
@@ -318,7 +318,7 @@ export const SPEAKERS = [
     name: "Dr. Hilda Muteshi",
     role: "Design & Inclusive Business Modeling Expert",
     org: "SUS-AFRIC",
-    topic: "Market Acquisition, retention & growth",
+    topic: "Market access & Cross-border trade",
     draft: false,
     bio: [
       "Dr. Hilda Muteshi is an expert in design and inclusive business modeling, holding a PhD in Business Administration (Marketing) and an MBA in Marketing. With more than 15 years of experience across the private sector and development, including 10 years in cross-sector research and consultancy, she focuses on human-centered and behavioral design, creating inclusive business models and scalable solutions that improve livelihoods, create jobs, and increase income for the Base of the Pyramid, while empowering youth and women economically.",
@@ -408,8 +408,22 @@ export const TRACKS = [
     ],
   },
   {
-    n: "02", slug: "market-acquisition-retention-growth",
-    name: "Market Acquisition, retention & growth",
+    /* Renamed back to its original name on 31 August 2026, and this is the
+       fourth name it has carried. The order was: "Market access &
+       Cross-border trade", then "Market Acquisition, retention & growth"
+       from the 14 August programme, then a reading of "acquisition" as
+       acquiring MARKETS that let the programme's name sit over cross-border
+       copy — and now the plain name again.
+
+       The copy never moved. Every version of it has been about AfCFTA, EAC,
+       export documentation and distributor networks, which is what the name
+       now says on its face. Nothing else in this entry changed.
+
+       If it moves a fifth time: the two speaker `topic` values below have to
+       move with it or /tracks silently lists nobody on this track, and the
+       press release paragraph names it too. */
+    n: "02", slug: "market-access-cross-border-trade",
+    name: "Market access & Cross-border trade",
     line: "Getting your product past the county line and across the border, and building the partners to keep it there.",
     who: "Businesses ready to expand beyond their local market, especially within the East African region.",
     format: "Panel discussion + Q&A",
@@ -793,7 +807,7 @@ export const PRESS_RELEASE = {
   body: [
     "The Africa SME Summit, a new one-day convening for Kenya's small business economy, will take place October 15, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. The summit is convened by I Choose Life – Africa in partnership with the University of Nairobi, and brings investors, banks, universities, and government together with the enterprises they exist to serve — for one day, in one room.",
     "Kenya is home to 7.4 million micro, small, and medium enterprises. Most of them operate informally, cut off from capital, from markets beyond their own county, and from the research being done about them at universities down the road. The Africa SME Summit was built to close that distance.",
-    "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market acquisition, retention and growth, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
+    "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market access and cross-border trade, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
     "Confirmed speakers include Susan Ndungu, Head of SME Banking at NCBA Bank Kenya; Michael Maddy, CRO and Co-Founder of Fleet Planner; Dr. Henry K. Yatich, Principal of the College of Graduate Studies and Research at Mount Kenya University; Dr. Hilda Muteshi of SUS-AFRIC; Salome Ayugi, Associate Director at Sinapis; Victor Sila, founder of the AI learning platform JuaPath, who leads the summit's AI and Technology track; and Eng. Mike Mutungi, who convenes the summit and speaks on strengthening Kenya's entrepreneurship ecosystem.",
     "Attendees will leave with more than information: mentor and investor matching within their track, templates and tools they can put to use immediately, and access to a papers call for those doing original research on the sector. The summit's institutional partners include the University of Nairobi, Mount Kenya University, Zetech University, and the Association of Startup and SME Enablers of Kenya (ASSEK), alongside county and international partners.",
   ],

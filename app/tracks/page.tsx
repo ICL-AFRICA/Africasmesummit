@@ -7,7 +7,7 @@ import { EVENT, TRACKS, TRACK_EXTRAS, SPEAKERS, PHOTOS, TICKET_CTA, DATE_LONG, D
 export const metadata: Metadata = {
   title: `The six tracks — ${EVENT.name} ${EVENT.year}`,
   description:
-    `The six tracks at the Africa SME Summit, ${DATE_LONG}: finance and capital, market acquisition, talent and safeguarding, AI adoption, industry-academia collaboration and Kenya's entrepreneurship ecosystem.`,
+    `The six tracks at the Africa SME Summit, ${DATE_LONG}: finance and capital, market access and cross-border trade, talent and safeguarding, AI adoption, industry-academia collaboration and Kenya's entrepreneurship ecosystem.`,
   alternates: { canonical: "https://africasmesummit.com/tracks" },
 };
 
