@@ -88,8 +88,8 @@ export default function Page() {
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-3">
               <Btn href={EVENT.ticketUrl}>{TICKET_CTA}</Btn>
-              <Btn href="/partner" tone="outline" internal>Become a partner</Btn>
               <Btn href="/exhibit" tone="outline" internal>Book a stand</Btn>
+              <Btn href="/partner" tone="outline" internal>Become a partner</Btn>
             </div>
           </div>
         </section>
