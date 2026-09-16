@@ -82,6 +82,16 @@ export const EVENT = {
 export const BOOKING_URL = "https://tikohub.com/events/africa-sme-s-summit";
 
 /**
+ * The sponsorship/partnership brochure, downloadable from /partner.
+ *
+ * A static asset — no server, so no download-tracking beyond whatever the
+ * host provides. Compressed from a 42MB Illustrator export to ~160KB with
+ * Ghostscript's /ebook preset (150dpi images); visually unchanged, checked
+ * page by page against the original before the compressed file replaced it.
+ */
+export const BROCHURE_URL = "/brochure/africa-sme-summit-brochure.pdf";
+
+/**
  * "University of Nairobi" — the campus qualifier dropped.
  *
  * `venueDetail` is "University of Nairobi, Main Campus", which is right on a
@@ -720,29 +730,24 @@ export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
  * Until they come from the real sponsorship document, /partner says so out
  * loud via SPONSOR_INCLUDES_NOTE. A sponsor paying KES 1,000,000 on the
  * strength of a bulleted list under a Book button will expect all of it.
+ *
+ * ORDER IS ASCENDING (Bronze → Platinum) AND IS LOAD-BEARING. /partner
+ * renders each tier's package as cumulative — "everything in the tier
+ * before it, plus its own list below" — by reading `SPONSOR_TIERS[i - 1]`.
+ * Reordering this array changes what /partner claims every tier includes,
+ * not just the order they're drawn in. Each tier's `includes` should only
+ * ever list what is genuinely NEW at that tier, never repeat what a lower
+ * tier already grants.
  */
 export const SPONSOR_TIERS = [
   {
-    tier: "Platinum", price: "1,000,000", currency: "KES",
-    limit: "One available", featured: true,
+    tier: "Bronze", price: "125,000", currency: "KES",
+    limit: "Open", featured: false,
     includes: [
-      "Named alongside the summit on all materials",
-      "Opening address from your leadership",
-      "Premium exhibition booth",
-      "Ten delegate passes",
-      "Logo on stage, badges and the delegate pack",
-      "Profile across ICL platforms reaching 10,000+",
-    ],
-  },
-  {
-    tier: "Gold", price: "500,000", currency: "KES",
-    limit: "Limited", featured: false,
-    includes: [
-      "Your name on one of the six tracks",
-      "Chair or co-chair that track's sessions",
-      "Exhibition booth",
-      "Six delegate passes",
-      "Logo on the programme and the website",
+      "Logo on the website and the delegate pack",
+      "Two delegate passes",
+      "Materials in the delegate bag",
+      "Named in the post-summit report",
     ],
   },
   {
@@ -756,13 +761,24 @@ export const SPONSOR_TIERS = [
     ],
   },
   {
-    tier: "Bronze", price: "125,000", currency: "KES",
-    limit: "Open", featured: false,
+    tier: "Gold", price: "500,000", currency: "KES",
+    limit: "Limited", featured: false,
     includes: [
-      "Logo on the website and the delegate pack",
-      "Two delegate passes",
-      "Materials in the delegate bag",
-      "Named in the post-summit report",
+      "Your name on one of the six tracks",
+      "Chair or co-chair that track's sessions",
+      "Six delegate passes",
+    ],
+  },
+  {
+    tier: "Platinum", price: "1,000,000", currency: "KES",
+    limit: "One available", featured: true,
+    includes: [
+      "Named alongside the summit on all materials",
+      "Opening address from your leadership",
+      "Premium exhibition booth",
+      "Ten delegate passes",
+      "Logo on stage, badges and the delegate pack",
+      "Profile across ICL platforms reaching 10,000+",
     ],
   },
 ] as const;
