@@ -16,32 +16,19 @@ export const metadata: Metadata = {
  * — colour, not content, so it lives here rather than in lib/event.ts. Keyed
  * on `t.tier` exactly as written in SPONSOR_TIERS; the four keys must match.
  *
- * Platinum and Gold read as the two premium tiers (solid, filled buttons).
- * Silver and Bronze read as the two accessible tiers (outlined, tinted on
- * hover). That split plus the four different hues is the hierarchy signal —
- * see the tier-accent tokens in globals.css for the contrast reasoning.
+ * Each card's ENTIRE background is now its tier colour (not just an accent
+ * border) — that is the hierarchy signal, so every card reads the same way:
+ * ink text throughout, one shared dark button. Text stays at full-strength
+ * ink rather than the site's usual ink/NN muted-opacity trick, deliberately —
+ * these backgrounds are mid-tone/saturated (unlike the near-white `bg-card`
+ * elsewhere), and ink/45-style fading measures well under 3:1 against them.
+ * See the tier tokens in globals.css for the solid-ink contrast numbers.
  */
-const TIER_STYLE: Record<string, { accent: string; chip: string; button: string }> = {
-  Platinum: {
-    accent: "border-t-4 border-platinum",
-    chip: "text-platinum",
-    button: "bg-platinum text-ink hover:brightness-110",
-  },
-  Gold: {
-    accent: "border-t-4 border-marigold",
-    chip: "text-marigold",
-    button: "bg-marigold text-ink hover:brightness-110",
-  },
-  Silver: {
-    accent: "border-t-4 border-silver",
-    chip: "text-silver",
-    button: "border border-silver text-silver hover:bg-silver hover:text-ink",
-  },
-  Bronze: {
-    accent: "border-t-4 border-bronze",
-    chip: "text-bronze",
-    button: "border border-bronze text-bronze hover:bg-bronze hover:text-ink",
-  },
+const TIER_STYLE: Record<string, { bg: string }> = {
+  Bronze: { bg: "bg-bronze" },
+  Silver: { bg: "bg-silver" },
+  Gold: { bg: "bg-marigold" },
+  Platinum: { bg: "bg-platinum" },
 };
 
 export default function Partner() {
@@ -63,44 +50,43 @@ export default function Partner() {
           <p className="lede text-[16px] text-white max-w-2xl mb-8">
             {SPONSOR_INCLUDES_NOTE}
           </p>
-          {/* items-end: cards are NOT the same height. Each tier's list is a
-              delta (see the ordering note on SPONSOR_TIERS), so Bronze is
-              deliberately the shortest card and Platinum the tallest — a
-              skyline that rises left to right, so the eye reads "more" as
-              "taller" before it reads a single word. Scoped to lg: below
-              that the grid drops to 1–2 columns and a staircase across
-              unrelated rows would just look broken. */}
-          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 lg:items-end border border-line">
+          {/* Equal-height by default: plain grid stretch (no items-end), so
+              every card matches the tallest one and each tier's "Book"
+              button lands at the same row regardless of how many bullets
+              it has — the `flex-1` on the <ul> below absorbs the slack.
+              The tier's identity is the card's own background colour, not
+              a border accent, so the row reads as one clean table. */}
+          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
             {SPONSOR_TIERS.map((t, i) => {
               const prev = i > 0 ? SPONSOR_TIERS[i - 1] : null;
               return (
                 <div
                   key={t.tier}
-                  className={`p-7 sm:p-8 flex flex-col ${t.featured ? "bg-raise" : "bg-ink"} ${TIER_STYLE[t.tier].accent}`}
+                  className={`p-7 sm:p-8 flex flex-col ${TIER_STYLE[t.tier].bg}`}
                 >
                   <div className="flex items-baseline justify-between gap-3">
-                    <p className={`eyebrow ${TIER_STYLE[t.tier].chip}`}>{t.tier}</p>
-                    <p className="font-mono text-[12px] text-white">{t.limit}</p>
+                    <p className="eyebrow text-ink">{t.tier}</p>
+                    <p className="font-mono text-[12px] text-ink">{t.limit}</p>
                   </div>
-                  <p className="h-lg text-white text-3xl mt-5">
+                  <p className="h-lg text-ink text-3xl mt-5">
                     <span className="text-base align-top mr-1.5 font-normal">{t.currency}</span>
                     {t.price}
                   </p>
-                  <ul className="mt-6 pt-5 space-y-2.5 border-t border-line flex-1">
+                  <ul className="mt-6 pt-5 space-y-2.5 border-t border-ink/60 flex-1">
                     {prev && (
-                      <li className="text-mist italic text-[16px] pb-1">
+                      <li className="text-ink italic text-[16px] pb-1">
                         Everything in {prev.tier}, plus:
                       </li>
                     )}
                     {t.includes.map((x) => (
-                      <li key={x} className="flex gap-2.5 text-[16px] text-white">
-                        <span className={`${TIER_STYLE[t.tier].chip} flex-none`}>✓</span>{x}
+                      <li key={x} className="flex gap-2.5 text-[16px] text-ink">
+                        <span className="flex-none">✓</span>{x}
                       </li>
                     ))}
                   </ul>
                   <a
                     href={BOOKING_URL}
-                    className={`mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-all ${TIER_STYLE[t.tier].button}`}
+                    className="mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
                   >
                     Book {t.tier}
                   </a>
