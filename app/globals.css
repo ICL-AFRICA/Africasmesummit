@@ -115,6 +115,25 @@
   --color-white:   #FFFFFF;
   --color-off:     #221D4A;
 
+  /* ── Sponsorship tier accents ────────────────────────────────────────
+     /partner only — each package (Platinum, Gold, Silver, Bronze) gets its
+     own identity so the tier hierarchy reads at a glance. NOT part of the
+     four-colour brand rotation above and not a substitute for it: these
+     exist because a sponsorship tier literally named "Silver" has to look
+     silver, which none of the four brand hues do. Gold reuses
+     --color-marigold rather than duplicating it — marigold already is gold.
+
+     Contrast checked against the card backgrounds they sit on (ink/raise,
+     both ~#19–22 luma): platinum 13.5:1, silver 9.5:1, bronze 6.6:1,
+     marigold (gold) 7.95:1 — all comfortably clear of the 4.5:1 floor, so
+     none of these reads as a muted grey. */
+  --color-platinum:   #DEE3EC;  /* cool silver-white — the premium tier   */
+  --color-platinum-t: #56607A;  /* 5.9:1 on paper, if ever needed there   */
+  --color-silver:     #B7C0D6;  /* steel grey-blue                       */
+  --color-silver-t:   #47536E;  /* 7.3:1 on paper                        */
+  --color-bronze:     #D98F52;  /* copper — a distinct hue from clay red */
+  --color-bronze-t:   #8C531F;  /* 5.9:1 on paper                        */
+
   --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
   /* Vendored above, so this names the family directly. */
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;

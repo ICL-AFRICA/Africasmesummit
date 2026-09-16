@@ -11,6 +11,39 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://africasmesummit.com/partner" },
 };
 
+/**
+ * Per-tier visual identity for the package grid below. Purely presentational
+ * — colour, not content, so it lives here rather than in lib/event.ts. Keyed
+ * on `t.tier` exactly as written in SPONSOR_TIERS; the four keys must match.
+ *
+ * Platinum and Gold read as the two premium tiers (solid, filled buttons).
+ * Silver and Bronze read as the two accessible tiers (outlined, tinted on
+ * hover). That split plus the four different hues is the hierarchy signal —
+ * see the tier-accent tokens in globals.css for the contrast reasoning.
+ */
+const TIER_STYLE: Record<string, { accent: string; chip: string; button: string }> = {
+  Platinum: {
+    accent: "border-t-4 border-platinum",
+    chip: "text-platinum",
+    button: "bg-platinum text-ink hover:brightness-110",
+  },
+  Gold: {
+    accent: "border-t-4 border-marigold",
+    chip: "text-marigold",
+    button: "bg-marigold text-ink hover:brightness-110",
+  },
+  Silver: {
+    accent: "border-t-4 border-silver",
+    chip: "text-silver",
+    button: "border border-silver text-silver hover:bg-silver hover:text-ink",
+  },
+  Bronze: {
+    accent: "border-t-4 border-bronze",
+    chip: "text-bronze",
+    button: "border border-bronze text-bronze hover:bg-bronze hover:text-ink",
+  },
+};
+
 export default function Partner() {
   return (
     <PageShell
@@ -32,9 +65,12 @@ export default function Partner() {
           </p>
           <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
             {SPONSOR_TIERS.map((t) => (
-              <div key={t.tier} className={`p-7 sm:p-8 flex flex-col ${t.featured ? "bg-raise" : "bg-ink"}`}>
+              <div
+                key={t.tier}
+                className={`p-7 sm:p-8 flex flex-col ${t.featured ? "bg-raise" : "bg-ink"} ${TIER_STYLE[t.tier].accent}`}
+              >
                 <div className="flex items-baseline justify-between gap-3">
-                  <p className="eyebrow text-marigold">{t.tier}</p>
+                  <p className={`eyebrow ${TIER_STYLE[t.tier].chip}`}>{t.tier}</p>
                   <p className="font-mono text-[12px] text-white">{t.limit}</p>
                 </div>
                 <p className="h-lg text-white text-3xl mt-5">
@@ -44,15 +80,13 @@ export default function Partner() {
                 <ul className="mt-6 pt-5 space-y-2.5 border-t border-line flex-1">
                   {t.includes.map((x) => (
                     <li key={x} className="flex gap-2.5 text-[16px] text-white">
-                      <span className="text-marigold flex-none">✓</span>{x}
+                      <span className={`${TIER_STYLE[t.tier].chip} flex-none`}>✓</span>{x}
                     </li>
                   ))}
                 </ul>
                 <a
                   href={BOOKING_URL}
-                  className={`mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-all ${
-                    t.featured ? "bg-gold text-ink hover:brightness-110"
-                               : "border border-line text-white hover:border-gold hover:text-marigold-t"}`}
+                  className={`mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-all ${TIER_STYLE[t.tier].button}`}
                 >
                   Book {t.tier}
                 </a>
