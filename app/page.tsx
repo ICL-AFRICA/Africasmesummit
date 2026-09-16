@@ -8,6 +8,17 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE } from "@/lib/event";
 
+/* The wall below is a curated seven, not the full roster — SPEAKERS grew
+   to twenty on 16 September 2026, and rendering all of them edge to edge
+   would either blow out the homepage or, worse, leave a hole in the last
+   row (the tiles have no gaps, so a short row shows as bare ink). Seven
+   plus the closing "propose a session" tile is the same clean 4x2 grid
+   the page was built around. The other thirteen are one click away on
+   /speakers and appear on their own track under /tracks. Change this
+   slice, and the "Four across… fills two rows exactly" comment below it,
+   together. */
+const HOMEPAGE_SPEAKERS = SPEAKERS.slice(0, 7);
+
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
    different kinds of space rather than the same layout recoloured. */
@@ -98,7 +109,7 @@ export default function Page() {
               gaps, so a hole shows as a bare ink rectangle. Adding or
               removing a speaker means checking this number again. */}
           <div className="grid grid-cols-2 lg:grid-cols-4">
-            {SPEAKERS.map((s, i) => (
+            {HOMEPAGE_SPEAKERS.map((s, i) => (
               <SpeakerCard
                 key={s.slug}
                 index={i}

@@ -361,6 +361,129 @@ export const SPEAKERS = [
       "Salome holds a Bachelor's degree in Communication and Media Technology from Maseno University, with project management and leadership training from the Kenya Institute of Project Management and Strathmore Business School. She contributes to the startup ecosystem through mentorship, governance, and leadership, currently serving as Board Vice Chairperson of the Association of Startup and SME Enablers of Kenya (ASSEK).",
     ],
   },
+  /* Thirteen speakers added 16 September 2026, confirmed by name, role, org
+     and track by I Choose Life – Africa communications, one at a time.
+     Every bio below is a single factual sentence built only from the name,
+     role and org supplied — no biography beyond that has been signed off,
+     so every entry here is `draft: true` per the rule above. Replace with
+     the speaker's own words, and flip to `draft: false`, once supplied. */
+  {
+    slug: "mercyline-binsari",
+    name: "Mercyline Binsari",
+    role: "Finance Manager",
+    org: "I Choose Life – Africa",
+    topic: "Finance, Capital & Investment",
+    draft: true,
+    bio: ["Mercyline Binsari is Finance Manager at I Choose Life – Africa."],
+  },
+  {
+    slug: "thomas-ondigi",
+    name: "Thomas Ondigi",
+    role: "Managing Partner",
+    org: "Nolands Kenya",
+    topic: "Finance, Capital & Investment",
+    draft: true,
+    bio: ["Thomas Ondigi is Managing Partner at Nolands Kenya."],
+  },
+  {
+    slug: "wanjau-nduba",
+    name: "Wanjau Nduba",
+    role: "Chairperson",
+    org: "Child's Mission Africa",
+    topic: "Finance, Capital & Investment",
+    draft: true,
+    bio: ["Wanjau Nduba is Chairperson of Child's Mission Africa."],
+  },
+  {
+    slug: "nils-lindh",
+    name: "Nils Lindh",
+    role: "Founder",
+    org: "Naventure Nordic",
+    topic: "Finance, Capital & Investment",
+    draft: true,
+    bio: ["Nils Lindh is Founder of Naventure Nordic."],
+  },
+  {
+    slug: "jonathan-asena",
+    name: "Jonathan Asena",
+    role: "Marketing Manager",
+    org: "Kimisitu DT Sacco",
+    topic: "Finance, Capital & Investment",
+    draft: true,
+    bio: ["Jonathan Asena is Marketing Manager at Kimisitu DT Sacco."],
+  },
+  {
+    slug: "daniel-huba",
+    name: "Daniel Huba",
+    role: "Head of Markets and Partnership Execution for Growth Segments",
+    org: "Mastercard",
+    topic: "Industry and Academia collaboration",
+    draft: true,
+    bio: ["Daniel Huba is Head of Markets and Partnership Execution for Growth Segments at Mastercard."],
+  },
+  {
+    slug: "duncan-levisohn",
+    name: "Duncan Levisohn",
+    role: "Associate Professor, Sustainable Enterprise",
+    org: "Jönköping International Business School, Jönköping University, Sweden",
+    topic: "Industry and Academia collaboration",
+    draft: true,
+    bio: ["Duncan Levisohn is Associate Professor in Sustainable Enterprise at Jönköping International Business School, Jönköping University, Sweden."],
+  },
+  {
+    slug: "eric-nyamwaro",
+    name: "Mr. Eric Nyamwaro",
+    role: "Partnerships Advisor",
+    org: "STEM Impact Center",
+    topic: "Industry and Academia collaboration",
+    draft: true,
+    bio: ["Eric Nyamwaro is Partnerships Advisor at STEM Impact Center."],
+  },
+  {
+    slug: "ruth-mawia",
+    name: "Ruth Mawia",
+    role: "CEO",
+    org: "Koola Waters",
+    topic: "Industry and Academia collaboration",
+    draft: true,
+    bio: ["Ruth Mawia is CEO of Koola Waters."],
+  },
+  {
+    slug: "kelvin-karobio",
+    name: "Kelvin Karobio",
+    role: "Director",
+    org: "Biztimam Ventures Limited",
+    topic: "Industry and Academia collaboration",
+    draft: true,
+    bio: ["Kelvin Karobio is Director of Biztimam Ventures Limited."],
+  },
+  {
+    slug: "jacqueline-tsuma",
+    name: "Ms. Jacqueline Tsuma",
+    role: "Chief Innovation Officer",
+    org: "Timbuktoo Foundation (UNDP)",
+    topic: "Adopting AI and Technology",
+    draft: true,
+    bio: ["Jacqueline Tsuma is Chief Innovation Officer at Timbuktoo Foundation (UNDP)."],
+  },
+  {
+    slug: "njeri-ngaruiya",
+    name: "Dr. Njeri Ngaruiya",
+    role: "Lecturer, School of Computing and Engineering Science",
+    org: "Strathmore University",
+    topic: "Adopting AI and Technology",
+    draft: true,
+    bio: ["Dr. Njeri Ngaruiya is a Lecturer in the School of Computing and Engineering Science at Strathmore University."],
+  },
+  {
+    slug: "esther-mwangi",
+    name: "Esther Mwangi",
+    role: "Director of Research & Innovation",
+    org: "Zetech University",
+    topic: "Adopting AI and Technology",
+    draft: true,
+    bio: ["Esther Mwangi is Director of Research & Innovation at Zetech University."],
+  },
 ] as const;
 
 /**
@@ -373,7 +496,9 @@ export const SPEAKERS = [
  */
 const COUNT_WORDS = [
   "zero", "one", "two", "three", "four", "five", "six",
-  "seven", "eight", "nine", "ten", "eleven", "twelve",
+  "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+  "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+  "twenty",
 ] as const;
 
 export const SPEAKER_COUNT = COUNT_WORDS[SPEAKERS.length] ?? String(SPEAKERS.length);
@@ -649,10 +774,16 @@ export const PHOTOS = {
      Adding a speaker without adding a photo at the matching index puts the
      wrong face under a person's name, so change the two together.
 
-     1-5 are extracted from the printed flyer. They are adequate but not
-     ideal — ask each speaker for the original file and drop it in with the
-     same name for a sharper result. 6 and 7 are supplied originals, cropped
-     to 4:5 by `scripts/build-speaker-headshots.py`.
+     1 is extracted from the printed flyer — adequate but not ideal, ask the
+     speaker for the original if a sharper result turns up. 3 and 4 were
+     replaced 16 September 2026 with supplied originals (Michael Maddy,
+     Henry Yatich); 2, 5, 6 and 7 are already supplied originals. 8-20 are
+     the thirteen speakers added the same day. Every one of 3-20 is cropped
+     to 4:5, face-anchored, by hand — never automatically — following the
+     convention `scripts/build-speaker-headshots.py` set out. Two of them
+     (Henry Yatich at index 3, and Eric Nyamwaro at index 14) come from a
+     small supplied photo and are visibly softer once enlarged to 800x1000;
+     ask each for a higher-resolution original when one is available.
 
      floor.jpg is still a placeholder — it sits behind the closing section at
      25% opacity. Replace it with photography from last year's conference
@@ -669,6 +800,19 @@ export const PHOTOS = {
     "/img/speaker-5.jpg",
     "/img/speaker-6.jpg",
     "/img/speaker-7.jpg",
+    "/img/speaker-8.jpg",
+    "/img/speaker-9.jpg",
+    "/img/speaker-10.jpg",
+    "/img/speaker-11.jpg",
+    "/img/speaker-12.jpg",
+    "/img/speaker-13.jpg",
+    "/img/speaker-14.jpg",
+    "/img/speaker-15.jpg",
+    "/img/speaker-16.jpg",
+    "/img/speaker-17.jpg",
+    "/img/speaker-18.jpg",
+    "/img/speaker-19.jpg",
+    "/img/speaker-20.jpg",
   ],
   floor: "/img/floor.jpg",
 } as const;
