@@ -6,7 +6,18 @@ import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE } from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, GUEST_OF_HONOUR } from "@/lib/event";
+
+/* The wall below is a curated seven, not the full roster — SPEAKERS grew
+   to twenty on 16 September 2026, and rendering all of them edge to edge
+   would either blow out the homepage or, worse, leave a hole in the last
+   row (the tiles have no gaps, so a short row shows as bare ink). Seven
+   plus the closing "propose a session" tile is the same clean 4x2 grid
+   the page was built around. The other thirteen are one click away on
+   /speakers and appear on their own track under /tracks. Change this
+   slice, and the "Four across… fills two rows exactly" comment below it,
+   together. */
+const HOMEPAGE_SPEAKERS = SPEAKERS.slice(0, 7);
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -98,7 +109,7 @@ export default function Page() {
               gaps, so a hole shows as a bare ink rectangle. Adding or
               removing a speaker means checking this number again. */}
           <div className="grid grid-cols-2 lg:grid-cols-4">
-            {SPEAKERS.map((s, i) => (
+            {HOMEPAGE_SPEAKERS.map((s, i) => (
               <SpeakerCard
                 key={s.slug}
                 index={i}
@@ -123,6 +134,32 @@ export default function Page() {
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 flex flex-wrap justify-center gap-3">
             <Btn href="/speakers" tone="onDark" internal>View all speakers</Btn>
             <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+          </div>
+        </section>
+
+        {/* ── Guest of Honour ───────────────────────────────────────── */}
+        {/* Standalone, not a SpeakerCard tile — he is not on a track, so the
+            "Speaking on" framing the wall above uses would not fit him.
+            Portrait left, title right, the same shape the profile rows on
+            /speakers use, just one entry rather than a repeating list. */}
+        <section className="bg-card border-t border-rule">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
+            <div className="grid gap-8 sm:grid-cols-[minmax(0,14rem)_1fr] items-center">
+              <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise max-w-56">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={GUEST_OF_HONOUR.photo}
+                  alt={GUEST_OF_HONOUR.name}
+                  className="portrait w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="eyebrow text-ink/45 mb-4">Guest of Honour · 10:45</p>
+                <h2 className="h-lg text-3xl sm:text-4xl">{GUEST_OF_HONOUR.name}</h2>
+                <p className="text-[16px] text-ink/70 mt-3">{GUEST_OF_HONOUR.role}</p>
+                <p className="text-[16px] text-ink font-medium">{GUEST_OF_HONOUR.org}</p>
+              </div>
+            </div>
           </div>
         </section>
 
