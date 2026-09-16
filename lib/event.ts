@@ -668,6 +668,24 @@ export const BENEFITS = [
   { t: "Meet government", d: "Nairobi, Machakos, Laikipia and Uasin Gishu county participation." },
 ] as const;
 
+/**
+ * The Guest of Honour, filling the running order's 10:45 slot below.
+ *
+ * A separate export rather than a SPEAKERS entry on purpose: he is not
+ * speaking on a track, so folding him into SPEAKERS would either invent a
+ * `topic` that puts him on a track he isn't on, or leave `topic` untyped as
+ * an exception every other entry has to special-case around. The homepage
+ * renders him as a standalone spotlight instead. Declared here, above
+ * AGENDA, so the agenda note below can read his name and title from one
+ * place rather than typing them a second time.
+ */
+export const GUEST_OF_HONOUR = {
+  name: "Prof. Eng. Ayub Gitau",
+  role: "Vice Chancellor",
+  org: "University of Nairobi",
+  photo: "/img/guest-ayub-gitau.jpg",
+} as const;
+
 /** Indicative running order — replace with the confirmed programme. */
 export const AGENDA = [
   { time: "07:30", title: "Arrival and registration", note: "" },
@@ -678,7 +696,7 @@ export const AGENDA = [
   { time: "09:30", title: "Panel: accelerating business growth through industry–academia collaboration", note: "" },
   { time: "10:15", title: "Accelerating Africa's business growth through the Quadra Helix", note: "" },
   { time: "10:35", title: "Keynote address", note: "" },
-  { time: "10:45", title: "Guest of Honour", note: "" },
+  { time: "10:45", title: "Guest of Honour", note: `${GUEST_OF_HONOUR.name}, ${GUEST_OF_HONOUR.role}, ${GUEST_OF_HONOUR.org}` },
   { time: "11:00", title: "Launches", note: "JuaPath research study · Jiinue Business Accelerator platform · SLP Project baseline report · SWC 2027" },
   { time: "11:20", title: "Photo session", note: "" },
   { time: "11:30", title: "Tea break", note: "" },
