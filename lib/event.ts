@@ -300,12 +300,16 @@ export const SPEAKERS = [
   {
     slug: "michael-maddy",
     name: "Mr. Michael Maddy",
-    role: "CRO and Co-Founder",
+    role: "CEO and Co-Founder",
     org: "Fleet Planner",
-    topic: "Market access & Cross-border trade",
+    /* Moved from Market access & Cross-border trade to this track on the
+       speaker's own correction (title and focus both updated at the same
+       time) — confirmed with I Choose Life – Africa communications,
+       16 September 2026. */
+    topic: "Adopting AI and Technology",
     draft: false,
     bio: [
-      "Michael Maddy is Chief Revenue Officer and Co-Founder of Fleet Planner, a Kenya-based logistics technology company using AI to transform fleet management and supply chain operations across East Africa. The platform improves fleet efficiency, real-time logistics visibility, and operational optimization. In his role, Michael leads revenue growth, market expansion, and customer adoption across a diverse portfolio of logistics and transport clients.",
+      "Michael Maddy is Chief Executive Officer and Co-Founder of Fleet Planner, a Kenya-based logistics technology company using AI to transform fleet management and supply chain operations across East Africa. The platform improves fleet efficiency, real-time logistics visibility, and operational optimization. In his role, Michael leads revenue growth, market expansion, and customer adoption across a diverse portfolio of logistics and transport clients.",
       "He brings cross-industry experience spanning fintech, healthtech, mortgage banking, and logistics, and has driven business development, strategic partnerships, and market-entry initiatives with global organizations including Wells Fargo, Boeing, and Warner Bros. Discovery, with a focus on systems integration and operational efficiency.",
       "Michael is recognized for his expertise in technology commercialization, revenue strategy, and logistics innovation. He holds a Master's degree and a Bachelor of Science in Education, and serves as a lecturer at Africa International University (AIU).",
     ],
