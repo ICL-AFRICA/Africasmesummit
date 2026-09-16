@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, SPONSOR_TIERS, SPONSOR_INCLUDES_NOTE, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
+import { EVENT, SPONSOR_TIERS, SPONSOR_INCLUDES_NOTE, TICKET_CTA, DATE_LONG, BOOKING_URL, BROCHURE_URL } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Become a partner — ${EVENT.name} ${EVENT.year}`,
@@ -63,40 +63,89 @@ export default function Partner() {
           <p className="lede text-[16px] text-white max-w-2xl mb-8">
             {SPONSOR_INCLUDES_NOTE}
           </p>
-          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
-            {SPONSOR_TIERS.map((t) => (
-              <div
-                key={t.tier}
-                className={`p-7 sm:p-8 flex flex-col ${t.featured ? "bg-raise" : "bg-ink"} ${TIER_STYLE[t.tier].accent}`}
-              >
-                <div className="flex items-baseline justify-between gap-3">
-                  <p className={`eyebrow ${TIER_STYLE[t.tier].chip}`}>{t.tier}</p>
-                  <p className="font-mono text-[12px] text-white">{t.limit}</p>
-                </div>
-                <p className="h-lg text-white text-3xl mt-5">
-                  <span className="text-base align-top mr-1.5 font-normal">{t.currency}</span>
-                  {t.price}
-                </p>
-                <ul className="mt-6 pt-5 space-y-2.5 border-t border-line flex-1">
-                  {t.includes.map((x) => (
-                    <li key={x} className="flex gap-2.5 text-[16px] text-white">
-                      <span className={`${TIER_STYLE[t.tier].chip} flex-none`}>✓</span>{x}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={BOOKING_URL}
-                  className={`mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-all ${TIER_STYLE[t.tier].button}`}
+          {/* items-end: cards are NOT the same height. Each tier's list is a
+              delta (see the ordering note on SPONSOR_TIERS), so Bronze is
+              deliberately the shortest card and Platinum the tallest — a
+              skyline that rises left to right, so the eye reads "more" as
+              "taller" before it reads a single word. Scoped to lg: below
+              that the grid drops to 1–2 columns and a staircase across
+              unrelated rows would just look broken. */}
+          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 lg:items-end border border-line">
+            {SPONSOR_TIERS.map((t, i) => {
+              const prev = i > 0 ? SPONSOR_TIERS[i - 1] : null;
+              return (
+                <div
+                  key={t.tier}
+                  className={`p-7 sm:p-8 flex flex-col ${t.featured ? "bg-raise" : "bg-ink"} ${TIER_STYLE[t.tier].accent}`}
                 >
-                  Book {t.tier}
-                </a>
-              </div>
-            ))}
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className={`eyebrow ${TIER_STYLE[t.tier].chip}`}>{t.tier}</p>
+                    <p className="font-mono text-[12px] text-white">{t.limit}</p>
+                  </div>
+                  <p className="h-lg text-white text-3xl mt-5">
+                    <span className="text-base align-top mr-1.5 font-normal">{t.currency}</span>
+                    {t.price}
+                  </p>
+                  <ul className="mt-6 pt-5 space-y-2.5 border-t border-line flex-1">
+                    {prev && (
+                      <li className="text-mist italic text-[16px] pb-1">
+                        Everything in {prev.tier}, plus:
+                      </li>
+                    )}
+                    {t.includes.map((x) => (
+                      <li key={x} className="flex gap-2.5 text-[16px] text-white">
+                        <span className={`${TIER_STYLE[t.tier].chip} flex-none`}>✓</span>{x}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href={BOOKING_URL}
+                    className={`mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-all ${TIER_STYLE[t.tier].button}`}
+                  >
+                    Book {t.tier}
+                  </a>
+                </div>
+              );
+            })}
           </div>
-          <p className="mt-6 text-[16px] text-white">
-            Packages are bookable directly. If you need something shaped differently,
-            tell us who you are trying to reach and we will come back with a proposal.
-          </p>
+
+          <div className="mt-10 flex flex-col items-center gap-4 text-center">
+            <p className="text-[16px] text-white max-w-xl">
+              Packages are bookable directly. If you need something shaped differently,
+              tell us who you are trying to reach and we will come back with a proposal.
+            </p>
+            {/* Pure CSS hover preview — no JS, so it costs nothing on a page
+                that otherwise ships none. The thumbnail is a 336px WebP
+                (~24KB) of the brochure's own cover, lazy-loaded, so it never
+                competes with anything above the fold. */}
+            <div className="group relative inline-block">
+              <div
+                className="pointer-events-none absolute bottom-full left-1/2 mb-3 w-[168px] -translate-x-1/2 opacity-0
+                           scale-95 transition-all duration-200 ease-out
+                           group-hover:opacity-100 group-hover:scale-100
+                           group-focus-within:opacity-100 group-focus-within:scale-100"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/img/brochure-preview.webp"
+                  alt="Preview of the Africa SME Summit partnership brochure"
+                  width={168}
+                  height={237}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto border border-line shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+                />
+              </div>
+              <a
+                href={BROCHURE_URL}
+                download
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
+              >
+                Get the full brochure (PDF)
+                <span aria-hidden="true" className="text-[12px]">↓</span>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
