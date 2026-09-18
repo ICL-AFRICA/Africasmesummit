@@ -92,6 +92,15 @@ export const BOOKING_URL = "https://tikohub.com/events/africa-sme-s-summit";
 export const BROCHURE_URL = "/brochure/africa-sme-summit-brochure.pdf";
 
 /**
+ * The confirmed running order, downloadable below the agenda on the
+ * homepage — the same PDF AGENDA above is transcribed from ("AFRICA_SME_
+ * SUMMIT_2026_Program_16.09.2026"), so anyone can carry the whole running
+ * order rather than re-scrolling the page. Same static-asset pattern as
+ * BROCHURE_URL just above: no server, no download-tracking.
+ */
+export const PROGRAMME_URL = "/programme/africa-sme-summit-2026-programme.pdf";
+
+/**
  * "University of Nairobi" — the campus qualifier dropped.
  *
  * `venueDetail` is "University of Nairobi, Main Campus", which is right on a
@@ -662,7 +671,8 @@ export const BENEFITS = [
 ] as const;
 
 /**
- * The Guest of Honour, filling the running order's 10:45 slot below.
+ * The Guest of Honour, filling the running order's Welcome Remarks slot
+ * below (08:50 in the confirmed programme).
  *
  * A separate export rather than a SPEAKERS entry on purpose: he is not
  * speaking on a track, so folding him into SPEAKERS would either invent a
@@ -670,6 +680,14 @@ export const BENEFITS = [
  * an exception every other entry has to special-case around. Declared here,
  * above AGENDA, so the agenda note below can read his name and title from one
  * place rather than typing them a second time.
+ *
+ * Corrected 19 September 2026 against the confirmed programme: the
+ * placeholder running order had him in an invented 10:45 "Guest of Honour"
+ * slot with no such title in the real programme. The confirmed programme
+ * has him opening the day with Welcome Remarks at 08:50, and again on the
+ * University Vice Chancellors and Industry Roundtable at midday — both
+ * read from this export in AGENDA below, so this stays the one place his
+ * facts live.
  *
  * `bio` added 18 September 2026, drafted from his University of Nairobi
  * profile page (see the source CV linked from profiles.uonbi.ac.ke) rather
@@ -694,8 +712,10 @@ export const GUEST_OF_HONOUR = {
  * the panel wall rather than finding them mixed into it.
  *
  * Gitau is spread from GUEST_OF_HONOUR rather than repeated, so his facts
- * stay declared in one place (he still fills the running order's 10:45 slot
- * via that export, unchanged). Mike Mutungi moved here FROM `SPEAKERS` on
+ * stay declared in one place (he still fills the running order's Welcome
+ * Remarks slot via that export — corrected 19 September 2026 from an
+ * earlier, invented 10:45 "Guest of Honour" slot; see AGENDA and the note
+ * on GUEST_OF_HONOUR above). Mike Mutungi moved here FROM `SPEAKERS` on
  * the same date — he is no longer a panel speaker and no longer appears on
  * the Kenya Entrepreneurship Ecosystem strengthening track page, which now
  * lists Salome Ayugi alone. His photo path (`/img/speaker-2.jpg`) is
@@ -716,7 +736,9 @@ export const KEYNOTES = [
   {
     slug: "ayub-gitau",
     ...GUEST_OF_HONOUR,
-    label: "Guest of Honour · 10:45",
+    // Was "Guest of Honour · 10:45" — that slot doesn't exist in the
+    // confirmed programme. He opens the day; corrected 19 September 2026.
+    label: "Welcome remarks · 8:50",
   },
   {
     slug: "mike-mutungi",
@@ -744,40 +766,97 @@ export const KEYNOTES = [
   },
 ] as const;
 
-/** Indicative running order — replace with the confirmed programme. */
-export const AGENDA = [
-  { time: "07:30", title: "Arrival and registration", note: "" },
-  { time: "09:00", title: "National and East Africa anthems", note: "" },
-  { time: "09:05", title: "Opening prayer", note: "" },
-  { time: "09:10", title: "Introductions and acknowledgements", note: "" },
-  { time: "09:20", title: "Welcome remarks", note: "" },
-  { time: "09:30", title: "Panel: accelerating business growth through industry–academia collaboration", note: "" },
-  { time: "10:15", title: "Accelerating Africa's business growth through the Quadra Helix", note: "" },
-  { time: "10:35", title: "Keynote address", note: "" },
-  { time: "10:45", title: "Guest of Honour", note: `${GUEST_OF_HONOUR.name}, ${GUEST_OF_HONOUR.role}, ${GUEST_OF_HONOUR.org}` },
-  { time: "11:00", title: "Launches", note: "JuaPath research study · Jiinue Business Accelerator platform · SLP Project baseline report · SWC 2027" },
-  { time: "11:20", title: "Photo session", note: "" },
-  { time: "11:30", title: "Tea break", note: "" },
-  { time: "12:00", title: "Parallel sessions", note: "The six tracks, plus the University Chancellors and Industry Roundtable" },
-  { time: "12:45", title: "SEALS Training launch", note: "" },
-  { time: "13:00", title: "Lunch", note: "" },
-  { time: "14:00", title: "Networking, deal making and poster presentations", note: "" },
-  { time: "16:00", title: "Africa SME Award 2026 winners presentation", note: "" },
-  { time: "17:00", title: "Closing remarks", note: "" },
-  { time: "17:30", title: "Closing prayers and departure", note: "" },
+/**
+ * A slot in the running order.
+ *
+ * Most slots are one activity and one facilitator line (`note`). A few —
+ * the 10:30 launches and the two blocks of concurrent tracks — are several
+ * things happening under one shared time, which `sessions` exists for
+ * rather than flattening them into separate top-level rows at the same
+ * time (that would break `AGENDA.map`'s one-row-per-time assumption and
+ * duplicate the time label). `quiet` marks logistics — arrivals, breaks,
+ * prayers, the photo session — so the page can render them smaller and
+ * dimmer than the actual programme content, which is what "hour by hour"
+ * should read as busy with.
+ */
+type AgendaSession = { title: string; note: string };
+type AgendaSlot = {
+  time: string;
+  title: string;
+  note?: string;
+  sessions?: readonly AgendaSession[];
+  quiet?: true;
+};
+
+/**
+ * The confirmed running order, transcribed from the programme I Choose Life
+ * – Africa published 16 September 2026 ("AFRICA_SME_SUMMIT_2026_Program_
+ * 16.09.2026"). Replaces the 14 August indicative draft this array held
+ * before — see AGENDA_SOURCE below for what changed and how sure this is.
+ */
+export const AGENDA: readonly AgendaSlot[] = [
+  { time: "07:30", title: "Arrival and registration", note: "Allan Manthi, Master SEAL, I Choose Life – Africa", quiet: true },
+  { time: "08:30", title: "National & East Africa anthem", note: "Led by the Master of Ceremony, Ian Muiga, Program Manager, I Choose Life – Africa", quiet: true },
+  { time: "08:35", title: "Opening prayer", quiet: true },
+  { time: "08:40", title: "Introductions and acknowledgements", note: "Master of Ceremony, Ian Muiga, Program Manager, I Choose Life – Africa", quiet: true },
+  { time: "08:50", title: "Welcome remarks", note: `${GUEST_OF_HONOUR.name}, ${GUEST_OF_HONOUR.role}, ${GUEST_OF_HONOUR.org}` },
+  { time: "09:00", title: "Industry – academia collaboration: the Juapath and Zetech University collaboration case study", note: "Victor Sila, Founder, Juapath & Walmart, and Esther Njuguna, Zetech University" },
+  { time: "09:30", title: "Strengthening Kenya's entrepreneurship ecosystem for MSME growth, investment and job creation — a Nairobi County case study", note: "Dr. Anastasia Nyalita, County Executive Committee Member — Business and Hustler Opportunities, Nairobi City County Government" },
+  { time: "09:40", title: "The money exists. The problem is the meeting.", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
+  { time: "10:00", title: "Transforming education through technology: reimagining teacher management and service delivery", note: "Evaleen Mitei, CEO, Teachers Service Commission" },
+  { time: "10:10", title: "Competency Based Curriculum (CBE), from classroom to economy: building future-ready skills for employability, entrepreneurship and economic growth", note: "John Lekakeny Ololtuaa, CBS, Principal Secretary, State Department for Basic Education, Ministry of Education" },
+  { time: "10:20", title: "From innovation to enterprise: unlocking capital and markets for Africa's next generation of innovators", note: "Prof. Abdulrazak Shaukat, Principal Secretary, State Department for Science, Research & Innovation, Kenya" },
+  {
+    time: "10:30",
+    title: "Launches",
+    sessions: [
+      { title: "Juapath Research study", note: "Prof. Njenga Munene, Vice Chancellor, Zetech University" },
+      { title: "Jiinue Business Accelerator platform", note: "Prof. Abdulrazak Shaukat, Principal Secretary, State Department for Science, Research & Innovation, Kenya" },
+      { title: "SLP Project", note: "Tom Owour, Mission Leader, Children's Mission Africa" },
+      { title: "Africa SME Summit 2027 — accelerating sustainable business growth and cross-border trade through AI and technology adoption", note: "Jenny Jakobsson, Co-Founder, Sustainable World Corporation" },
+    ],
+  },
+  { time: "11:20", title: "Photo session", note: "All", quiet: true },
+  { time: "11:30", title: "Tea break", quiet: true },
+  {
+    time: "12:00",
+    title: "Parallel sessions — five tracks",
+    sessions: [
+      { title: "Finance, Capital & Investment", note: "Susan Ndungu, Head of MSME Banking, NCBA, with Prof. Kellen Kiambati (Karatina University), Dr. Eric Wamuya (Machakos University), Wanjau Nduba, Nils Lindh and Barbara Lutomia (the Swarm Initiative), and Patrick Maina (Intellect Illumini Advisory, MSEA)" },
+      { title: "Talent management", note: "Dr. James Nyamu, Tharaka University, and Prof. Kellen Kiambati, Karatina University" },
+      { title: "Industry and academia collaboration", note: "Dr. Henry Yatich, Principal, Graduate Studies and Research, Mount Kenya University; Dr. Faith Yator, Kabarak University; Jenny Jakobsson, Co-Founder, Sustainable World Corporation" },
+      { title: "Paper presentations", note: "Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant" },
+      { title: "University Vice Chancellors and Industry Roundtable", note: `${GUEST_OF_HONOUR.name}, ${GUEST_OF_HONOUR.role}, ${GUEST_OF_HONOUR.org}` },
+    ],
+  },
+  { time: "12:45", title: "SEALS commissioning", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
+  { time: "13:15", title: "Lunch", quiet: true },
+  {
+    time: "14:15",
+    title: "Parallel sessions — three tracks",
+    sessions: [
+      { title: "Adopting AI and technology for business growth and efficiency", note: "Victor Sila, Juapath Founder & Walmart, with Esther Mwangi (Zetech University), Dr. Njeri Ngaruya (Strathmore University), and Newton (South Sudan)" },
+      { title: "Market access and cross-border trade", note: "Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant, with Dr. Susan Chege (Daystar University), Dr. Faith Yator (Kabarak University), and Nabitnu (Congo DRC)" },
+      { title: "Kenya entrepreneurship ecosystem strengthening", note: "Mercy Kimalat, CEO, ASSEK, with Dr. Anastasia Nyalita (CECM, MSMEs, Nairobi City County), Phillip Kabii (Regional Coordinator, Children's Mission Africa), Prof. Stephen Muathe (Kenyatta University), Dr. Ruth Ruhiu (Technical University of Kenya), Henry Rithea (MSEA) and Anne Lawi" },
+    ],
+  },
+  { time: "15:15", title: "Networking, deal making, pitching, exhibition & poster presentations", note: "Track business clinics" },
+  { time: "16:00", title: "Africa SME Award 2026 winners ceremony", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
+  { time: "17:00", title: "Closing remarks", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
+  { time: "17:30", title: "Closing prayers & departure", quiet: true },
 ] as const;
 
 /**
  * Where the running order came from, and how sure it is.
  *
- * Rendered under the agenda. The programme above is transcribed from
- * "SME Conference Program - 14.08.2026", which is a real running order
- * rather than the invented placeholder it replaced — but nobody has called
- * it final, and it predates the move to 15 October. Say what it is and when
- * it was written, rather than either claiming it is confirmed or calling it
- * indicative when it plainly is not.
+ * Rendered under the agenda. Replaces the 14 August indicative draft: this
+ * one is transcribed from a programme I Choose Life – Africa itself
+ * published and dated, "AFRICA_SME_SUMMIT_2026_Program_16.09.2026", not
+ * the placeholder running order it replaced. Still worth a source line
+ * rather than silence — a programme this detailed, with facilitators named
+ * against every slot, is the kind of thing that gets a late substitution.
  */
-export const AGENDA_SOURCE = "Programme as at 14 August 2026. Times may still move.";
+export const AGENDA_SOURCE = "Confirmed programme, published 16 September 2026.";
 
 /**
  * When the day starts and ends, taken from the running order itself.

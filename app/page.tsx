@@ -7,7 +7,15 @@ import SummitCountdownBadge from "@/components/SummitCountdownBadge";
 import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS, PROGRAMME_URL } from "@/lib/event";
+
+/* Agenda accent colours — the same four-colour rotation used on /tracks
+   (marigold, clay, indigo, palm), so a track's colour means the same thing
+   wherever it shows up on the site rather than the agenda inventing its
+   own palette. Two forms because a `bg-*` dot and a `border-*` rule need
+   different Tailwind classes for the same colour. */
+const AGENDA_ACCENT_BG = ["bg-marigold", "bg-clay", "bg-indigo", "bg-palm"];
+const AGENDA_ACCENT_BORDER = ["border-marigold", "border-clay", "border-indigo", "border-palm"];
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -110,9 +118,11 @@ export default function Page() {
             whole roster — deliberately bigger than the panel wall tiles
             below, one portrait each instead of a shared edge-to-edge grid,
             so the summit's three headline names get room to breathe before
-            the panel wall. Gitau still fills the running order's 10:45 slot
-            (see AGENDA); Munene and Mutungi are keynote speakers without a
-            fixed time slot yet. */}
+            the panel wall. Gitau still fills the running order's Welcome
+            Remarks slot at 08:50 (see AGENDA — corrected 19 September 2026
+            against the confirmed programme, which has no 10:45 slot);
+            Munene and Mutungi are keynote speakers without a fixed time
+            slot of their own. */}
         <section className="bg-card border-t border-rule">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
             <div className="text-center mb-14">
@@ -323,26 +333,87 @@ export default function Page() {
         </section>
 
         {/* ── Agenda ────────────────────────────────────────────────── */}
+        {/* Redesigned 19 September 2026 against the confirmed programme:
+            the old plain-row list treated every slot as equally weighty,
+            which is wrong now that most slots carry a named facilitator and
+            three carry several concurrent sessions at once. Logistics
+            (`quiet`: arrivals, breaks, prayers, the photo session) render
+            small and muted so the actual content of the day — the talks,
+            launches and parallel tracks — is what reads as busy. A rotating
+            accent dot gives the list some rhythm without any motion, in
+            keeping with the rest of the page. */}
         <section id="agenda" className="bg-card">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Head eyebrow="The running order">{DATE_DAY_MONTH}, hour by hour</Head>
-            <ul className="mt-14 border-t border-rule">
-              {AGENDA.map((a) => (
-                <li key={a.time} className="grid grid-cols-[4rem_1fr] sm:grid-cols-[8rem_1fr_16rem] gap-4 sm:gap-10 py-6 border-b border-rule items-baseline">
-                  <span className="font-mono text-[16px] text-ink/45">{a.time}</span>
-                  <span className="h-sm text-lg sm:text-2xl">{a.title}</span>
-                  {/* Most items in the real programme are a time and a title
-                      and nothing else. Rendering an empty third column left a
-                      stray grid cell on every one of them. */}
-                  {a.note && (
-                    <span className="col-start-2 sm:col-start-3 text-[16px] text-ink/55">{a.note}</span>
-                  )}
-                </li>
+            <Head eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head>
+            <div className="mt-14 border-t border-rule">
+              {AGENDA.map((a, i) => (
+                <div
+                  key={a.time}
+                  className={`grid grid-cols-[3.5rem_1fr] sm:grid-cols-[7rem_1fr] gap-4 sm:gap-8 border-b border-rule transition-colors hover:bg-raise/50 ${a.quiet ? "py-4" : "py-7 sm:py-8"}`}
+                >
+                  <div className="flex items-start gap-2.5 sm:gap-3">
+                    <span
+                      aria-hidden="true"
+                      className={`mt-[7px] h-2 w-2 shrink-0 rounded-full ${a.quiet ? "bg-ink/15" : AGENDA_ACCENT_BG[i % AGENDA_ACCENT_BG.length]}`}
+                    />
+                    <span className={`font-mono tabular-nums ${a.quiet ? "text-[13px] text-ink/35" : "text-[15px] sm:text-[16px] text-ink/45"}`}>
+                      {a.time}
+                    </span>
+                  </div>
+                  <div>
+                    <p className={a.quiet ? "text-[15px] text-ink/50" : "h-sm text-lg sm:text-2xl"}>
+                      {a.title}
+                    </p>
+                    {a.note && (
+                      <p className={`mt-1.5 text-[15px] sm:text-[16px] ${a.quiet ? "text-ink/40" : "text-ink/55"}`}>
+                        {a.note}
+                      </p>
+                    )}
+                    {/* Concurrent sessions under one time — the 10:30 launches
+                        and the two blocks of parallel tracks. Each gets its
+                        own accent border so a dense block still scans as
+                        several distinct things, not one paragraph. */}
+                    {a.sessions && (
+                      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                        {a.sessions.map((s, j) => (
+                          <div key={s.title} className={`border-l-2 pl-4 ${AGENDA_ACCENT_BORDER[j % AGENDA_ACCENT_BORDER.length]}`}>
+                            <p className="text-[15px] sm:text-[16px] font-medium text-ink">{s.title}</p>
+                            <p className="mt-1 text-[14px] text-ink/55">{s.note}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
             <p className="mt-6 font-mono text-[12px] text-ink/45">
               {AGENDA_SOURCE}
             </p>
+
+            {/* Downloadable programme — the confirmed PDF this agenda is
+                transcribed from, for anyone who wants the whole running
+                order to keep, print or forward, rather than re-scrolling
+                this section on the day. Placed directly under the agenda
+                it mirrors, at ICL's request. Same download-link pattern as
+                the partnership brochure on /partner (a plain link with the
+                `download` attribute, not a Btn — the arrow Btn always
+                renders implies a page to visit, not a file to keep), so a
+                "get the PDF" action looks the same wherever it shows up. */}
+            <div className="mt-10 flex flex-wrap items-center gap-5 border border-rule bg-raise/40 px-6 sm:px-8 py-6">
+              <span aria-hidden="true" className="font-mono text-[12px] text-ink/40 tracking-widest">PDF</span>
+              <p className="flex-1 min-w-[220px] text-[15px] sm:text-[16px] text-ink">
+                Get the full confirmed programme — every slot, every facilitator.
+              </p>
+              <a
+                href={PROGRAMME_URL}
+                download
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all border border-ink/20 text-ink hover:border-ink"
+              >
+                Get the full programme (PDF)
+                <span aria-hidden="true" className="text-[12px]">↓</span>
+              </a>
+            </div>
           </div>
         </section>
 
