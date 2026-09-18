@@ -4,19 +4,23 @@ import SpeakerCard from "@/components/SpeakerCard";
 import HeroMosaic from "@/components/HeroMosaic";
 import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
+import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, GUEST_OF_HONOUR } from "@/lib/event";
+import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
 
 /* The wall below is a curated seven, not the full roster — SPEAKERS grew
    to twenty on 16 September 2026, and rendering all of them edge to edge
    would either blow out the homepage or, worse, leave a hole in the last
    row (the tiles have no gaps, so a short row shows as bare ink). Seven
    plus the closing "propose a session" tile is the same clean 4x2 grid
-   the page was built around. The other thirteen are one click away on
-   /speakers and appear on their own track under /tracks. Change this
-   slice, and the "Four across… fills two rows exactly" comment below it,
-   together. */
+   the page was built around. The other panel speakers are one click away
+   on /speakers and appear on their own track under /tracks.
+
+   Mike Mutungi moved out of SPEAKERS and into KEYNOTES on 18 September
+   2026 — he no longer occupies a slot in this slice, so it now runs one
+   further into the roster than it used to. Change this slice, and the
+   "Four across… fills two rows exactly" comment below it, together. */
 const HOMEPAGE_SPEAKERS = SPEAKERS.slice(0, 7);
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
@@ -81,15 +85,28 @@ export default function Page() {
               7.4 million enterprises.<br />One of them is yours.
             </h2>
             <p className="lede mt-8 max-w-2xl mx-auto text-[18px] text-ink/70">
-              Kenya&rsquo;s small businesses carry 80% of the workforce and almost none of
-              the support. This is the day they meet the capital, the buyers, the county
-              governments and the thirteen universities that can actually move them
-              forward — in one room, in one day.
+              Kenya&rsquo;s small businesses carry 80% of the workforce and get almost
+              none of the support. This is the one day that changes that — the capital,
+              the buyers, the county governments and the thirteen universities that can
+              move them forward, all in one room.
             </p>
             <div className="mt-11 flex flex-wrap justify-center gap-3">
               <Btn href={EVENT.ticketUrl}>{TICKET_CTA}</Btn>
-              <Btn href="/partner" tone="outline" internal>Become a partner</Btn>
               <Btn href="/exhibit" tone="outline" internal>Book a stand</Btn>
+              <Btn href="/partner" tone="outline" internal>Partner with us</Btn>
+            </div>
+
+            {/* Counts down to the summit itself rather than a ticket deadline
+                — the one urgency signal that never expires until the day
+                actually arrives, so it keeps working long after the early
+                bird (and every other deadline on the page) has closed. */}
+            <div className="mt-14 flex justify-center">
+              <Countdown
+                tone="light"
+                target={SUMMIT_STARTS}
+                activeLabel={`Until ${EVENT.name} ${EVENT.year}`}
+                endedLabel="The summit is under way."
+              />
             </div>
           </div>
         </section>
@@ -137,28 +154,42 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── Guest of Honour ───────────────────────────────────────── */}
-        {/* Standalone, not a SpeakerCard tile — he is not on a track, so the
-            "Speaking on" framing the wall above uses would not fit him.
-            Portrait left, title right, the same shape the profile rows on
-            /speakers use, just one entry rather than a repeating list. */}
+        {/* ── Keynote speakers ──────────────────────────────────────── */}
+        {/* Three people, not the whole roster — deliberately bigger than the
+            panel wall tiles above, one portrait each instead of a shared
+            edge-to-edge grid, so the summit's three headline names get room
+            to breathe before the panel wall. Gitau still fills the running
+            order's 10:45 slot (see AGENDA); Munene and Mutungi are keynote
+            speakers without a fixed time slot yet. */}
         <section className="bg-card border-t border-rule">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-            <div className="grid gap-8 sm:grid-cols-[minmax(0,14rem)_1fr] items-center">
-              <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise max-w-56">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={GUEST_OF_HONOUR.photo}
-                  alt={GUEST_OF_HONOUR.name}
-                  className="portrait w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <p className="eyebrow text-ink/45 mb-4">Guest of Honour · 10:45</p>
-                <h2 className="h-lg text-3xl sm:text-4xl">{GUEST_OF_HONOUR.name}</h2>
-                <p className="text-[16px] text-ink/70 mt-3">{GUEST_OF_HONOUR.role}</p>
-                <p className="text-[16px] text-ink font-medium">{GUEST_OF_HONOUR.org}</p>
-              </div>
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
+            <div className="text-center mb-14">
+              <p className="eyebrow text-ink/45 mb-5">Keynote</p>
+              <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
+                Before the tracks open
+              </h2>
+              <p className="lede mt-5 text-ink/60 max-w-xl mx-auto text-[16px]">
+                Two Vice-Chancellors and the summit&rsquo;s own convener, setting the tone
+                before six tracks open.
+              </p>
+            </div>
+            <div className="grid gap-12 sm:grid-cols-3">
+              {KEYNOTES.map((k) => (
+                <div key={k.slug}>
+                  <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={k.photo}
+                      alt={k.name}
+                      className="portrait w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="eyebrow text-ink/45 mt-5 mb-2">{k.label}</p>
+                  <h3 className="h-sm text-2xl">{k.name}</h3>
+                  <p className="text-[16px] text-ink/70 mt-2">{k.role}</p>
+                  <p className="text-[16px] text-ink font-medium">{k.org}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -309,38 +340,64 @@ export default function Page() {
             <div className="text-center">
               <p className="eyebrow text-ink/45 mb-5">Tickets</p>
               <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
-                {`Book before ${EARLY_BIRD_LABEL} and save KES 1,000`}
+                {EARLY_BIRD_ACTIVE
+                  ? `Book before ${EARLY_BIRD_LABEL} and save KES 1,000`
+                  : "Early bird sold out — book standard now before seats go"}
               </h2>
             </div>
             <div className="mt-14 grid gap-px bg-rule lg:grid-cols-3">
-              {TICKETS.map((t) => (
-                <div key={t.tier} className={`p-8 sm:p-10 flex flex-col ${t.urgent ? "bg-ink text-white" : "bg-card"}`}>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <p className={`eyebrow ${t.urgent ? "text-marigold" : "text-ink/45"}`}>{t.tier}</p>
-                    <p className={`font-mono text-[12px] ${t.urgent ? "text-white" : "text-ink/45"}`}>{t.note}</p>
-                  </div>
-                  <p className={`h-lg mt-6 text-5xl ${t.urgent ? "text-white" : "text-ink"}`}>
-                    {t.currency && <span className="text-lg align-top mr-2 font-normal">{t.currency}</span>}
-                    {t.price}
-                  </p>
-                  <ul className={`mt-8 pt-6 space-y-3 border-t ${t.urgent ? "border-line" : "border-rule"}`}>
-                    {t.includes.map((i) => (
-                      <li key={i} className={`flex gap-3 text-[16px] ${t.urgent ? "text-white" : "text-ink/70"}`}>
-                        <span className={t.urgent ? "text-marigold" : "text-ink/35"}>✓</span>
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href={EVENT.ticketUrl}
-                    className={`mt-9 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-colors ${
-                      t.urgent ? "bg-gold text-ink hover:brightness-110" : "bg-ink text-white hover:bg-raise"
+              {TICKETS.map((t) => {
+                /* The Early Bird tile is the one card whose deal can expire
+                   under it. Once EARLY_BIRD_ACTIVE flips false (a redeploy
+                   after EARLY_BIRD_ENDS — see the comment on that constant),
+                   this tile goes flat and mute rather than still inviting a
+                   click on a price that no longer exists: struck-through
+                   price, "Sold out" instead of the countdown note, and a CTA
+                   that pushes toward booking at the standard rate right now
+                   instead of pretending the early tier is still open. */
+                const justClosed = t.tier === "Early bird" && !EARLY_BIRD_ACTIVE;
+                return (
+                  <div
+                    key={t.tier}
+                    className={`p-8 sm:p-10 flex flex-col ${
+                      justClosed ? "bg-card" : t.urgent ? "bg-ink text-white" : "bg-card"
                     }`}
                   >
-                    {`Book ${t.tier.toLowerCase()}`}
-                  </a>
-                </div>
-              ))}
+                    <div className="flex items-baseline justify-between gap-4">
+                      <p className={`eyebrow ${justClosed ? "text-ink/35" : t.urgent ? "text-marigold" : "text-ink/45"}`}>
+                        {t.tier}
+                      </p>
+                      <p className={`font-mono text-[12px] ${justClosed ? "text-ink/35" : t.urgent ? "text-white" : "text-ink/45"}`}>
+                        {justClosed ? "Sold out" : t.note}
+                      </p>
+                    </div>
+                    <p className={`h-lg mt-6 text-5xl ${justClosed ? "text-ink/30 line-through" : t.urgent ? "text-white" : "text-ink"}`}>
+                      {t.currency && <span className="text-lg align-top mr-2 font-normal">{t.currency}</span>}
+                      {t.price}
+                    </p>
+                    <ul className={`mt-8 pt-6 space-y-3 border-t ${justClosed ? "border-rule" : t.urgent ? "border-line" : "border-rule"}`}>
+                      {t.includes.map((i) => (
+                        <li key={i} className={`flex gap-3 text-[16px] ${justClosed ? "text-ink/45" : t.urgent ? "text-white" : "text-ink/70"}`}>
+                          <span className={justClosed ? "text-ink/25" : t.urgent ? "text-marigold" : "text-ink/35"}>✓</span>
+                          {i}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={EVENT.ticketUrl}
+                      className={`mt-9 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-colors ${
+                        justClosed
+                          ? "bg-paper text-ink/60 hover:text-ink border border-rule"
+                          : t.urgent
+                            ? "bg-gold text-ink hover:brightness-110"
+                            : "bg-ink text-white hover:bg-raise"
+                      }`}
+                    >
+                      {justClosed ? "Book standard now" : `Book ${t.tier.toLowerCase()}`}
+                    </a>
+                  </div>
+                );
+              })}
             </div>
             <p className="mt-8 text-center text-[16px] text-ink/60">
               Exhibiting or sponsoring? <Link href="/exhibit" className="underline underline-offset-4 hover:text-ink">Booths from KES 30,000</Link>{" "}

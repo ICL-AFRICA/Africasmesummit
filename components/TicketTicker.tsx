@@ -17,8 +17,14 @@ const KEY = "asm-ticker-dismissed";
  *    than an interruption.
  * 2. Dismissal is remembered in localStorage. Being asked to close the same
  *    thing on every page is what makes these hated.
- * 3. It removes itself when the deadline passes rather than showing zeros —
- *    the page should never pressure someone with a deadline that has gone.
+ * 3. Once the deadline passes it switches to a "sold out" card rather than
+ *    removing itself — this is the only urgency mechanism the desktop
+ *    homepage shows (see the "one urgency mechanism per screen" comment on
+ *    the homepage), so disappearing here left the entire desktop page with
+ *    nothing at all once early bird ended. Never shows zeros or a stale
+ *    countdown, though — the message is static, not ticking down to
+ *    nothing, and it pushes toward booking standard now rather than just
+ *    announcing the discount is gone.
  */
 export default function TicketTicker() {
   const target = new Date(EARLY_BIRD_ENDS).getTime();
@@ -59,7 +65,42 @@ export default function TicketTicker() {
     setTimeout(() => setClosed(true), 320);
   }
 
-  if (closed || left === undefined || left === null) return null;
+  if (closed || left === undefined) return null;
+
+  const cardShell = `hidden sm:block fixed z-50 right-8 bottom-8
+                  transition-all duration-300 ease-out
+                  ${shown ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`;
+
+  if (left === null) {
+    return (
+      <div className={cardShell} role="complementary" aria-label="Ticket status">
+        <div className="relative bg-card border border-rule shadow-[0_8px_40px_rgba(25,21,57,0.18)]">
+          <button
+            onClick={dismiss}
+            aria-label="Dismiss notice"
+            className="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center
+                       rounded-full bg-ink text-white text-[16px] leading-none
+                       hover:bg-raise transition-colors"
+          >
+            ×
+          </button>
+
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 px-6 py-5">
+            <p className="text-[16px] text-ink font-medium">
+              Early bird sold out — standard tickets are moving
+            </p>
+            <a
+              href={EVENT.ticketUrl}
+              className="ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
+                         hover:brightness-105 transition-all"
+            >
+              Book ticket now
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const units: [number, string][] = [
     [Math.floor(left / 86_400_000), "Days"],
@@ -73,9 +114,7 @@ export default function TicketTicker() {
       /* Desktop only. On a phone a floating card covers a third of the
          viewport and competes with the content it is trying to sell; the
          top bar does the same job in 44px. */
-      className={`hidden sm:block fixed z-50 right-8 bottom-8
-                  transition-all duration-300 ease-out
-                  ${shown ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+      className={cardShell}
       role="complementary"
       aria-label="Early bird offer"
     >

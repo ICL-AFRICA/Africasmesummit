@@ -4,7 +4,7 @@ import Btn from "@/components/Btn";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, SPEAKER_COUNT_CAP, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
+import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, DATE_LONG, DATE_DAY_MONTH, KEYNOTES } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Speakers — ${EVENT.name} ${EVENT.year}`,
@@ -31,56 +31,102 @@ export default function Speakers() {
               The people you came to meet
             </h1>
             <p className="lede mt-7 text-white max-w-2xl text-[18px]">
-              {SPEAKER_COUNT_CAP} speakers, one day, and enough time between
-              the sessions to actually get to the person you came for.
+              Three keynote speakers and {SPEAKER_COUNT} panel speakers, six
+              tracks, one day — and enough room between sessions to actually
+              reach the person you came for.
             </p>
           </div>
         </section>
 
-        {/* Profiles — alternating so the eye moves down the page instead of
-            reading five identical rows. */}
-        {SPEAKERS.map((s, i) => (
-          <section key={s.slug} id={s.slug} className="border-b border-line">
-            <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 sm:py-20">
-              <div className={`grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,26rem)_1fr] items-start ${i % 2 ? "lg:[direction:rtl]" : ""}`}>
-                <div className={`portrait-tint aspect-[4/5] overflow-hidden bg-raise ${i % 2 ? "lg:[direction:ltr]" : ""}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={PHOTOS.speakers[i]} alt={s.name} className="portrait w-full h-full object-cover" />
-                </div>
-
-                <div className={i % 2 ? "lg:[direction:ltr]" : ""}>
-                  <p className="font-mono text-[12px] text-marigold">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h2 className="h-lg text-white text-3xl sm:text-4xl mt-4">{s.name}</h2>
-                  <p className="text-[16px] text-white mt-3">{s.role}</p>
-                  <p className="text-[16px] text-white font-medium">{s.org}</p>
-
-                  {/* Supplied bios run to three paragraphs; the two drafts
-                      are a single one. Same markup handles both. */}
-                  <div className="mt-8 max-w-2xl space-y-5">
-                    {s.bio.map((para, n) => (
-                      <p key={n} className="lede text-[17px] sm:text-[18px] text-white">
-                        {para}
-                      </p>
-                    ))}
+        {/* ── Keynote speakers ──────────────────────────────────────── */}
+        {/* Full-width alternating rows, same shape this page always used for
+            every profile — kept deliberately larger than the panelist grid
+            below, since there are three of these rather than nineteen. */}
+        <section className="border-b border-line bg-raise/40">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-12 sm:pt-16">
+            <p className="eyebrow text-marigold mb-2">Keynote</p>
+            <h2 className="h-sm text-white text-2xl sm:text-3xl">Before the tracks open</h2>
+            <p className="lede mt-3 text-white/70 max-w-xl text-[16px]">
+              Two Vice-Chancellors and the summit&rsquo;s own convener, on stage before
+              the panel speakers below.
+            </p>
+          </div>
+          {KEYNOTES.map((k, i) => (
+            <div key={k.slug} id={k.slug} className={i > 0 ? "border-t border-line" : ""}>
+              <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 sm:py-20">
+                <div className={`grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,26rem)_1fr] items-start ${i % 2 ? "lg:[direction:rtl]" : ""}`}>
+                  <div className={`portrait-tint aspect-[4/5] overflow-hidden bg-raise ${i % 2 ? "lg:[direction:ltr]" : ""}`}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={k.photo} alt={k.name} className="portrait w-full h-full object-cover" />
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-line max-w-2xl">
-                    <p className="eyebrow text-white mb-2">Speaking on</p>
-                    <p className="h-sm text-white text-lg">{s.topic}</p>
+                  <div className={i % 2 ? "lg:[direction:ltr]" : ""}>
+                    <p className="font-mono text-[12px] text-marigold">{k.label}</p>
+                    <h2 className="h-lg text-white text-3xl sm:text-4xl mt-4">{k.name}</h2>
+                    <p className="text-[16px] text-white mt-3">{k.role}</p>
+                    <p className="text-[16px] text-white font-medium">{k.org}</p>
+
+                    <div className="mt-8 max-w-2xl space-y-5">
+                      {k.bio.map((para, n) => (
+                        <p key={n} className="lede text-[17px] sm:text-[18px] text-white">
+                          {para}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-        ))}
+          ))}
+        </section>
+
+        {/* ── Panel speakers ────────────────────────────────────────── */}
+        {/* A denser grid than the keynote rows above — smaller portraits,
+            three across at lg — so nineteen panelists don't each claim a
+            full-width row the way the three keynotes do. */}
+        <section className="border-b border-line">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-16 sm:pt-20">
+            <p className="eyebrow text-white mb-2">Panel speakers</p>
+            <h2 className="h-sm text-white text-2xl sm:text-3xl">Across the six tracks</h2>
+          </div>
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-12 sm:py-16 grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+            {SPEAKERS.map((s, i) => (
+              <div key={s.slug} id={s.slug}>
+                <div className="portrait-tint aspect-[4/5] max-w-[13rem] overflow-hidden bg-raise">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={PHOTOS.speakers[i]} alt={s.name} className="portrait w-full h-full object-cover" />
+                </div>
+
+                <p className="font-mono text-[12px] text-marigold mt-5">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="h-sm text-white text-xl sm:text-2xl mt-2">{s.name}</h3>
+                <p className="text-[15px] text-white mt-2">{s.role}</p>
+                <p className="text-[15px] text-white font-medium">{s.org}</p>
+
+                <div className="mt-4 max-w-md space-y-3">
+                  {s.bio.map((para, n) => (
+                    <p key={n} className="lede text-[15px] text-white">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-line max-w-md">
+                  <p className="eyebrow text-white mb-1 text-[11px]">Speaking on</p>
+                  <p className="h-sm text-white text-base">{s.topic}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Close — the same two actions as every other page */}
         <section>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24 text-center">
             <h2 className="h-lg text-white text-3xl sm:text-5xl max-w-2xl mx-auto">
-              All {SPEAKER_COUNT}, one room, {DATE_DAY_MONTH}.
+              All {SPEAKER_COUNT} panel speakers and three keynote speakers,
+              one room, {DATE_DAY_MONTH}.
             </h2>
             <p className="lede mt-5 text-white">
               {EVENT.venue}, University of Nairobi

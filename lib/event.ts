@@ -69,7 +69,7 @@ export const EVENT = {
  * skipped the event page and landed on TikoHub's booking step — one click
  * closer to paying for someone who had already chosen. This slug has no
  * /booking path (it 404s), so that shortcut is gone: these buttons now land
- * on the event page, the same place the general "Get a ticket" buttons go,
+ * on the event page, the same place the general "Grab a ticket" buttons go,
  * reached by a different URL.
  *
  * Both URLs are live and serve the same event — /events/562 and this slug —
@@ -226,7 +226,7 @@ export const TICKETS = [
  * would put JavaScript on ten static buttons and let the most important
  * price on the site visibly change after paint.
  */
-const EARLY_BIRD_ACTIVE = Date.now() < new Date(EARLY_BIRD_ENDS).getTime();
+export const EARLY_BIRD_ACTIVE = Date.now() < new Date(EARLY_BIRD_ENDS).getTime();
 
 /** The tier the site should be quoting right now. */
 export const ACTIVE_TICKET = EARLY_BIRD_ACTIVE ? TICKETS[0] : TICKETS[1];
@@ -238,12 +238,17 @@ export const TICKET_PRICE = `${ACTIVE_TICKET.currency} ${ACTIVE_TICKET.price}`;
 export const TICKET_PRICE_PLAIN = ACTIVE_TICKET.price.replace(/,/g, "");
 
 /**
- * "Get a ticket — KES 5,800". The label on every ticket button on the site.
+ * "Grab a ticket — KES 5,800". The label on every ticket button on the site.
  *
  * One string in one place, because a landing page whose ticket button says
  * one price in the hero and another in the footer stops being believed.
+ *
+ * Changed from "Get a ticket" to "Grab a ticket" 18 September 2026 as part
+ * of a punchier copy pass — a more active verb, and one that reads
+ * consistently with the "sold out" framing the early-bird messaging now
+ * uses elsewhere on the site.
  */
-export const TICKET_CTA = `Get a ticket — ${TICKET_PRICE}`;
+export const TICKET_CTA = `Grab a ticket — ${TICKET_PRICE}`;
 
 /**
  * "KES 5,800" — always the early-bird price, whatever the date.
@@ -283,18 +288,6 @@ export const SPEAKERS = [
     bio: [
       "Susan Ndungu is Head of SME Banking at NCBA Bank Kenya, bringing over 20 years of banking experience with a focus on solutioning for micro, small, medium, and corporate businesses.",
       "She leads the development and execution of strategies to empower small and medium-sized enterprises across Kenya, with an approach centered on sustainable growth, tailored financial solutions, and a deep understanding of local market dynamics to drive resilience within the SME sector. Susan currently oversees 100 branches and more than 100 branch relationship managers who champion the SME banking agenda across the network.",
-    ],
-  },
-  {
-    slug: "mike-mutungi",
-    name: "Eng. Mike Mutungi",
-    role: "Founder & CEO",
-    org: "I Choose Life – Africa",
-    topic: "Kenya Entrepreneurship Ecosystem strengthening",
-    draft: false,
-    bio: [
-      "Eng. Mike Mutungi is Founder and CEO of I Choose Life – Africa (ICL) and Chairman of the Association of Startup and SME Enablers of Kenya (ASSEK). He holds a Bachelor of Science in Geospatial and Space Technology from the University of Nairobi and a Master of Divinity from NIST.",
-      "For over 20 years, Mike has designed programs spanning health, education, economic empowerment, leadership and governance, and institutional strengthening. He currently chairs the NGOs Network (HENNET) and sits on the boards of several organizations, including Planning Interiors and Jiinue Microcredit. He has overseen the development of strategic plans for programs and organizations across Africa, Europe, and the Middle East, and is the author of Kenya Mpya: Selecting and Holding Leaders to Account.",
     ],
   },
   {
@@ -674,17 +667,77 @@ export const BENEFITS = [
  * A separate export rather than a SPEAKERS entry on purpose: he is not
  * speaking on a track, so folding him into SPEAKERS would either invent a
  * `topic` that puts him on a track he isn't on, or leave `topic` untyped as
- * an exception every other entry has to special-case around. The homepage
- * renders him as a standalone spotlight instead. Declared here, above
- * AGENDA, so the agenda note below can read his name and title from one
+ * an exception every other entry has to special-case around. Declared here,
+ * above AGENDA, so the agenda note below can read his name and title from one
  * place rather than typing them a second time.
+ *
+ * `bio` added 18 September 2026, drafted from his University of Nairobi
+ * profile page (see the source CV linked from profiles.uonbi.ac.ke) rather
+ * than supplied directly, unlike the speakers in KEYNOTES/SPEAKERS whose
+ * bios come from the person themselves — flag for review if a fuller,
+ * speaker-supplied version becomes available.
  */
 export const GUEST_OF_HONOUR = {
   name: "Prof. Eng. Ayub Gitau",
   role: "Vice Chancellor",
   org: "University of Nairobi",
   photo: "/img/guest-ayub-gitau.jpg",
+  bio: [
+    "Prof. Ayub Gitau is a professor of Agricultural and Biosystems Engineering at the University of Nairobi, where he has built his career across both academic and administrative roles before becoming Vice-Chancellor. He holds a PhD in Agricultural Engineering from the University of Nairobi and has been involved in significant research projects and institutional initiatives throughout his tenure there, combining academic depth with practical engineering experience.",
+  ],
 } as const;
+
+/**
+ * The three keynote speakers, shown above the panel roster on the homepage
+ * and /speakers — promoted out of the panel grid on 18 September 2026 at
+ * ICL's request, so visitors meet the summit's three biggest names before
+ * the panel wall rather than finding them mixed into it.
+ *
+ * Gitau is spread from GUEST_OF_HONOUR rather than repeated, so his facts
+ * stay declared in one place (he still fills the running order's 10:45 slot
+ * via that export, unchanged). Mike Mutungi moved here FROM `SPEAKERS` on
+ * the same date — he is no longer a panel speaker and no longer appears on
+ * the Kenya Entrepreneurship Ecosystem strengthening track page, which now
+ * lists Salome Ayugi alone. His photo path (`/img/speaker-2.jpg`) is
+ * unchanged; only which array points at it moved.
+ *
+ * Njenga Munene is new: his bio is supplied (from I Choose Life – Africa
+ * communications, 18 September 2026), his photo is a small source image
+ * (264×270) upscaled to the site's 800×1000 headshot convention — ask for a
+ * higher-resolution original if one becomes available, same as the two
+ * softer panel photos flagged in PHOTOS above.
+ */
+export const KEYNOTES = [
+  {
+    slug: "ayub-gitau",
+    ...GUEST_OF_HONOUR,
+    label: "Guest of Honour · 10:45",
+  },
+  {
+    slug: "njenga-munene",
+    name: "Prof. Njenga Munene",
+    role: "Vice-Chancellor",
+    org: "Zetech University",
+    photo: "/img/keynote-njenga-munene.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "Prof. Njenga Munene is Vice-Chancellor of Zetech University and a Professor of Clinical Veterinary Medicine. Before joining Zetech, he spent many years at Egerton University in teaching and administration, including a full five-year term as Deputy Vice-Chancellor for Administration and Finance, a period marked by significant improvement in the university's physical facilities and webometric ranking. He also served as Dean of the Faculty of Veterinary Medicine at the University of Nairobi.",
+      "He is a Kenya Veterinary Board–registered veterinary surgeon and a trustee of the Kenya Veterinary Association. Over his career he has chaired numerous university committees and the Joint Negotiation Committee of the Inter-Public Universities Council Consultative Forum, and has authored more than 50 scientific publications. He holds a PhD and MSc in Clinical Studies and a Bachelor's degree in Veterinary Medicine from the University of Nairobi, with advanced studies in protozoan diseases at Obihiro University in Japan.",
+    ],
+  },
+  {
+    slug: "mike-mutungi",
+    name: "Eng. Mike Mutungi",
+    role: "Founder & CEO",
+    org: "I Choose Life – Africa",
+    photo: "/img/speaker-2.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "Eng. Mike Mutungi is Founder and CEO of I Choose Life – Africa (ICL) and Chairman of the Association of Startup and SME Enablers of Kenya (ASSEK). He holds a Bachelor of Science in Geospatial and Space Technology from the University of Nairobi and a Master of Divinity from NIST.",
+      "For over 20 years, Mike has designed programs spanning health, education, economic empowerment, leadership and governance, and institutional strengthening. He currently chairs the NGOs Network (HENNET) and sits on the boards of several organizations, including Planning Interiors and Jiinue Microcredit. He has overseen the development of strategic plans for programs and organizations across Africa, Europe, and the Middle East, and is the author of Kenya Mpya: Selecting and Holding Leaders to Account.",
+    ],
+  },
+] as const;
 
 /** Indicative running order — replace with the confirmed programme. */
 export const AGENDA = [
@@ -732,6 +785,12 @@ export const AGENDA_SOURCE = "Programme as at 14 August 2026. Times may still mo
  */
 export const AGENDA_START = AGENDA[0].time;
 export const AGENDA_END = AGENDA[AGENDA.length - 1].time;
+
+/** Full ISO timestamp for the summit's own countdown (see Countdown.tsx),
+ *  built from DATE_ISO and the agenda's own opening time rather than a
+ *  second typed date — registration opens at AGENDA_START, so that is the
+ *  moment the homepage counts down to. */
+export const SUMMIT_STARTS = `${DATE_ISO}T${AGENDA_START}:00+03:00`;
 
 export const FAQ = [
   { q: "Is lunch included?", a: "Yes. Every ticket includes lunch and refreshments through the day." },
@@ -795,13 +854,19 @@ export const PHOTOS = {
      1 is extracted from the printed flyer — adequate but not ideal, ask the
      speaker for the original if a sharper result turns up. 3 and 4 were
      replaced 16 September 2026 with supplied originals (Michael Maddy,
-     Henry Yatich); 2, 5, 6 and 7 are already supplied originals. 8-20 are
+     Henry Yatich); 5, 6 and 7 are already supplied originals. 8-20 are
      the thirteen speakers added the same day. Every one of 3-20 is cropped
      to 4:5, face-anchored, by hand — never automatically — following the
      convention `scripts/build-speaker-headshots.py` set out. Two of them
-     (Henry Yatich at index 3, and Eric Nyamwaro at index 14) come from a
-     small supplied photo and are visibly softer once enlarged to 800x1000;
-     ask each for a higher-resolution original when one is available.
+     (Henry Yatich, now at index 2, and Eric Nyamwaro, now at index 13) come
+     from a small supplied photo and are visibly softer once enlarged to
+     800x1000; ask each for a higher-resolution original when one is
+     available.
+
+     speaker-2.jpg (Mike Mutungi) is deliberately absent from this array —
+     he moved to KEYNOTES on 18 September 2026 and is no longer one of the
+     panel speakers this array backs. The file itself was not deleted or
+     renumbered; KEYNOTES below points at it directly by its existing path.
 
      floor.jpg is still a placeholder — it sits behind the closing section at
      25% opacity. Replace it with photography from last year's conference
@@ -812,7 +877,6 @@ export const PHOTOS = {
        floor: "https://picsum.photos/seed/asm-floor/1600/900"                */
   speakers: [
     "/img/speaker-1.jpg",
-    "/img/speaker-2.jpg",
     "/img/speaker-3.jpg",
     "/img/speaker-4.jpg",
     "/img/speaker-5.jpg",
@@ -1182,6 +1246,36 @@ export const FLOOR_PLAN = [
 
 /** The papers call has its own ticket on TikoHub. */
 export const PAPERS_TICKET = { price: "6,800", currency: "KES" } as const;
+
+/**
+ * Call-for-papers submission window.
+ *
+ * Supplied 18 September 2026, after the fact: submissions closed 14
+ * September 23:59 EAT; selection notifications go out 21 September 23:59
+ * EAT. PAPERS_SUBMISSION_DEADLINE is already in the past relative to the
+ * day this was added, on purpose — the call is genuinely closed, not open
+ * with a stale countdown ticking past zero. Never point a countdown at it.
+ *
+ * What's still ahead, and what /papers now builds anticipation around
+ * instead, is the notification date: that's the thing worth counting down
+ * to once submissions themselves are done.
+ */
+export const PAPERS_SUBMISSION_DEADLINE = "2026-09-14T23:59:00+03:00";
+export const PAPERS_NOTIFY_DATE = "2026-09-21T23:59:00+03:00";
+
+/** Build-time flags, same mechanism as EARLY_BIRD_ACTIVE above — true only
+ *  if the site is rebuilt before the date in question. A redeploy on or
+ *  after 22 September flips PAPERS_NOTIFY_PENDING to false; nothing to
+ *  edit by hand when that day comes. */
+export const PAPERS_SUBMISSIONS_OPEN =
+  Date.now() < new Date(PAPERS_SUBMISSION_DEADLINE).getTime();
+export const PAPERS_NOTIFY_PENDING =
+  Date.now() < new Date(PAPERS_NOTIFY_DATE).getTime();
+
+/** Derived label — never type the notification date anywhere else. */
+export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateString(
+  "en-GB", { day: "numeric", month: "long", timeZone: "Africa/Nairobi" }
+);
 
 
 /** Hero mosaic photography — East African enterprises at work.

@@ -4,13 +4,17 @@ import { useEffect, useState } from "react";
 import { EARLY_BIRD_ENDS } from "@/lib/event";
 
 /**
- * The early-bird countdown — the only client-side JavaScript on the page.
+ * A generic countdown to any target timestamp.
+ *
+ * Originally hardcoded to the early-bird deadline (still the default, so
+ * every existing call site keeps working unchanged). Generalised 18
+ * September 2026 to also drive the summit-day countdown on the homepage —
+ * pass `target` and the two labels to point it at a different date.
  *
  * Renders a stable placeholder on the server so the static export has no
- * layout shift, then fills in on mount. When the deadline passes it swaps
- * itself for the standard-rate message rather than showing zeros, so the
- * page never tells someone they are too late for a rate that is still open,
- * or too early for one that has closed.
+ * layout shift, then fills in on mount. When the target passes it swaps
+ * itself for `endedLabel` rather than showing zeros, so the page never
+ * pressures someone with a deadline that has already gone.
  */
 
 function remaining(target: number) {
@@ -26,8 +30,18 @@ function remaining(target: number) {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export default function Countdown({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  const target = new Date(EARLY_BIRD_ENDS).getTime();
+export default function Countdown({
+  tone = "dark",
+  target: targetISO = EARLY_BIRD_ENDS,
+  activeLabel = "Early bird closes in",
+  endedLabel = "Early bird sold out — standard rate applies.",
+}: {
+  tone?: "dark" | "light";
+  target?: string;
+  activeLabel?: string;
+  endedLabel?: string;
+}) {
+  const target = new Date(targetISO).getTime();
   const [left, setLeft] = useState<ReturnType<typeof remaining> | undefined>(undefined);
 
   useEffect(() => {
@@ -50,7 +64,7 @@ export default function Countdown({ tone = "dark" }: { tone?: "dark" | "light" }
   if (left === null) {
     return (
       <p className={`font-mono text-sm ${labelClass}`}>
-        Early bird has closed — standard rate applies.
+        {endedLabel}
       </p>
     );
   }
@@ -66,7 +80,7 @@ export default function Countdown({ tone = "dark" }: { tone?: "dark" | "light" }
     <div>
       <p className={`eyebrow mb-2 ${onDark ? "text-clay-bright" : "text-clay"}`}
          style={onDark ? { color: "#E8776A" } : undefined}>
-        Early bird closes in
+        {activeLabel}
       </p>
       <div className="flex items-end gap-4" role="timer" aria-live="off">
         {units.map(([value, label]) => (

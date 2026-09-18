@@ -5,9 +5,16 @@ import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EARLY_BIRD_PRICE, EVENT } from "@/li
 
 /**
  * The early-bird bar. Pinned to the top, present on every scroll position,
- * and the only place on the site that carries urgency. When the deadline
- * passes it removes itself rather than showing zeros — the page should
- * never pressure someone with a deadline that has already gone.
+ * and the only place on the site that carries urgency.
+ *
+ * Two states, not one: while the deadline is still open it counts down: once
+ * it passes, it does NOT disappear (that was the original behaviour, and it
+ * left the page with zero urgency signal for the entire gap between the
+ * early-bird deadline and the summit itself — the exact window a visitor is
+ * most likely to actually book). Instead it switches to a "sold out" message
+ * that pushes toward booking at standard rate now, with the same Book Now
+ * action, so there is always something here rather than nothing once the
+ * discount is gone.
  */
 export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean } = {}) {
   const target = new Date(EARLY_BIRD_ENDS).getTime();
@@ -24,7 +31,36 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
     return () => clearInterval(id);
   }, [target]);
 
-  if (left === undefined || left === null || closed) return null;
+  if (left === undefined || closed) return null;
+
+  const wrapClass = `${mobileOnly ? "sm:hidden " : ""}`;
+
+  if (left === null) {
+    return (
+      <div className={`${wrapClass}bg-ink text-white`}>
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-12 sm:h-11 flex items-center justify-between gap-3 sm:gap-4 text-[16px]">
+          <p className="font-medium truncate">
+            Early bird sold out — book now before standard fills too.
+          </p>
+          <div className="flex items-center gap-3 sm:gap-4 flex-none">
+            <a
+              href={EVENT.ticketUrl}
+              className="bg-marigold text-ink px-4 py-2 font-medium hover:brightness-105 transition-all whitespace-nowrap"
+            >
+              Book now
+            </a>
+            <button
+              onClick={() => setClosed(true)}
+              aria-label="Dismiss notice"
+              className="text-white/60 hover:text-white text-[22px] leading-none px-1"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const days = Math.floor(left / 86_400_000);
   const hours = Math.floor((left / 3_600_000) % 24);
@@ -33,7 +69,7 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
   const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <div className={`${mobileOnly ? "sm:hidden " : ""}bg-marigold text-ink`}>
+    <div className={`${wrapClass}bg-marigold text-ink`}>
       <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-12 sm:h-11 flex items-center justify-between gap-3 sm:gap-4 text-[16px]">
         {/* Two messages, not one truncated one. A phone has room for the
             price and the days left; a laptop has room for the sentence. */}

@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
-import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
+import Countdown from "@/components/Countdown";
+import Link from "next/link";
+import {
+  EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA, DATE_DAY_MONTH,
+  PAPERS_NOTIFY_DATE, PAPERS_NOTIFY_LABEL, PAPERS_NOTIFY_PENDING,
+} from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Call for papers — ${EVENT.name} ${EVENT.year}`,
   description:
-    `Call for papers for the Africa SME Summit, ${DATE_LONG}. Open to academics and practitioners across six tracks, from SME finance to market access.`,
+    `Submissions for the Africa SME Summit ${EVENT.year} call for papers are closed. Selection notifications go out ${PAPERS_NOTIFY_LABEL}.`,
   alternates: { canonical: "https://africasmesummit.com/papers" },
 };
 
 const STEPS = [
-  { n: "01", t: "Submit an abstract", d: "Up to 400 words, naming the track it belongs to and what the work shows." },
+  { n: "01", t: "Submissions closed", d: "The window closed 14 September. Every abstract that came in is now with the committee." },
   { n: "02", t: "Review", d: "The committee reads every submission and replies within three weeks." },
   { n: "03", t: "Present", d: `Accepted papers are presented in their track on ${DATE_DAY_MONTH}.` },
   { n: "04", t: "Publish", d: "Selected papers go into the post-summit proceedings." },
@@ -22,9 +26,9 @@ export default function Papers() {
   return (
     <PageShell
       current="/papers"
-      eyebrow="Call for papers"
+      eyebrow="Call for papers — submissions closed"
       title="Research that reaches the businesses it is about"
-      lede="Open to academics and practitioners. We are looking for work that a Kenyan small business owner could act on — not only work that advances the literature."
+      lede={`Submissions closed 14 September. The committee is reading every one of them now — everyone who sent an abstract hears back by ${PAPERS_NOTIFY_LABEL}, accepted or not.`}
     >
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-10 flex flex-wrap items-center justify-between gap-6">
@@ -58,7 +62,7 @@ export default function Papers() {
 
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">Tracks open to submissions</p>
+          <p className="eyebrow text-white mb-5">The six tracks submissions came in against</p>
           <div className="grid gap-x-14 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {TRACKS.map((t) => (
               <div key={t.n} className="border-t border-line pt-5">
@@ -70,28 +74,44 @@ export default function Papers() {
         </div>
       </section>
 
+      {/* Submissions are closed, so this is no longer a form — it's the
+          anticipation mechanism the papers page needs instead: a live
+          countdown to the notification date rather than a dead countdown
+          to the submission deadline that has already passed, plus a way
+          for anyone who missed this round to get flagged for the next one. */}
       <section className="border-b border-line">
-        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-2">
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-2 items-center">
           <div>
-            <p className="eyebrow text-white mb-5">Submit</p>
-            <h2 className="h-lg text-white text-3xl sm:text-4xl">Send your abstract</h2>
+            <p className="eyebrow text-marigold-t mb-5">What&rsquo;s next</p>
+            <h2 className="h-lg text-white text-3xl sm:text-4xl">
+              {PAPERS_NOTIFY_PENDING ? "Results land soon" : "Results are out"}
+            </h2>
             <p className="lede mt-5 text-white text-[16px] max-w-md">
-              Paste the abstract below, or send a note and we will reply with the
-              full submission guidance.
+              {PAPERS_NOTIFY_PENDING
+                ? `Every submitter hears from the committee by ${PAPERS_NOTIFY_LABEL} — accepted or not. Accepted papers present live to the room on ${DATE_DAY_MONTH}.`
+                : `Notifications went out ${PAPERS_NOTIFY_LABEL}. If you submitted and haven't heard from us, `}
+              {!PAPERS_NOTIFY_PENDING && (
+                <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
+                  get in touch
+                </Link>
+              )}
+              {!PAPERS_NOTIFY_PENDING && "."}
+            </p>
+            <p className="lede mt-4 text-white/60 text-[15px] max-w-md">
+              Missed this round?{" "}
+              <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
+                Ask us to flag you
+              </Link>{" "}
+              for the next call for papers.
             </p>
           </div>
-          <EnquiryForm
-            subject="Paper submission — Africa SME Summit 2026"
-            cta="Submit abstract"
-            fields={[
-              { name: "name", label: "Your name", required: true },
-              { name: "institution", label: "Institution or organisation", required: true },
-              { name: "email", label: "Email", type: "email", required: true },
-              { name: "track", label: "Track", options: [...TRACKS.map((t) => t.name), "Not sure yet"], required: true },
-              { name: "title", label: "Paper title", required: true },
-              { name: "abstract", label: "Abstract (up to 400 words)", type: "textarea", required: true },
-            ]}
-          />
+          <div className="flex justify-center lg:justify-end">
+            <Countdown
+              target={PAPERS_NOTIFY_DATE}
+              activeLabel="Notifications in"
+              endedLabel="Notifications are out."
+            />
+          </div>
         </div>
       </section>
 
