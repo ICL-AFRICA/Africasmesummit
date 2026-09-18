@@ -100,7 +100,7 @@ export default function EnquiryForm({
       <button
         type="submit"
         disabled={state === "sending"}
-        className="bg-gold text-ink px-7 py-3.5 text-[16px] font-medium hover:brightness-110 disabled:opacity-60 transition-all"
+        className="btn-glow bg-gold text-ink px-7 py-3.5 text-[16px] font-medium hover:brightness-110 disabled:opacity-60 transition-all"
       >
         {state === "sending" ? "Sending…" : cta}
       </button>

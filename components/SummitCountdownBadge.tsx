@@ -38,7 +38,12 @@ export default function SummitCountdownBadge() {
 
   return (
     <div
-      className="hidden sm:flex fixed z-40 left-6 bottom-8
+      // btn-glow (app/globals.css) added here too, 19 September 2026, at
+      // ICL's request to glow "all the buttons on the site" — this one
+      // isn't clickable, but it's the other floating widget the request
+      // named directly, so it gets the same ambient pulse rather than
+      // being the one thing left looking left out.
+      className="btn-glow hidden sm:flex fixed z-40 left-6 bottom-8
                  items-center gap-3 bg-ink text-white border border-line
                  shadow-[0_8px_40px_rgba(25,21,57,0.18)] px-5 py-3"
       role="complementary"

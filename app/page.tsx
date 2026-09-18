@@ -408,7 +408,7 @@ export default function Page() {
               <a
                 href={PROGRAMME_URL}
                 download
-                className="inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all border border-ink/20 text-ink hover:border-ink"
+                className="btn-glow inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all border border-ink/20 text-ink hover:border-ink"
               >
                 Get the full programme (PDF)
                 <span aria-hidden="true" className="text-[12px]">↓</span>
@@ -494,39 +494,47 @@ export default function Page() {
         </section>
 
         {/* ── Partners ──────────────────────────────────────────────── */}
-        <section className="bg-card border-t border-rule">
+        {/* Redesigned 19 September 2026 at ICL's request: the fixed 5×2
+            grid (with two hidden filler cells just to keep the row counts
+            even at every breakpoint) is gone in favour of one continuously
+            scrolling strip, which sidesteps that filler-cell bookkeeping
+            entirely — a scrolling row has no "leftover slot" to fill no
+            matter how many partners there are. The list is duplicated once
+            (see .partner-track in globals.css for why) so it loops without
+            a visible seam; the second copy is aria-hidden so screen readers
+            only hear each partner named once. */}
+        <section className="bg-card border-t border-rule overflow-hidden">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20">
             <p className="eyebrow text-ink/45 mb-4">2026 partners</p>
             <h2 className="h-lg text-3xl sm:text-4xl max-w-2xl">
               Convened alongside
             </h2>
-            {/* Every logo file is the same 400x192 canvas with the mark
-                already optically balanced inside it, so this one rule sizes
-                all nine and the balance survives every breakpoint. */}
-            <ul className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px bg-rule border border-rule">
-              {PARTNERS.map((p) => (
-                <li key={p.name} className="bg-card h-32 flex items-center justify-center px-5">
+          </div>
+          {/* Full-bleed, outside the max-width wrapper above, so the strip
+              can scroll edge to edge and the fade mask has room to work
+              against the section's own background rather than a hard
+              content-column edge. */}
+          <div className="relative mt-12 [mask-image:linear-gradient(to_right,transparent,black_64px,black_calc(100%-64px),transparent)]">
+            <div className="partner-track flex w-max items-center gap-16 py-4">
+              {[...PARTNERS, ...PARTNERS].map((p, i) => (
+                <div
+                  key={`${p.name}-${i}`}
+                  className="flex h-24 w-[190px] shrink-0 items-center justify-center"
+                  aria-hidden={i >= PARTNERS.length}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={p.logo}
-                    alt={p.name}
+                    alt={i < PARTNERS.length ? p.name : ""}
                     width={400}
                     height={192}
                     loading="lazy"
                     decoding="async"
                     className="w-full max-w-[190px] h-auto"
                   />
-                </li>
+                </div>
               ))}
-              {/* Ten logos divide exactly by 2 and by 5, and leave two empty
-                  slots at 3. That is the reverse of the nine-logo case this
-                  replaced, which needed a filler at 2 and 5 but not at 3 —
-                  so the count and these classes have to change together.
-                  Without them the gap shows the grid's own rule colour
-                  through and reads as a missing partner. */}
-              <li aria-hidden="true" className="bg-card h-32 hidden sm:block lg:hidden" />
-              <li aria-hidden="true" className="bg-card h-32 hidden sm:block lg:hidden" />
-            </ul>
+            </div>
           </div>
         </section>
 

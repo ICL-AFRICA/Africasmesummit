@@ -10,11 +10,13 @@ const KEY = "asm-ticker-dismissed";
  * Floating early-bird ticker.
  *
  * Sits bottom-right on desktop, full width along the bottom on a phone.
- * Three behaviours worth knowing:
+ * Two behaviours worth knowing:
  *
- * 1. It waits ~1.4s before appearing. Arriving with the hero fights the
- *    first impression; arriving just after it feels like an offer rather
- *    than an interruption.
+ * 1. No entrance animation — it's just there once the consent bar is
+ *    answered, no delay and no slide/fade-in. That motion read as a popup
+ *    ad intruding on the page (flagged 19 September 2026), so it was
+ *    removed in favour of the card simply being present, the same way the
+ *    top sticky bar always just is.
  * 2. Dismissal is remembered in localStorage. Being asked to close the same
  *    thing on every page is what makes these hated.
  * 3. Once the deadline passes it switches to a "sold out" card rather than
@@ -30,7 +32,6 @@ export default function TicketTicker() {
   const target = new Date(EARLY_BIRD_ENDS).getTime();
   const [left, setLeft] = useState<number | null | undefined>(undefined);
   const [closed, setClosed] = useState(true);
-  const [shown, setShown] = useState(false);
 
   /* Wait for the consent bar to be answered before appearing. Both are
      pinned to the bottom of the viewport, and this site's rule is one pinned
@@ -49,27 +50,23 @@ export default function TicketTicker() {
       if (localStorage.getItem(KEY) === "1") return;
     } catch { /* private mode — just show it */ }
     setClosed(false);
-    const reveal = setTimeout(() => setShown(true), 1400);
     const tick = () => {
       const ms = target - Date.now();
       setLeft(ms > 0 ? ms : null);
     };
     tick();
     const id = setInterval(tick, 1000);
-    return () => { clearInterval(id); clearTimeout(reveal); };
+    return () => clearInterval(id);
   }, [decided, target]);
 
   function dismiss() {
-    setShown(false);
+    setClosed(true);
     try { localStorage.setItem(KEY, "1"); } catch { /* ignore */ }
-    setTimeout(() => setClosed(true), 320);
   }
 
   if (closed || left === undefined) return null;
 
-  const cardShell = `hidden sm:block fixed z-50 right-8 bottom-8
-                  transition-all duration-300 ease-out
-                  ${shown ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`;
+  const cardShell = "hidden sm:block fixed z-50 right-8 bottom-8";
 
   if (left === null) {
     return (
@@ -91,7 +88,7 @@ export default function TicketTicker() {
             </p>
             <a
               href={EVENT.ticketUrl}
-              className="ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
+              className="btn-glow ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
                          hover:brightness-105 transition-all"
             >
               Book ticket now
@@ -147,7 +144,7 @@ export default function TicketTicker() {
 
           <a
             href={EVENT.ticketUrl}
-            className="ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
+            className="btn-glow ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
                        hover:brightness-105 transition-all"
           >
             Book ticket now

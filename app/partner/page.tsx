@@ -125,7 +125,7 @@ export default function Partner() {
               <a
                 href={BROCHURE_URL}
                 download
-                className="inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
+                className="btn-glow inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
               >
                 Get the full brochure (PDF)
                 <span aria-hidden="true" className="text-[12px]">↓</span>

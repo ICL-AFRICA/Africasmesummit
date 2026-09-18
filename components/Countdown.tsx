@@ -52,7 +52,13 @@ export default function Countdown({
 
   const onDark = tone === "dark";
   const labelClass = onDark ? "text-white" : "text-ink";
-  const digitClass = onDark ? "text-cream" : "text-ink";
+  // Was "text-cream" — not a defined colour token anywhere in the theme, so
+  // it compiled to no rule at all and the digits fell back to inherited
+  // text-ink on a dark field: ink on ink, invisible. Found 19 September
+  // 2026 on the /papers notifications countdown, the first dark-tone,
+  // dark-background use of this component (the homepage countdown uses
+  // tone="light", which was never broken).
+  const digitClass = onDark ? "text-white" : "text-ink";
 
   // Before hydration: reserve the space, say nothing that could be wrong.
   if (left === undefined) {

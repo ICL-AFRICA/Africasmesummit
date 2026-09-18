@@ -26,7 +26,10 @@ export default function Btn({
   internal?: boolean;
   className?: string;
 }) {
-  const cls = `inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all ${TONES[tone]} ${className}`;
+  // btn-glow (app/globals.css): a slow marigold pulse on every button in
+  // the system, added 19 September 2026 at ICL's request — one place to
+  // apply it, same as everything else about this component.
+  const cls = `btn-glow inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all ${TONES[tone]} ${className}`;
   const arrow = <span aria-hidden="true" className="text-[12px]">{internal ? "→" : "↗"}</span>;
 
   if (internal) {

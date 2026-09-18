@@ -639,13 +639,27 @@ export const TRACKS = [
   },
 ] as const;
 
-/** Three buyers, three reasons. The old page spoke to one. */
+/**
+ * Three buyers, three reasons. The old page spoke to one.
+ *
+ * Regrouped 19 September 2026 at ICL's request: the original three were
+ * "Corporates & county" / "Universities" / "Business owners", which put two
+ * quite different audiences — corporates and county government — in one
+ * card and split "business owner" and "corporate" (both really the SME
+ * sector, from opposite sides of it) into different ones. Now it's SMEs and
+ * the corporates who serve them together in one card, county government
+ * broken out into its own (it is a distinct audience with its own reasons
+ * to attend — MSMEs registered in their jurisdiction, not a market to
+ * exhibit to), and universities unchanged in the middle. Array order IS
+ * display order, and the middle card keeps the dark treatment regardless of
+ * which audience sits there (see the i === 1 check in app/page.tsx).
+ */
 export const PATHS = [
   {
-    who: "Corporates & county",
-    lead: "You serve the SME sector",
-    body: "This is where the businesses you are trying to reach spend the day. Exhibit, speak, or sponsor a track — and meet enterprises already screened through the ICL programme.",
-    points: ["Exhibition and speaking slots", "Profile to 10,000+ across ICL platforms", "Direct access to screened enterprises"],
+    who: "SMEs & corporates",
+    lead: "You run an SME, or you serve one",
+    body: "Meet the person who runs SME banking at NCBA. Put a university research team on a problem in your business, exhibit, speak, or sponsor a track — and meet enterprises already screened through the ICL programme, whichever side of that table you're on.",
+    points: ["Capital and market access", "Research support at no cost to you", "Exhibition and speaking slots", "Profile to 10,000+ across ICL platforms"],
   },
   {
     who: "Universities",
@@ -654,10 +668,10 @@ export const PATHS = [
     points: ["Papers call and publishing", "Student placement into real businesses", "Industry partners for ongoing research"],
   },
   {
-    who: "Business owners",
-    lead: "You run an SME",
-    body: "Meet the person who runs SME banking at NCBA. Put a university research team on a problem in your business. Show your product to four county governments in one afternoon.",
-    points: ["Capital and market access", "Research support at no cost to you", "Buyers, banks and county government in one room"],
+    who: "County government",
+    lead: "You govern where they operate",
+    body: "Nairobi, Machakos, Laikipia and Uasin Gishu county governments are all in the room — a direct line to the MSMEs registered in your jurisdiction, and to the corporates who procure from them.",
+    points: ["Direct access to registered MSMEs", "Buyers, banks and business owners in one room", "Policy conversations grounded in real businesses"],
   },
 ] as const;
 

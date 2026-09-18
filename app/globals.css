@@ -326,3 +326,79 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .nav-panel { animation: none; }
 }
+
+/* ── /papers "What's next" card ────────────────────────────────────────
+   Added 19 September 2026, at ICL's request, for the notification
+   countdown specifically — a short settle on arrival, then a slow, low-
+   amplitude glow on the border so the one card on the page still counting
+   down to something keeps a faint pulse of life without turning into the
+   "loudest thing on the site" the rest of this file deliberately avoids.
+   Nothing else on /papers moves. */
+@keyframes notify-card-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes notify-card-glow {
+  0%, 100% { border-color: rgba(227, 164, 40, 0.35); box-shadow: 0 0 0 rgba(227, 164, 40, 0); }
+  50%      { border-color: rgba(227, 164, 40, 0.8);  box-shadow: 0 0 28px rgba(227, 164, 40, 0.18); }
+}
+.notify-card {
+  animation:
+    notify-card-in 700ms ease-out both,
+    notify-card-glow 3.6s ease-in-out 700ms infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .notify-card { animation: none; }
+}
+
+/* ── Buttons: ambient glow ──────────────────────────────────────────────
+   Added 19 September 2026 at ICL's request, sitewide this time rather than
+   scoped to one card: every button and button-styled link gets a slow,
+   low-amplitude pulse of marigold light around its edge — Btn (the one
+   button component every CTA on the site already routes through, per its
+   own comment in components/Btn.tsx), the enquiry form's submit button,
+   the floating ticket popup's two "Book ticket now" buttons, the two PDF
+   download links (brochure and programme), and the floating summit
+   countdown badge. Same shape as .notify-card-glow above — a shadow pulse,
+   nothing that moves or resizes — just generalised into its own class
+   instead of copied per component. Deliberately left off small utility
+   controls (the ticket popup's × dismiss, the cookie-consent buttons, nav
+   toggles): those aren't calls to action, and glowing a consent button in
+   particular would read as a dark pattern rather than a design choice. */
+@keyframes btn-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(227, 164, 40, 0); }
+  50%      { box-shadow: 0 0 18px 3px rgba(227, 164, 40, 0.5); }
+}
+.btn-glow {
+  animation: btn-glow 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-glow { animation: none; }
+}
+
+/* ── Partners: scrolling logo strip ──────────────────────────────────────
+   Added 19 September 2026 at ICL's request, replacing the fixed 5×2 grid
+   ("logos scroll left to right, instead of within a rigid box"). The list
+   renders twice back to back (see app/page.tsx) and this animates the pair
+   left by exactly one copy's width, so the loop seams invisibly — a
+   standard marquee trick, not a hack specific to this page. Slow and
+   linear on purpose: a logo strip that speeds up or eases reads as an ad;
+   this should read as a credits line. Pauses on hover/focus so a mouse
+   resting on a specific logo (or a keyboard user tabbing through the
+   links, if any are ever added) gets a still target instead of a moving
+   one. The edges fade via mask-image in the JSX rather than here, since
+   Tailwind's arbitrary-value syntax covers that in one utility. */
+@keyframes partner-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.partner-track {
+  animation: partner-scroll 36s linear infinite;
+}
+.partner-track:hover,
+.partner-track:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .partner-track { animation: none; }
+}
