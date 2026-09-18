@@ -706,24 +706,17 @@ export const GUEST_OF_HONOUR = {
  * (264×270) upscaled to the site's 800×1000 headshot convention — ask for a
  * higher-resolution original if one becomes available, same as the two
  * softer panel photos flagged in PHOTOS above.
+ *
+ * Display order is Gitau, then Mutungi, then Munene (set 19 September 2026
+ * at ICL's request — UoN's VC, then the convener, then Zetech's VC). Array
+ * order IS display order on both the homepage and /speakers, so reordering
+ * this array is the only thing needed to change it.
  */
 export const KEYNOTES = [
   {
     slug: "ayub-gitau",
     ...GUEST_OF_HONOUR,
     label: "Guest of Honour · 10:45",
-  },
-  {
-    slug: "njenga-munene",
-    name: "Prof. Njenga Munene",
-    role: "Vice-Chancellor",
-    org: "Zetech University",
-    photo: "/img/keynote-njenga-munene.jpg",
-    label: "Keynote speaker",
-    bio: [
-      "Prof. Njenga Munene is Vice-Chancellor of Zetech University and a Professor of Clinical Veterinary Medicine. Before joining Zetech, he spent many years at Egerton University in teaching and administration, including a full five-year term as Deputy Vice-Chancellor for Administration and Finance, a period marked by significant improvement in the university's physical facilities and webometric ranking. He also served as Dean of the Faculty of Veterinary Medicine at the University of Nairobi.",
-      "He is a Kenya Veterinary Board–registered veterinary surgeon and a trustee of the Kenya Veterinary Association. Over his career he has chaired numerous university committees and the Joint Negotiation Committee of the Inter-Public Universities Council Consultative Forum, and has authored more than 50 scientific publications. He holds a PhD and MSc in Clinical Studies and a Bachelor's degree in Veterinary Medicine from the University of Nairobi, with advanced studies in protozoan diseases at Obihiro University in Japan.",
-    ],
   },
   {
     slug: "mike-mutungi",
@@ -735,6 +728,18 @@ export const KEYNOTES = [
     bio: [
       "Eng. Mike Mutungi is Founder and CEO of I Choose Life – Africa (ICL) and Chairman of the Association of Startup and SME Enablers of Kenya (ASSEK). He holds a Bachelor of Science in Geospatial and Space Technology from the University of Nairobi and a Master of Divinity from NIST.",
       "For over 20 years, Mike has designed programs spanning health, education, economic empowerment, leadership and governance, and institutional strengthening. He currently chairs the NGOs Network (HENNET) and sits on the boards of several organizations, including Planning Interiors and Jiinue Microcredit. He has overseen the development of strategic plans for programs and organizations across Africa, Europe, and the Middle East, and is the author of Kenya Mpya: Selecting and Holding Leaders to Account.",
+    ],
+  },
+  {
+    slug: "njenga-munene",
+    name: "Prof. Njenga Munene",
+    role: "Vice-Chancellor",
+    org: "Zetech University",
+    photo: "/img/keynote-njenga-munene.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "Prof. Njenga Munene is Vice-Chancellor of Zetech University and a Professor of Clinical Veterinary Medicine. Before joining Zetech, he spent many years at Egerton University in teaching and administration, including a full five-year term as Deputy Vice-Chancellor for Administration and Finance, a period marked by significant improvement in the university's physical facilities and webometric ranking. He also served as Dean of the Faculty of Veterinary Medicine at the University of Nairobi.",
+      "He is a Kenya Veterinary Board–registered veterinary surgeon and a trustee of the Kenya Veterinary Association. Over his career he has chaired numerous university committees and the Joint Negotiation Committee of the Inter-Public Universities Council Consultative Forum, and has authored more than 50 scientific publications. He holds a PhD and MSc in Clinical Studies and a Bachelor's degree in Veterinary Medicine from the University of Nairobi, with advanced studies in protozoan diseases at Obihiro University in Japan.",
     ],
   },
 ] as const;

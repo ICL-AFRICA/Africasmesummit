@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Btn from "@/components/Btn";
-import SpeakerCard from "@/components/SpeakerCard";
 import HeroMosaic from "@/components/HeroMosaic";
 import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
@@ -9,20 +8,6 @@ import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
-
-/* The wall below is a curated seven, not the full roster — SPEAKERS grew
-   to twenty on 16 September 2026, and rendering all of them edge to edge
-   would either blow out the homepage or, worse, leave a hole in the last
-   row (the tiles have no gaps, so a short row shows as bare ink). Seven
-   plus the closing "propose a session" tile is the same clean 4x2 grid
-   the page was built around. The other panel speakers are one click away
-   on /speakers and appear on their own track under /tracks.
-
-   Mike Mutungi moved out of SPEAKERS and into KEYNOTES on 18 September
-   2026 — he no longer occupies a slot in this slice, so it now runs one
-   further into the roster than it used to. Change this slice, and the
-   "Four across… fills two rows exactly" comment below it, together. */
-const HOMEPAGE_SPEAKERS = SPEAKERS.slice(0, 7);
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -161,44 +146,61 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── Speaker wall: edge to edge, no cards, no gaps ─────────── */}
+        {/* ── Speaker wall: every panel speaker, one clean directory ─── */}
+        {/* Redesigned 19 September 2026 at ICL's request: all
+            {SPEAKER_COUNT_CAP} panel speakers now show here, not a curated
+            seven — a step down in visual weight from the keynote portraits
+            above on purpose (smaller photos, name and title only, no bio;
+            full bios still live on /speakers). A dense, gapped, uniform
+            grid rather than the old edge-to-edge tiles reads as a
+            professional directory rather than a features wall, and it
+            never leaves a hole in the last row the way the no-gap grid did
+            — a short row just trails off, which a gapped grid can afford. */}
         <section id="speakers" className="bg-ink">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-12 text-center">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-14 text-center">
             <p className="eyebrow text-white mb-5">On stage</p>
             <h2 className="h-lg text-white text-4xl sm:text-5xl">The people you came to meet</h2>
             <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
-              {SPEAKER_COUNT_CAP} names, one room, and a whole day to get to them.
+              {SPEAKER_COUNT_CAP} panel speakers across six tracks, one room, one day.
             </p>
           </div>
-          {/* Four across at lg, not three: seven speakers plus the closing
-              tile is eight, which fills two rows exactly. At three it left a
-              hole in the last row, and the tiles are edge to edge with no
-              gaps, so a hole shows as a bare ink rectangle. Adding or
-              removing a speaker means checking this number again. */}
-          <div className="grid grid-cols-2 lg:grid-cols-4">
-            {HOMEPAGE_SPEAKERS.map((s, i) => (
-              <SpeakerCard
-                key={s.slug}
-                index={i}
-                name={s.name}
-                role={s.role}
-                org={s.org}
-                href={`/speakers#${s.slug}`}
-              />
-            ))}
-            <div className="aspect-[4/5] bg-raise flex flex-col justify-between p-6 sm:p-8">
-              <p className="eyebrow text-marigold">Speaking slots</p>
-              <div>
-                <p className="h-sm text-white text-lg sm:text-2xl">
-                  There is room on the programme for one more.
-                </p>
-                <Link href="/contact" className="mt-4 inline-block text-[16px] text-marigold hover:text-white transition-colors">
-                  Propose a session →
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-16">
+            <div className="grid gap-x-6 gap-y-11 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6">
+              {SPEAKERS.map((s, i) => (
+                <Link
+                  key={s.slug}
+                  href={`/speakers#${s.slug}`}
+                  className="group block"
+                  aria-label={`${s.name} — ${s.role}, ${s.org}`}
+                >
+                  <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={PHOTOS.speakers[i]}
+                      alt={s.name}
+                      className="portrait w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="mt-3 h-sm text-white text-[14px] sm:text-[15px] leading-snug group-hover:text-marigold transition-colors">
+                    {s.name}
+                  </p>
+                  <p className="text-[12px] sm:text-[13px] text-white/55 leading-snug mt-0.5">
+                    {s.role}
+                  </p>
+                  <p className="text-[12px] sm:text-[13px] text-white/55 leading-snug">
+                    {s.org}
+                  </p>
                 </Link>
-              </div>
+              ))}
             </div>
+            <p className="mt-12 text-center text-[16px] text-white/70">
+              There is room on the programme for one more —{" "}
+              <Link href="/contact" className="text-marigold hover:text-white transition-colors underline underline-offset-4">
+                propose a session
+              </Link>.
+            </p>
           </div>
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 flex flex-wrap justify-center gap-3">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-16 flex flex-wrap justify-center gap-3">
             <Btn href="/speakers" tone="onDark" internal>View all speakers</Btn>
             <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
           </div>
