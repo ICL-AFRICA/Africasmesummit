@@ -4,6 +4,7 @@ import SpeakerCard from "@/components/SpeakerCard";
 import HeroMosaic from "@/components/HeroMosaic";
 import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
+import SummitCountdownBadge from "@/components/SummitCountdownBadge";
 import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -44,9 +45,13 @@ export default function Page() {
     <>
       {/* One urgency mechanism per screen, never two at once. On a phone
           that is the top bar; on desktop it is the floating ticker, which
-          has room to breathe there and none on a phone. */}
+          has room to breathe there and none on a phone. The summit-date
+          badge is a separate thing (it never expires and never asks for a
+          click), so it sits in the opposite corner rather than competing
+          with the ticket urgency for the same visual attention. */}
       <StickyBar mobileOnly />
       <TicketTicker />
+      <SummitCountdownBadge />
 
       {/* ── Nav ──────────────────────────────────────────────────────── */}
       {/* current="/" so the new Home link marks itself on the page it points
@@ -111,6 +116,51 @@ export default function Page() {
           </div>
         </section>
 
+        {/* ── Keynote speakers ──────────────────────────────────────── */}
+        {/* Moved ahead of the panel wall on 19 September 2026 — the original
+            brief was "the VC section above the panelist speakers," and this
+            page had it backwards (panel wall first, keynotes second) since
+            the restructuring landed. /speakers already had the order right;
+            this brings the homepage in line with it. Three people, not the
+            whole roster — deliberately bigger than the panel wall tiles
+            below, one portrait each instead of a shared edge-to-edge grid,
+            so the summit's three headline names get room to breathe before
+            the panel wall. Gitau still fills the running order's 10:45 slot
+            (see AGENDA); Munene and Mutungi are keynote speakers without a
+            fixed time slot yet. */}
+        <section className="bg-card border-t border-rule">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
+            <div className="text-center mb-14">
+              <p className="eyebrow text-ink/45 mb-5">Keynote</p>
+              <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
+                Before the tracks open
+              </h2>
+              <p className="lede mt-5 text-ink/60 max-w-xl mx-auto text-[16px]">
+                Two Vice-Chancellors and the summit&rsquo;s own convener, setting the tone
+                before six tracks open.
+              </p>
+            </div>
+            <div className="grid gap-12 sm:grid-cols-3">
+              {KEYNOTES.map((k) => (
+                <div key={k.slug}>
+                  <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={k.photo}
+                      alt={k.name}
+                      className="portrait w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="eyebrow text-ink/45 mt-5 mb-2">{k.label}</p>
+                  <h3 className="h-sm text-2xl">{k.name}</h3>
+                  <p className="text-[16px] text-ink/70 mt-2">{k.role}</p>
+                  <p className="text-[16px] text-ink font-medium">{k.org}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Speaker wall: edge to edge, no cards, no gaps ─────────── */}
         <section id="speakers" className="bg-ink">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-12 text-center">
@@ -151,46 +201,6 @@ export default function Page() {
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 flex flex-wrap justify-center gap-3">
             <Btn href="/speakers" tone="onDark" internal>View all speakers</Btn>
             <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
-          </div>
-        </section>
-
-        {/* ── Keynote speakers ──────────────────────────────────────── */}
-        {/* Three people, not the whole roster — deliberately bigger than the
-            panel wall tiles above, one portrait each instead of a shared
-            edge-to-edge grid, so the summit's three headline names get room
-            to breathe before the panel wall. Gitau still fills the running
-            order's 10:45 slot (see AGENDA); Munene and Mutungi are keynote
-            speakers without a fixed time slot yet. */}
-        <section className="bg-card border-t border-rule">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
-            <div className="text-center mb-14">
-              <p className="eyebrow text-ink/45 mb-5">Keynote</p>
-              <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
-                Before the tracks open
-              </h2>
-              <p className="lede mt-5 text-ink/60 max-w-xl mx-auto text-[16px]">
-                Two Vice-Chancellors and the summit&rsquo;s own convener, setting the tone
-                before six tracks open.
-              </p>
-            </div>
-            <div className="grid gap-12 sm:grid-cols-3">
-              {KEYNOTES.map((k) => (
-                <div key={k.slug}>
-                  <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={k.photo}
-                      alt={k.name}
-                      className="portrait w-full h-full object-cover"
-                    />
-                  </div>
-                  <p className="eyebrow text-ink/45 mt-5 mb-2">{k.label}</p>
-                  <h3 className="h-sm text-2xl">{k.name}</h3>
-                  <p className="text-[16px] text-ink/70 mt-2">{k.role}</p>
-                  <p className="text-[16px] text-ink font-medium">{k.org}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -341,7 +351,7 @@ export default function Page() {
               <p className="eyebrow text-ink/45 mb-5">Tickets</p>
               <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
                 {EARLY_BIRD_ACTIVE
-                  ? `Book before ${EARLY_BIRD_LABEL} and save KES 1,000`
+                  ? <>Book before <span className="text-clay">{EARLY_BIRD_LABEL}</span> and save KES 1,000</>
                   : "Early bird sold out — book standard now before seats go"}
               </h2>
             </div>
@@ -367,7 +377,7 @@ export default function Page() {
                       <p className={`eyebrow ${justClosed ? "text-ink/35" : t.urgent ? "text-marigold" : "text-ink/45"}`}>
                         {t.tier}
                       </p>
-                      <p className={`font-mono text-[12px] ${justClosed ? "text-ink/35" : t.urgent ? "text-white" : "text-ink/45"}`}>
+                      <p className={`font-mono text-[12px] ${justClosed ? "text-ink/35" : t.urgent ? "text-marigold font-semibold" : "text-ink/45"}`}>
                         {justClosed ? "Sold out" : t.note}
                       </p>
                     </div>

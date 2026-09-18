@@ -131,7 +131,7 @@ export default function TicketTicker() {
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 px-6 py-5">
           <p className="text-[16px] text-ink font-medium">
-            Early bird — ends {EARLY_BIRD_LABEL}
+            Early bird — ends <span className="font-bold text-clay">{EARLY_BIRD_LABEL}</span>
           </p>
 
           <div className="flex items-start gap-4">

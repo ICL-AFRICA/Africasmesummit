@@ -30,6 +30,52 @@ export default function Papers() {
       title="Research that reaches the businesses it is about"
       lede={`Submissions closed 14 September. The committee is reading every one of them now — everyone who sent an abstract hears back by ${PAPERS_NOTIFY_LABEL}, accepted or not.`}
     >
+      {/* Submissions are closed, so this is the first thing on the page now,
+          not a form buried three sections down — it's the anticipation
+          mechanism /papers actually needs: a live countdown to the
+          notification date rather than a dead countdown to the submission
+          deadline that has already passed, plus a way for anyone who missed
+          this round to get flagged for the next one. Boxed rather than run
+          as plain paragraphs — a bordered, tinted card so it reads as a
+          widget you'd check back on, not another block of copy. */}
+      <section className="border-b border-line bg-raise/30">
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
+          <div className="border border-marigold/40 bg-ink p-8 sm:p-12 grid gap-10 lg:gap-14 lg:grid-cols-2 items-center">
+            <div>
+              <p className="eyebrow text-marigold-t mb-5">What&rsquo;s next</p>
+              <h2 className="h-lg text-white text-3xl sm:text-4xl">
+                {PAPERS_NOTIFY_PENDING ? "Results land soon" : "Results are out"}
+              </h2>
+              <p className="lede mt-5 text-white text-[16px] max-w-md">
+                {PAPERS_NOTIFY_PENDING
+                  ? `Every submitter hears from the committee by ${PAPERS_NOTIFY_LABEL} — accepted or not. Accepted papers present live to the room on ${DATE_DAY_MONTH}.`
+                  : `Notifications went out ${PAPERS_NOTIFY_LABEL}. If you submitted and haven't heard from us, `}
+                {!PAPERS_NOTIFY_PENDING && (
+                  <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
+                    get in touch
+                  </Link>
+                )}
+                {!PAPERS_NOTIFY_PENDING && "."}
+              </p>
+              <p className="lede mt-4 text-white/60 text-[15px] max-w-md">
+                Missed this round?{" "}
+                <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
+                  Ask us to flag you
+                </Link>{" "}
+                for the next call for papers.
+              </p>
+            </div>
+            <div className="flex justify-center lg:justify-end">
+              <Countdown
+                target={PAPERS_NOTIFY_DATE}
+                activeLabel="Notifications in"
+                endedLabel="Notifications are out."
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-10 flex flex-wrap items-center justify-between gap-6">
           <div>
@@ -70,47 +116,6 @@ export default function Papers() {
                 <h3 className="h-sm text-white text-lg">{t.name}</h3>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Submissions are closed, so this is no longer a form — it's the
-          anticipation mechanism the papers page needs instead: a live
-          countdown to the notification date rather than a dead countdown
-          to the submission deadline that has already passed, plus a way
-          for anyone who missed this round to get flagged for the next one. */}
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-2 items-center">
-          <div>
-            <p className="eyebrow text-marigold-t mb-5">What&rsquo;s next</p>
-            <h2 className="h-lg text-white text-3xl sm:text-4xl">
-              {PAPERS_NOTIFY_PENDING ? "Results land soon" : "Results are out"}
-            </h2>
-            <p className="lede mt-5 text-white text-[16px] max-w-md">
-              {PAPERS_NOTIFY_PENDING
-                ? `Every submitter hears from the committee by ${PAPERS_NOTIFY_LABEL} — accepted or not. Accepted papers present live to the room on ${DATE_DAY_MONTH}.`
-                : `Notifications went out ${PAPERS_NOTIFY_LABEL}. If you submitted and haven't heard from us, `}
-              {!PAPERS_NOTIFY_PENDING && (
-                <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
-                  get in touch
-                </Link>
-              )}
-              {!PAPERS_NOTIFY_PENDING && "."}
-            </p>
-            <p className="lede mt-4 text-white/60 text-[15px] max-w-md">
-              Missed this round?{" "}
-              <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
-                Ask us to flag you
-              </Link>{" "}
-              for the next call for papers.
-            </p>
-          </div>
-          <div className="flex justify-center lg:justify-end">
-            <Countdown
-              target={PAPERS_NOTIFY_DATE}
-              activeLabel="Notifications in"
-              endedLabel="Notifications are out."
-            />
           </div>
         </div>
       </section>

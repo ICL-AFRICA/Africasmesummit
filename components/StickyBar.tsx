@@ -77,7 +77,8 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
           {EARLY_BIRD_PRICE} · <span className="font-mono tabular-nums">{days}d</span> left
         </p>
         <p className="font-medium hidden sm:block truncate">
-          {`Early bird — ${EARLY_BIRD_PRICE}. Ends ${EARLY_BIRD_LABEL}.`}
+          {`Early bird — ${EARLY_BIRD_PRICE}. Ends `}
+          <span className="font-bold underline underline-offset-2">{EARLY_BIRD_LABEL}</span>.
         </p>
         <div className="flex items-center gap-3 sm:gap-4 flex-none">
           <p className="font-mono tabular-nums hidden sm:block">
