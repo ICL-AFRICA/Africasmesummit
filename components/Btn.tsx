@@ -29,7 +29,12 @@ export default function Btn({
   // btn-glow (app/globals.css): a slow marigold pulse on every button in
   // the system, added 19 September 2026 at ICL's request — one place to
   // apply it, same as everything else about this component.
-  const cls = `btn-glow inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all ${TONES[tone]} ${className}`;
+  //
+  // rounded-lg: added 20 September 2026, also at ICL's request — the site
+  // was deliberately sharp-cornered everywhere before this. Every other
+  // button in the system (below) uses the same rounded-lg so the curve
+  // reads as one rule, not a one-off on this component.
+  const cls = `btn-glow rounded-lg inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all ${TONES[tone]} ${className}`;
   const arrow = <span aria-hidden="true" className="text-[12px]">{internal ? "→" : "↗"}</span>;
 
   if (internal) {

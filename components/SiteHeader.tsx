@@ -87,7 +87,7 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
           <MobileNav nav={NAV} current={current} />
           <a
             href={EVENT.ticketUrl}
-            className="bg-ink text-white px-4 sm:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
+            className="rounded-lg bg-ink text-white px-4 sm:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
           >
             Get ticket
           </a>

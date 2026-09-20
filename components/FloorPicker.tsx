@@ -35,7 +35,7 @@ export default function FloorPicker({
 
   const chip = (id: string, kind: string, isSel: boolean) =>
     [
-      "font-mono text-[12px] leading-none tracking-tight px-2 py-1.5 border transition-all",
+      "rounded font-mono text-[12px] leading-none tracking-tight px-2 py-1.5 border transition-all",
       isSel
         ? "bg-marigold text-ink border-marigold font-semibold"
         : kind === "corporate"

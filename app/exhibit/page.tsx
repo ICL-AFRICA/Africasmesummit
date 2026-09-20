@@ -42,7 +42,7 @@ export default function Exhibit() {
                 </ul>
                 <a
                   href={BOOKING_URL}
-                  className={`mt-8 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-all ${
+                  className={`rounded-lg mt-8 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-all ${
                     i === 0 ? "bg-gold text-ink hover:brightness-110"
                             : "border border-line text-white hover:border-gold hover:text-marigold-t"}`}
                 >

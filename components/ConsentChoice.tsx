@@ -37,7 +37,7 @@ export default function ConsentChoice() {
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="px-5 py-3 text-[16px] font-medium border border-line text-white
+            className="rounded-lg px-5 py-3 text-[16px] font-medium border border-line text-white
                        hover:border-marigold hover:text-marigold transition-colors"
           >
             Accept advertising cookies
@@ -47,7 +47,7 @@ export default function ConsentChoice() {
           <button
             type="button"
             onClick={() => writeConsent("denied")}
-            className="px-5 py-3 text-[16px] font-medium border border-line text-white
+            className="rounded-lg px-5 py-3 text-[16px] font-medium border border-line text-white
                        hover:border-marigold hover:text-marigold transition-colors"
           >
             Decline advertising cookies

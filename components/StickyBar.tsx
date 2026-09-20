@@ -45,7 +45,7 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
           <div className="flex items-center gap-3 sm:gap-4 flex-none">
             <a
               href={EVENT.ticketUrl}
-              className="bg-marigold text-ink px-4 py-2 font-medium hover:brightness-105 transition-all whitespace-nowrap"
+              className="rounded-lg bg-marigold text-ink px-4 py-2 font-medium hover:brightness-105 transition-all whitespace-nowrap"
             >
               Book now
             </a>
@@ -86,7 +86,7 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
           </p>
           <a
             href={EVENT.ticketUrl}
-            className="bg-ink text-white px-4 py-2 font-medium hover:bg-raise transition-colors whitespace-nowrap"
+            className="rounded-lg bg-ink text-white px-4 py-2 font-medium hover:bg-raise transition-colors whitespace-nowrap"
           >
             Book now
           </a>

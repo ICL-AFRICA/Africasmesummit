@@ -408,7 +408,7 @@ export default function Page() {
               <a
                 href={PROGRAMME_URL}
                 download
-                className="btn-glow inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all border border-ink/20 text-ink hover:border-ink"
+                className="btn-glow rounded-lg inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all border border-ink/20 text-ink hover:border-ink"
               >
                 Get the full programme (PDF)
                 <span aria-hidden="true" className="text-[12px]">↓</span>
@@ -468,7 +468,7 @@ export default function Page() {
                     </ul>
                     <a
                       href={EVENT.ticketUrl}
-                      className={`mt-9 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-colors ${
+                      className={`rounded-lg mt-9 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-colors ${
                         justClosed
                           ? "bg-paper text-ink/60 hover:text-ink border border-rule"
                           : t.urgent

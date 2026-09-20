@@ -89,7 +89,7 @@ export default function Partner() {
                   </ul>
                   <a
                     href={BOOKING_URL}
-                    className="btn-glow mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
+                    className="btn-glow rounded-lg mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
                   >
                     Book {t.tier}
                   </a>
@@ -128,7 +128,7 @@ export default function Partner() {
               <a
                 href={BROCHURE_URL}
                 download
-                className="btn-glow inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
+                className="btn-glow rounded-lg inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
               >
                 Get the full brochure (PDF)
                 <span aria-hidden="true" className="text-[12px]">↓</span>

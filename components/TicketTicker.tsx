@@ -88,7 +88,7 @@ export default function TicketTicker() {
             </p>
             <a
               href={EVENT.ticketUrl}
-              className="btn-glow ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
+              className="btn-glow rounded-lg ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
                          hover:brightness-105 transition-all"
             >
               Book ticket now
@@ -144,7 +144,7 @@ export default function TicketTicker() {
 
           <a
             href={EVENT.ticketUrl}
-            className="btn-glow ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
+            className="btn-glow rounded-lg ml-auto bg-marigold text-ink px-5 py-3 text-[16px] font-semibold
                        hover:brightness-105 transition-all"
           >
             Book ticket now

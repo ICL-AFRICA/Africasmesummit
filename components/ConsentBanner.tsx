@@ -55,7 +55,7 @@ export default function ConsentBanner() {
           <button
             type="button"
             onClick={() => writeConsent("denied")}
-            className="px-5 py-3 text-[16px] font-medium border border-rule text-ink
+            className="rounded-lg px-5 py-3 text-[16px] font-medium border border-rule text-ink
                        hover:border-ink transition-colors"
           >
             Decline
@@ -63,7 +63,7 @@ export default function ConsentBanner() {
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="px-5 py-3 text-[16px] font-medium bg-ink text-white
+            className="rounded-lg px-5 py-3 text-[16px] font-medium bg-ink text-white
                        hover:bg-raise transition-colors"
           >
             Accept
