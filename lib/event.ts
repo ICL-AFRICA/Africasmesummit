@@ -1428,6 +1428,18 @@ export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateStri
  * structure and card design are real, the content is not. Swap each one
  * for the actual announcement (and drop the "[Placeholder]" marker) before
  * it goes live; do not publish them as-is.
+ *
+ * `media` is optional — a text-only update is fine — but when a card has a
+ * photo or clip from the activity, it goes here rather than inline in
+ * `body`. Two fixed drop-zones, so nobody has to guess a path:
+ *   - Photos → public/img/updates/, referenced as "/img/updates/<file>.webp"
+ *     (or .jpg). Always give real `alt` text — it is the only description
+ *     a screen reader gets.
+ *   - Clips → public/video/updates/, referenced as "/video/updates/<file>.mp4",
+ *     with a `poster` still frame from the same folder so the card never
+ *     shows a black box before someone presses play.
+ * See public/img/updates/README.md and public/video/updates/README.md for
+ * the exact format/size guidance.
  */
 export type SummitUpdate = {
   date: string; // ISO, e.g. "2026-09-20"
@@ -1435,6 +1447,9 @@ export type SummitUpdate = {
   title: string;
   body: string;
   link?: { href: string; text: string };
+  media?:
+    | { type: "image"; src: string; alt: string }
+    | { type: "video"; src: string; poster: string };
 };
 
 export const SUMMIT_UPDATES: readonly SummitUpdate[] = [

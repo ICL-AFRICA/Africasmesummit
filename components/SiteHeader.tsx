@@ -20,7 +20,7 @@ const NAV = [
   { label: "Partner", href: "/partner" },
   { label: "Exhibit", href: "/exhibit" },
   { label: "Papers", href: "/papers" },
-  { label: "Updates", href: "/press" },
+  { label: "Press", href: "/press" },
   { label: "Contact", href: "/contact" },
 ];
 

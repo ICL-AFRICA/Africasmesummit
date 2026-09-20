@@ -5,9 +5,9 @@ import PageShell from "@/components/PageShell";
 import { EVENT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG } from "@/lib/event";
 
 export const metadata: Metadata = {
-  title: `Updates — ${EVENT.name} ${EVENT.year}`,
+  title: `Press — ${EVENT.name} ${EVENT.year}`,
   description:
-    `What's happening on the way to the Africa SME Summit, ${DATE_LONG} at the University of Nairobi — new partners, speakers, papers and ticket milestones.`,
+    `What's happening on the way to the Africa SME Summit, ${DATE_LONG} at the University of Nairobi — new partners, speakers, papers and ticket milestones, in photos and video.`,
   alternates: { canonical: "https://africasmesummit.com/press" },
 };
 
@@ -37,36 +37,71 @@ export default function Press() {
       current="/press"
       eyebrow="On the way to the summit"
       title="Everything building up to October 15"
-      lede="New partners, speakers, deadlines and milestones, as they happen — nothing here is embargoed, so quote or share whatever's useful."
+      lede="New partners, speakers, deadlines and milestones — in photos and video as they happen. Nothing here is embargoed, so quote or share whatever's useful."
     >
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <div className="max-w-[46rem] space-y-px bg-line border border-line">
+          {/* Widened from the old 46rem article measure — a card carrying a
+              photo or video needs more than a text column's worth of room,
+              and the feed reads better in two columns above the lg
+              breakpoint. */}
+          <div className="grid gap-6 lg:grid-cols-2 max-w-[1100px]">
             {SUMMIT_UPDATES.map((u) => (
               <article
                 key={u.title}
-                className={`bg-ink p-8 sm:p-10 border-l-2 ${TAG_STYLE[u.tag].border}`}
+                className={`bg-ink border-l-2 ${TAG_STYLE[u.tag].border} overflow-hidden flex flex-col`}
               >
-                <div className="flex items-center gap-3 flex-wrap">
-                  <span className={`font-mono text-[12px] uppercase tracking-widest ${TAG_STYLE[u.tag].text}`}>
-                    {u.tag}
-                  </span>
-                  <span aria-hidden="true" className="text-white/30">·</span>
-                  <time dateTime={u.date} className="font-mono text-[12px] text-white/40">
-                    {updateLabel(u.date)}
-                  </time>
-                </div>
-                <h2 className="h-sm text-white text-2xl mt-4">{u.title}</h2>
-                <p className="lede mt-3 text-[17px] text-white/80 max-w-2xl">{u.body}</p>
-                {u.link && (
-                  <Link
-                    href={u.link.href}
-                    className="mt-4 inline-flex items-center gap-1.5 text-[16px] text-white underline underline-offset-4 hover:text-marigold transition-colors"
-                  >
-                    {u.link.text}
-                    <span aria-hidden="true">→</span>
-                  </Link>
+                {/* Media bleeds to the card's own edges — no padding, no
+                    rounded corners (the site is sharp everywhere) — so a
+                    photo or clip reads as press material, not a thumbnail
+                    stuck inside a text card. Fixed 16:9 box either way, so
+                    a mixed feed of photo/video/text-only cards still lines
+                    up in the grid. */}
+                {u.media && (
+                  <div className="aspect-video w-full bg-raise flex-none">
+                    {u.media.type === "image" ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={u.media.src}
+                        alt={u.media.alt}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <video
+                        controls
+                        playsInline
+                        preload="none"
+                        poster={u.media.poster}
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={u.media.src} type="video/mp4" />
+                      </video>
+                    )}
+                  </div>
                 )}
+                <div className="p-8 sm:p-10">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className={`font-mono text-[12px] uppercase tracking-widest ${TAG_STYLE[u.tag].text}`}>
+                      {u.tag}
+                    </span>
+                    <span aria-hidden="true" className="text-white/30">·</span>
+                    <time dateTime={u.date} className="font-mono text-[12px] text-white/40">
+                      {updateLabel(u.date)}
+                    </time>
+                  </div>
+                  <h2 className="h-sm text-white text-2xl mt-4">{u.title}</h2>
+                  <p className="lede mt-3 text-[17px] text-white/80">{u.body}</p>
+                  {u.link && (
+                    <Link
+                      href={u.link.href}
+                      className="mt-4 inline-flex items-center gap-1.5 text-[16px] text-white underline underline-offset-4 hover:text-marigold transition-colors"
+                    >
+                      {u.link.text}
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  )}
+                </div>
               </article>
             ))}
           </div>
