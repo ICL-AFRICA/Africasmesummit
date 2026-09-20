@@ -1153,6 +1153,11 @@ export const SPONSOR_INCLUDES_NOTE =
  * omission of the convener from the speaker list. Once journalists have the
  * text, corrections mean a second release with its own date — editing a
  * quote someone has already filed is how a newsroom stops trusting you.
+ *
+ * Changed 20 September 2026: /press no longer renders this release — the
+ * page is now the SUMMIT_UPDATES feed below. PRESS_RELEASE stays here,
+ * unrendered, because it is still the correct thing to paste into an email
+ * or hand a journalist directly; it just isn't the page anymore.
  */
 export const PRESS_RELEASE = {
   kicker: "For immediate release",
@@ -1200,7 +1205,10 @@ export const PRESS_RELEASE = {
   ],
 } as const;
 
-/** Media contact. The phone is EVENT.phone[0] in international form. */
+/** Media contact. The phone is EVENT.phone[0] in international form. Still
+ *  shown on /press, in a smaller form, below the updates feed — a working
+ *  journalist should still find it there even though the page's main job
+ *  has changed. */
 export const PRESS_CONTACT = {
   name: "Ian Muiga Wangari",
   org: "I Choose Life – Africa",
@@ -1389,6 +1397,69 @@ export const PAPERS_SUBMISSION_LABEL = new Date(PAPERS_SUBMISSION_DEADLINE).toLo
 export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateString(
   "en-GB", { day: "numeric", month: "long", timeZone: "Africa/Nairobi" }
 );
+
+/**
+ * SUMMIT_UPDATES — added 20 September 2026, replacing the single press
+ * release as the content of /press. Rather than one static document, the
+ * page is now a running feed of what is actually happening on the way to
+ * the summit: papers reopening, new partners, speakers confirmed, ticket
+ * milestones — the things that build anticipation between now and
+ * October 15. Add a new entry at the TOP of the array as things happen;
+ * nothing else on the page needs to change.
+ *
+ * Declared down here, after PAPERS_SUBMISSION_LABEL / PAPERS_NOTIFY_LABEL,
+ * because the first entry below quotes them — module-level consts can only
+ * reference what has already been declared above them in the file.
+ *
+ * `date` is an ISO date; the page derives its display label from it at
+ * render time (same "derive, don't retype" rule as EARLY_BIRD_LABEL and
+ * PAPERS_SUBMISSION_LABEL above) — never add a separate display string.
+ *
+ * `tag` drives the card's accent colour and deliberately reuses the site's
+ * existing four-colour system (see AGENDA_ACCENT_BG / the /tracks page)
+ * rather than inventing a fifth: marigold = Speakers (the spotlight
+ * colour, same as the ticket action), clay = Tickets (urgency and
+ * deadlines), indigo = Partners (capital and institutions), palm = Papers
+ * (growth — universities and research). A future fifth category should be
+ * folded into whichever of these four it resembles rather than getting a
+ * new colour of its own.
+ *
+ * The two entries below marked "[Placeholder]" are exactly that — the
+ * structure and card design are real, the content is not. Swap each one
+ * for the actual announcement (and drop the "[Placeholder]" marker) before
+ * it goes live; do not publish them as-is.
+ */
+export type SummitUpdate = {
+  date: string; // ISO, e.g. "2026-09-20"
+  tag: "Speakers" | "Papers" | "Partners" | "Tickets";
+  title: string;
+  body: string;
+  link?: { href: string; text: string };
+};
+
+export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
+  {
+    date: "2026-09-20",
+    tag: "Papers",
+    title: "The call for papers is open again",
+    body: `Submissions reopened and now run until ${PAPERS_SUBMISSION_LABEL}, with every submitter hearing back by ${PAPERS_NOTIFY_LABEL}. If you already sent an abstract before the original deadline, it's still in — no need to resend.`,
+    link: { href: "/papers", text: "Read the call for papers" },
+  },
+  {
+    date: "2026-09-08",
+    tag: "Partners",
+    title: "[Placeholder] A new partner is joining the room",
+    body: "Placeholder card — replace with the real announcement once a partner is confirmed and cleared to be named publicly.",
+    link: { href: "/partner", text: "See partnership packages" },
+  },
+  {
+    date: "2026-08-26",
+    tag: "Speakers",
+    title: "[Placeholder] Another name is added to the stage",
+    body: "Placeholder card — replace with the real speaker announcement once it's confirmed.",
+    link: { href: "/speakers", text: "See who's speaking" },
+  },
+] as const;
 
 
 /** Hero mosaic photography — East African enterprises at work.
