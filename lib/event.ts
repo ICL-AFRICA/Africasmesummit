@@ -1059,13 +1059,22 @@ export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
  * loud via SPONSOR_INCLUDES_NOTE. A sponsor paying KES 1,000,000 on the
  * strength of a bulleted list under a Book button will expect all of it.
  *
- * ORDER IS ASCENDING (Bronze → Platinum) AND IS LOAD-BEARING. /partner
- * renders each tier's package as cumulative — "everything in the tier
- * before it, plus its own list below" — by reading `SPONSOR_TIERS[i - 1]`.
- * Reordering this array changes what /partner claims every tier includes,
- * not just the order they're drawn in. Each tier's `includes` should only
- * ever list what is genuinely NEW at that tier, never repeat what a lower
- * tier already grants.
+ * ORDER IS ASCENDING (Bronze → Platinum) AND IS LOAD-BEARING. Each tier's
+ * `includes` should only ever list what is genuinely NEW at that tier,
+ * never repeat what a lower tier already grants — /partner derives the
+ * full cumulative list a tier actually gets by flattening `includes` from
+ * every tier up to and including it (`SPONSOR_TIERS.slice(0, i + 1)`),
+ * rather than retyping each tier's complete bullet list here. Reordering
+ * this array changes what /partner claims every tier includes, not just
+ * the order they're drawn in.
+ *
+ * Changed 20 September 2026 at ICL's request: /partner used to show only a
+ * tier's own new bullets under an "Everything in {previous tier}, plus:"
+ * line, which undersold the higher tiers — a Platinum card looked like six
+ * items, not the seventeen it actually is once Bronze and Silver and Gold
+ * are folded in. It now spells out the full list every time, so a card's
+ * length is the value at that tier, and cards are allowed to end up very
+ * different heights because of it.
  */
 export const SPONSOR_TIERS = [
   {
@@ -1348,29 +1357,35 @@ export const PAPERS_TICKET = { price: "6,800", currency: "KES" } as const;
 /**
  * Call-for-papers submission window.
  *
- * Supplied 18 September 2026, after the fact: submissions closed 14
- * September 23:59 EAT; selection notifications go out 21 September 23:59
- * EAT. PAPERS_SUBMISSION_DEADLINE is already in the past relative to the
- * day this was added, on purpose — the call is genuinely closed, not open
- * with a stale countdown ticking past zero. Never point a countdown at it.
+ * Extended 20 September 2026 at ICL's request. Originally supplied 18
+ * September, after the fact, as already-closed: submissions due 14
+ * September 23:59 EAT, notifications 21 September 23:59 EAT. The window is
+ * now reopened instead — submissions extended to 21 September 23:59 EAT
+ * (midnight at the end of the day after this change was made), and
+ * notifications pushed back a week to match, 28 September 23:59 EAT.
  *
- * What's still ahead, and what /papers now builds anticipation around
- * instead, is the notification date: that's the thing worth counting down
- * to once submissions themselves are done.
+ * This is the first time PAPERS_SUBMISSION_DEADLINE has been in the
+ * future rather than the past, so /papers (and its STEPS list) now
+ * actually branches on PAPERS_SUBMISSIONS_OPEN below instead of assuming
+ * "closed" unconditionally the way it could get away with before.
  */
-export const PAPERS_SUBMISSION_DEADLINE = "2026-09-14T23:59:00+03:00";
-export const PAPERS_NOTIFY_DATE = "2026-09-21T23:59:00+03:00";
+export const PAPERS_SUBMISSION_DEADLINE = "2026-09-21T23:59:00+03:00";
+export const PAPERS_NOTIFY_DATE = "2026-09-28T23:59:00+03:00";
 
 /** Build-time flags, same mechanism as EARLY_BIRD_ACTIVE above — true only
  *  if the site is rebuilt before the date in question. A redeploy on or
- *  after 22 September flips PAPERS_NOTIFY_PENDING to false; nothing to
- *  edit by hand when that day comes. */
+ *  after 22 September flips PAPERS_SUBMISSIONS_OPEN to false; one on or
+ *  after 29 September flips PAPERS_NOTIFY_PENDING to false. Nothing to
+ *  edit by hand when either day comes — only if a deadline moves again. */
 export const PAPERS_SUBMISSIONS_OPEN =
   Date.now() < new Date(PAPERS_SUBMISSION_DEADLINE).getTime();
 export const PAPERS_NOTIFY_PENDING =
   Date.now() < new Date(PAPERS_NOTIFY_DATE).getTime();
 
-/** Derived label — never type the notification date anywhere else. */
+/** Derived labels — never type either date anywhere else. */
+export const PAPERS_SUBMISSION_LABEL = new Date(PAPERS_SUBMISSION_DEADLINE).toLocaleDateString(
+  "en-GB", { day: "numeric", month: "long", timeZone: "Africa/Nairobi" }
+);
 export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateString(
   "en-GB", { day: "numeric", month: "long", timeZone: "Africa/Nairobi" }
 );

@@ -5,18 +5,29 @@ import Countdown from "@/components/Countdown";
 import Link from "next/link";
 import {
   EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA, DATE_DAY_MONTH,
+  PAPERS_SUBMISSION_DEADLINE, PAPERS_SUBMISSION_LABEL, PAPERS_SUBMISSIONS_OPEN,
   PAPERS_NOTIFY_DATE, PAPERS_NOTIFY_LABEL, PAPERS_NOTIFY_PENDING,
 } from "@/lib/event";
 
 export const metadata: Metadata = {
-  title: `Call for papers — ${EVENT.name} ${EVENT.year}`,
-  description:
-    `Submissions for the Africa SME Summit ${EVENT.year} call for papers are closed. Selection notifications go out ${PAPERS_NOTIFY_LABEL}.`,
+  title: PAPERS_SUBMISSIONS_OPEN
+    ? `Call for papers — closes ${PAPERS_SUBMISSION_LABEL} — ${EVENT.name} ${EVENT.year}`
+    : `Call for papers — ${EVENT.name} ${EVENT.year}`,
+  description: PAPERS_SUBMISSIONS_OPEN
+    ? `Submissions for the Africa SME Summit ${EVENT.year} call for papers are open until ${PAPERS_SUBMISSION_LABEL}. Selection notifications go out ${PAPERS_NOTIFY_LABEL}.`
+    : `Submissions for the Africa SME Summit ${EVENT.year} call for papers are closed. Selection notifications go out ${PAPERS_NOTIFY_LABEL}.`,
   alternates: { canonical: "https://africasmesummit.com/papers" },
 };
 
+/* Step 01 is the only one that changes shape between the two states —
+   the rest of the pipeline (review, present, publish) runs the same
+   either way. Written as a ternary on the whole entry rather than just
+   its fields, so nothing here can end up half in one state and half in
+   the other. */
 const STEPS = [
-  { n: "01", t: "Submissions closed", d: "The window closed 14 September. Every abstract that came in is now with the committee." },
+  PAPERS_SUBMISSIONS_OPEN
+    ? { n: "01", t: "Submissions open", d: `The window closes ${PAPERS_SUBMISSION_LABEL}. Get your abstract in before then.` }
+    : { n: "01", t: "Submissions closed", d: `The window closed ${PAPERS_SUBMISSION_LABEL}. Every abstract that came in is now with the committee.` },
   { n: "02", t: "Review", d: "The committee reads every submission and replies within three weeks." },
   { n: "03", t: "Present", d: `Accepted papers are presented in their track on ${DATE_DAY_MONTH}.` },
   { n: "04", t: "Publish", d: "Selected papers go into the post-summit proceedings." },
@@ -26,50 +37,75 @@ export default function Papers() {
   return (
     <PageShell
       current="/papers"
-      eyebrow="Call for papers — submissions closed"
+      eyebrow={PAPERS_SUBMISSIONS_OPEN ? `Call for papers — closes ${PAPERS_SUBMISSION_LABEL}` : "Call for papers — submissions closed"}
       title="Research that reaches the businesses it is about"
-      lede={`Submissions closed 14 September. The committee is reading every one of them now — everyone who sent an abstract hears back by ${PAPERS_NOTIFY_LABEL}, accepted or not.`}
+      lede={
+        PAPERS_SUBMISSIONS_OPEN
+          ? `Submissions are open until ${PAPERS_SUBMISSION_LABEL} — send your abstract and hear back by ${PAPERS_NOTIFY_LABEL}, accepted or not.`
+          : `Submissions closed ${PAPERS_SUBMISSION_LABEL}. The committee is reading every one of them now — everyone who sent an abstract hears back by ${PAPERS_NOTIFY_LABEL}, accepted or not.`
+      }
     >
-      {/* Submissions are closed, so this is the first thing on the page now,
-          not a form buried three sections down — it's the anticipation
-          mechanism /papers actually needs: a live countdown to the
-          notification date rather than a dead countdown to the submission
-          deadline that has already passed, plus a way for anyone who missed
-          this round to get flagged for the next one. Boxed rather than run
-          as plain paragraphs — a bordered, tinted card so it reads as a
-          widget you'd check back on, not another block of copy. */}
+      {/* This card is the anticipation mechanism /papers builds around,
+          whichever state the call is in — a live countdown rather than a
+          dead one. Extended 20 September 2026: submissions reopened until
+          PAPERS_SUBMISSION_DEADLINE (a real future date now, not a past
+          one), so this card counts down to THAT while open — urgency to
+          get an abstract in — and only switches to counting down to the
+          notification date once the window shuts again, which is the one
+          and only thing it used to count down to before the extension.
+          Boxed rather than run as plain paragraphs — a bordered, tinted
+          card so it reads as a widget you'd check back on, not another
+          block of copy. */}
       <section className="border-b border-line bg-raise/30">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <div className="border border-marigold/40 bg-ink p-8 sm:p-12 grid gap-10 lg:gap-14 lg:grid-cols-2 items-center">
+          <div className="notify-card rounded-xl border border-marigold/40 bg-ink p-8 sm:p-12 grid gap-10 lg:gap-14 lg:grid-cols-2 items-center">
             <div>
-              <p className="eyebrow text-marigold-t mb-5">What&rsquo;s next</p>
+              <p className="eyebrow text-marigold-t mb-5">
+                {PAPERS_SUBMISSIONS_OPEN ? "Closing soon" : "What’s next"}
+              </p>
               <h2 className="h-lg text-white text-3xl sm:text-4xl">
-                {PAPERS_NOTIFY_PENDING ? "Results land soon" : "Results are out"}
+                {PAPERS_SUBMISSIONS_OPEN
+                  ? "The window is open again"
+                  : (PAPERS_NOTIFY_PENDING ? "Results land soon" : "Results are out")}
               </h2>
               <p className="lede mt-5 text-white text-[16px] max-w-md">
-                {PAPERS_NOTIFY_PENDING
-                  ? `Every submitter hears from the committee by ${PAPERS_NOTIFY_LABEL} — accepted or not. Accepted papers present live to the room on ${DATE_DAY_MONTH}.`
-                  : `Notifications went out ${PAPERS_NOTIFY_LABEL}. If you submitted and haven't heard from us, `}
-                {!PAPERS_NOTIFY_PENDING && (
+                {PAPERS_SUBMISSIONS_OPEN
+                  ? `Submissions close ${PAPERS_SUBMISSION_LABEL}. Get your abstract in before then — everyone who submits hears back by ${PAPERS_NOTIFY_LABEL}, accepted or not.`
+                  : (PAPERS_NOTIFY_PENDING
+                    ? `Every submitter hears from the committee by ${PAPERS_NOTIFY_LABEL} — accepted or not. Accepted papers present live to the room on ${DATE_DAY_MONTH}.`
+                    : `Notifications went out ${PAPERS_NOTIFY_LABEL}. If you submitted and haven't heard from us, `)}
+                {!PAPERS_SUBMISSIONS_OPEN && !PAPERS_NOTIFY_PENDING && (
                   <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
                     get in touch
                   </Link>
                 )}
-                {!PAPERS_NOTIFY_PENDING && "."}
+                {!PAPERS_SUBMISSIONS_OPEN && !PAPERS_NOTIFY_PENDING && "."}
               </p>
               <p className="lede mt-4 text-white/60 text-[15px] max-w-md">
-                Missed this round?{" "}
-                <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
-                  Ask us to flag you
-                </Link>{" "}
-                for the next call for papers.
+                {PAPERS_SUBMISSIONS_OPEN ? (
+                  <>
+                    Ready to send yours?{" "}
+                    <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
+                      Get in touch
+                    </Link>{" "}
+                    and we'll point you to the submission form.
+                  </>
+                ) : (
+                  <>
+                    Missed this round?{" "}
+                    <Link href="/contact" className="underline underline-offset-4 hover:text-marigold">
+                      Ask us to flag you
+                    </Link>{" "}
+                    for the next call for papers.
+                  </>
+                )}
               </p>
             </div>
             <div className="flex justify-center lg:justify-end">
               <Countdown
-                target={PAPERS_NOTIFY_DATE}
-                activeLabel="Notifications in"
-                endedLabel="Notifications are out."
+                target={PAPERS_SUBMISSIONS_OPEN ? PAPERS_SUBMISSION_DEADLINE : PAPERS_NOTIFY_DATE}
+                activeLabel={PAPERS_SUBMISSIONS_OPEN ? "Submissions close in" : "Notifications in"}
+                endedLabel={PAPERS_SUBMISSIONS_OPEN ? "Submissions have closed." : "Notifications are out."}
               />
             </div>
           </div>
@@ -108,7 +144,9 @@ export default function Papers() {
 
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">The six tracks submissions came in against</p>
+          <p className="eyebrow text-white mb-5">
+            {PAPERS_SUBMISSIONS_OPEN ? "The six tracks you can submit against" : "The six tracks submissions came in against"}
+          </p>
           <div className="grid gap-x-14 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {TRACKS.map((t) => (
               <div key={t.n} className="border-t border-line pt-5">

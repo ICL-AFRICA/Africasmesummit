@@ -50,15 +50,23 @@ export default function Partner() {
           <p className="lede text-[16px] text-white max-w-2xl mb-8">
             {SPONSOR_INCLUDES_NOTE}
           </p>
-          {/* Equal-height by default: plain grid stretch (no items-end), so
-              every card matches the tallest one and each tier's "Book"
-              button lands at the same row regardless of how many bullets
-              it has — the `flex-1` on the <ul> below absorbs the slack.
-              The tier's identity is the card's own background colour, not
-              a border accent, so the row reads as one clean table. */}
-          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
+          {/* Changed 20 September 2026 at ICL's request: each card now spells
+              out everything that tier actually gets — the full cumulative
+              list, flattened from every tier up to and including this one
+              (SPONSOR_TIERS itself still only stores what's NEW at each
+              tier; see the comment there) — rather than "everything in the
+              tier before, plus" and just the new bullets. A sponsor reading
+              only the Platinum card should see all seventeen things they
+              get without having to add up three other cards first.
+              Deliberately NOT equal-height any more (items-start, no
+              flex-1 slack-absorber): a four-bullet Bronze card and a
+              seventeen-bullet Platinum card are supposed to look like
+              different amounts of value, not be forced to the same size.
+              The "Book" button sits right after each card's own content,
+              wherever that lands. */}
+          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line items-start">
             {SPONSOR_TIERS.map((t, i) => {
-              const prev = i > 0 ? SPONSOR_TIERS[i - 1] : null;
+              const included = SPONSOR_TIERS.slice(0, i + 1).flatMap((tier) => tier.includes);
               return (
                 <div
                   key={t.tier}
@@ -72,13 +80,8 @@ export default function Partner() {
                     <span className="text-base align-top mr-1.5 font-normal">{t.currency}</span>
                     {t.price}
                   </p>
-                  <ul className="mt-6 pt-5 space-y-2.5 border-t border-ink/60 flex-1">
-                    {prev && (
-                      <li className="text-ink italic text-[16px] pb-1">
-                        Everything in {prev.tier}, plus:
-                      </li>
-                    )}
-                    {t.includes.map((x) => (
+                  <ul className="mt-6 pt-5 space-y-2.5 border-t border-ink/60">
+                    {included.map((x) => (
                       <li key={x} className="flex gap-2.5 text-[16px] text-ink">
                         <span className="flex-none">✓</span>{x}
                       </li>
@@ -86,7 +89,7 @@ export default function Partner() {
                   </ul>
                   <a
                     href={BOOKING_URL}
-                    className="mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
+                    className="btn-glow mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
                   >
                     Book {t.tier}
                   </a>
