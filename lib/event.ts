@@ -1509,10 +1509,19 @@ export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateStri
  * folded into whichever of these four it resembles rather than getting a
  * new colour of its own.
  *
- * The two entries below marked "[Placeholder]" are exactly that — the
- * structure and card design are real, the content is not. Swap each one
- * for the actual announcement (and drop the "[Placeholder]" marker) before
- * it goes live; do not publish them as-is.
+ * The one entry below still marked "[Placeholder]" is exactly that — the
+ * structure and card design are real, the content is not. Swap it for the
+ * actual announcement (and drop the "[Placeholder]" marker) before it goes
+ * live; do not publish it as-is.
+ *
+ * `link` is a plain underlined text link by default — right for "read
+ * more" style references to another page. Give it `style: "button"` when
+ * the update itself IS the call to action (a ticket push, a booking
+ * deadline) and it should render as the site's one shared gold, glowing
+ * button (components/Btn.tsx) instead — added 21 September 2026 for the
+ * early-bird-sold-out update below, at ICL's request ("a button linking to
+ * TikoHub, gold in colour and glowing"), rather than inventing a one-off
+ * button style just for this card.
  *
  * `media` is optional — a text-only update is fine — but when a card has a
  * photo or clip from the activity, it goes here rather than inline in
@@ -1537,7 +1546,7 @@ export type SummitUpdate = {
   tag: "Speakers" | "Papers" | "Partners" | "Tickets";
   title: string;
   body: string;
-  link?: { href: string; text: string };
+  link?: { href: string; text: string; style?: "button" };
   media?:
     | { type: "image"; src: string; alt: string }
     | { type: "video"; src: string; poster: string }
@@ -1545,6 +1554,13 @@ export type SummitUpdate = {
 };
 
 export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
+  {
+    date: "2026-09-21",
+    tag: "Tickets",
+    title: "Early bird sold out. The room is filling fast.",
+    body: `The first release is gone — thank you for showing up for this the way you did. Standard tickets are live now at ${TICKET_PRICE}, and if the early bird's pace is anything to go by, this batch won't last long either. 7.4 million Kenyan SMEs are represented in that room on October 15 — don't be the one still deciding when it sells out again.`,
+    link: { href: EVENT.ticketUrl, text: TICKET_CTA, style: "button" },
+  },
   {
     date: "2026-09-20",
     tag: "Papers",
