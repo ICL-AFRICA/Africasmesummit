@@ -720,10 +720,10 @@ export const GUEST_OF_HONOUR = {
 } as const;
 
 /**
- * The three keynote speakers, shown above the panel roster on the homepage
- * and /speakers — promoted out of the panel grid on 18 September 2026 at
- * ICL's request, so visitors meet the summit's three biggest names before
- * the panel wall rather than finding them mixed into it.
+ * The keynote speakers, shown above the panel roster on the homepage and
+ * /speakers — promoted out of the panel grid on 18 September 2026 at ICL's
+ * request, so visitors meet the summit's biggest names before the panel
+ * wall rather than finding them mixed into it.
  *
  * Gitau is spread from GUEST_OF_HONOUR rather than repeated, so his facts
  * stay declared in one place (he still fills the running order's Welcome
@@ -735,16 +735,28 @@ export const GUEST_OF_HONOUR = {
  * lists Salome Ayugi alone. His photo path (`/img/speaker-2.jpg`) is
  * unchanged; only which array points at it moved.
  *
- * Njenga Munene is new: his bio is supplied (from I Choose Life – Africa
- * communications, 18 September 2026), his photo is a small source image
+ * Njenga Munene is new as of 18 September 2026: his bio is supplied (from I
+ * Choose Life – Africa communications), his photo is a small source image
  * (264×270) upscaled to the site's 800×1000 headshot convention — ask for a
  * higher-resolution original if one becomes available, same as the two
  * softer panel photos flagged in PHOTOS above.
  *
- * Display order is Gitau, then Mutungi, then Munene (set 19 September 2026
- * at ICL's request — UoN's VC, then the convener, then Zetech's VC). Array
- * order IS display order on both the homepage and /speakers, so reordering
- * this array is the only thing needed to change it.
+ * Evaleen Mitei is new as of 21 September 2026, added at ICL's request from
+ * a photo and biographical detail ICL supplied. She already had a
+ * standalone session in AGENDA ("Transforming education through technology"
+ * at 10:00) before this addition — her name and title here are kept
+ * spelled exactly as AGENDA already had them (transcribed from the
+ * confirmed summit programme), which ICL confirmed over a differently
+ * spelled/titled version from a secondary source. Her photo, like Munene's,
+ * is a small source image (265×265) upscaled to the 800×1000 convention.
+ *
+ * Display order is Gitau, then Mutungi, then Munene, then Mitei (Munene/
+ * Mitei set 19–21 September 2026 at ICL's request — UoN's VC, the convener,
+ * Zetech's VC, then TSC's CEO). Array order IS display order on both the
+ * homepage and /speakers, so reordering this array is the only thing
+ * needed to change it. Whenever this array's length changes, KEYNOTE_COUNT
+ * below and the hardcoded speaker-count copy on the homepage and /speakers
+ * need a look — see the comment there.
  */
 export const KEYNOTES = [
   {
@@ -778,7 +790,34 @@ export const KEYNOTES = [
       "He is a Kenya Veterinary Board–registered veterinary surgeon and a trustee of the Kenya Veterinary Association. Over his career he has chaired numerous university committees and the Joint Negotiation Committee of the Inter-Public Universities Council Consultative Forum, and has authored more than 50 scientific publications. He holds a PhD and MSc in Clinical Studies and a Bachelor's degree in Veterinary Medicine from the University of Nairobi, with advanced studies in protozoan diseases at Obihiro University in Japan.",
     ],
   },
+  {
+    slug: "evaleen-mitei",
+    name: "Evaleen Mitei",
+    role: "Chief Executive Officer",
+    org: "Teachers Service Commission",
+    photo: "/img/keynote-evaleen-mitei.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "Evaleen Mitei is Chief Executive Officer of the Teachers Service Commission (TSC), the constitutional body responsible for registering, employing, deploying and managing the conduct of Kenya's teaching service. She has spent 31 years at the Commission, rising through senior leadership including Senior Deputy Director and Deputy Director in TSC's Human Resource Directorate.",
+      "She has also served at the Ministry of Public Service, where she worked on the implementation of national public service reforms — institutional reform experience she now brings to managing and supporting Kenya's teachers.",
+    ],
+  },
 ] as const;
+
+/**
+ * Written-out keynote count, same "derive, don't retype" reasoning as
+ * SPEAKER_COUNT above: the homepage and /speakers both say how many
+ * keynote speakers there are in prose ("Two Vice-Chancellors and the
+ * summit's own convener…", "Three keynote speakers…"), and that copy is
+ * hardcoded English rather than a template around this — a fourth keynote
+ * (Evaleen Mitei, 21 September 2026) already forced both files open to fix
+ * the sentences by hand. Use these two exports for the *count* going
+ * forward; the *description* of who they are still needs a human sentence,
+ * since "two Vice-Chancellors, the convener and the TSC CEO" isn't
+ * something `countWord` can write.
+ */
+export const KEYNOTE_COUNT = countWord(KEYNOTES.length);
+export const KEYNOTE_COUNT_CAP = countWordCap(KEYNOTES.length);
 
 /**
  * A slot in the running order.

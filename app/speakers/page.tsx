@@ -4,7 +4,7 @@ import Btn from "@/components/Btn";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, DATE_LONG, DATE_DAY_MONTH, KEYNOTES } from "@/lib/event";
+import { EVENT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, DATE_LONG, DATE_DAY_MONTH, KEYNOTES, KEYNOTE_COUNT, KEYNOTE_COUNT_CAP } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Speakers — ${EVENT.name} ${EVENT.year}`,
@@ -31,7 +31,7 @@ export default function Speakers() {
               The people you came to meet
             </h1>
             <p className="lede mt-7 text-white max-w-2xl text-[18px]">
-              Three keynote speakers and {SPEAKER_COUNT} panel speakers, six
+              {KEYNOTE_COUNT_CAP} keynote speakers and {SPEAKER_COUNT} panel speakers, six
               tracks, one day — and enough room between sessions to actually
               reach the person you came for.
             </p>
@@ -47,8 +47,8 @@ export default function Speakers() {
             <p className="eyebrow text-marigold mb-2">Keynote</p>
             <h2 className="h-sm text-white text-2xl sm:text-3xl">Before the tracks open</h2>
             <p className="lede mt-3 text-white/70 max-w-xl text-[16px]">
-              Two Vice-Chancellors and the summit&rsquo;s own convener, on stage before
-              the panel speakers below.
+              Two Vice-Chancellors, the summit&rsquo;s own convener, and the CEO of the
+              Teachers Service Commission, on stage before the panel speakers below.
             </p>
           </div>
           {KEYNOTES.map((k, i) => (
@@ -83,7 +83,7 @@ export default function Speakers() {
         {/* ── Panel speakers ────────────────────────────────────────── */}
         {/* A denser grid than the keynote rows above — smaller portraits,
             three across at lg — so nineteen panelists don't each claim a
-            full-width row the way the three keynotes do. */}
+            full-width row the way the keynotes above do. */}
         <section className="border-b border-line">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-16 sm:pt-20">
             <p className="eyebrow text-white mb-2">Panel speakers</p>
@@ -125,7 +125,7 @@ export default function Speakers() {
         <section>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24 text-center">
             <h2 className="h-lg text-white text-3xl sm:text-5xl max-w-2xl mx-auto">
-              All {SPEAKER_COUNT} panel speakers and three keynote speakers,
+              All {SPEAKER_COUNT} panel speakers and {KEYNOTE_COUNT} keynote speakers,
               one room, {DATE_DAY_MONTH}.
             </h2>
             <p className="lede mt-5 text-white">

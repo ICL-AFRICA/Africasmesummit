@@ -114,15 +114,24 @@ export default function Page() {
             brief was "the VC section above the panelist speakers," and this
             page had it backwards (panel wall first, keynotes second) since
             the restructuring landed. /speakers already had the order right;
-            this brings the homepage in line with it. Three people, not the
-            whole roster — deliberately bigger than the panel wall tiles
-            below, one portrait each instead of a shared edge-to-edge grid,
-            so the summit's three headline names get room to breathe before
+            this brings the homepage in line with it. A short curated list,
+            not the whole roster — deliberately bigger than the panel wall
+            tiles below, one portrait each instead of a shared edge-to-edge
+            grid, so the summit's headline names get room to breathe before
             the panel wall. Gitau still fills the running order's Welcome
             Remarks slot at 08:50 (see AGENDA — corrected 19 September 2026
             against the confirmed programme, which has no 10:45 slot);
-            Munene and Mutungi are keynote speakers without a fixed time
-            slot of their own. */}
+            Mutungi, Munene and Mitei are keynote speakers without a single
+            fixed slot label of their own (Mitei does have her own AGENDA
+            session, at 10:00, but the card just says "Keynote speaker"
+            like Mutungi's and Munene's — see the KEYNOTES comment).
+
+            Grid widened from a fixed 3-up to 2-up/4-up on 21 September 2026
+            when Evaleen Mitei joined as the fourth keynote — a straight
+            sm:grid-cols-3 would have orphaned her card alone on its own
+            row. 4-up at desktop keeps one portrait-height row; 2-up on a
+            tablet-width screen keeps each portrait legible rather than
+            cramming four across. */}
         <section className="bg-card border-t border-rule">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
             <div className="text-center mb-14">
@@ -131,11 +140,11 @@ export default function Page() {
                 Before the tracks open
               </h2>
               <p className="lede mt-5 text-ink/60 max-w-xl mx-auto text-[16px]">
-                Two Vice-Chancellors and the summit&rsquo;s own convener, setting the tone
-                before six tracks open.
+                Two Vice-Chancellors, the summit&rsquo;s own convener, and the CEO of
+                the Teachers Service Commission, setting the tone before six tracks open.
               </p>
             </div>
-            <div className="grid gap-12 sm:grid-cols-3">
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
               {KEYNOTES.map((k) => (
                 <div key={k.slug}>
                   <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
