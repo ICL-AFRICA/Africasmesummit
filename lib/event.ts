@@ -1048,16 +1048,34 @@ export const LINKEDIN_PARTNER_ID = "9923012";
 export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
 
 /**
- * Sponsorship packages. Tier names and prices are verified against the live
- * TikoHub listing — all four match to the shilling.
+ * The partnership proposal PDF, downloadable from /partner — the actual
+ * rate card SPONSOR_TIERS below is now sourced from (see that comment).
+ * Same static-asset pattern as BROCHURE_URL and PROGRAMME_URL: no server,
+ * no download-tracking beyond whatever the host provides.
  *
- * The `includes` bullets are DRAFTS — written to be plausible, not taken
- * from a rate card. The TikoHub listing carries no inclusions for any
- * package, only a name and a price, so it cannot settle them either.
+ * This is a different document from BROCHURE_URL — that one is the general
+ * summit overview (date, tracks, speakers); this one is specifically the
+ * sponsorship rate card and the two signature opportunities below. Both
+ * stay downloadable from /partner; neither replaces the other.
+ */
+export const PARTNERSHIP_PROPOSAL_URL = "/partnership/africa-sme-summit-2026-partnership-proposal.pdf";
+
+/**
+ * Sponsorship packages, sourced 21 September 2026 from the actual
+ * partnership proposal document (PARTNERSHIP_PROPOSAL_URL above) — not
+ * drafted, not TikoHub's name-and-price-only listing. Tier names and
+ * prices still match TikoHub to the shilling; `title`, `limit`, `cta` and
+ * every `includes` bullet now come from the signed-off proposal.
  *
- * Until they come from the real sponsorship document, /partner says so out
- * loud via SPONSOR_INCLUDES_NOTE. A sponsor paying KES 1,000,000 on the
- * strength of a bulleted list under a Book button will expect all of it.
+ * `title` is the proposal's own name for the tier ("Associate Partner" for
+ * Bronze, and so on) — shown alongside the metal name on /partner, not in
+ * place of it, since both appear on the proposal.
+ *
+ * `cta` is the proposal's own button copy per tier, and it is not uniform
+ * on purpose: Bronze/Silver/Gold are a direct booking ("Secure", "Claim a
+ * track"), Platinum is not — the proposal calls it a negotiated enquiry,
+ * not a checkout, so its button points at the enquiry form on this page
+ * rather than BOOKING_URL. See the tier === "Platinum" check on /partner.
  *
  * ORDER IS ASCENDING (Bronze → Platinum) AND IS LOAD-BEARING. Each tier's
  * `includes` should only ever list what is genuinely NEW at that tier,
@@ -1068,18 +1086,17 @@ export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
  * this array changes what /partner claims every tier includes, not just
  * the order they're drawn in.
  *
- * Changed 20 September 2026 at ICL's request: /partner used to show only a
- * tier's own new bullets under an "Everything in {previous tier}, plus:"
- * line, which undersold the higher tiers — a Platinum card looked like six
- * items, not the seventeen it actually is once Bronze and Silver and Gold
- * are folded in. It now spells out the full list every time, so a card's
- * length is the value at that tier, and cards are allowed to end up very
- * different heights because of it.
+ * Platinum's "Premium exhibition booth" is the one bullet that is not a
+ * new grant so much as an upgrade of Silver's plain "Exhibition booth" —
+ * the proposal's own table shows it the same way (the Platinum column
+ * reads "Premium" in the row every other tier just ticks). Left as its own
+ * bullet rather than modelled as a real upgrade mechanism — one word of
+ * difference did not justify a second field.
  */
 export const SPONSOR_TIERS = [
   {
-    tier: "Bronze", price: "125,000", currency: "KES",
-    limit: "Open", featured: false,
+    tier: "Bronze", title: "Associate Partner", price: "125,000", currency: "KES",
+    limit: "Open", cta: "Secure Associate", featured: false,
     includes: [
       "Logo on the website and the delegate pack",
       "Two delegate passes",
@@ -1088,18 +1105,18 @@ export const SPONSOR_TIERS = [
     ],
   },
   {
-    tier: "Silver", price: "250,000", currency: "KES",
-    limit: "Open", featured: false,
+    tier: "Silver", title: "Platform Partner", price: "250,000", currency: "KES",
+    limit: "Open", cta: "Secure Platform", featured: false,
     includes: [
       "Panel or speaking slot",
       "Exhibition booth",
       "Four delegate passes",
-      "Logo on the programme and the website",
+      "Logo on the printed programme",
     ],
   },
   {
-    tier: "Gold", price: "500,000", currency: "KES",
-    limit: "Limited", featured: false,
+    tier: "Gold", title: "Track Partner", price: "500,000", currency: "KES",
+    limit: "6 — one per track", cta: "Claim a track", featured: false,
     includes: [
       "Your name on one of the six tracks",
       "Chair or co-chair that track's sessions",
@@ -1107,8 +1124,8 @@ export const SPONSOR_TIERS = [
     ],
   },
   {
-    tier: "Platinum", price: "1,000,000", currency: "KES",
-    limit: "One available", featured: true,
+    tier: "Platinum", title: "Convening Partner", price: "1,000,000", currency: "KES",
+    limit: "1 only", cta: "Enquire", featured: true,
     includes: [
       "Named alongside the summit on all materials",
       "Opening address from your leadership",
@@ -1121,17 +1138,39 @@ export const SPONSOR_TIERS = [
 ] as const;
 
 /**
- * Shown directly above the tier grid on /partner, because the `includes`
- * bullets above are drafts and the page publishes them under a price and a
- * Book button.
- *
- * DELETE THIS — and the line that renders it — the moment the inclusions
- * come from the real rate card. It is scaffolding for an unfinished fact,
- * not a permanent disclaimer, and leaving it up once the packages are
- * confirmed makes a settled offer read as provisional.
+ * Two opportunities the proposal keeps outside the four tiers entirely —
+ * each goes to a single partner, by application, negotiated directly with
+ * the convener rather than booked off a price list. Added to /partner
+ * 21 September 2026, as its own section after the tier grid, so they read
+ * as a different kind of offer rather than a fifth row bolted onto the
+ * table above.
  */
-export const SPONSOR_INCLUDES_NOTE =
-  "Tiers, prices and availability are confirmed. The inclusions listed under each tier are indicative — we agree the final package with you in writing before anything is committed.";
+export const SIGNATURE_OPPORTUNITIES = [
+  {
+    time: "16:00",
+    moment: "The peak of the day",
+    name: "The Africa SME Award 2026",
+    body: "The winners are announced from the stage in front of the entire summit, at the emotional high point of the programme. Naming rights place a partner's brand permanently against Kenyan enterprise achievement — the most photographed, most reported moment of the day.",
+  },
+  {
+    time: "10:30",
+    moment: "The platform launch",
+    name: "The Jiinue Business Accelerator",
+    body: "Kenya's new enterprise assessment and investor-matching platform launches from this stage, introduced by the Principal Secretary for Science, Research & Innovation. Association with the launch positions a partner at the origin of national infrastructure, not merely at an event.",
+  },
+] as const;
+
+/**
+ * The proposal's own deadline: a partner confirmed by this date appears in
+ * the printed programme, on delegate badges and across the remaining
+ * campaign; one confirmed after it still gets everything their tier
+ * promises, just not in print — materials have already gone. Derived
+ * label, never typed elsewhere, same rule as every other date in this file.
+ */
+export const PARTNER_PRINT_DEADLINE = "2026-10-01T23:59:00+03:00";
+export const PARTNER_PRINT_LABEL = new Date(PARTNER_PRINT_DEADLINE).toLocaleDateString(
+  "en-GB", { weekday: "long", day: "numeric", month: "long" }
+);
 
 /**
  * Press release, issued 12 August 2026.
@@ -1377,8 +1416,15 @@ export const PAPERS_TICKET = { price: "6,800", currency: "KES" } as const;
  * actually branches on PAPERS_SUBMISSIONS_OPEN below instead of assuming
  * "closed" unconditionally the way it could get away with before.
  */
-export const PAPERS_SUBMISSION_DEADLINE = "2026-09-21T23:59:00+03:00";
-export const PAPERS_NOTIFY_DATE = "2026-09-28T23:59:00+03:00";
+/* Extended again 21 September 2026 at ICL's request: submissions now run
+   to 30 September. The notify date moves with it — it was 28 September,
+   which the extension would otherwise have left BEFORE the new submission
+   deadline (notifying people before the window that decides who gets
+   notified has even closed). Kept the same 7-day review gap the previous
+   dates used (21→28) rather than inventing a new one: 30 September + 7
+   days = 7 October. */
+export const PAPERS_SUBMISSION_DEADLINE = "2026-09-30T23:59:00+03:00";
+export const PAPERS_NOTIFY_DATE = "2026-10-07T23:59:00+03:00";
 
 /** Build-time flags, same mechanism as EARLY_BIRD_ACTIVE above — true only
  *  if the site is rebuilt before the date in question. A redeploy on or
@@ -1431,10 +1477,16 @@ export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateStri
  *
  * `media` is optional — a text-only update is fine — but when a card has a
  * photo or clip from the activity, it goes here rather than inline in
- * `body`. Two fixed drop-zones, so nobody has to guess a path:
- *   - Photos → public/img/updates/, referenced as "/img/updates/<file>.webp"
+ * `body`. Three shapes, all rooted in the same two drop-zones, so nobody
+ * has to guess a path:
+ *   - One photo → public/img/updates/, referenced as "/img/updates/<file>.webp"
  *     (or .jpg). Always give real `alt` text — it is the only description
  *     a screen reader gets.
+ *   - Several photos from the same activity → `gallery`, same folder and
+ *     naming rule, rendered in-card as a slow auto-advancing slideshow
+ *     (components/UpdateGallery.tsx) rather than four separate cards for
+ *     one event. Every image still needs its own real `alt` text — the
+ *     gallery does not fall back to a shared caption.
  *   - Clips → public/video/updates/, referenced as "/video/updates/<file>.mp4",
  *     with a `poster` still frame from the same folder so the card never
  *     shows a black box before someone presses play.
@@ -1449,7 +1501,8 @@ export type SummitUpdate = {
   link?: { href: string; text: string };
   media?:
     | { type: "image"; src: string; alt: string }
-    | { type: "video"; src: string; poster: string };
+    | { type: "video"; src: string; poster: string }
+    | { type: "gallery"; images: readonly { src: string; alt: string }[] };
 };
 
 export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
@@ -1461,11 +1514,32 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     link: { href: "/papers", text: "Read the call for papers" },
   },
   {
-    date: "2026-09-08",
+    date: "2026-09-16",
     tag: "Partners",
-    title: "[Placeholder] A new partner is joining the room",
-    body: "Placeholder card — replace with the real announcement once a partner is confirmed and cleared to be named publicly.",
+    title: "From partnership to action: Zetech University signs on",
+    body: "Eng. Mike Mutungi, CEO of I Choose Life – Africa, and Prof. Njenga Munene, Vice Chancellor of Zetech University, have signed an MoU bringing academia and industry together on the road to the summit. It opens the door to student internships and placements, collaborative research and innovation, and two-way knowledge and resource sharing — starting with a joint research focus on artificial intelligence in education technology, alongside Victor Sila, founder of JuaPath, an AI tutor piloting in Kenya with a reach of 12.6 million learners.",
     link: { href: "/partner", text: "See partnership packages" },
+    media: {
+      type: "gallery",
+      images: [
+        {
+          src: "/img/updates/zetech-mou-handshake-document.webp",
+          alt: "Eng. Mike Mutungi and Prof. Njenga Munene shake hands while holding the signed memorandum of understanding between I Choose Life – Africa and Zetech University.",
+        },
+        {
+          src: "/img/updates/zetech-mou-signing-closeup.webp",
+          alt: "Eng. Mike Mutungi and Prof. Njenga Munene each hold open folders containing the signed MoU in front of the Zetech University event backdrop.",
+        },
+        {
+          src: "/img/updates/zetech-mou-group-photo.webp",
+          alt: "Leaders from I Choose Life – Africa, Zetech University and JuaPath gather together after the MoU signing, including Victor Sila in a red JuaPath cap.",
+        },
+        {
+          src: "/img/updates/zetech-mou-working-session.webp",
+          alt: "Delegates from I Choose Life – Africa, Zetech University and JuaPath in a working session around the table, with the Zetech University banner in the background.",
+        },
+      ],
+    },
   },
   {
     date: "2026-08-26",

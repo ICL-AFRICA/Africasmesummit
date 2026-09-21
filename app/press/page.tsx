@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
+import UpdateGallery from "@/components/UpdateGallery";
 import { EVENT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG } from "@/lib/event";
 
 export const metadata: Metadata = {
@@ -67,6 +68,8 @@ export default function Press() {
                         loading="lazy"
                         className="w-full h-full object-cover"
                       />
+                    ) : u.media.type === "gallery" ? (
+                      <UpdateGallery images={u.media.images} />
                     ) : (
                       <video
                         controls
