@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, SPONSOR_TIERS, SPONSOR_INCLUDES_NOTE, TICKET_CTA, DATE_LONG, BOOKING_URL, BROCHURE_URL } from "@/lib/event";
+import {
+  EVENT, SPONSOR_TIERS, SIGNATURE_OPPORTUNITIES, PARTNER_PRINT_LABEL,
+  TICKET_CTA, DATE_LONG, BOOKING_URL, BROCHURE_URL, PARTNERSHIP_PROPOSAL_URL,
+} from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Become a partner — ${EVENT.name} ${EVENT.year}`,
@@ -41,15 +44,21 @@ export default function Partner() {
     >
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">What partners get</p>
-          {/* The inclusions below are drafts. Saying so here is the whole
-              point — it sits above the grid rather than under it, because a
-              caveat a sponsor reads after the price and the Book button has
-              not done its job. Remove with SPONSOR_INCLUDES_NOTE once the
-              rate card lands. */}
-          <p className="lede text-[16px] text-white max-w-2xl mb-8">
-            {SPONSOR_INCLUDES_NOTE}
-          </p>
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
+            <p className="eyebrow text-white">What partners get</p>
+            {/* The full rate card, one level up from the summary grid below.
+                Sits with the section heading rather than at the foot of the
+                page, since this is the document a sponsor actually forwards
+                internally for sign-off. */}
+            <a
+              href={PARTNERSHIP_PROPOSAL_URL}
+              download
+              className="btn-glow rounded-lg inline-flex items-center gap-2 px-4 py-2 text-[14px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
+            >
+              Download the partnership proposal (PDF)
+              <span aria-hidden="true" className="text-[12px]">↓</span>
+            </a>
+          </div>
           {/* Changed 20 September 2026 at ICL's request: each card now spells
               out everything that tier actually gets — the full cumulative
               list, flattened from every tier up to and including this one
@@ -76,6 +85,7 @@ export default function Partner() {
                     <p className="eyebrow text-ink">{t.tier}</p>
                     <p className="font-mono text-[12px] text-ink">{t.limit}</p>
                   </div>
+                  <p className="text-[13px] text-ink/70 mt-1">{t.title}</p>
                   <p className="h-lg text-ink text-3xl mt-5">
                     <span className="text-base align-top mr-1.5 font-normal">{t.currency}</span>
                     {t.price}
@@ -88,15 +98,27 @@ export default function Partner() {
                     ))}
                   </ul>
                   <a
-                    href={BOOKING_URL}
+                    href={t.tier === "Platinum" ? "#enquire" : BOOKING_URL}
                     className="btn-glow rounded-lg mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
                   >
-                    Book {t.tier}
+                    {t.cta}
                   </a>
                 </div>
               );
             })}
           </div>
+
+          {/* The proposal's own deadline for making print — a real, dated
+              fact from the source document, not a manufactured countdown.
+              Text only, no timer: this is one cutoff among several on the
+              site, and the homepage already owns the one ticking-clock
+              urgency mechanism. */}
+          <p className="mt-6 text-[15px] text-white/70 max-w-2xl">
+            Materials go to print shortly. A partner confirmed by{" "}
+            <span className="text-marigold-t font-medium">{PARTNER_PRINT_LABEL}</span> appears
+            in the printed programme, on delegate badges and across the remaining campaign —
+            after that, everything your tier promises still stands, just not in print.
+          </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 text-center">
             <p className="text-[16px] text-white max-w-xl">
@@ -138,14 +160,43 @@ export default function Partner() {
         </div>
       </section>
 
-      <section className="border-b border-line">
+      {/* Signature opportunities — deliberately outside the tier grid and
+          its four-colour system: these aren't a fifth tier, they're a
+          different kind of offer (one partner each, by application), so the
+          section reads as its own thing rather than a row bolted onto the
+          table above. */}
+      <section className="border-b border-line bg-raise/30">
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
+          <p className="eyebrow text-marigold-t mb-3">Signature opportunities</p>
+          <h2 className="h-lg text-white text-3xl sm:text-4xl">Two moments the whole room stops for</h2>
+          <p className="lede mt-5 text-white max-w-2xl text-[17px]">
+            Neither is included in the tiers above. Both go to a single partner, by
+            application, negotiated directly with the convener.
+          </p>
+          <div className="mt-10 grid gap-px bg-line sm:grid-cols-2 border border-line">
+            {SIGNATURE_OPPORTUNITIES.map((o) => (
+              <div key={o.name} className="bg-ink p-8 sm:p-10">
+                <p className="font-mono text-[12px] uppercase tracking-widest text-marigold-t">
+                  {o.time} · {o.moment}
+                </p>
+                <h3 className="h-sm text-white text-2xl mt-4">{o.name}</h3>
+                <p className="lede mt-3 text-[17px] text-white/80">{o.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="enquire" className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-2">
           <div>
             <p className="eyebrow text-white mb-5">Tell us what you need</p>
             <h2 className="h-lg text-white text-3xl sm:text-4xl">Start the conversation</h2>
             <p className="lede mt-5 text-white text-[16px] max-w-md">
               A short note is enough. We will reply within two working days with
-              options and what each one costs.
+              options and what each one costs. This is also where a Convening
+              Partner enquiry, or a question about the Award or the Accelerator
+              launch, starts.
             </p>
             <div className="mt-8 pt-8 border-t border-line text-[16px] text-white space-y-1">
               <p className="text-white">Or reach us directly</p>
@@ -161,7 +212,10 @@ export default function Partner() {
               { name: "organisation", label: "Organisation", required: true },
               { name: "email", label: "Email", type: "email", required: true },
               { name: "phone", label: "Phone" },
-              { name: "tier", label: "Which level interests you", options: [...SPONSOR_TIERS.map((t) => t.tier), "Not sure yet"] },
+              {
+                name: "tier", label: "Which level interests you",
+                options: [...SPONSOR_TIERS.map((t) => t.tier), "The Africa SME Award", "The Jiinue Accelerator launch", "Not sure yet"],
+              },
               { name: "message", label: "Who are you trying to reach?", type: "textarea", required: true },
             ]}
           />
