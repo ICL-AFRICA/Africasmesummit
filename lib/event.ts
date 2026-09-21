@@ -1560,6 +1560,11 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     title: "Early bird sold out. The room is filling fast.",
     body: `The first release is gone — thank you for showing up for this the way you did. Standard tickets are live now at ${TICKET_PRICE}, and if the early bird's pace is anything to go by, this batch won't last long either. 7.4 million Kenyan SMEs are represented in that room on October 15 — don't be the one still deciding when it sells out again.`,
     link: { href: EVENT.ticketUrl, text: TICKET_CTA, style: "button" },
+    media: {
+      type: "image",
+      src: "/img/updates/early-bird-sold-out.webp",
+      alt: "Africa SME Summit 2026 flyer announcing the early bird ticket pass is sold out, with standard tickets available at KES 6,800.",
+    },
   },
   {
     date: "2026-09-20",
