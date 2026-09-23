@@ -33,8 +33,8 @@ export const EVENT = {
   dateLabel: fmtDate({ weekday: "long", day: "numeric", month: "long", year: "numeric" })
     .replace(",", ""),
   dateShort: fmtDate({ day: "numeric", month: "short", year: "numeric" }),
-  venue: "Chandaria Centre for Performing Arts",
-  venueDetail: "University of Nairobi, Main Campus",
+  venue: "Ole Sereni",
+  venueDetail: "Mombasa Road, Nairobi",
   city: "Nairobi, Kenya",
   ticketUrl: "https://tikohub.com/events/562",
   /* ONE email address for the whole site. Everything that invites a reply
@@ -101,12 +101,20 @@ export const BROCHURE_URL = "/brochure/africa-sme-summit-brochure.pdf";
 export const PROGRAMME_URL = "/programme/africa-sme-summit-2026-programme.pdf";
 
 /**
- * "University of Nairobi" — the campus qualifier dropped.
+ * "Mombasa Road" — everything after the first comma in `venueDetail`
+ * dropped.
  *
- * `venueDetail` is "University of Nairobi, Main Campus", which is right on a
- * directions line and too long for a share preview or the OG card. Both
- * derive the short form the same way; `scripts/build-og.mjs` applies the same
- * rule when it reads venueDetail out of this file.
+ * `venueDetail` is "Mombasa Road, Nairobi", which is right on a directions
+ * line or the contact page but too long for a share preview, the OG card, or
+ * a one-line mention next to `EVENT.venue`. All three derive the short form
+ * the same way; `scripts/build-og.mjs` applies the same rule when it reads
+ * venueDetail out of this file.
+ *
+ * Also used directly in JSX (the 404 page, the homepage, /press, /speakers)
+ * next to `EVENT.venue` — those spots used to hardcode "University of
+ * Nairobi" as a literal string instead of deriving it, which is exactly the
+ * drift this file exists to prevent. Fixed when the venue moved to Ole
+ * Sereni, 23 September 2026.
  */
 export const VENUE_SHORT = EVENT.venueDetail.replace(/,.*$/, "");
 
@@ -935,7 +943,7 @@ export const FAQ = [
   /* Times here derive from AGENDA rather than being typed: registration opens
      at its first entry, and the answer used to say "before the opening
      keynote", which the real programme does not contain. */
-  { q: "Is there parking at the University of Nairobi?", a: `Parking is available on the Main Campus. Registration opens at ${AGENDA_START}, and spaces fill through the morning — come early.` },
+  { q: "Is there parking at Ole Sereni?", a: `Yes, on-site parking is available for delegates. Registration opens at ${AGENDA_START}, and spaces fill through the morning — come early.` },
   { q: "Do exhibitors need a separate ticket?", a: `Exhibition booths include delegate passes — ${countWord(BOOTH_PASSES.startup)} with the Startup booth and ${countWord(BOOTH_PASSES.corporate)} with the Corporate booth. Additional team members need standard tickets.` },
   { q: "Will I get a certificate?", a: "Yes. Certificates of participation are issued to all delegates at the close." },
   { q: "How do I submit a paper?", a: "Submit an abstract on the call for papers page — it lists the tracks and the review timeline." },

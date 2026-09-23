@@ -3,12 +3,12 @@ import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
 import UpdateGallery from "@/components/UpdateGallery";
-import { EVENT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG } from "@/lib/event";
+import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Press — ${EVENT.name} ${EVENT.year}`,
   description:
-    `What's happening on the way to the Africa SME Summit, ${DATE_LONG} at the University of Nairobi — new partners, speakers, papers and ticket milestones, in photos and video.`,
+    `What's happening on the way to the Africa SME Summit, ${DATE_LONG} at ${EVENT.venue} — new partners, speakers, papers and ticket milestones, in photos and video.`,
   alternates: { canonical: "https://africasmesummit.com/press" },
 };
 
@@ -151,7 +151,7 @@ export default function Press() {
               Don't want to miss the next one?
             </h2>
             <p className="lede mt-5 text-white text-[17px]">
-              {EVENT.venue}, University of Nairobi, {EVENT.dateLabel}.
+              <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}, {EVENT.dateLabel}.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Btn from "@/components/Btn";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT } from "@/lib/event";
+import { EVENT, VENUE_SHORT } from "@/lib/event";
 
 /* A custom 404 so a mistyped or expired link still leads somewhere useful.
    Old posters and shared links outlive the pages they pointed at. */
@@ -17,7 +17,7 @@ export default function NotFound() {
             That page is not here — but the summit still is.
           </h1>
           <p className="lede mt-7 text-white max-w-xl text-[18px]">
-            {EVENT.dateLabel}, {EVENT.venue}, University of Nairobi.
+            {EVENT.dateLabel}, <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Btn href="/" tone="gold" internal>Go to the summit</Btn>

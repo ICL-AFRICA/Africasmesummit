@@ -7,7 +7,7 @@ import { EVENT, TICKET_CTA, DATE_LONG } from "@/lib/event";
 export const metadata: Metadata = {
   title: `Contact — ${EVENT.name} ${EVENT.year}`,
   description:
-    `Contact the Africa SME Summit team about tickets, group bookings, speaking, partnership or exhibiting. ${DATE_LONG}, University of Nairobi.`,
+    `Contact the Africa SME Summit team about tickets, group bookings, speaking, partnership or exhibiting. ${DATE_LONG}, ${EVENT.venue}.`,
   alternates: { canonical: "https://africasmesummit.com/contact" },
 };
 
@@ -37,8 +37,8 @@ export default function Contact() {
               </div>
               <div>
                 <p className="eyebrow text-marigold mb-3">Venue</p>
-                <p className="text-white text-[16px]">{EVENT.venue}</p>
-                <p className="text-[16px] text-white">University of Nairobi, Main Campus</p>
+                <p className="text-white text-[16px]"><span className="venue-float">{EVENT.venue}</span></p>
+                <p className="text-[16px] text-white">{EVENT.venueDetail}</p>
                 <p className="text-[16px] text-white">{EVENT.city}</p>
               </div>
               <div>

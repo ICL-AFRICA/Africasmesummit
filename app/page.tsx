@@ -7,7 +7,7 @@ import SummitCountdownBadge from "@/components/SummitCountdownBadge";
 import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS, PROGRAMME_URL } from "@/lib/event";
+import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS, PROGRAMME_URL } from "@/lib/event";
 
 /* Agenda accent colours — the same four-colour rotation used on /tracks
    (marigold, clay, indigo, palm), so a track's colour means the same thing
@@ -70,7 +70,7 @@ export default function Page() {
           <div className="border-t border-line">
             <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3 text-[16px] text-white">
               <p>{EVENT.dateLabel}</p>
-              <p className="text-white">{EVENT.venue}, University of Nairobi</p>
+              <p className="text-white"><span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}</p>
             </div>
           </div>
         </section>
@@ -569,7 +569,7 @@ export default function Page() {
               One day. One room. Bring the business.
             </h2>
             <p className="lede mt-6 text-white">
-              {EVENT.dateLabel} · {EVENT.venue}, University of Nairobi
+              {EVENT.dateLabel} · <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>

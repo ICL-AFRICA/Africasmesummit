@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   // rather than advertising an expired rate. Same length as before, which
   // matters — this is the search snippet.
   description:
-    `One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. ${DATE_LONG}, University of Nairobi. ${ACTIVE_TICKET.tier} from ${TICKET_PRICE}.`,
+    `One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. ${DATE_LONG}, ${EVENT.venue}. ${ACTIVE_TICKET.tier} from ${TICKET_PRICE}.`,
   keywords: [
     "SME conference Kenya",
     "SME summit Nairobi",

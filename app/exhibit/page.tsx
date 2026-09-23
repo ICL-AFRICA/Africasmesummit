@@ -7,7 +7,7 @@ import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
   description:
-    `Exhibition stands at the Africa SME Summit, ${DATE_LONG}, University of Nairobi. Show your product to buyers, banks, universities and county government.`,
+    `Exhibition stands at the Africa SME Summit, ${DATE_LONG}, ${EVENT.venue}. Show your product to buyers, banks, universities and county government.`,
   alternates: { canonical: "https://africasmesummit.com/exhibit" },
 };
 

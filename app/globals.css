@@ -376,6 +376,29 @@ body {
   .btn-glow { animation: none; }
 }
 
+/* ── Venue name: floating hover ──────────────────────────────────────────
+   Added 23 September 2026 at ICL's request, when the venue moved to Ole
+   Sereni. Wraps every rendered instance of EVENT.venue (not-found, the
+   homepage, /press, /speakers, /tracks, /contact) in a span that lifts a
+   few pixels and gains a shadow beneath it on hover, reading as the name
+   floating off the page. Transform + box-shadow only — nothing here
+   changes text opacity or colour, which the brand rules reserve out for
+   dark-background text. Shadow colour is plain black rather than the
+   ink-tinted shadow used elsewhere in the system (TicketTicker's card),
+   because this span sits on both light and dark sections and a neutral
+   shadow reads on either. (hover: hover) keeps it off touch devices, where
+   there is no pointer to hover with and the lift would just stick. */
+.venue-float {
+  display: inline-block;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+@media (hover: hover) {
+  .venue-float:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 22px -10px rgba(0, 0, 0, 0.45);
+  }
+}
+
 /* ── Partners: scrolling logo strip ──────────────────────────────────────
    Added 19 September 2026 at ICL's request, replacing the fixed 5×2 grid
    ("logos scroll left to right, instead of within a rigid box"). The list

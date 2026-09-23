@@ -151,7 +151,7 @@ export default function Tracks() {
             </h2>
             <p className="lede mt-5 text-white text-[17px]">
               The tracks run in parallel, so you pick on the day rather than in
-              advance. {EVENT.venue}, {EVENT.dateLabel}.
+              advance. <span className="venue-float">{EVENT.venue}</span>, {EVENT.dateLabel}.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
