@@ -71,6 +71,16 @@ export default function Exhibit() {
             enquiries arrive, and we confirm within two working days.
           </p>
 
+          <div className="mt-10 border-l-2 border-clay bg-raise px-6 py-5 max-w-2xl">
+            <p className="font-mono text-[12px] uppercase tracking-widest text-clay-t">Venue update</p>
+            <p className="lede mt-2 text-[16px] text-white">
+              The summit has moved to Ole Sereni. The floor plan below still shows the
+              previous venue&rsquo;s layout — stand letters and positions are being redrawn
+              for the new hall. You can still reserve a stand now; we will confirm your
+              exact spot once the new plan is ready.
+            </p>
+          </div>
+
           <div className="mt-12">
             <StandBooking />
           </div>
