@@ -37,7 +37,7 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
 
   if (left === null) {
     return (
-      <div className={`${wrapClass}bg-ink text-white`}>
+      <div className={`${wrapClass}bg-ink text-white glow-clay`}>
         <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-12 sm:h-11 flex items-center justify-between gap-3 sm:gap-4 text-[16px]">
           <p className="font-medium truncate">
             Early bird sold out — book now before standard fills too.

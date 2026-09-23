@@ -399,6 +399,25 @@ body {
   }
 }
 
+/* ── Early bird sold out: clay-red urgency glow ──────────────────────────
+   Added 23 September 2026 at ICL's request, on every section that says the
+   early bird is gone: the ticket tile on the homepage, the top sticky bar,
+   the floating ticker, and its /press card. Same shape as .btn-glow above,
+   just clay red instead of marigold — matching the brand rule that clay is
+   reserved for the early-bird deadline specifically, so red only ever means
+   time is running out. Box-shadow only, same as the other glows: nothing
+   here moves or resizes, and nothing touches text opacity. */
+@keyframes glow-clay {
+  0%, 100% { box-shadow: 0 0 0 rgba(198, 85, 63, 0); }
+  50%      { box-shadow: 0 0 20px 4px rgba(198, 85, 63, 0.5); }
+}
+.glow-clay {
+  animation: glow-clay 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow-clay { animation: none; }
+}
+
 /* ── Partners: scrolling logo strip ──────────────────────────────────────
    Added 19 September 2026 at ICL's request, replacing the fixed 5×2 grid
    ("logos scroll left to right, instead of within a rigid box"). The list

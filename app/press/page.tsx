@@ -50,7 +50,7 @@ export default function Press() {
             {SUMMIT_UPDATES.map((u) => (
               <article
                 key={u.title}
-                className={`bg-ink border-l-2 ${TAG_STYLE[u.tag].border} overflow-hidden flex flex-col`}
+                className={`bg-ink border-l-2 ${TAG_STYLE[u.tag].border} overflow-hidden flex flex-col ${u.urgent ? "glow-clay" : ""}`}
               >
                 {/* Media bleeds to the card's own edges — no padding, no
                     rounded corners (the site is sharp everywhere) — so a

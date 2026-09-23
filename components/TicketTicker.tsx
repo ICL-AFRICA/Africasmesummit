@@ -71,7 +71,7 @@ export default function TicketTicker() {
   if (left === null) {
     return (
       <div className={cardShell} role="complementary" aria-label="Ticket status">
-        <div className="relative bg-card border border-rule shadow-[0_8px_40px_rgba(25,21,57,0.18)]">
+        <div className="relative bg-card border border-rule shadow-[0_8px_40px_rgba(25,21,57,0.18)] glow-clay">
           <button
             onClick={dismiss}
             aria-label="Dismiss notice"

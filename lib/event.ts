@@ -1554,6 +1554,14 @@ export type SummitUpdate = {
   tag: "Speakers" | "Papers" | "Partners" | "Tickets";
   title: string;
   body: string;
+  /** True for the one card that should carry the clay-red urgency glow —
+   *  currently just the early-bird-sold-out update. Not tied to `tag`: a
+   *  future Tickets update ("tickets now open", say) should not glow, so
+   *  this is its own explicit flag rather than inferred from the tag.
+   *  Added 23 September 2026, alongside the same glow on the ticket tile,
+   *  the sticky bar and the floating ticker — everywhere the site already
+   *  says the early bird is gone. */
+  urgent?: boolean;
   link?: { href: string; text: string; style?: "button" };
   media?:
     | { type: "image"; src: string; alt: string }
@@ -1565,6 +1573,7 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
   {
     date: "2026-09-21",
     tag: "Tickets",
+    urgent: true,
     title: "Early bird sold out. The room is filling fast.",
     body: `The first release is gone — thank you for showing up for this the way you did. Standard tickets are live now at ${TICKET_PRICE}, and if the early bird's pace is anything to go by, this batch won't last long either. 7.4 million Kenyan SMEs are represented in that room on October 15 — don't be the one still deciding when it sells out again.`,
     link: { href: EVENT.ticketUrl, text: TICKET_CTA, style: "button" },

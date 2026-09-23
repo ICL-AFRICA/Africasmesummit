@@ -452,7 +452,7 @@ export default function Page() {
                   <div
                     key={t.tier}
                     className={`p-8 sm:p-10 flex flex-col ${
-                      justClosed ? "bg-card" : t.urgent ? "bg-ink text-white" : "bg-card"
+                      justClosed ? "bg-card glow-clay" : t.urgent ? "bg-ink text-white" : "bg-card"
                     }`}
                   >
                     <div className="flex items-baseline justify-between gap-4">
