@@ -1087,6 +1087,35 @@ export const PHOTOS = {
     "/img/speaker-21.jpg",
   ],
   floor: "/img/floor.jpg",
+
+  /* Venue photography, added 24 September 2026 at ICL's request for the
+     homepage header's new venue button (see VenueHoverButton.tsx and the
+     "Inside Ole Sereni" gallery section on /press) — nine photos supplied
+     by ICL: the building from outside, the entrance, the lobby, and five
+     of the function spaces the summit will actually use. Resized to a
+     1400px long edge and re-encoded as WEBP (quality 82), the same
+     treatment as the /press flyer image, since these are full photographs
+     rather than face-cropped headshots and don't need the speakers'
+     800x1000 convention.
+
+     The header's hover preview uses `PHOTOS.venue.slice(0, 5)` — the
+     first five entries below — as a quick orientation lap; the /press
+     gallery renders the full array, same order. */
+  venue: [
+    /* First five are also the header hover-preview's set, in this exact
+       order — a quick orientation lap (outside, in, hall, view), not the
+       whole tour. Keep any newly curated preview photos in the first five
+       slots if this array is ever reordered. */
+    { src: "/img/venue/venue-exterior.webp", alt: "Aerial view of the Ole Sereni hotel on Mombasa Road, its red entrance tower rising above open grassland" },
+    { src: "/img/venue/venue-entrance.webp", alt: "Ole Sereni's red-and-cream entrance tower and covered driveway" },
+    { src: "/img/venue/venue-lobby.webp", alt: "Ole Sereni's reception desk beneath woven pendant lights" },
+    { src: "/img/venue/venue-hall.webp", alt: "Ole Sereni's Pride Hall laid out banquet-style with round tables for a conference" },
+    { src: "/img/venue/venue-terrace.webp", alt: "Ole Sereni's rooftop terrace, dining tables looking out over the plains" },
+    { src: "/img/venue/venue-stairs.webp", alt: "A seating area overlooking Ole Sereni's double-height lobby, lit by a chandelier" },
+    { src: "/img/venue/venue-boardroom.webp", alt: "A long boardroom table set for a meeting, overlooking Ole Sereni's gardens" },
+    { src: "/img/venue/venue-buffet-1.webp", alt: "A buffet spread at Ole Sereni, chafing dishes of roasted vegetables" },
+    { src: "/img/venue/venue-buffet-2.webp", alt: "A buffet spread at Ole Sereni, rice and vegetable dishes" },
+  ],
 } as const;
 
 /** Why people actually give up a working day. Not features — reasons. */

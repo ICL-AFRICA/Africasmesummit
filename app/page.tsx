@@ -7,6 +7,7 @@ import SummitCountdownBadge from "@/components/SummitCountdownBadge";
 import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import VenueHoverButton from "@/components/VenueHoverButton";
 import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS, PROGRAMME_URL } from "@/lib/event";
 
 /* Agenda accent colours — the same four-colour rotation used on /tracks
@@ -70,7 +71,18 @@ export default function Page() {
           <div className="border-t border-line">
             <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3 text-[16px] text-white">
               <p>{EVENT.dateLabel}</p>
-              <p className="text-white"><span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}</p>
+              {/* Enclosed as a hover-preview button 24 September 2026, at
+                  ICL's request — see VenueHoverButton.tsx. This is the one
+                  EVENT.venue mention on the site that got this treatment;
+                  the other five keep the plain .venue-float hover-lift. */}
+              <p className="text-white">
+                <VenueHoverButton
+                  images={PHOTOS.venue.slice(0, 5)}
+                  href="/press#venue"
+                  label={EVENT.venue}
+                />
+                , {VENUE_SHORT}
+              </p>
             </div>
           </div>
         </section>

@@ -399,6 +399,72 @@ body {
   }
 }
 
+/* ── Venue button: orange pill with a hover photo preview ────────────────
+   Added 24 September 2026 at ICL's request, for the homepage header's
+   venue mention specifically (VenueHoverButton.tsx) — not a replacement
+   for .venue-float above, which still handles the other five EVENT.venue
+   mentions sitewide (see that component's own doc comment for why this
+   one is scoped to just the homepage).
+
+   .venue-btn shares Btn's gold tone (bg-gold/text-ink — the site's one
+   orange) via Tailwind utilities in the component itself; this class only
+   supplies the pill shape and the lift-and-shadow hover state, in the same
+   motion language as .venue-float and .keynote-frame, since this is that
+   same venue mention, just wearing a fill colour and a click target now. */
+.venue-btn {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.3rem 1rem;
+  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+}
+@media (hover: hover) {
+  .venue-btn:hover,
+  .venue-btn:focus-visible {
+    filter: brightness(1.08);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 22px -10px rgba(0, 0, 0, 0.45);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .venue-btn { transition: none; }
+  .venue-btn:hover, .venue-btn:focus-visible { transform: none; }
+}
+
+/* Floating photo preview above the venue button: a small crossfading strip
+   that fades and lifts into view on hover/focus (opacity + translateY,
+   the same entrance every floating element on this site uses — the ticket
+   popup, the summit countdown badge). Right-edge anchored rather than
+   centred, since the button it hangs off sits at the far right of its row
+   — centring would push the panel off the viewport's right edge on
+   in-between screen widths. Sized for a glance at a handful of photos, not
+   a full gallery; the full set is exactly what the button's click leads
+   to, on /press. pointer-events: none throughout, so the panel never
+   intercepts the hover it depends on. */
+.venue-preview {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
+  width: 260px;
+  max-width: min(260px, calc(100vw - 2.5rem));
+  aspect-ratio: 3 / 2;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow:
+    0 24px 38px -20px rgba(25, 21, 57, 0.45),
+    0 8px 14px -8px rgba(25, 21, 57, 0.3);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.venue-preview-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .venue-preview { transition: none; }
+}
+
 /* ── Early bird sold out: clay-red urgency glow ──────────────────────────
    Added 23 September 2026 at ICL's request, on every section that says the
    early bird is gone: the ticket tile on the homepage, the top sticky bar,

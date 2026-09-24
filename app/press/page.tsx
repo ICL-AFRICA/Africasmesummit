@@ -3,7 +3,7 @@ import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
 import UpdateGallery from "@/components/UpdateGallery";
-import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG } from "@/lib/event";
+import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG, PHOTOS } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Press — ${EVENT.name} ${EVENT.year}`,
@@ -143,6 +143,41 @@ export default function Press() {
           </section>
         );
       })}
+
+      {/* Venue gallery — added 24 September 2026 at ICL's request, as the
+          landing spot for the homepage header's new venue button (see
+          VenueHoverButton.tsx): its href is /press#venue, and this is that
+          #venue. Each photo wears .keynote-frame rather than .panel-card —
+          the same glossy, rounded, floating treatment as the speaker
+          portraits, sheen overlay and all, which reads right on a full
+          photograph in a way the flatter, no-sheen .panel-card (built for
+          cards full of body text) doesn't. scroll-mt-24 keeps the sticky
+          header off the heading when a visitor lands here mid-page, the
+          same convention /tracks uses for its own id-anchored sections. */}
+      <section id="venue" className="border-b border-line scroll-mt-24">
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
+          <p className="eyebrow text-marigold-t mb-8">The venue</p>
+          <h2 className="h-sm text-white text-2xl sm:text-3xl max-w-2xl">
+            Inside <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
+          </h2>
+          <p className="lede mt-4 max-w-2xl text-[16px] text-white/80">
+            Where the summit actually happens on {EVENT.dateLabel} — the building, the hall, and the spaces around it.
+          </p>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {PHOTOS.venue.map((photo) => (
+              <div key={photo.src} className="keynote-frame overflow-hidden bg-raise aspect-[4/5]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Media contact — kept from the old press-release layout. The page's
           job has changed, but a working journalist looking for a human to
