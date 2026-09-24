@@ -17,11 +17,17 @@ import { useEffect, useRef, useState } from "react";
  * the same auto-play. The crossfade itself still runs on a CSS transition,
  * which the sitewide reduced-motion rule in globals.css already collapses
  * to effectively instant either way.
+ *
+ * `caption` (added 21 September 2026, at ICL's request, for the keynote
+ * lineup card) is optional per image — a gallery of plain event photos
+ * doesn't need one. When present it crossfades in lockstep with its image,
+ * same duration and easing, as a bottom scrim bar rather than a fixed-height
+ * strip, so a two-line caption doesn't clip.
  */
 export default function UpdateGallery({
   images,
 }: {
-  images: readonly { src: string; alt: string }[];
+  images: readonly { src: string; alt: string; caption?: string }[];
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -61,6 +67,31 @@ export default function UpdateGallery({
           }`}
         />
       ))}
+
+      {/* Captions live in their own absolutely-positioned, crossfading layer
+          — one per image, same i === index opacity toggle as the photos —
+          so the name under the portrait changes exactly as the portrait
+          does, never a beat ahead or behind. Sits above the images but
+          below the dots (z-10), with enough top padding on the gradient
+          for the fade to read as a scrim rather than a hard bar. */}
+      {images.some((img) => img.caption) && (
+        <div className="absolute inset-x-0 bottom-0 z-[5] pointer-events-none">
+          {images.map((img, i) =>
+            img.caption ? (
+              <p
+                key={img.src}
+                className={`absolute inset-x-0 bottom-0 px-4 pb-8 pt-10 text-[14px] sm:text-[15px] font-medium text-white
+                            bg-gradient-to-t from-ink/90 via-ink/50 to-transparent
+                            transition-opacity duration-700 ease-in-out ${
+                  i === index ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                {img.caption}
+              </p>
+            ) : null
+          )}
+        </div>
+      )}
 
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">

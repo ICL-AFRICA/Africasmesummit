@@ -66,7 +66,7 @@ export default function Press() {
                         src={u.media.src}
                         alt={u.media.alt}
                         loading="lazy"
-                        className="w-full h-full object-cover"
+                        className={`w-full h-full ${u.media.fit === "contain" ? "object-contain" : "object-cover"}`}
                       />
                     ) : u.media.type === "gallery" ? (
                       <UpdateGallery images={u.media.images} />
@@ -96,13 +96,19 @@ export default function Press() {
                   <h2 className="h-sm text-white text-2xl mt-4">{u.title}</h2>
                   <p className="lede mt-3 text-[17px] text-white/80">{u.body}</p>
                   {u.link && (
-                    <Link
-                      href={u.link.href}
-                      className="mt-4 inline-flex items-center gap-1.5 text-[16px] text-white underline underline-offset-4 hover:text-marigold transition-colors"
-                    >
-                      {u.link.text}
-                      <span aria-hidden="true">→</span>
-                    </Link>
+                    u.link.style === "button" ? (
+                      <Btn href={u.link.href} tone="gold" className="mt-5">
+                        {u.link.text}
+                      </Btn>
+                    ) : (
+                      <Link
+                        href={u.link.href}
+                        className="mt-4 inline-flex items-center gap-1.5 text-[16px] text-white underline underline-offset-4 hover:text-marigold transition-colors"
+                      >
+                        {u.link.text}
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    )
                   )}
                 </div>
               </article>
