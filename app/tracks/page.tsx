@@ -80,9 +80,12 @@ export default function Tracks() {
                   {extra && (
                     <div className={`mt-8 pt-7 border-t-2 ${RULE[i]}`}>
                       <p className="eyebrow text-white mb-5">{extra.intro}</p>
-                      <ul className="grid gap-px bg-line border border-line sm:grid-cols-2">
+                      {/* .panel-card (globals.css) — real gap + floating
+                          shadow instead of the old shared hairline, same as
+                          every other card grid on the site now. */}
+                      <ul className="grid gap-5 sm:grid-cols-2">
                         {extra.useCases.map((u) => (
-                          <li key={u.n} className="bg-ink p-6 flex flex-col">
+                          <li key={u.n} className="panel-card bg-raise p-6 flex flex-col">
                             <p className={`font-mono text-[12px] ${ACCENT[i]}`}>{u.n}</p>
                             <h3 className="h-sm text-white text-lg mt-3">{u.name}</h3>
                             <p className="mt-3 text-[16px] font-light text-white">{u.fixes}</p>

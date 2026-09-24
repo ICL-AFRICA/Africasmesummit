@@ -293,6 +293,10 @@ export default function Page() {
         </section>
 
         {/* ── Three paths ───────────────────────────────────────────── */}
+        {/* Cards use .panel-card (globals.css) for a real gap plus a
+            floating shadow, replacing the old shared-hairline seam — same
+            treatment now applied to every card grid on the site, at ICL's
+            request. See the comment on .panel-card for the full context. */}
         <section id="why" className="bg-paper">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
             <div className="text-center">
@@ -305,9 +309,9 @@ export default function Page() {
                 matches why you are coming.
               </p>
             </div>
-            <div className="mt-14 grid gap-px bg-rule lg:grid-cols-3">
+            <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
               {PATHS.map((p, i) => (
-                <div key={p.who} className={`p-8 sm:p-10 flex flex-col ${i === 1 ? "bg-ink text-white" : "bg-card"}`}>
+                <div key={p.who} className={`panel-card p-8 sm:p-10 flex flex-col ${i === 1 ? "bg-ink text-white" : "bg-card"}`}>
                   <p className={`eyebrow ${i === 1 ? "text-marigold" : "text-ink/45"}`}>{p.who}</p>
                   <h3 className={`h-sm text-2xl mt-4 ${i === 1 ? "text-white" : "text-ink"}`}>{p.lead}</h3>
                   <p className={`lede mt-4 text-[16px] ${i === 1 ? "text-white" : "text-ink/65"}`}>{p.body}</p>
@@ -337,15 +341,15 @@ export default function Page() {
                 Not five features — five things people actually leave with.
               </p>
             </div>
-            <div className="mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3 border border-line">
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {REASONS.map((r) => (
-                <div key={r.n} className="bg-ink p-8">
+                <div key={r.n} className="panel-card bg-raise p-8">
                   <p className={`font-mono text-[12px] ${["text-marigold","text-clay","text-indigo","text-palm","text-marigold"][Number(r.n)-1]}`}>{r.n}</p>
                   <h3 className="h-sm text-white text-lg mt-4">{r.t}</h3>
                   <p className="lede mt-3 text-[16px] text-white">{r.d}</p>
                 </div>
               ))}
-              <div className="bg-ink p-8 flex items-end">
+              <div className="p-8 flex items-end">
                 <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               </div>
             </div>
@@ -448,7 +452,7 @@ export default function Page() {
                   : "Early bird sold out — book standard now before seats go"}
               </h2>
             </div>
-            <div className="mt-14 grid gap-px bg-rule lg:grid-cols-3">
+            <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
               {TICKETS.map((t) => {
                 /* The Early Bird tile is the one card whose deal can expire
                    under it. Once EARLY_BIRD_ACTIVE flips false (a redeploy
@@ -462,7 +466,7 @@ export default function Page() {
                 return (
                   <div
                     key={t.tier}
-                    className={`ticket-card p-8 sm:p-10 flex flex-col ${
+                    className={`ticket-card panel-card p-8 sm:p-10 flex flex-col ${
                       justClosed ? "bg-card glow-clay" : t.urgent ? "bg-ink text-white" : "bg-card"
                     }`}
                   >

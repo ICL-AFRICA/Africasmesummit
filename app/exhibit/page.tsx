@@ -22,9 +22,13 @@ export default function Exhibit() {
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <p className="eyebrow text-white mb-5">Stand options</p>
-          <div className="grid gap-px bg-line lg:grid-cols-2 border border-line">
+          {/* .panel-card (globals.css) — real gap + floating shadow,
+              replacing the shared-hairline seam. Both cards now sit on
+              bg-raise (not bg-ink) so the shadow reads against a lighter
+              card than the dark section behind it. */}
+          <div className="grid gap-6 lg:grid-cols-2">
             {STAND_OPTIONS.map((s, i) => (
-              <div key={s.name} className={`p-8 sm:p-10 flex flex-col ${i === 0 ? "bg-raise" : "bg-ink"}`}>
+              <div key={s.name} className="panel-card bg-raise p-8 sm:p-10 flex flex-col">
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="eyebrow text-marigold">{s.name}</p>
                   <p className="font-mono text-[12px] text-white">{s.who}</p>

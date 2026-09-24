@@ -73,13 +73,16 @@ export default function Partner() {
               different amounts of value, not be forced to the same size.
               The "Book" button sits right after each card's own content,
               wherever that lands. */}
-          <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line items-start">
+          {/* .panel-card (globals.css) — real gap + floating shadow,
+              replacing the shared-hairline seam, same as every other card
+              grid on the site now. */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 items-start">
             {SPONSOR_TIERS.map((t, i) => {
               const included = SPONSOR_TIERS.slice(0, i + 1).flatMap((tier) => tier.includes);
               return (
                 <div
                   key={t.tier}
-                  className={`p-7 sm:p-8 flex flex-col ${TIER_STYLE[t.tier].bg}`}
+                  className={`panel-card p-7 sm:p-8 flex flex-col ${TIER_STYLE[t.tier].bg}`}
                 >
                   <div className="flex items-baseline justify-between gap-3">
                     <p className="eyebrow text-ink">{t.tier}</p>
@@ -173,9 +176,9 @@ export default function Partner() {
             Neither is included in the tiers above. Both go to a single partner, by
             application, negotiated directly with the convener.
           </p>
-          <div className="mt-10 grid gap-px bg-line sm:grid-cols-2 border border-line">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {SIGNATURE_OPPORTUNITIES.map((o) => (
-              <div key={o.name} className="bg-ink p-8 sm:p-10">
+              <div key={o.name} className="panel-card bg-raise p-8 sm:p-10">
                 <p className="font-mono text-[12px] uppercase tracking-widest text-marigold-t">
                   {o.time} · {o.moment}
                 </p>

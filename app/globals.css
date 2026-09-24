@@ -510,6 +510,57 @@ body {
   .keynote-frame:hover { transform: none; }
 }
 
+/* ── Panel cards: glossy floating separation ─────────────────────────────
+   Added 24 September 2026 at ICL's request, extending the keynote-portrait
+   treatment above (.keynote-frame) to every card grid sitewide: the
+   three-path cards, the five-reasons cards and the ticket tiles on the
+   homepage, the sponsorship tiers and signature opportunities on /partner,
+   the stand options on /exhibit, the track use-case cards on /tracks, and
+   the update cards on /press.
+
+   Every one of these grids used to share a single hairline background —
+   `gap-px bg-rule` (or `bg-line` on dark sections) with a `border` wrapped
+   around the whole grid — so the cards touched edge to edge and the only
+   separation was a 1px seam showing through the gap. That reads as one
+   slab cut into cells, not as distinct cards, which is exactly what ICL
+   asked to change ("remove the generic sharp corners/generic feel"). These
+   grids now use a real gap between cells, and each cell carries this
+   class: individually rounded, lifted off its section with the same soft,
+   ink-tinted shadow as .keynote-frame, so separation reads as space and
+   shadow rather than a ruled line. A few cards that used to sit directly on
+   a dark (bg-ink) section moved to bg-raise — the palette's own "raised
+   surface on ink" colour — so the card is visibly a card and not just a
+   shadow cast on identically-dark ground.
+
+   No sheen overlay here (unlike .keynote-frame) — that diagonal gloss reads
+   right on a photograph, not on a card full of body text, so this is the
+   shadow-and-radius half of the treatment only.
+
+   Same considered-exception status as .keynote-frame and .venue-float: the
+   flat/hairline rule at the top of this file stays the default everywhere
+   else. This is deliberately scoped to card containers, at the client's
+   explicit, repeated request for a "classy", "floating", non-generic feel
+   — not a reversal of the flat rule for text, buttons or rules sitewide. */
+.panel-card {
+  border-radius: 1.25rem;
+  box-shadow:
+    0 24px 38px -20px rgba(25, 21, 57, 0.35),
+    0 8px 14px -8px rgba(25, 21, 57, 0.18);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+@media (hover: hover) {
+  .panel-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 30px 46px -18px rgba(25, 21, 57, 0.4),
+      0 12px 18px -8px rgba(25, 21, 57, 0.24);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel-card { transition: none; }
+  .panel-card:hover { transform: none; }
+}
+
 /* ── Partners: scrolling logo strip ──────────────────────────────────────
    Added 19 September 2026 at ICL's request, replacing the fixed 5×2 grid
    ("logos scroll left to right, instead of within a rigid box"). The list
