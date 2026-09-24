@@ -23,11 +23,21 @@ import { useEffect, useRef, useState } from "react";
  * doesn't need one. When present it crossfades in lockstep with its image,
  * same duration and easing, as a bottom scrim bar rather than a fixed-height
  * strip, so a two-line caption doesn't clip.
+ *
+ * `showCaptions` (added 24 September 2026, at ICL's request) turns that
+ * bar off entirely, image data and all — for the keynote lineup card,
+ * once its frame shrank to a minimised, .keynote-frame-sized thumbnail
+ * on /press, a name crossfading in tiny text over a small face read as
+ * clutter rather than identification (the card's own title and body copy
+ * already say who is confirmed). Defaults to true so any other gallery
+ * that does supply captions keeps showing them at full card size.
  */
 export default function UpdateGallery({
   images,
+  showCaptions = true,
 }: {
   images: readonly { src: string; alt: string; caption?: string }[];
+  showCaptions?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -74,7 +84,7 @@ export default function UpdateGallery({
           does, never a beat ahead or behind. Sits above the images but
           below the dots (z-10), with enough top padding on the gradient
           for the fade to read as a scrim rather than a hard bar. */}
-      {images.some((img) => img.caption) && (
+      {showCaptions && images.some((img) => img.caption) && (
         <div className="absolute inset-x-0 bottom-0 z-[5] pointer-events-none">
           {images.map((img, i) =>
             img.caption ? (

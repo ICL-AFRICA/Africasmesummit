@@ -56,14 +56,23 @@ export default function Press() {
           nothing posted to it yet renders no section at all.
 
           Each card's media also shrank from a full-bleed 16:9 hero down to
-          a fixed, minimised thumbnail wearing .keynote-frame — the same
-          glossy, rounded, floating treatment as the keynote portraits on
-          the homepage and /speakers, at ICL's explicit request that press
-          media "feel the same" as those. The card itself carries
+          a minimised thumbnail wearing .keynote-frame — the same glossy,
+          rounded, floating treatment as the keynote portraits on the
+          homepage and /speakers, at ICL's explicit request that press
+          media "feel the same" as those, sized at the keynote cards' own
+          aspect-[4/5] rather than forced into a square (a first pass at
+          this shrank it to a 144px square, which read as too small once
+          live — 24 September 2026, ICL). The card itself carries
           .panel-card, the same real-gap, floating-shadow treatment now
           used by every card grid on the site (see both classes in
           globals.css) — no more left-border tag stripe on the card, since
-          the category heading above it already says the tag. */}
+          the category heading above it already says the tag.
+
+          Per-image captions (UpdateGallery's crossfading name bar, built
+          for the keynote lineup card) are switched off here via
+          showCaptions={false} — a name in small text over a small face
+          at this size read as clutter rather than identification, and the
+          card's own title/body already say who is confirmed. */}
       {TAG_ORDER.map((tag) => {
         const items = SUMMIT_UPDATES
           .filter((u) => u.tag === tag)
@@ -81,7 +90,7 @@ export default function Press() {
                     className={`panel-card bg-ink overflow-hidden flex flex-col sm:flex-row gap-6 p-6 sm:p-7 ${u.urgent ? "glow-clay" : ""}`}
                   >
                     {u.media && (
-                      <div className="keynote-frame overflow-hidden bg-raise flex-none w-full h-44 sm:w-36 sm:h-36">
+                      <div className="keynote-frame overflow-hidden bg-raise flex-none w-full sm:w-52 aspect-[4/5]">
                         {u.media.type === "image" ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
@@ -91,7 +100,7 @@ export default function Press() {
                             className={`w-full h-full ${u.media.fit === "contain" ? "object-contain" : "object-cover"}`}
                           />
                         ) : u.media.type === "gallery" ? (
-                          <UpdateGallery images={u.media.images} />
+                          <UpdateGallery images={u.media.images} showCaptions={false} />
                         ) : (
                           <video
                             controls
