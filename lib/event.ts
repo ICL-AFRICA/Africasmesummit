@@ -1517,10 +1517,12 @@ export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateStri
  * folded into whichever of these four it resembles rather than getting a
  * new colour of its own.
  *
- * The one entry below still marked "[Placeholder]" is exactly that — the
- * structure and card design are real, the content is not. Swap it for the
- * actual announcement (and drop the "[Placeholder]" marker) before it goes
- * live; do not publish it as-is.
+ * No entries below are placeholders any more as of 21 September 2026 — the
+ * last one ("[Placeholder] Another name is added to the stage") was
+ * replaced with the real keynote-lineup teaser. If a new placeholder is
+ * ever added for a not-yet-confirmed announcement, mark it "[Placeholder]"
+ * in the title the same way and swap it for the real thing before it goes
+ * live; do not publish a placeholder as-is.
  *
  * `link` is a plain underlined text link by default — right for "read
  * more" style references to another page. Give it `style: "button"` when
@@ -1537,12 +1539,24 @@ export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateStri
  * has to guess a path:
  *   - One photo → public/img/updates/, referenced as "/img/updates/<file>.webp"
  *     (or .jpg). Always give real `alt` text — it is the only description
- *     a screen reader gets.
+ *     a screen reader gets. Defaults to filling the card's fixed 16:9 box
+ *     edge-to-edge (`object-cover`, cropping whatever overflows) like every
+ *     other card's media — right for a photo. Set `fit: "contain"` instead
+ *     for a designed graphic that has to be seen whole and uncropped (a
+ *     flyer, a poster) — added 21 September 2026 for the early-bird-sold-out
+ *     flyer below, at ICL's request ("display fully, not just half of it").
+ *     `contain` letterboxes into the box's own bg-raise background rather
+ *     than stretching or cropping, so use it for graphics, not photos.
  *   - Several photos from the same activity → `gallery`, same folder and
  *     naming rule, rendered in-card as a slow auto-advancing slideshow
  *     (components/UpdateGallery.tsx) rather than four separate cards for
  *     one event. Every image still needs its own real `alt` text — the
- *     gallery does not fall back to a shared caption.
+ *     gallery does not fall back to a shared caption. Each image can also
+ *     carry its own `caption`, shown as a bottom scrim bar that crossfades
+ *     in lockstep with its photo (added 21 September 2026 for the keynote
+ *     lineup card below, so the name on screen always matches the face) —
+ *     omit it for a gallery where the images don't need individual labels,
+ *     like the Zetech MoU photos below.
  *   - Clips → public/video/updates/, referenced as "/video/updates/<file>.mp4",
  *     with a `poster` still frame from the same folder so the card never
  *     shows a black box before someone presses play.
@@ -1564,9 +1578,9 @@ export type SummitUpdate = {
   urgent?: boolean;
   link?: { href: string; text: string; style?: "button" };
   media?:
-    | { type: "image"; src: string; alt: string }
+    | { type: "image"; src: string; alt: string; fit?: "cover" | "contain" }
     | { type: "video"; src: string; poster: string }
-    | { type: "gallery"; images: readonly { src: string; alt: string }[] };
+    | { type: "gallery"; images: readonly { src: string; alt: string; caption?: string }[] };
 };
 
 export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
@@ -1580,7 +1594,8 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     media: {
       type: "image",
       src: "/img/updates/early-bird-sold-out.webp",
-      alt: "Africa SME Summit 2026 flyer announcing the early bird ticket pass is sold out, with standard tickets available at KES 6,800.",
+      alt: "Africa SME Summit 2026 flyer: the early bird ticket pass is sold out, with standard tickets available at africasmesummit.com for KES 6,800.",
+      fit: "contain",
     },
   },
   {
@@ -1619,11 +1634,30 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     },
   },
   {
-    date: "2026-08-26",
+    date: "2026-09-21",
     tag: "Speakers",
-    title: "[Placeholder] Another name is added to the stage",
-    body: "Placeholder card — replace with the real speaker announcement once it's confirmed.",
-    link: { href: "/speakers", text: "See who's speaking" },
+    title: "Four names taking the stage before the tracks open",
+    body: "Two Vice-Chancellors, the summit's own convener, and the CEO of Kenya's Teachers Service Commission — the keynote lineup is confirmed, and it sets the tone for everything that follows. This is the room you'll be walking into on October 15.",
+    link: { href: "/speakers", text: "Meet the full keynote lineup" },
+    // Images and alt text pulled straight from KEYNOTES rather than
+    // retyped — added 21 September 2026 at ICL's request, replacing the
+    // last "[Placeholder]" card with a teaser of the confirmed keynote
+    // portraits instead of one more named announcement. Because this
+    // derives from KEYNOTES, it stays correct on its own if a fifth
+    // keynote is ever added or the order changes — nothing here needs a
+    // hand edit the way the other cards' media does.
+    media: {
+      type: "gallery",
+      images: KEYNOTES.map((k) => ({
+        src: k.photo,
+        alt: `${k.name}, ${k.role}, ${k.org}`,
+        // Shown as the crossfading caption under the portrait — kept short
+        // (name + role/org, not the full bio) since it has to fit a
+        // two-line scrim bar on a phone-width card. Same derive-don't-
+        // retype reasoning as `alt` above.
+        caption: `${k.name} — ${k.role}, ${k.org}`,
+      })),
+    },
   },
 ] as const;
 
