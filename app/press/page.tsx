@@ -15,14 +15,22 @@ export const metadata: Metadata = {
 /**
  * Per-tag accent, mirroring SUMMIT_UPDATES' doc comment in lib/event.ts:
  * marigold = Speakers, clay = Tickets, indigo = Partners, palm = Papers.
- * Keyed on `tag` exactly as written there.
+ * Keyed on `tag` exactly as written there. Used only for each category's
+ * own heading now (24 September 2026) — cards no longer carry a left
+ * border stripe in their own colour, since the section they sit under
+ * already says the tag; see the redesign comment below.
  */
-const TAG_STYLE: Record<string, { border: string; text: string }> = {
-  Speakers: { border: "border-marigold", text: "text-marigold-t" },
-  Tickets: { border: "border-clay", text: "text-clay-t" },
-  Partners: { border: "border-indigo", text: "text-indigo-t" },
-  Papers: { border: "border-palm", text: "text-palm-t" },
+const TAG_TEXT: Record<string, string> = {
+  Speakers: "text-marigold-t",
+  Tickets: "text-clay-t",
+  Partners: "text-indigo-t",
+  Papers: "text-palm-t",
 };
+
+/* Fixed category order for grouping SUMMIT_UPDATES below — same order as
+   the object above. A tag with nothing posted to it yet simply renders no
+   section, rather than an empty heading. */
+const TAG_ORDER = ["Speakers", "Tickets", "Partners", "Papers"] as const;
 
 function updateLabel(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -40,82 +48,92 @@ export default function Press() {
       title="Everything building up to October 15"
       lede="New partners, speakers, deadlines and milestones — in photos and video as they happen. Nothing here is embargoed, so quote or share whatever's useful."
     >
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          {/* Widened from the old 46rem article measure — a card carrying a
-              photo or video needs more than a text column's worth of room,
-              and the feed reads better in two columns above the lg
-              breakpoint. */}
-          <div className="grid gap-6 lg:grid-cols-2 max-w-[1100px]">
-            {SUMMIT_UPDATES.map((u) => (
-              <article
-                key={u.title}
-                className={`bg-ink border-l-2 ${TAG_STYLE[u.tag].border} overflow-hidden flex flex-col ${u.urgent ? "glow-clay" : ""}`}
-              >
-                {/* Media bleeds to the card's own edges — no padding, no
-                    rounded corners (the site is sharp everywhere) — so a
-                    photo or clip reads as press material, not a thumbnail
-                    stuck inside a text card. Fixed 16:9 box either way, so
-                    a mixed feed of photo/video/text-only cards still lines
-                    up in the grid. */}
-                {u.media && (
-                  <div className="aspect-video w-full bg-raise flex-none">
-                    {u.media.type === "image" ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={u.media.src}
-                        alt={u.media.alt}
-                        loading="lazy"
-                        className={`w-full h-full ${u.media.fit === "contain" ? "object-contain" : "object-cover"}`}
-                      />
-                    ) : u.media.type === "gallery" ? (
-                      <UpdateGallery images={u.media.images} />
-                    ) : (
-                      <video
-                        controls
-                        playsInline
-                        preload="none"
-                        poster={u.media.poster}
-                        className="w-full h-full object-cover"
-                      >
-                        <source src={u.media.src} type="video/mp4" />
-                      </video>
+      {/* Redesigned 24 September 2026 at ICL's request: what was one flat
+          two-up feed is now grouped into the same categories the tag colour
+          already implied (TAG_ORDER, matching TAG_TEXT above) — newest
+          first within each group — because a flat feed stops scanning well
+          once there is a lot of content, and there will be. A tag with
+          nothing posted to it yet renders no section at all.
+
+          Each card's media also shrank from a full-bleed 16:9 hero down to
+          a fixed, minimised thumbnail wearing .keynote-frame — the same
+          glossy, rounded, floating treatment as the keynote portraits on
+          the homepage and /speakers, at ICL's explicit request that press
+          media "feel the same" as those. The card itself carries
+          .panel-card, the same real-gap, floating-shadow treatment now
+          used by every card grid on the site (see both classes in
+          globals.css) — no more left-border tag stripe on the card, since
+          the category heading above it already says the tag. */}
+      {TAG_ORDER.map((tag) => {
+        const items = SUMMIT_UPDATES
+          .filter((u) => u.tag === tag)
+          .slice()
+          .sort((a, b) => (a.date < b.date ? 1 : -1));
+        if (items.length === 0) return null;
+        return (
+          <section key={tag} className="border-b border-line">
+            <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
+              <p className={`eyebrow mb-8 ${TAG_TEXT[tag]}`}>{tag}</p>
+              <div className="grid gap-6 lg:grid-cols-2">
+                {items.map((u) => (
+                  <article
+                    key={u.title}
+                    className={`panel-card bg-ink overflow-hidden flex flex-col sm:flex-row gap-6 p-6 sm:p-7 ${u.urgent ? "glow-clay" : ""}`}
+                  >
+                    {u.media && (
+                      <div className="keynote-frame overflow-hidden bg-raise flex-none w-full h-44 sm:w-36 sm:h-36">
+                        {u.media.type === "image" ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={u.media.src}
+                            alt={u.media.alt}
+                            loading="lazy"
+                            className={`w-full h-full ${u.media.fit === "contain" ? "object-contain" : "object-cover"}`}
+                          />
+                        ) : u.media.type === "gallery" ? (
+                          <UpdateGallery images={u.media.images} />
+                        ) : (
+                          <video
+                            controls
+                            playsInline
+                            preload="none"
+                            poster={u.media.poster}
+                            className="w-full h-full object-cover"
+                          >
+                            <source src={u.media.src} type="video/mp4" />
+                          </video>
+                        )}
+                      </div>
                     )}
-                  </div>
-                )}
-                <div className="p-8 sm:p-10">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className={`font-mono text-[12px] uppercase tracking-widest ${TAG_STYLE[u.tag].text}`}>
-                      {u.tag}
-                    </span>
-                    <span aria-hidden="true" className="text-white/30">·</span>
-                    <time dateTime={u.date} className="font-mono text-[12px] text-white/40">
-                      {updateLabel(u.date)}
-                    </time>
-                  </div>
-                  <h2 className="h-sm text-white text-2xl mt-4">{u.title}</h2>
-                  <p className="lede mt-3 text-[17px] text-white/80">{u.body}</p>
-                  {u.link && (
-                    u.link.style === "button" ? (
-                      <Btn href={u.link.href} tone="gold" className="mt-5">
-                        {u.link.text}
-                      </Btn>
-                    ) : (
-                      <Link
-                        href={u.link.href}
-                        className="mt-4 inline-flex items-center gap-1.5 text-[16px] text-white underline underline-offset-4 hover:text-marigold transition-colors"
-                      >
-                        {u.link.text}
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    )
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+                    <div className="min-w-0 flex-1">
+                      <time dateTime={u.date} className="font-mono text-[12px] text-white/40">
+                        {updateLabel(u.date)}
+                      </time>
+                      <h2 className="h-sm text-white text-xl mt-2">{u.title}</h2>
+                      <p className="lede mt-2.5 text-[16px] text-white/80">{u.body}</p>
+                      {u.link && (
+                        u.link.style === "button" ? (
+                          <Btn href={u.link.href} tone="gold" className="mt-5">
+                            {u.link.text}
+                          </Btn>
+                        ) : (
+                          <Link
+                            href={u.link.href}
+                            className="mt-3 inline-flex items-center gap-1.5 text-[16px] text-white underline underline-offset-4 hover:text-marigold transition-colors"
+                          >
+                            {u.link.text}
+                            <span aria-hidden="true">→</span>
+                          </Link>
+                        )
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
 
       {/* Media contact — kept from the old press-release layout. The page's
           job has changed, but a working journalist looking for a human to
