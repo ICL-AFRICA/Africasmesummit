@@ -451,7 +451,7 @@ export default function Page() {
                 return (
                   <div
                     key={t.tier}
-                    className={`p-8 sm:p-10 flex flex-col ${
+                    className={`ticket-card p-8 sm:p-10 flex flex-col ${
                       justClosed ? "bg-card glow-clay" : t.urgent ? "bg-ink text-white" : "bg-card"
                     }`}
                   >
@@ -459,11 +459,19 @@ export default function Page() {
                       <p className={`eyebrow ${justClosed ? "text-ink/35" : t.urgent ? "text-marigold" : "text-ink/45"}`}>
                         {t.tier}
                       </p>
-                      <p className={`font-mono text-[12px] ${justClosed ? "text-ink/35" : t.urgent ? "text-marigold font-semibold" : "text-ink/45"}`}>
+                      <p
+                        className={
+                          justClosed
+                            ? "sold-out-badge inline-flex items-center rounded-full border border-clay bg-card text-clay-t font-mono text-[12px] font-semibold uppercase tracking-wide px-3 py-1 glow-clay"
+                            : t.urgent
+                              ? "font-mono text-[12px] text-marigold font-semibold"
+                              : "font-mono text-[12px] text-ink/45"
+                        }
+                      >
                         {justClosed ? "Sold out" : t.note}
                       </p>
                     </div>
-                    <p className={`h-lg mt-6 text-5xl ${justClosed ? "text-ink/30 line-through" : t.urgent ? "text-white" : "text-ink"}`}>
+                    <p className={`h-lg mt-6 text-5xl ${justClosed ? "text-clay-t line-through text-glow-clay" : t.urgent ? "text-white" : "text-ink"}`}>
                       {t.currency && <span className="text-lg align-top mr-2 font-normal">{t.currency}</span>}
                       {t.price}
                     </p>
@@ -479,7 +487,7 @@ export default function Page() {
                       href={EVENT.ticketUrl}
                       className={`rounded-lg mt-9 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-colors ${
                         justClosed
-                          ? "bg-paper text-ink/60 hover:text-ink border border-rule"
+                          ? "cta-standard-book bg-paper text-ink/60 hover:text-ink border border-rule"
                           : t.urgent
                             ? "bg-gold text-ink hover:brightness-110"
                             : "bg-ink text-white hover:bg-raise"

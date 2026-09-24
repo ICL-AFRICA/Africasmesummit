@@ -418,6 +418,44 @@ body {
   .glow-clay { animation: none; }
 }
 
+/* ── Early bird sold out: glowing price figure ───────────────────────────
+   Added 24 September 2026 at ICL's request, alongside the card- and
+   badge-level glows above. The struck-through price used to fade to
+   text-ink/30 (a muted grey) once the tier closed; it now reads solid
+   clay-red (text-clay-t, the same accessible tint used in the /exhibit
+   venue notice) with a soft pulsing text-shadow around the glyphs — a
+   text-shadow rather than box-shadow because it hugs the number's own
+   shape instead of drawing a rectangle behind it. */
+@keyframes text-glow-clay {
+  0%, 100% { text-shadow: 0 0 0 rgba(198, 85, 63, 0); }
+  50%      { text-shadow: 0 0 14px rgba(198, 85, 63, 0.65); }
+}
+.text-glow-clay {
+  animation: text-glow-clay 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .text-glow-clay { animation: none; }
+}
+
+/* ── Early bird sold out: hovering the badge previews the standard CTA ───
+   Added 24 September 2026 at ICL's request. Hovering the "Sold out" pill
+   glows the "Book standard now" button gold underneath it, previewing the
+   tier that button actually leads to. Pure CSS via :has() — no JS state —
+   scoped through .ticket-card so the hover can never bleed onto the other
+   two ticket tiles even though all three cards share this stylesheet. This
+   is a discrete hover highlight rather than an infinite pulse (unlike the
+   glows above, which run whether or not anyone is looking), so it is a
+   plain transition, not a @keyframes animation. */
+.cta-standard-book {
+  transition: box-shadow 220ms ease;
+}
+.ticket-card:has(.sold-out-badge:hover) .cta-standard-book {
+  box-shadow: 0 0 18px 3px rgba(227, 164, 40, 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-standard-book { transition: none; }
+}
+
 /* ── Partners: scrolling logo strip ──────────────────────────────────────
    Added 19 September 2026 at ICL's request, replacing the fixed 5×2 grid
    ("logos scroll left to right, instead of within a rigid box"). The list
