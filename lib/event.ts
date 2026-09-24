@@ -494,6 +494,28 @@ export const SPEAKERS = [
     draft: true,
     bio: ["Esther Mwangi is Director of Research & Innovation at Zetech University."],
   },
+  {
+    slug: "catherine-odhiambo",
+    name: "CPA Catherine Odhiambo",
+    role: "Acting Chief Executive Officer",
+    org: "Kimisitu DT Sacco",
+    /* Added 24 September 2026 at ICL's request, placed at the end of the
+       array next to Esther Mwangi (no track order was specified). Topic
+       set to Finance, Capital & Investment as the closest fit to a SACCO/
+       banking background — same track as Susan Ndungu — but this is an
+       inference, not an organiser-confirmed placement; correct it once one
+       is given. bio is drafted from public reporting (Kimisitu Sacco's own
+       leadership page, Co-op News, ZoomInfo), not her own submitted words
+       — hence draft: true, per the rule at the top of this array: nothing
+       here may be presented as her approved biography until she has
+       signed off on it. */
+    topic: "Finance, Capital & Investment",
+    draft: true,
+    bio: [
+      "Catherine Odhiambo is the Acting Chief Executive Officer of Kimisitu DT Sacco, appointed by the board in October 2025 to steer the organisation following the departure of the previous CEO. She brings more than 20 years of experience in Kenya's co-operative movement, including eleven years at Vest Sacco, before returning to Kimisitu Sacco as Credit Manager overseeing its credit operations.",
+      "She holds a Bachelor's degree in Business Administration (Finance) from Kenya Methodist University and a Diploma in Co-operative Management from the Co-operative College of Kenya, and is a Certified Public Accountant (CPA-K).",
+    ],
+  },
 ] as const;
 
 /**
@@ -1024,6 +1046,12 @@ export const PHOTOS = {
      800x1000; ask each for a higher-resolution original when one is
      available.
 
+     21 (Catherine Odhiambo, added 24 September 2026) is the same situation
+     as Anastasia Nyalita in KEYNOTES: a supplied 500x500 photo, centre-
+     cropped to 4:5 (400x500) and upscaled to 800x1000 rather than the
+     original-pixels crop the rest of this comment describes — there was no
+     source large enough for a no-resampling crop.
+
      speaker-2.jpg (Mike Mutungi) is deliberately absent from this array —
      he moved to KEYNOTES on 18 September 2026 and is no longer one of the
      panel speakers this array backs. The file itself was not deleted or
@@ -1056,6 +1084,7 @@ export const PHOTOS = {
     "/img/speaker-18.jpg",
     "/img/speaker-19.jpg",
     "/img/speaker-20.jpg",
+    "/img/speaker-21.jpg",
   ],
   floor: "/img/floor.jpg",
 } as const;
