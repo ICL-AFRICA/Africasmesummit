@@ -456,6 +456,60 @@ body {
   .cta-standard-book { transition: none; }
 }
 
+/* ── Keynote portraits: glossy floating card ─────────────────────────────
+   Added 24 September 2026 at ICL's request, on the five keynote portraits
+   on the homepage's "Before the tracks open" grid and their larger repeats
+   on /speakers: rounded corners, a soft layered shadow lifting each photo
+   off its background, and a faint diagonal sheen across the glass, reading
+   as a "classy," glossy, floating photo card rather than a flat tile.
+
+   This is a deliberate exception to the flat/hairline rule at the top of
+   this file (no gradients, no shadows, no rounded corners) — the same kind
+   of considered departure .venue-float and the glow-* classes above
+   already are, scoped to a handful of elements the client specifically
+   wants to feel dimensional. It is not a reversal of the flat rule for the
+   rest of the site, which stays hairline-and-flat everywhere else.
+
+   The sheen is a ::after overlay rather than a gradient on the img itself,
+   so it sits above the photo without fighting the greyscale/duotone
+   treatment .portrait-tint already applies underneath. Shadow and lift use
+   the site's ink colour (not black) to stay tonally consistent with the
+   rest of the palette. Hover lift is (hover: hover)-gated like
+   .venue-float, and everything collapses under prefers-reduced-motion. */
+.keynote-frame {
+  position: relative;
+  border-radius: 1.5rem;
+  box-shadow:
+    0 30px 45px -22px rgba(25, 21, 57, 0.4),
+    0 10px 18px -10px rgba(25, 21, 57, 0.22);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+.keynote-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0) 32%,
+    rgba(255, 255, 255, 0) 70%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .keynote-frame:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 38px 55px -20px rgba(25, 21, 57, 0.45),
+      0 14px 22px -8px rgba(25, 21, 57, 0.28);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .keynote-frame { transition: none; }
+  .keynote-frame:hover { transform: none; }
+}
+
 /* ── Partners: scrolling logo strip ──────────────────────────────────────
    Added 19 September 2026 at ICL's request, replacing the fixed 5×2 grid
    ("logos scroll left to right, instead of within a rigid box"). The list

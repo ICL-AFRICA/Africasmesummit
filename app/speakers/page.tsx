@@ -46,16 +46,17 @@ export default function Speakers() {
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-12 sm:pt-16">
             <p className="eyebrow text-marigold mb-2">Keynote</p>
             <h2 className="h-sm text-white text-2xl sm:text-3xl">Before the tracks open</h2>
-            <p className="lede mt-3 text-white/70 max-w-xl text-[16px]">
-              Two Vice-Chancellors, the summit&rsquo;s own convener, and the CEO of the
-              Teachers Service Commission, on stage before the panel speakers below.
+            <p className="lede mt-3 text-white/70 max-w-2xl text-[16px]">
+              Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
+              Teachers Service Commission, and Nairobi County&rsquo;s CECM for Business
+              and Hustler Opportunities, on stage before the panel speakers below.
             </p>
           </div>
           {KEYNOTES.map((k, i) => (
             <div key={k.slug} id={k.slug} className={i > 0 ? "border-t border-line" : ""}>
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 sm:py-20">
                 <div className={`grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,26rem)_1fr] items-start ${i % 2 ? "lg:[direction:rtl]" : ""}`}>
-                  <div className={`portrait-tint aspect-[4/5] overflow-hidden bg-raise ${i % 2 ? "lg:[direction:ltr]" : ""}`}>
+                  <div className={`keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise ${i % 2 ? "lg:[direction:ltr]" : ""}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={k.photo} alt={k.name} className="portrait w-full h-full object-cover" />
                   </div>

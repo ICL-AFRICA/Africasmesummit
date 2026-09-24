@@ -129,9 +129,19 @@ export default function Page() {
             Grid widened from a fixed 3-up to 2-up/4-up on 21 September 2026
             when Evaleen Mitei joined as the fourth keynote — a straight
             sm:grid-cols-3 would have orphaned her card alone on its own
-            row. 4-up at desktop keeps one portrait-height row; 2-up on a
-            tablet-width screen keeps each portrait legible rather than
-            cramming four across. */}
+            row. Widened again to 2-up/3-up/5-up on 24 September 2026 when
+            Anastasia Nyalita joined as the fifth: 5-up at desktop keeps one
+            clean row instead of 4-then-1, and the added md:3-up step gives
+            tablet widths a balanced 3+2 instead of 2+2+1.
+
+            The portraits also picked up .keynote-frame the same day —
+            rounded corners, a soft shadow and a faint sheen, at ICL's
+            request for a "classy, floating" feel. That's a deliberate
+            departure from the flat/hairline rule atop globals.css (no
+            shadows, no rounded corners) for these five portraits
+            specifically, same as .venue-float and the glow-* classes
+            already are elsewhere on the page — not a reversal of the flat
+            rule everywhere else. */}
         <section className="bg-card border-t border-rule">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
             <div className="text-center mb-14">
@@ -139,15 +149,16 @@ export default function Page() {
               <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
                 Before the tracks open
               </h2>
-              <p className="lede mt-5 text-ink/60 max-w-xl mx-auto text-[16px]">
-                Two Vice-Chancellors, the summit&rsquo;s own convener, and the CEO of
-                the Teachers Service Commission, setting the tone before six tracks open.
+              <p className="lede mt-5 text-ink/60 max-w-2xl mx-auto text-[16px]">
+                Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
+                Teachers Service Commission, and Nairobi County&rsquo;s CECM for Business
+                and Hustler Opportunities, setting the tone before six tracks open.
               </p>
             </div>
-            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
               {KEYNOTES.map((k) => (
                 <div key={k.slug}>
-                  <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
+                  <div className="keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={k.photo}

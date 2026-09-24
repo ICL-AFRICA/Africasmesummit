@@ -758,9 +758,14 @@ export const GUEST_OF_HONOUR = {
  * spelled/titled version from a secondary source. Her photo, like Munene's,
  * is a small source image (265×265) upscaled to the 800×1000 convention.
  *
- * Display order is Gitau, then Mutungi, then Munene, then Mitei (Munene/
- * Mitei set 19–21 September 2026 at ICL's request — UoN's VC, the convener,
- * Zetech's VC, then TSC's CEO). Array order IS display order on both the
+ * Display order is Gitau, then Mutungi, then Munene, then Mitei, then
+ * Nyalita (Munene/Mitei set 19–21 September 2026 at ICL's request — UoN's
+ * VC, the convener, Zetech's VC, then TSC's CEO; Nyalita added 24 September
+ * 2026, appended last as the newest addition — Nairobi County's CECM for
+ * Business and Hustler Opportunities. Bio supplied by ICL communications;
+ * her photo is a supplied portrait (506×605) cropped and upscaled to the
+ * site's 800×1000 headshot convention, same treatment as Munene's and
+ * Mitei's smaller source photos above). Array order IS display order on both the
  * homepage and /speakers, so reordering this array is the only thing
  * needed to change it. Whenever this array's length changes, KEYNOTE_COUNT
  * below and the hardcoded speaker-count copy on the homepage and /speakers
@@ -808,6 +813,17 @@ export const KEYNOTES = [
     bio: [
       "Evaleen Mitei is Chief Executive Officer of the Teachers Service Commission (TSC), the constitutional body responsible for registering, employing, deploying and managing the conduct of Kenya's teaching service. She has spent 31 years at the Commission, rising through senior leadership including Senior Deputy Director and Deputy Director in TSC's Human Resource Directorate.",
       "She has also served at the Ministry of Public Service, where she worked on the implementation of national public service reforms — institutional reform experience she now brings to managing and supporting Kenya's teachers.",
+    ],
+  },
+  {
+    slug: "anastasia-nyalita",
+    name: "Dr. Anastasia Mutethya Nyalita",
+    role: "County Executive Committee Member, Business and Hustler Opportunities",
+    org: "Nairobi City County Government",
+    photo: "/img/keynote-anastasia-nyalita.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "Dr. Anastasia Mutethya Nyalita is a distinguished Kenyan pharmacist, healthcare specialist, and public administrator who serves as the Nairobi City County Government's County Executive Committee Member (CECM) for Business and Hustler Opportunities. With over 20 years of senior leadership experience spanning multinational corporations, trade associations, and public service, she has built a reputation as a highly efficient, action-oriented corporate governance expert.",
     ],
   },
 ] as const;
