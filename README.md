@@ -1,7 +1,7 @@
 # Africa SME Summit — africasmesummit.com
 
 Static marketing site for the SMEs Conference, Thursday 15 October 2026,
-University of Nairobi.
+University of Nairobi  ...
 
 The date lives in exactly one place — `DATE_ISO` in `lib/event.ts`. Every
 label, heading, search description and the schema.org start and end times
