@@ -546,7 +546,11 @@ body {
   box-shadow:
     0 24px 38px -20px rgba(25, 21, 57, 0.35),
     0 8px 14px -8px rgba(25, 21, 57, 0.18);
-  transition: transform 260ms ease, box-shadow 260ms ease;
+  /* border-color is here (not just transform/box-shadow) so this class can
+     sit on the same element as a hover:border-* utility — e.g. the /tracks
+     cards — without a `transition` shorthand collision with Tailwind's
+     transition-colors. */
+  transition: transform 260ms ease, box-shadow 260ms ease, border-color 220ms ease;
 }
 @media (hover: hover) {
   .panel-card:hover {

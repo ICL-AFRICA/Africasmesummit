@@ -240,7 +240,14 @@ export default function Page() {
         {/* The hairline earns its keep here specifically: this section and
             the speaker wall above it are both bg-ink, so without it the two
             read as one long dark run. Everywhere else on the site a section
-            boundary is drawn by the field changing colour. */}
+            boundary is drawn by the field changing colour.
+
+            Cards picked up .panel-card on 24 September 2026 at ICL's
+            request, same as every other card grid on the site — rounded
+            corners, a floating shadow, a hover lift. Each one is now a
+            solid bg-raise panel rather than transparent text over the
+            floor photo, so the shadow and gloss actually read; the photo
+            still shows through in the gaps between cards. */}
         <section id="tracks" className="relative bg-ink border-t border-line">
           <div className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -261,8 +268,11 @@ export default function Page() {
                      only generates what it can read literally in the source,
                      so an interpolated variant compiles to nothing — which is
                      exactly what happened here: marigold worked and the other
-                     three silently did not. */
-                  className={`group block border-t-2 pt-5 transition-colors ${
+                     three silently did not. No transition-colors utility
+                     here — .panel-card's own transition list already covers
+                     border-color, and a second `transition` shorthand on the
+                     same element would just overwrite the first. */
+                  className={`panel-card group block bg-raise p-6 sm:p-7 border-t-2 ${
                     ["border-line hover:border-marigold",
                      "border-line hover:border-clay",
                      "border-line hover:border-indigo",

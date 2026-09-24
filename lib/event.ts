@@ -595,7 +595,7 @@ export const TRACKS = [
   },
   {
     n: "03", slug: "talent-human-resource-safeguarding",
-    name: "Talent & Human Resource acquisition with safeguarding",
+    name: "Talent management & Human resource acquisition",
     line: "Hiring well, and the safeguarding duties that come with it.",
     who: "Owners and HR leads building a team faster than their systems can keep up.",
     format: "Workshop",
