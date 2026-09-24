@@ -462,7 +462,7 @@ export default function Page() {
                       <p
                         className={
                           justClosed
-                            ? "sold-out-badge inline-flex items-center rounded-full border border-clay bg-card text-clay-t font-mono text-[12px] font-semibold uppercase tracking-wide px-3 py-1 glow-clay"
+                            ? "sold-out-badge inline-flex items-center rounded-full bg-clay-t text-white font-mono text-[12px] font-semibold uppercase tracking-wide px-3 py-1 glow-clay"
                             : t.urgent
                               ? "font-mono text-[12px] text-marigold font-semibold"
                               : "font-mono text-[12px] text-ink/45"
