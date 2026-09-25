@@ -1481,48 +1481,41 @@ export const TRACK_EXTRAS: Record<string, TrackExtra> = {
  * stand states a preference on the enquiry form — it does not reserve
  * anything, and the page must not imply that it does.
  */
+/**
+ * Pride Hall, Ole Sereni — replaced 25 September 2026 when the venue moved
+ * from the old two-floor plan above (6th/5th floor, 10 corporate + 21
+ * startup spots) to this single hall. Source: "ceo_ready_summit_floor_plan.pdf",
+ * a one-page rendered floor plan with no PDF text layer, so
+ * scripts/build-floorplan.py's bbox-extraction approach does not apply here
+ * — coordinates below were read off the rendered page with OCR (tesseract)
+ * plus manual verification (markers overlaid on the image and checked
+ * against every label) rather than pulled from real vector text boxes.
+ * Re-derive by the same means if this plan changes; do not eyeball it fresh.
+ * Legend was 9 corporate (EB1-EB9) + 9 startup (T1-T9) = 18 spots total.
+ */
 export const FLOOR_PLAN = [
   {
-    slug: "sixth", name: "6th floor",
-    image: "/img/floorplan/sixth.webp", w: 1700, h: 1177,
+    slug: "pride-hall", name: "Pride Hall",
+    image: "/img/floorplan/pride-hall.webp", w: 1900, h: 1386,
     spots: [
-      { id: "T1", kind: "startup", x: 50.9, y: 12.6 },
-      { id: "T2", kind: "startup", x: 55.8, y: 12.6 },
-      { id: "T3", kind: "startup", x: 60.4, y: 12.6 },
-      { id: "T4", kind: "startup", x: 65.2, y: 12.6 },
-      { id: "T5", kind: "startup", x: 71.5, y: 15.4 },
-      { id: "T6", kind: "startup", x: 74.6, y: 20.1 },
-      { id: "T7", kind: "startup", x: 77.7, y: 24.7 },
-      { id: "T8", kind: "startup", x: 87.1, y: 67.8 },
-      { id: "T9", kind: "startup", x: 62.4, y: 77.4 },
-      { id: "T10", kind: "startup", x: 58.0, y: 78.3 },
-      { id: "T11", kind: "startup", x: 53.2, y: 78.9 },
-      { id: "T12", kind: "startup", x: 48.4, y: 79.6 },
-    ],
-  },
-  {
-    slug: "fifth", name: "5th floor",
-    image: "/img/floorplan/fifth.webp", w: 1700, h: 1023,
-    spots: [
-      { id: "EB1", kind: "corporate", x: 30.9, y: 20.3 },
-      { id: "EB2", kind: "corporate", x: 39.1, y: 25.6 },
-      { id: "EB3", kind: "corporate", x: 49.4, y: 28.7 },
-      { id: "EB4", kind: "corporate", x: 61.1, y: 28.7 },
-      { id: "EB5", kind: "corporate", x: 72.7, y: 26.3 },
-      { id: "EB6", kind: "corporate", x: 80.1, y: 33.2 },
-      { id: "EB7", kind: "corporate", x: 81.9, y: 67.8 },
-      { id: "EB8", kind: "corporate", x: 63.3, y: 82.4 },
-      { id: "EB9", kind: "corporate", x: 51.7, y: 84.6 },
-      { id: "EB10", kind: "corporate", x: 27.8, y: 63.1 },
-      { id: "T13", kind: "startup", x: 22.7, y: 24.7 },
-      { id: "T14", kind: "startup", x: 24.4, y: 35.9 },
-      { id: "T15", kind: "startup", x: 23.5, y: 80.5 },
-      { id: "T16", kind: "startup", x: 38.3, y: 44.8 },
-      { id: "T17", kind: "startup", x: 37.7, y: 59.8 },
-      { id: "T18", kind: "startup", x: 45.0, y: 72.3 },
-      { id: "T19", kind: "startup", x: 55.2, y: 74.8 },
-      { id: "T20", kind: "startup", x: 63.6, y: 61.6 },
-      { id: "T21", kind: "startup", x: 64.1, y: 47.6 },
+      { id: "EB1", kind: "corporate", x: 22.4, y: 60.5 },
+      { id: "EB2", kind: "corporate", x: 26.9, y: 60.4 },
+      { id: "EB3", kind: "corporate", x: 41.0, y: 60.5 },
+      { id: "EB4", kind: "corporate", x: 84.9, y: 24.4 },
+      { id: "EB5", kind: "corporate", x: 84.9, y: 30.8 },
+      { id: "EB6", kind: "corporate", x: 84.9, y: 37.2 },
+      { id: "EB7", kind: "corporate", x: 85.0, y: 43.7 },
+      { id: "EB8", kind: "corporate", x: 85.1, y: 50.5 },
+      { id: "EB9", kind: "corporate", x: 85.0, y: 57.1 },
+      { id: "T1", kind: "startup", x: 82.7, y: 10.7 },
+      { id: "T2", kind: "startup", x: 91.3, y: 10.7 },
+      { id: "T3", kind: "startup", x: 91.1, y: 17.5 },
+      { id: "T4", kind: "startup", x: 91.3, y: 24.9 },
+      { id: "T5", kind: "startup", x: 91.3, y: 33.0 },
+      { id: "T6", kind: "startup", x: 91.3, y: 41.2 },
+      { id: "T7", kind: "startup", x: 91.3, y: 49.3 },
+      { id: "T8", kind: "startup", x: 91.3, y: 57.4 },
+      { id: "T9", kind: "startup", x: 91.3, y: 65.1 },
     ],
   },
 ] as const;
