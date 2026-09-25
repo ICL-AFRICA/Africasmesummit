@@ -57,7 +57,15 @@ export default function Page() {
             <div className="absolute inset-x-0 bottom-0">
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-10 sm:pb-14">
                 <h1 className="h-xl text-white text-[15vw] sm:text-[9vw] lg:text-[7.5rem]">
-                  Africa SME Summit
+                  {EVENT.name.split(" ").map((word, i) => (
+                    <span
+                      key={word + i}
+                      className="hero-word"
+                      style={{ animationDelay: `${i * 140}ms` }}
+                    >
+                      {word}
+                    </span>
+                  ))}
                 </h1>
               </div>
             </div>

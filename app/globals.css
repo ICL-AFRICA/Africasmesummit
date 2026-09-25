@@ -826,3 +826,33 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .agenda-preview { transition: none; }
 }
+
+/* ── Hero title: fades in word by word on load ──────────────────────────
+   Added 25 September 2026 at ICL's request ("Africa SME Summit" fading in
+   word for word as the page opens). Plain CSS keyframes, not
+   components/Reveal.tsx — the hero is the first thing on the page, so
+   there is nothing to scroll to and no IntersectionObserver needed; each
+   word just plays its entrance on mount, the same "no JS required" shape
+   as .notify-card-in and .nav-panel elsewhere in this file. animation-
+   fill-mode: both holds the first frame before the animation starts (so
+   there is no flash of the full word before it fades) and the last frame
+   after it ends. display: inline-block is required for the translateY —
+   a plain inline span cannot be transformed — and the word-to-word gap
+   moves from a text space (which a set of inline-block spans would
+   otherwise collapse) to margin-right instead. */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  margin-right: 0.28em;
+  animation: hero-word-in 650ms ease-out both;
+}
+.hero-word:last-child {
+  margin-right: 0;
+}
+@keyframes hero-word-in {
+  from { opacity: 0; transform: translate3d(0, 0.18em, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-word { animation: none; opacity: 1; }
+}
