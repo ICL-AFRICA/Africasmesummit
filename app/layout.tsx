@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Analytics from "@/components/Analytics";
+import CursorGlow from "@/components/CursorGlow";
 import {
 EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END, SHARE_DESCRIPTION,
 } from "@/lib/event";
@@ -107,6 +108,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-KE">
       <head>
         <meta name="theme-color" content="#171442" />
+        {/* Progressive-enhancement fallback for .reveal (globals.css):
+            without JavaScript, components/Reveal.tsx never runs and
+            .reveal-in never gets added, so this forces every .reveal
+            element back to fully visible rather than leaving it at the
+            base opacity: 0 forever. Added 25 September 2026 alongside
+            the site-wide scroll-reveal motion system. */}
+        <noscript>
+          <style>{".reveal{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
@@ -117,6 +127,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        {/* One instance, sitewide — see components/CursorGlow.tsx. */}
+        <CursorGlow />
         {children}
         {/* Consent, and the two trackers behind it. The <noscript> beacons
             that used to sit here are gone on purpose: they fire without

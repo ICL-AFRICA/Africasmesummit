@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+import Reveal from "@/components/Reveal";
 import Btn from "@/components/Btn";
 import Countdown from "@/components/Countdown";
 import Link from "next/link";
@@ -112,9 +113,9 @@ export default function Papers() {
         </div>
       </section>
 
-      <section className="border-b border-line">
+      <section className="border-b border-line tint-clay">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-10 flex flex-wrap items-center justify-between gap-6">
-          <div>
+          <Reveal as="div">
             <p className="eyebrow text-marigold-t mb-2">Papers call ticket</p>
             <p className="h-lg text-white text-3xl">
               <span className="text-base align-top mr-2 font-normal">{PAPERS_TICKET.currency}</span>
@@ -123,20 +124,20 @@ export default function Papers() {
             <p className="lede mt-2 text-[16px] text-white">
               Includes full delegate access on the day.
             </p>
-          </div>
+          </Reveal>
           <Btn href={EVENT.ticketUrl} tone="gold">Book the papers ticket</Btn>
         </div>
       </section>
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">How it works</p>
+          <Reveal as="p" className="eyebrow text-white mb-5">How it works</Reveal>
           <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
-            {STEPS.map((s) => (
-              <div key={s.n} className="bg-ink p-8">
+            {STEPS.map((s, i) => (
+              <Reveal key={s.n} as="div" delay={i * 80} className="bg-ink p-8">
                 <p className="font-mono text-[12px] text-marigold">{s.n}</p>
                 <h3 className="h-sm text-white text-lg mt-4">{s.t}</h3>
                 <p className="lede mt-3 text-[16px] text-white">{s.d}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -144,15 +145,15 @@ export default function Papers() {
 
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">
+          <Reveal as="p" className="eyebrow text-white mb-5">
             {PAPERS_SUBMISSIONS_OPEN ? "The six tracks you can submit against" : "The six tracks submissions came in against"}
-          </p>
+          </Reveal>
           <div className="grid gap-x-14 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {TRACKS.map((t) => (
-              <div key={t.n} className="border-t border-line pt-5">
+            {TRACKS.map((t, i) => (
+              <Reveal key={t.n} as="div" delay={Math.min(i, 5) * 70} className="border-t border-line pt-5">
                 <p className="font-mono text-[12px] text-marigold-t mb-3">{t.n}</p>
                 <h3 className="h-sm text-white text-lg">{t.name}</h3>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

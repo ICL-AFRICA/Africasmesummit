@@ -65,6 +65,13 @@ Nothing on this site stops working if you do.`,
   },
 ];
 
+/* Deliberately excluded from the site-wide scroll-reveal/colour-depth
+   pass added 25 September 2026 (see components/Reveal.tsx and the
+   .tint-* classes in globals.css, both used on every other page) — a
+   privacy policy is read carefully, not browsed, and motion on a legal
+   document reads as friction rather than polish. If that judgment ever
+   needs revisiting, the same <Reveal> wrapper used everywhere else
+   drops in here the same way. */
 export default function Privacy() {
   return (
     <PageShell

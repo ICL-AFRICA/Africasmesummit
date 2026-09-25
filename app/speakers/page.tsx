@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
+import Reveal from "@/components/Reveal";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -42,9 +43,9 @@ export default function Speakers() {
         {/* Full-width alternating rows, same shape this page always used for
             every profile — kept deliberately larger than the panelist grid
             below, since there are three of these rather than nineteen. */}
-        <section className="border-b border-line bg-raise/40">
+        <section className="border-b border-line bg-raise/40 tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-12 sm:pt-16">
-            <p className="eyebrow text-marigold mb-2">Keynote</p>
+            <Reveal as="p" className="eyebrow text-marigold mb-2">Keynote</Reveal>
             <h2 className="h-sm text-white text-2xl sm:text-3xl">Before the tracks open</h2>
             <p className="lede mt-3 text-white/70 max-w-2xl text-[16px]">
               Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
@@ -53,7 +54,7 @@ export default function Speakers() {
             </p>
           </div>
           {KEYNOTES.map((k, i) => (
-            <div key={k.slug} id={k.slug} className={i > 0 ? "border-t border-line" : ""}>
+            <Reveal key={k.slug} as="div" id={k.slug} className={i > 0 ? "border-t border-line" : ""}>
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 sm:py-20">
                 <div className={`grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,26rem)_1fr] items-start ${i % 2 ? "lg:[direction:rtl]" : ""}`}>
                   <div className={`keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise ${i % 2 ? "lg:[direction:ltr]" : ""}`}>
@@ -77,7 +78,7 @@ export default function Speakers() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </section>
 
@@ -85,14 +86,16 @@ export default function Speakers() {
         {/* A denser grid than the keynote rows above — smaller portraits,
             three across at lg — so nineteen panelists don't each claim a
             full-width row the way the keynotes above do. */}
-        <section className="border-b border-line">
+        <section className="border-b border-line tint-indigo">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-16 sm:pt-20">
-            <p className="eyebrow text-white mb-2">Panel speakers</p>
-            <h2 className="h-sm text-white text-2xl sm:text-3xl">Across the six tracks</h2>
+            <Reveal>
+              <p className="eyebrow text-white mb-2">Panel speakers</p>
+              <h2 className="h-sm text-white text-2xl sm:text-3xl">Across the six tracks</h2>
+            </Reveal>
           </div>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-12 sm:py-16 grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
             {SPEAKERS.map((s, i) => (
-              <div key={s.slug} id={s.slug}>
+              <Reveal key={s.slug} as="div" id={s.slug} delay={(i % 6) * 60}>
                 <div className="portrait-tint aspect-[4/5] max-w-[13rem] overflow-hidden bg-raise">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={PHOTOS.speakers[i]} alt={s.name} className="portrait w-full h-full object-cover" />
@@ -117,13 +120,13 @@ export default function Speakers() {
                   <p className="eyebrow text-white mb-1 text-[11px]">Speaking on</p>
                   <p className="h-sm text-white text-base">{s.topic}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
 
         {/* Close — the same two actions as every other page */}
-        <section>
+        <section className="tint-palm">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24 text-center">
             <h2 className="h-lg text-white text-3xl sm:text-5xl max-w-2xl mx-auto">
               All {SPEAKER_COUNT} panel speakers and {KEYNOTE_COUNT} keynote speakers,

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
+import Reveal from "@/components/Reveal";
 import { EVENT, TRACKS, TRACK_EXTRAS, SPEAKERS, PHOTOS, TICKET_CTA, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
 
 export const metadata: Metadata = {
@@ -35,10 +36,11 @@ export default function Tracks() {
           .map((s, idx) => ({ ...s, photo: PHOTOS.speakers[idx] }))
           .filter((s) => s.topic === t.name);
 
+        const TINTS = ["tint-marigold", "tint-clay", "tint-indigo", "tint-palm", "tint-marigold", "tint-clay"];
         return (
-          <section key={t.slug} id={`track-${i + 1}`} className="border-b border-line scroll-mt-24">
+          <section key={t.slug} id={`track-${i + 1}`} className={`border-b border-line scroll-mt-24 ${TINTS[i]}`}>
             <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-14 sm:py-20">
-              <div className="grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,22rem)_1fr]">
+              <Reveal as="div" className="grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,22rem)_1fr]">
                 <div>
                   <p className={`font-mono text-[12px] ${ACCENT[i]}`}>{t.n}</p>
                   <h2 className="h-lg text-white text-3xl sm:text-4xl mt-4">{t.name}</h2>
@@ -84,8 +86,8 @@ export default function Tracks() {
                           shadow instead of the old shared hairline, same as
                           every other card grid on the site now. */}
                       <ul className="grid gap-5 sm:grid-cols-2">
-                        {extra.useCases.map((u) => (
-                          <li key={u.n} className="panel-card bg-raise p-6 flex flex-col">
+                        {extra.useCases.map((u, ui) => (
+                          <Reveal key={u.n} as="li" delay={ui * 90} className="panel-card bg-raise p-6 flex flex-col">
                             <p className={`font-mono text-[12px] ${ACCENT[i]}`}>{u.n}</p>
                             <h3 className="h-sm text-white text-lg mt-3">{u.name}</h3>
                             <p className="mt-3 text-[16px] font-light text-white">{u.fixes}</p>
@@ -93,7 +95,7 @@ export default function Tracks() {
                               <span className={`flex-none ${ACCENT[i]}`} aria-hidden="true">→</span>
                               <span className="lede">{u.tools}</span>
                             </p>
-                          </li>
+                          </Reveal>
                         ))}
                       </ul>
 
@@ -140,7 +142,7 @@ export default function Tracks() {
                     </div>
                   )}
                 </div>
-              </div>
+              </Reveal>
             </div>
           </section>
         );
@@ -148,7 +150,7 @@ export default function Tracks() {
 
       <section>
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <div className="max-w-2xl">
+          <Reveal as="div" className="max-w-2xl">
             <h2 className="h-lg text-white text-3xl sm:text-4xl">
               One ticket, all six.
             </h2>
@@ -160,7 +162,7 @@ export default function Tracks() {
               <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               <Btn href="/papers" tone="onDark" internal>Submit a paper</Btn>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </PageShell>

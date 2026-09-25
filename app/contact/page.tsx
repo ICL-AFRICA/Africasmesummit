@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
 import { EVENT, TICKET_CTA, DATE_LONG } from "@/lib/event";
@@ -19,9 +20,9 @@ export default function Contact() {
       title="Ask us anything"
       lede="Tickets, group rates, speaking, partnership, exhibiting, or directions on the day — this reaches the team running the summit."
     >
-      <section className="border-b border-line">
+      <section className="border-b border-line tint-clay">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-[1fr_minmax(0,32rem)]">
-          <div>
+          <Reveal as="div">
             <div className="grid gap-10 sm:grid-cols-2">
               <div>
                 <p className="eyebrow text-marigold mb-3">Email</p>
@@ -56,8 +57,9 @@ export default function Contact() {
                 <Btn href="/papers" tone="onDark" internal>Submit a paper</Btn>
               </div>
             </div>
-          </div>
+          </Reveal>
 
+          <Reveal as="div" delay={120}>
           <EnquiryForm
             subject="Enquiry — Africa SME Summit 2026"
             cta="Send message"
@@ -72,10 +74,11 @@ export default function Contact() {
               { name: "message", label: "Your message", type: "textarea", required: true },
             ]}
           />
+          </Reveal>
         </div>
       </section>
 
-      <section>
+      <section className="tint-marigold">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Ready to book?</p>
           <div className="mt-6">

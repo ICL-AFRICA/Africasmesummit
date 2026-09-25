@@ -8,15 +8,9 @@ import Countdown from "@/components/Countdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import VenueHoverButton from "@/components/VenueHoverButton";
-import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, AGENDA, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, AGENDA_SOURCE, KEYNOTES, SUMMIT_STARTS, PROGRAMME_URL } from "@/lib/event";
-
-/* Agenda accent colours — the same four-colour rotation used on /tracks
-   (marigold, clay, indigo, palm), so a track's colour means the same thing
-   wherever it shows up on the site rather than the agenda inventing its
-   own palette. Two forms because a `bg-*` dot and a `border-*` rule need
-   different Tailwind classes for the same colour. */
-const AGENDA_ACCENT_BG = ["bg-marigold", "bg-clay", "bg-indigo", "bg-palm"];
-const AGENDA_ACCENT_BORDER = ["border-marigold", "border-clay", "border-indigo", "border-palm"];
+import Reveal from "@/components/Reveal";
+import AgendaPreview from "@/components/AgendaPreview";
+import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -90,18 +84,20 @@ export default function Page() {
         </section>
 
         {/* ── The statement ─────────────────────────────────────────── */}
-        <section className="bg-card">
+        <section className="bg-card tint-marigold">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-32 text-center">
-            <p className="eyebrow text-ink/45 mb-6">One day, {DATE_DAY_MONTH}</p>
-            <h2 className="h-lg text-4xl sm:text-6xl lg:text-[4.2rem] max-w-4xl mx-auto">
-              7.4 million enterprises.<br />One of them is yours.
-            </h2>
-            <p className="lede mt-8 max-w-2xl mx-auto text-[18px] text-ink/70">
-              Kenya&rsquo;s small businesses carry 80% of the workforce and get almost
-              none of the support. This is the one day that changes that — the capital,
-              the buyers, the county governments and the thirteen universities that can
-              move them forward, all in one room.
-            </p>
+            <Reveal>
+              <p className="eyebrow text-ink/45 mb-6">One day, {DATE_DAY_MONTH}</p>
+              <h2 className="h-lg text-4xl sm:text-6xl lg:text-[4.2rem] max-w-4xl mx-auto">
+                7.4 million enterprises.<br />One of them is yours.
+              </h2>
+              <p className="lede mt-8 max-w-2xl mx-auto text-[18px] text-ink/70">
+                Kenya&rsquo;s small businesses carry 80% of the workforce and get almost
+                none of the support. This is the one day that changes that — the capital,
+                the buyers, the county governments and the thirteen universities that can
+                move them forward, all in one room.
+              </p>
+            </Reveal>
             <div className="mt-11 flex flex-wrap justify-center gap-3">
               <Btn href={EVENT.ticketUrl}>{TICKET_CTA}</Btn>
               <Btn href="/exhibit" tone="outline" internal>Book a stand</Btn>
@@ -156,9 +152,9 @@ export default function Page() {
             specifically, same as .venue-float and the glow-* classes
             already are elsewhere on the page — not a reversal of the flat
             rule everywhere else. */}
-        <section className="bg-card border-t border-rule">
+        <section className="bg-card border-t border-rule tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
-            <div className="text-center mb-14">
+            <Reveal className="text-center mb-14" as="div">
               <p className="eyebrow text-ink/45 mb-5">Keynote</p>
               <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
                 Before the tracks open
@@ -168,10 +164,10 @@ export default function Page() {
                 Teachers Service Commission, and Nairobi County&rsquo;s CECM for Business
                 and Hustler Opportunities, setting the tone before six tracks open.
               </p>
-            </div>
+            </Reveal>
             <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-              {KEYNOTES.map((k) => (
-                <div key={k.slug}>
+              {KEYNOTES.map((k, i) => (
+                <Reveal key={k.slug} delay={Math.min(i, 5) * 80}>
                   <div className="keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -184,7 +180,7 @@ export default function Page() {
                   <h3 className="h-sm text-2xl">{k.name}</h3>
                   <p className="text-[16px] text-ink/70 mt-2">{k.role}</p>
                   <p className="text-[16px] text-ink font-medium">{k.org}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -200,19 +196,21 @@ export default function Page() {
             professional directory rather than a features wall, and it
             never leaves a hole in the last row the way the no-gap grid did
             — a short row just trails off, which a gapped grid can afford. */}
-        <section id="speakers" className="bg-ink">
+        <section id="speakers" className="bg-ink tint-indigo">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-14 text-center">
-            <p className="eyebrow text-white mb-5">On stage</p>
-            <h2 className="h-lg text-white text-4xl sm:text-5xl">The people you came to meet</h2>
-            <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
-              {SPEAKER_COUNT_CAP} panel speakers across six tracks, one room, one day.
-            </p>
+            <Reveal>
+              <p className="eyebrow text-white mb-5">On stage</p>
+              <h2 className="h-lg text-white text-4xl sm:text-5xl">The people you came to meet</h2>
+              <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
+                {SPEAKER_COUNT_CAP} panel speakers across six tracks, one room, one day.
+              </p>
+            </Reveal>
           </div>
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-16">
             <div className="grid gap-x-6 gap-y-11 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6">
               {SPEAKERS.map((s, i) => (
+                <Reveal key={s.slug} delay={(i % 6) * 60}>
                 <Link
-                  key={s.slug}
                   href={`/speakers#${s.slug}`}
                   className="group block"
                   aria-label={`${s.name} — ${s.role}, ${s.org}`}
@@ -235,6 +233,7 @@ export default function Page() {
                     {s.org}
                   </p>
                 </Link>
+                </Reveal>
               ))}
             </div>
             <p className="mt-12 text-center text-[16px] text-white/70">
@@ -268,15 +267,15 @@ export default function Page() {
             <img src={PHOTOS.floor} alt="" className="w-full h-full object-cover opacity-25" />
           </div>
           <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Head eyebrow="Six tracks" dark>Pick what your business actually needs</Head>
+            <Reveal><Head eyebrow="Six tracks" dark>Pick what your business actually needs</Head></Reveal>
             <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {TRACKS.map((t, i) => (
                 /* The whole card is the link, so the target is the card and
                    not a five-word tail. The top rule takes the track's colour
                    and thickens on hover — the only thing that moves, which is
                    enough to say "this is clickable" without decoration. */
+                <Reveal key={t.n} delay={Math.min(i, 5) * 70}>
                 <Link
-                  key={t.n}
                   href={`/tracks#track-${i + 1}`}
                   /* Whole class strings, never `hover:${colour}`. Tailwind
                      only generates what it can read literally in the source,
@@ -311,6 +310,7 @@ export default function Page() {
                     <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
                   </p>
                 </Link>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -321,9 +321,9 @@ export default function Page() {
             floating shadow, replacing the old shared-hairline seam — same
             treatment now applied to every card grid on the site, at ICL's
             request. See the comment on .panel-card for the full context. */}
-        <section id="why" className="bg-paper">
+        <section id="why" className="bg-paper tint-palm">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <div className="text-center">
+            <Reveal className="text-center" as="div">
               <p className="eyebrow text-ink/45 mb-5">One day to attend</p>
               <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
                 Built differently for three kinds of visitor
@@ -332,10 +332,10 @@ export default function Page() {
                 Same summit, three different reasons to be here — pick the one that
                 matches why you are coming.
               </p>
-            </div>
+            </Reveal>
             <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
               {PATHS.map((p, i) => (
-                <div key={p.who} className={`panel-card p-8 sm:p-10 flex flex-col ${i === 1 ? "bg-ink text-white" : "bg-card"}`}>
+                <Reveal key={p.who} delay={i * 90} className={`panel-card p-8 sm:p-10 flex flex-col ${i === 1 ? "bg-ink text-white" : "bg-card"}`}>
                   <p className={`eyebrow ${i === 1 ? "text-marigold" : "text-ink/45"}`}>{p.who}</p>
                   <h3 className={`h-sm text-2xl mt-4 ${i === 1 ? "text-white" : "text-ink"}`}>{p.lead}</h3>
                   <p className={`lede mt-4 text-[16px] ${i === 1 ? "text-white" : "text-ink/65"}`}>{p.body}</p>
@@ -347,16 +347,16 @@ export default function Page() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </section>
 
         {/* ── Five reasons ──────────────────────────────────────────── */}
-        <section className="bg-ink">
+        <section className="bg-ink tint-marigold">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <div className="text-center">
+            <Reveal className="text-center" as="div">
               <p className="eyebrow text-white mb-5">Why people give up a working day</p>
               <h2 className="h-lg text-white text-4xl sm:text-5xl">
                 Five reasons the summit is worth it
@@ -364,14 +364,14 @@ export default function Page() {
               <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
                 Not five features — five things people actually leave with.
               </p>
-            </div>
+            </Reveal>
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {REASONS.map((r) => (
-                <div key={r.n} className="panel-card bg-raise p-8">
+              {REASONS.map((r, i) => (
+                <Reveal key={r.n} as="div" delay={i * 70} className="panel-card bg-raise p-8">
                   <p className={`font-mono text-[12px] ${["text-marigold","text-clay","text-indigo","text-palm","text-marigold"][Number(r.n)-1]}`}>{r.n}</p>
                   <h3 className="h-sm text-white text-lg mt-4">{r.t}</h3>
                   <p className="lede mt-3 text-[16px] text-white">{r.d}</p>
-                </div>
+                </Reveal>
               ))}
               <div className="p-8 flex items-end">
                 <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
@@ -381,103 +381,37 @@ export default function Page() {
         </section>
 
         {/* ── Agenda ────────────────────────────────────────────────── */}
-        {/* Redesigned 19 September 2026 against the confirmed programme:
-            the old plain-row list treated every slot as equally weighty,
-            which is wrong now that most slots carry a named facilitator and
-            three carry several concurrent sessions at once. Logistics
-            (`quiet`: arrivals, breaks, prayers, the photo session) render
-            small and muted so the actual content of the day — the talks,
-            launches and parallel tracks — is what reads as busy. A rotating
-            accent dot gives the list some rhythm without any motion, in
-            keeping with the rest of the page. */}
-        <section id="agenda" className="bg-card">
+        {/* Redesigned 19 September 2026 against the confirmed programme,
+            then redesigned again 25 September 2026 at ICL's request: the
+            always-visible hour-by-hour list that used to render here (see
+            the git history for that version — `quiet` slots small and
+            muted, named slots busy, a rotating accent dot for rhythm) is
+            now a single line plus the download bar, with the full running
+            order living in components/AgendaPreview.tsx and showing only
+            on hover/focus. See that file's own doc comment for the full
+            reasoning. */}
+        <section id="agenda" className="bg-card tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Head eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head>
-            <div className="mt-14 border-t border-rule">
-              {AGENDA.map((a, i) => (
-                <div
-                  key={a.time}
-                  className={`grid grid-cols-[3.5rem_1fr] sm:grid-cols-[7rem_1fr] gap-4 sm:gap-8 border-b border-rule transition-colors hover:bg-raise/50 ${a.quiet ? "py-4" : "py-7 sm:py-8"}`}
-                >
-                  <div className="flex items-start gap-2.5 sm:gap-3">
-                    <span
-                      aria-hidden="true"
-                      className={`mt-[7px] h-2 w-2 shrink-0 rounded-full ${a.quiet ? "bg-ink/15" : AGENDA_ACCENT_BG[i % AGENDA_ACCENT_BG.length]}`}
-                    />
-                    <span className={`font-mono tabular-nums ${a.quiet ? "text-[13px] text-ink/35" : "text-[15px] sm:text-[16px] text-ink/45"}`}>
-                      {a.time}
-                    </span>
-                  </div>
-                  <div>
-                    <p className={a.quiet ? "text-[15px] text-ink/50" : "h-sm text-lg sm:text-2xl"}>
-                      {a.title}
-                    </p>
-                    {a.note && (
-                      <p className={`mt-1.5 text-[15px] sm:text-[16px] ${a.quiet ? "text-ink/40" : "text-ink/55"}`}>
-                        {a.note}
-                      </p>
-                    )}
-                    {/* Concurrent sessions under one time — the 10:30 launches
-                        and the two blocks of parallel tracks. Each gets its
-                        own accent border so a dense block still scans as
-                        several distinct things, not one paragraph. */}
-                    {a.sessions && (
-                      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                        {a.sessions.map((s, j) => (
-                          <div key={s.title} className={`border-l-2 pl-4 ${AGENDA_ACCENT_BORDER[j % AGENDA_ACCENT_BORDER.length]}`}>
-                            <p className="text-[15px] sm:text-[16px] font-medium text-ink">{s.title}</p>
-                            <p className="mt-1 text-[14px] text-ink/55">{s.note}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 font-mono text-[12px] text-ink/45">
-              {AGENDA_SOURCE}
-            </p>
-
-            {/* Downloadable programme — the confirmed PDF this agenda is
-                transcribed from, for anyone who wants the whole running
-                order to keep, print or forward, rather than re-scrolling
-                this section on the day. Placed directly under the agenda
-                it mirrors, at ICL's request. Same download-link pattern as
-                the partnership brochure on /partner (a plain link with the
-                `download` attribute, not a Btn — the arrow Btn always
-                renders implies a page to visit, not a file to keep), so a
-                "get the PDF" action looks the same wherever it shows up. */}
-            <div className="mt-10 flex flex-wrap items-center gap-5 border border-rule bg-raise/40 px-6 sm:px-8 py-6">
-              <span aria-hidden="true" className="font-mono text-[12px] text-ink/40 tracking-widest">PDF</span>
-              <p className="flex-1 min-w-[220px] text-[15px] sm:text-[16px] text-ink">
-                Get the full confirmed programme — every slot, every facilitator.
-              </p>
-              <a
-                href={PROGRAMME_URL}
-                download
-                className="btn-glow rounded-lg inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium transition-all border border-ink/20 text-ink hover:border-ink"
-              >
-                Get the full programme (PDF)
-                <span aria-hidden="true" className="text-[12px]">↓</span>
-              </a>
-            </div>
+            <Reveal><Head eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head></Reveal>
+            <Reveal delay={80} className="mt-10">
+              <AgendaPreview />
+            </Reveal>
           </div>
         </section>
 
         {/* ── Tickets ───────────────────────────────────────────────── */}
-        <section id="tickets" className="bg-paper">
+        <section id="tickets" className="bg-paper tint-indigo">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <div className="text-center">
+            <Reveal className="text-center" as="div">
               <p className="eyebrow text-ink/45 mb-5">Tickets</p>
               <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
                 {EARLY_BIRD_ACTIVE
                   ? <>Book before <span className="text-clay">{EARLY_BIRD_LABEL}</span> and save KES 1,000</>
                   : "Early bird sold out — book standard now before seats go"}
               </h2>
-            </div>
+            </Reveal>
             <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
-              {TICKETS.map((t) => {
+              {TICKETS.map((t, i) => {
                 /* The Early Bird tile is the one card whose deal can expire
                    under it. Once EARLY_BIRD_ACTIVE flips false (a redeploy
                    after EARLY_BIRD_ENDS — see the comment on that constant),
@@ -488,8 +422,10 @@ export default function Page() {
                    instead of pretending the early tier is still open. */
                 const justClosed = t.tier === "Early bird" && !EARLY_BIRD_ACTIVE;
                 return (
-                  <div
+                  <Reveal
                     key={t.tier}
+                    as="div"
+                    delay={i * 90}
                     className={`ticket-card panel-card p-8 sm:p-10 flex flex-col ${
                       justClosed ? "bg-card glow-clay" : t.urgent ? "bg-ink text-white" : "bg-card"
                     }`}
@@ -534,7 +470,7 @@ export default function Page() {
                     >
                       {justClosed ? "Book standard now" : `Book ${t.tier.toLowerCase()}`}
                     </a>
-                  </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -559,12 +495,14 @@ export default function Page() {
             (see .partner-track in globals.css for why) so it loops without
             a visible seam; the second copy is aria-hidden so screen readers
             only hear each partner named once. */}
-        <section className="bg-card border-t border-rule overflow-hidden">
+        <section className="bg-card border-t border-rule overflow-hidden tint-palm">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20">
-            <p className="eyebrow text-ink/45 mb-4">2026 partners</p>
-            <h2 className="h-lg text-3xl sm:text-4xl max-w-2xl">
-              Convened alongside
-            </h2>
+            <Reveal>
+              <p className="eyebrow text-ink/45 mb-4">2026 partners</p>
+              <h2 className="h-lg text-3xl sm:text-4xl max-w-2xl">
+                Convened alongside
+              </h2>
+            </Reveal>
           </div>
           {/* Full-bleed, outside the max-width wrapper above, so the strip
               can scroll edge to edge and the fade mask has room to work
@@ -595,29 +533,31 @@ export default function Page() {
         </section>
 
         {/* ── FAQ ───────────────────────────────────────────────────── */}
-        <section id="faq" className="bg-paper">
+        <section id="faq" className="bg-paper tint-marigold">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Head eyebrow="Before you book">Questions</Head>
+            <Reveal><Head eyebrow="Before you book">Questions</Head></Reveal>
             <dl className="mt-14 grid sm:grid-cols-2 gap-x-16 border-t border-rule">
-              {FAQ.map((f) => (
-                <div key={f.q} className="py-6 border-b border-rule">
+              {FAQ.map((f, i) => (
+                <Reveal key={f.q} as="div" delay={Math.min(i, 5) * 60} className="py-6 border-b border-rule">
                   <dt className="h-sm text-[18px]">{f.q}</dt>
                   <dd className="lede mt-2 text-[16px] text-ink/65">{f.a}</dd>
-                </div>
+                </Reveal>
               ))}
             </dl>
           </div>
         </section>
 
         {/* ── Close ─────────────────────────────────────────────────── */}
-        <section className="bg-ink">
+        <section className="bg-ink tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-16 text-center">
-            <h2 className="h-lg text-white text-4xl sm:text-6xl max-w-3xl mx-auto">
-              One day. One room. Bring the business.
-            </h2>
-            <p className="lede mt-6 text-white">
-              {EVENT.dateLabel} · <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
-            </p>
+            <Reveal>
+              <h2 className="h-lg text-white text-4xl sm:text-6xl max-w-3xl mx-auto">
+                One day. One room. Bring the business.
+              </h2>
+              <p className="lede mt-6 text-white">
+                {EVENT.dateLabel} · <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
+              </p>
+            </Reveal>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               <Btn href="/exhibit" tone="onDark" internal>Book a stand</Btn>

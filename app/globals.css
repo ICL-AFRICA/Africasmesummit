@@ -706,3 +706,123 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .partner-track { animation: none; }
 }
+
+
+/* ── Scroll reveal: text and cards settle in as they enter view ─────────
+   Added 25 September 2026 at ICL's request ("scroll animation, motion
+   effect as someone scrolls down the pages, the text dynamics, the card
+   changes") — rolled out site-wide in one pass. Same entrance shape the
+   page already used in two places before this (.notify-card-in on /papers,
+   .nav-panel on mobile): a short fade plus a small rise, nothing that
+   swoops, spins or overshoots. The class starts elements fully visible —
+   see the <noscript> override in layout.tsx — and components/Reveal.tsx
+   is what actually adds .reveal-in, via IntersectionObserver, once an
+   element scrolls into range; without JavaScript everything just renders
+   in place, same as before this existed.
+
+   transitionDelay is set inline per element (Reveal's `delay` prop) for
+   staggered groups — a card grid where each card settles a beat after the
+   one before it — rather than a second CSS class per stagger step. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+.reveal-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Section colour depth ─────────────────────────────────────────────
+   Added 25 September 2026 at ICL's request ("slight colour depth
+   variations" while scrolling). Each major section takes a whisper of one
+   brand colour as a soft radial wash tucked in a corner — rotating
+   through the four-colour palette section to section (ROTATE, DO NOT
+   RANK, same rule as everywhere else this palette is used), so
+   consecutive sections read as gently different fields rather than one
+   flat one. This is a background-image layer, not a new element: it
+   paints underneath every card's own solid background and the page's own
+   text, so it only ever shows through in the gaps and the section's own
+   padding — nothing here touches text contrast. Static rather than
+   scroll-triggered on its own — the variation IS the scroll, one
+   section's tint giving way to the next — so it needs no observer or
+   animation on top of .reveal above. color-mix keeps the wash reasoning
+   in one place (opacity of the *mix*, not the final colour) rather than
+   hand-picking a low-alpha hex per hue. */
+.tint-marigold { background-image: radial-gradient(ellipse 60% 55% at 92% 4%, color-mix(in srgb, var(--color-marigold) 9%, transparent) 0%, transparent 100%); }
+.tint-clay     { background-image: radial-gradient(ellipse 60% 55% at 6% 96%, color-mix(in srgb, var(--color-clay) 9%, transparent) 0%, transparent 100%); }
+.tint-indigo   { background-image: radial-gradient(ellipse 60% 55% at 92% 4%, color-mix(in srgb, var(--color-indigo) 10%, transparent) 0%, transparent 100%); }
+.tint-palm     { background-image: radial-gradient(ellipse 60% 55% at 6% 96%, color-mix(in srgb, var(--color-palm) 9%, transparent) 0%, transparent 100%); }
+
+/* ── Cursor glow ──────────────────────────────────────────────────────
+   Added 25 September 2026 at ICL's request ("cursor affect on the site as
+   it moves around") — a single soft marigold light, mounted once in the
+   root layout (components/CursorGlow.tsx), that drifts toward the
+   pointer rather than snapping to it. Fixed and pointer-events: none, so
+   it never sits between a visitor and anything clickable; low enough
+   opacity that it reads as ambient light rather than a second cursor.
+   Desktop/mouse only — (hover: hover) and (pointer: fine), same gate
+   .venue-float and .keynote-frame use for their own hover-only touches —
+   there is no pointer to glow around on a phone. */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 460px;
+  height: 460px;
+  margin-left: -230px;
+  margin-top: -230px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(227, 164, 40, 0.12) 0%, rgba(227, 164, 40, 0) 68%);
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  will-change: transform;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-glow { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow { display: none; }
+}
+
+/* ── Agenda preview: hover the download button, see the running order ───
+   Added 25 September 2026 at ICL's request, replacing the always-visible
+   hour-by-hour list that used to sit above this download box (see the
+   comment on #agenda in app/page.tsx for why, and components/
+   AgendaPreview.tsx for the hover logic) — same entrance shape as
+   .venue-preview above (opacity + translateY, fading and lifting into
+   view), just anchored above a full-width bar instead of a corner button,
+   and considerably taller since a running order has more to show than a
+   handful of photos. max-height plus overflow-y so twenty-one slots at
+   16px never demand a panel taller than the viewport itself. */
+.agenda-preview {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 14px);
+  max-height: min(420px, 60vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 1rem;
+  background: var(--color-card);
+  box-shadow:
+    0 24px 38px -20px rgba(25, 21, 57, 0.45),
+    0 8px 14px -8px rgba(25, 21, 57, 0.3);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.agenda-preview-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .agenda-preview { transition: none; }
+}

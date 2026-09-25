@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+import Reveal from "@/components/Reveal";
 import StandBooking from "@/components/StandBooking";
 import Btn from "@/components/Btn";
 import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
@@ -19,16 +20,16 @@ export default function Exhibit() {
       title="Put your product in front of people who can buy it"
       lede="The Innovation Expo runs all day and the gallery walk brings every delegate past the stands at lunch. Stands are limited and they go before the summit fills."
     >
-      <section className="border-b border-line">
+      <section className="border-b border-line tint-clay">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">Stand options</p>
+          <Reveal as="p" className="eyebrow text-white mb-5">Stand options</Reveal>
           {/* .panel-card (globals.css) — real gap + floating shadow,
               replacing the shared-hairline seam. Both cards now sit on
               bg-raise (not bg-ink) so the shadow reads against a lighter
               card than the dark section behind it. */}
           <div className="grid gap-6 lg:grid-cols-2">
             {STAND_OPTIONS.map((s, i) => (
-              <div key={s.name} className="panel-card bg-raise p-8 sm:p-10 flex flex-col">
+              <Reveal key={s.name} as="div" delay={i * 90} className="panel-card bg-raise p-8 sm:p-10 flex flex-col">
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="eyebrow text-marigold">{s.name}</p>
                   <p className="font-mono text-[12px] text-white">{s.who}</p>
@@ -52,7 +53,7 @@ export default function Exhibit() {
                 >
                   Book this booth
                 </a>
-              </div>
+              </Reveal>
             ))}
           </div>
           <p className="mt-6 text-[16px] text-white">
@@ -65,15 +66,17 @@ export default function Exhibit() {
       {/* Reserve a stand. The plan is the picker, so this section runs full
           width rather than the two-column split it used before — thirty-one
           stands over two floors do not fit in half a page. */}
-      <section className="border-b border-line">
+      <section className="border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-white mb-5">Reserve a stand</p>
-          <h2 className="h-lg text-white text-3xl sm:text-4xl">Choose your spot in the hall</h2>
-          <p className="lede mt-5 text-white text-[17px] max-w-2xl">
-            Thirty-one stands across the two floors. Pick the one you want and
-            tell us what you are bringing — stands are allocated in the order
-            enquiries arrive, and we confirm within two working days.
-          </p>
+          <Reveal>
+            <p className="eyebrow text-white mb-5">Reserve a stand</p>
+            <h2 className="h-lg text-white text-3xl sm:text-4xl">Choose your spot in the hall</h2>
+            <p className="lede mt-5 text-white text-[17px] max-w-2xl">
+              Thirty-one stands across the two floors. Pick the one you want and
+              tell us what you are bringing — stands are allocated in the order
+              enquiries arrive, and we confirm within two working days.
+            </p>
+          </Reveal>
 
           <div className="mt-10 border-l-2 border-clay bg-raise px-6 py-5 max-w-2xl">
             <p className="font-mono text-[12px] uppercase tracking-widest text-clay-t">Venue update</p>
@@ -97,7 +100,7 @@ export default function Exhibit() {
         </div>
       </section>
 
-      <section>
+      <section className="tint-marigold">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Attending rather than exhibiting?</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">

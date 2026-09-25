@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
+import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
 import {
@@ -42,9 +43,9 @@ export default function Partner() {
       title="Reach the businesses you are trying to serve"
       lede="Everyone in this room runs or supports a small business in Kenya. If that is who you sell to, fund, regulate or research, this is a day of direct access rather than a logo on a banner."
     >
-      <section className="border-b border-line">
+      <section className="border-b border-line tint-marigold">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
+          <Reveal as="div" className="flex flex-wrap items-end justify-between gap-4 mb-5">
             <p className="eyebrow text-white">What partners get</p>
             {/* The full rate card, one level up from the summary grid below.
                 Sits with the section heading rather than at the foot of the
@@ -58,7 +59,7 @@ export default function Partner() {
               Download the partnership proposal (PDF)
               <span aria-hidden="true" className="text-[12px]">↓</span>
             </a>
-          </div>
+          </Reveal>
           {/* Changed 20 September 2026 at ICL's request: each card now spells
               out everything that tier actually gets — the full cumulative
               list, flattened from every tier up to and including this one
@@ -80,8 +81,10 @@ export default function Partner() {
             {SPONSOR_TIERS.map((t, i) => {
               const included = SPONSOR_TIERS.slice(0, i + 1).flatMap((tier) => tier.includes);
               return (
-                <div
+                <Reveal
                   key={t.tier}
+                  as="div"
+                  delay={i * 90}
                   className={`panel-card p-7 sm:p-8 flex flex-col ${TIER_STYLE[t.tier].bg}`}
                 >
                   <div className="flex items-baseline justify-between gap-3">
@@ -106,7 +109,7 @@ export default function Partner() {
                   >
                     {t.cta}
                   </a>
-                </div>
+                </Reveal>
               );
             })}
           </div>
@@ -168,31 +171,33 @@ export default function Partner() {
           different kind of offer (one partner each, by application), so the
           section reads as its own thing rather than a row bolted onto the
           table above. */}
-      <section className="border-b border-line bg-raise/30">
+      <section className="border-b border-line bg-raise/30 tint-indigo">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-marigold-t mb-3">Signature opportunities</p>
-          <h2 className="h-lg text-white text-3xl sm:text-4xl">Two moments the whole room stops for</h2>
-          <p className="lede mt-5 text-white max-w-2xl text-[17px]">
-            Neither is included in the tiers above. Both go to a single partner, by
-            application, negotiated directly with the convener.
-          </p>
+          <Reveal>
+            <p className="eyebrow text-marigold-t mb-3">Signature opportunities</p>
+            <h2 className="h-lg text-white text-3xl sm:text-4xl">Two moments the whole room stops for</h2>
+            <p className="lede mt-5 text-white max-w-2xl text-[17px]">
+              Neither is included in the tiers above. Both go to a single partner, by
+              application, negotiated directly with the convener.
+            </p>
+          </Reveal>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {SIGNATURE_OPPORTUNITIES.map((o) => (
-              <div key={o.name} className="panel-card bg-raise p-8 sm:p-10">
+            {SIGNATURE_OPPORTUNITIES.map((o, i) => (
+              <Reveal key={o.name} as="div" delay={i * 90} className="panel-card bg-raise p-8 sm:p-10">
                 <p className="font-mono text-[12px] uppercase tracking-widest text-marigold-t">
                   {o.time} · {o.moment}
                 </p>
                 <h3 className="h-sm text-white text-2xl mt-4">{o.name}</h3>
                 <p className="lede mt-3 text-[17px] text-white/80">{o.body}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="enquire" className="border-b border-line">
+      <section id="enquire" className="border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20 grid gap-14 lg:grid-cols-2">
-          <div>
+          <Reveal as="div">
             <p className="eyebrow text-white mb-5">Tell us what you need</p>
             <h2 className="h-lg text-white text-3xl sm:text-4xl">Start the conversation</h2>
             <p className="lede mt-5 text-white text-[16px] max-w-md">
@@ -206,7 +211,8 @@ export default function Partner() {
               <p>{EVENT.email}</p>
               {EVENT.phone.map((p) => <p key={p}>{p}</p>)}
             </div>
-          </div>
+          </Reveal>
+          <Reveal as="div" delay={120}>
           <EnquiryForm
             subject="Partnership enquiry — Africa SME Summit 2026"
             cta="Send partnership enquiry"
@@ -222,10 +228,11 @@ export default function Partner() {
               { name: "message", label: "Who are you trying to reach?", type: "textarea", required: true },
             ]}
           />
+          </Reveal>
         </div>
       </section>
 
-      <section>
+      <section className="tint-marigold">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Looking for an exhibition stand instead?</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">

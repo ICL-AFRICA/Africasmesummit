@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
+import Reveal from "@/components/Reveal";
 import UpdateGallery from "@/components/UpdateGallery";
 import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG, PHOTOS } from "@/lib/event";
 
@@ -73,20 +74,23 @@ export default function Press() {
           showCaptions={false} — a name in small text over a small face
           at this size read as clutter rather than identification, and the
           card's own title/body already say who is confirmed. */}
-      {TAG_ORDER.map((tag) => {
+      {TAG_ORDER.map((tag, tagIndex) => {
         const items = SUMMIT_UPDATES
           .filter((u) => u.tag === tag)
           .slice()
           .sort((a, b) => (a.date < b.date ? 1 : -1));
         if (items.length === 0) return null;
+        const TINTS = ["tint-marigold", "tint-clay", "tint-indigo", "tint-palm"];
         return (
-          <section key={tag} className="border-b border-line">
+          <section key={tag} className={`border-b border-line ${TINTS[tagIndex % TINTS.length]}`}>
             <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-              <p className={`eyebrow mb-8 ${TAG_TEXT[tag]}`}>{tag}</p>
+              <Reveal as="p" className={`eyebrow mb-8 ${TAG_TEXT[tag]}`}>{tag}</Reveal>
               <div className="grid gap-6 lg:grid-cols-2">
-                {items.map((u) => (
-                  <article
+                {items.map((u, i) => (
+                  <Reveal
+                    as="article"
                     key={u.title}
+                    delay={Math.min(i, 5) * 80}
                     className={`panel-card bg-ink overflow-hidden flex flex-col sm:flex-row gap-6 p-6 sm:p-7 ${u.urgent ? "glow-clay" : ""}`}
                   >
                     {u.media && (
@@ -136,7 +140,7 @@ export default function Press() {
                         )
                       )}
                     </div>
-                  </article>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -156,16 +160,18 @@ export default function Press() {
           same convention /tracks uses for its own id-anchored sections. */}
       <section id="venue" className="border-b border-line scroll-mt-24">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <p className="eyebrow text-marigold-t mb-8">The venue</p>
-          <h2 className="h-sm text-white text-2xl sm:text-3xl max-w-2xl">
-            Inside <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
-          </h2>
-          <p className="lede mt-4 max-w-2xl text-[16px] text-white/80">
-            Where the summit actually happens on {EVENT.dateLabel} — the building, the hall, and the spaces around it.
-          </p>
+          <Reveal>
+            <p className="eyebrow text-marigold-t mb-8">The venue</p>
+            <h2 className="h-sm text-white text-2xl sm:text-3xl max-w-2xl">
+              Inside <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
+            </h2>
+            <p className="lede mt-4 max-w-2xl text-[16px] text-white/80">
+              Where the summit actually happens on {EVENT.dateLabel} — the building, the hall, and the spaces around it.
+            </p>
+          </Reveal>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PHOTOS.venue.map((photo) => (
-              <div key={photo.src} className="keynote-frame overflow-hidden bg-raise aspect-[4/5]">
+            {PHOTOS.venue.map((photo, i) => (
+              <Reveal key={photo.src} as="div" delay={Math.min(i, 5) * 70} className="keynote-frame overflow-hidden bg-raise aspect-[4/5]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={photo.src}
@@ -173,7 +179,7 @@ export default function Press() {
                   loading="lazy"
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
