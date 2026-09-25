@@ -100,7 +100,7 @@ export default function Press() {
                             className={`w-full h-full ${u.media.fit === "contain" ? "object-contain" : "object-cover"}`}
                           />
                         ) : u.media.type === "gallery" ? (
-                          <UpdateGallery images={u.media.images} showCaptions={false} />
+                          <UpdateGallery images={u.media.images} showCaptions={false} fit={u.media.fit} />
                         ) : (
                           <video
                             controls

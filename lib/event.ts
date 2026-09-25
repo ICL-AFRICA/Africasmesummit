@@ -1638,7 +1638,14 @@ export const PAPERS_NOTIFY_LABEL = new Date(PAPERS_NOTIFY_DATE).toLocaleDateStri
  *     in lockstep with its photo (added 21 September 2026 for the keynote
  *     lineup card below, so the name on screen always matches the face) —
  *     omit it for a gallery where the images don't need individual labels,
- *     like the Zetech MoU photos below.
+ *     like the Zetech MoU photos below. Like the single-image case, a
+ *     gallery defaults to filling the card's fixed portrait frame
+ *     (`object-cover`) — fine for photos shot to roughly match it, but a
+ *     landscape event photo cropped into that frame can lose a third of
+ *     its width. Set `fit: "contain"` on the gallery itself (not per
+ *     image) to letterbox every photo in the set uncropped instead —
+ *     added 25 September 2026 for the Zetech MoU gallery below, at ICL's
+ *     request ("they need to be visible for this post").
  *   - Clips → public/video/updates/, referenced as "/video/updates/<file>.mp4",
  *     with a `poster` still frame from the same folder so the card never
  *     shows a black box before someone presses play.
@@ -1662,7 +1669,7 @@ export type SummitUpdate = {
   media?:
     | { type: "image"; src: string; alt: string; fit?: "cover" | "contain" }
     | { type: "video"; src: string; poster: string }
-    | { type: "gallery"; images: readonly { src: string; alt: string; caption?: string }[] };
+    | { type: "gallery"; images: readonly { src: string; alt: string; caption?: string }[]; fit?: "cover" | "contain" };
 };
 
 export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
@@ -1695,6 +1702,7 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     link: { href: "/partner", text: "See partnership packages" },
     media: {
       type: "gallery",
+      fit: "contain",
       images: [
         {
           src: "/img/updates/zetech-mou-handshake-document.webp",

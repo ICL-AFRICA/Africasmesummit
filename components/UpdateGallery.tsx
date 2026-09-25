@@ -31,13 +31,22 @@ import { useEffect, useRef, useState } from "react";
  * clutter rather than identification (the card's own title and body copy
  * already say who is confirmed). Defaults to true so any other gallery
  * that does supply captions keeps showing them at full card size.
+ *
+ * `fit` (added 25 September 2026, at ICL's request) mirrors the
+ * single-image escape hatch in lib/event.ts / app/press/page.tsx.
+ * Defaults to "cover", which fills the card's frame and crops — fine for
+ * photos shot to roughly match it. "contain" letterboxes every image in
+ * the set uncropped instead, for a gallery whose photos are a different
+ * aspect ratio than the frame, like the landscape Zetech MoU photos.
  */
 export default function UpdateGallery({
   images,
   showCaptions = true,
+  fit = "cover",
 }: {
   images: readonly { src: string; alt: string; caption?: string }[];
   showCaptions?: boolean;
+  fit?: "cover" | "contain";
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -72,9 +81,9 @@ export default function UpdateGallery({
           loading="lazy"
           decoding="async"
           aria-hidden={i === index ? undefined : true}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+            fit === "contain" ? "object-contain" : "object-cover"
+          } ${i === index ? "opacity-100" : "opacity-0"}`}
         />
       ))}
 
