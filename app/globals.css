@@ -399,35 +399,84 @@ body {
   }
 }
 
-/* ── Venue button: orange pill with a hover photo preview ────────────────
-   Added 24 September 2026 at ICL's request, for the homepage header's
-   venue mention specifically (VenueHoverButton.tsx) — not a replacement
-   for .venue-float above, which still handles the other five EVENT.venue
-   mentions sitewide (see that component's own doc comment for why this
-   one is scoped to just the homepage).
+/* ── Venue toggle: two joined pills, "Venue" and the name ────────────────
+   Added 24 September 2026 at ICL's request (the single orange "Ole Sereni"
+   pill), reshaped 25 September 2026 into two segments once "Mombasa Road"
+   came out and "Venue" needed to be a visible label rather than plain text
+   (VenueHoverButton.tsx) — not a replacement for .venue-float above, which
+   still handles the other five EVENT.venue mentions sitewide.
 
-   .venue-btn shares Btn's gold tone (bg-gold/text-ink — the site's one
-   orange) via Tailwind utilities in the component itself; this class only
-   supplies the pill shape and the lift-and-shadow hover state, in the same
-   motion language as .venue-float and .keynote-frame, since this is that
-   same venue mention, just wearing a fill colour and a click target now. */
-.venue-btn {
-  display: inline-block;
-  border-radius: 999px;
-  padding: 0.3rem 1rem;
-  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+   .venue-toggle is the outer hit area: it owns the lift-and-shadow hover
+   state (both segments move as one unit) and is the positioning parent for
+   .venue-preview below. .venue-toggle-pill is a plain overflow:hidden
+   rounded rectangle one level in — clipping lives here, separately from
+   the outer element's shadow/transform, because a shadow can't render past
+   its own overflow:hidden boundary.
+
+   The two segments start in opposite fills — "Venue" white-on-ink,
+   "Ole Sereni" gold-on-ink (Btn's own gold, the site's one orange) — and
+   swap on hover/focus of the "Venue" segment specifically, via :has(),
+   the same mechanism .ticket-card's hover-glow already uses elsewhere on
+   this site. "Venue" itself is a label, not a link — see
+   VenueHoverButton.tsx's doc comment for why that hover has no keyboard/
+   touch equivalent, same as every other hover-only affordance here. */
+.venue-toggle {
+  position: relative;
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 @media (hover: hover) {
-  .venue-btn:hover,
-  .venue-btn:focus-visible {
-    filter: brightness(1.08);
+  .venue-toggle:hover,
+  .venue-toggle:focus-within {
     transform: translateY(-3px);
     box-shadow: 0 14px 22px -10px rgba(0, 0, 0, 0.45);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .venue-btn { transition: none; }
-  .venue-btn:hover, .venue-btn:focus-visible { transform: none; }
+  .venue-toggle { transition: none; }
+  .venue-toggle:hover, .venue-toggle:focus-within { transform: none; }
+}
+.venue-toggle-pill {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.venue-seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 260ms ease, color 260ms ease;
+}
+.venue-seg-venue {
+  background: var(--color-card);
+  color: var(--color-ink);
+}
+.venue-seg-name {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+.venue-seg-logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+@media (hover: hover) {
+  .venue-toggle:has(.venue-seg-venue:hover) .venue-seg-venue,
+  .venue-toggle:has(.venue-seg-venue:focus-visible) .venue-seg-venue {
+    background: var(--color-gold);
+  }
+  .venue-toggle:has(.venue-seg-venue:hover) .venue-seg-name,
+  .venue-toggle:has(.venue-seg-venue:focus-visible) .venue-seg-name {
+    background: var(--color-card);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .venue-seg { transition: none; }
 }
 
 /* Floating photo preview above the venue button: a small crossfading strip

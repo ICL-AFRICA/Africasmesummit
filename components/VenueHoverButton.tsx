@@ -4,41 +4,46 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * The homepage header's venue mention, enclosed as an orange (gold) pill
- * button that also gives a peek at the venue: hover or focus it and a
- * small crossfading photo strip lifts into view above the button, cycling
- * through a handful of Ole Sereni photos; click (or tap) it and you land on
- * the full venue gallery on /press. Added 24 September 2026 at ICL's
- * request.
+ * The homepage header's venue mention. Two joined pill segments —
+ * "Venue" (with Emara Ole Sereni's own roundel) and "Ole Sereni" — read
+ * together as a labelled field, replacing the old plain-text "Ole Sereni,
+ * Mombasa Road" (Mombasa Road dropped 25 September 2026 at ICL's request,
+ * once "Venue" made the label explicit and the road name redundant).
+ *
+ * Two independent hover behaviours, both ICL's request:
+ *
+ * 1. Hovering (or focusing) anywhere in the group lifts a small
+ *    crossfading photo strip above it, cycling through a handful of Ole
+ *    Sereni photos; clicking the "Ole Sereni" segment (the only part that
+ *    is actually a link) goes to the full venue gallery on /press. This
+ *    is unchanged from the 24 September version — see the photo-mounting
+ *    comment below.
+ *
+ * 2. Hovering specifically the "Venue" segment swaps the pair's fill:
+ *    "Venue" goes white→gold and "Ole Sereni" goes gold→white, together,
+ *    with a smooth colour transition — pure CSS via :has() (see
+ *    .venue-seg-venue in globals.css), the same mechanism .ticket-card's
+ *    hover-glow already uses elsewhere on the site. "Venue" itself never
+ *    navigates anywhere; it is a label, not a link, so this is mouse/
+ *    keyboard-hover-only by design, same as .venue-float and .keynote-frame
+ *    elsewhere on the site (see their own comments on why touch devices
+ *    don't get a hover-only affordance).
  *
  * Deliberately scoped to just this one homepage instance, not every
  * EVENT.venue mention sitewide — see .venue-float in globals.css, which
  * still handles the other five (they sit mid-sentence in paragraph copy on
- * /contact, /tracks, /speakers, /not-found and /press's own closing CTA;
- * turning those into photo-preview buttons too would read as interruption
- * rather than a feature).
- *
- * Coloured with Btn's own `gold` tone (bg-gold/text-ink — the site's one
- * orange) rather than routed through Btn itself: Btn's padding, arrow and
- * btn-glow pulse are tuned for a primary call to action, and this sits
- * inline in a thin one-line header bar next to the date, not a hero.
- * .venue-btn (globals.css) supplies only the pill shape and the
- * lift-and-shadow hover state.
- *
- * The photo stack is not mounted until the first hover/focus, so a visitor
- * who never interacts with the button never downloads it — the homepage
- * hero doesn't pay for a preview nobody asked to see. Touch devices skip
- * the preview entirely and go straight to a tap-to-navigate click, since
- * there is no hover state to preview from.
+ * /contact, /tracks, /speakers, /not-found and /press's own closing CTA).
  */
 export default function VenueHoverButton({
   images,
   href,
   label,
+  logoSrc,
 }: {
   images: readonly { src: string; alt: string }[];
   href: string;
   label: string;
+  logoSrc: string;
 }) {
   const [hovered, setHovered] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -64,7 +69,7 @@ export default function VenueHoverButton({
 
   return (
     <span
-      className="relative inline-block"
+      className="venue-toggle inline-flex"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
@@ -89,9 +94,19 @@ export default function VenueHoverButton({
           ))}
         </span>
       )}
-      <Link href={href} className="venue-btn bg-gold text-ink font-semibold">
-        {label}
-      </Link>
+
+      <span className="venue-toggle-pill">
+        {/* Label, not a link — see doc comment above for why this segment
+            has no keyboard/touch equivalent for its colour-swap hover. */}
+        <span className="venue-seg venue-seg-venue">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoSrc} alt="" className="venue-seg-logo" />
+          Venue
+        </span>
+        <Link href={href} className="venue-seg venue-seg-name">
+          {label}
+        </Link>
+      </span>
     </span>
   );
 }

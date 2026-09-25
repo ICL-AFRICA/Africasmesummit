@@ -71,8 +71,10 @@ export default function Page() {
           <div className="border-t border-line">
             <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3 text-[16px] text-white">
               <p>{EVENT.dateLabel}</p>
-              {/* Enclosed as a hover-preview button 24 September 2026, at
-                  ICL's request — see VenueHoverButton.tsx. This is the one
+              {/* Enclosed as a "Venue" / name toggle 24-25 September 2026,
+                  at ICL's request — see VenueHoverButton.tsx. "Mombasa
+                  Road" came out once "Venue" made the label explicit and
+                  the road name read as redundant. This is the one
                   EVENT.venue mention on the site that got this treatment;
                   the other five keep the plain .venue-float hover-lift. */}
               <p className="text-white">
@@ -80,8 +82,8 @@ export default function Page() {
                   images={PHOTOS.venue.slice(0, 5)}
                   href="/press#venue"
                   label={EVENT.venue}
+                  logoSrc={PHOTOS.venueLogo}
                 />
-                , {VENUE_SHORT}
               </p>
             </div>
           </div>

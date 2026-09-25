@@ -1100,7 +1100,15 @@ export const PHOTOS = {
 
      The header's hover preview uses `PHOTOS.venue.slice(0, 5)` — the
      first five entries below — as a quick orientation lap; the /press
-     gallery renders the full array, same order. */
+     gallery renders the full array, same order.
+
+     `venueLogo` (added 25 September 2026) is Emara Ole Sereni's own
+     roundel — the ostrich-and-sun mark, cropped square from the supplied
+     logo file with its wordmark dropped (illegible at the ~18px it renders
+     at in the homepage header's "Venue" segment) and padded back to a
+     square on white. It is a brand mark, not a photo, so it stays out of
+     the `venue` gallery array below and is referenced on its own. */
+  venueLogo: "/img/venue/venue-logo.webp",
   venue: [
     /* First five are also the header hover-preview's set, in this exact
        order — a quick orientation lap (outside, in, hall, view), not the
