@@ -616,16 +616,27 @@ export const TRACKS = [
     ],
   },
   {
-    n: "03", slug: "talent-human-resource-safeguarding",
-    name: "Talent management",
-    line: "Hiring well, and the safeguarding duties that come with it.",
-    who: "Owners and HR leads building a team faster than their systems can keep up.",
-    format: "Workshop",
+    /* Replaced 28 September 2026 at ICL's request: this track was "Talent
+       management" (hiring and safeguarding) up to this point — see git
+       history for that version. The swap is website/track-description
+       only: the 12:00 agenda slot in AGENDA below still says "Talent
+       management" with its original facilitators (Dr. James Nyamu, Prof.
+       Kellen Kiambati), because that reflects the actual confirmed
+       programme PDF, not this array — ICL confirmed leaving it as-is.
+       No SPEAKERS entry pointed at the old topic string, so nothing else
+       needed to move with this rename (contrast the warning on Track 02
+       above, where two speakers' `topic` values do have to move with any
+       future rename here too, once someone is confirmed for this track). */
+    n: "03", slug: "climate-action-sustainability",
+    name: "Climate action and sustainability",
+    line: "The cost of doing nothing, and the business case for doing something now.",
+    who: "MSMEs whose costs, supply chains or customers are already being shaped by climate risk — energy, water, packaging, weather.",
+    format: "Panel discussion + Q&A",
     outcomes: [
-      "Recruitment and retention strategies built for growing businesses, not established ones",
-      "How to embed safeguarding into HR policy from day one — not bolt it on later",
-      "How to hire fast without compromising protection for staff and vulnerable stakeholders",
-      "What a values-driven workplace culture actually looks like in practice, not on paper",
+      "Practical, low-cost ways to cut energy, water and waste costs that pay for themselves within a year",
+      "What buyers, lenders and export markets are starting to require on sustainability — and how to get ahead of it",
+      "Real examples of Kenyan SMEs that turned environmental practice into a market advantage, not just a compliance cost",
+      "Where to find climate financing and green business support already available to MSMEs",
     ],
   },
   {
