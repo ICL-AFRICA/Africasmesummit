@@ -616,17 +616,22 @@ export const TRACKS = [
     ],
   },
   {
-    /* Replaced 28 September 2026 at ICL's request: this track was "Talent
-       management" (hiring and safeguarding) up to this point — see git
-       history for that version. The swap is website/track-description
-       only: the 12:00 agenda slot in AGENDA below still says "Talent
-       management" with its original facilitators (Dr. James Nyamu, Prof.
-       Kellen Kiambati), because that reflects the actual confirmed
-       programme PDF, not this array — ICL confirmed leaving it as-is.
-       No SPEAKERS entry pointed at the old topic string, so nothing else
-       needed to move with this rename (contrast the warning on Track 02
-       above, where two speakers' `topic` values do have to move with any
-       future rename here too, once someone is confirmed for this track). */
+    /* Renamed from "Talent management" (hiring and safeguarding) on 28
+       September 2026 at ICL's request — see git history for that version.
+       At the time, the 12:00 agenda slot in AGENDA below still read
+       "Talent management" with its original facilitators (Dr. James
+       Nyamu, Prof. Kellen Kiambati), because that reflected the confirmed
+       programme PDF then current, not this array. The 30 September 2026
+       confirmed programme supersedes that: its 12:00 slot now names this
+       track directly, with its own facilitator list unrelated to the old
+       Talent management one — AGENDA below has been updated to match.
+       No SPEAKERS entry points at this topic string (the new facilitators
+       are mostly organisations — Roam Electric, Cooperative Bank of
+       Kenya, Canopy Insurance, ICEA Lion — not named individuals with
+       bios), so nothing else needed to move with either change (contrast
+       the warning on Track 02 above, where two speakers' `topic` values
+       do have to move with any future rename here too, once someone is
+       confirmed for this track). */
     n: "03", slug: "climate-action-sustainability",
     name: "Climate action and sustainability",
     line: "The cost of doing nothing, and the business case for doing something now.",
@@ -739,10 +744,12 @@ export const BENEFITS = [
  * Corrected 19 September 2026 against the confirmed programme: the
  * placeholder running order had him in an invented 10:45 "Guest of Honour"
  * slot with no such title in the real programme. The confirmed programme
- * has him opening the day with Welcome Remarks at 08:50, and again on the
- * University Vice Chancellors and Industry Roundtable at midday — both
- * read from this export in AGENDA below, so this stays the one place his
- * facts live.
+ * has him opening the day with Welcome Remarks at 08:50 — read from this
+ * export in AGENDA below, so this stays the one place his facts live. He
+ * also chaired a midday "University Vice Chancellors and Industry
+ * Roundtable" in the 16 September programme; the 30 September confirmed
+ * programme drops that session, so AGENDA no longer has a second slot
+ * pointing at this export.
  *
  * `bio` added 18 September 2026, drafted from his University of Nairobi
  * profile page (see the source CV linked from profiles.uonbi.ac.ke) rather
@@ -900,9 +907,19 @@ type AgendaSlot = {
 
 /**
  * The confirmed running order, transcribed from the programme I Choose Life
- * – Africa published 16 September 2026 ("AFRICA_SME_SUMMIT_2026_Program_
- * 16.09.2026"). Replaces the 14 August indicative draft this array held
- * before — see AGENDA_SOURCE below for what changed and how sure this is.
+ * – Africa published 30 September 2026 ("Africa-SME-Summit-2026-programme_
+ * 30.09.2026"), which supersedes the 16 September version this array held
+ * before. What changed: the 12:00 midday block now runs four parallel
+ * tracks rather than five — "Talent management" is replaced by "Climate
+ * action and sustainability" (its own, unrelated facilitator list) and the
+ * "University Vice Chancellors and Industry Roundtable" session is dropped
+ * entirely — and the whole afternoon from lunch onward shifted: Lunch
+ * moves to 13:00, the three-track block to 14:00, Networking to 15:00, and
+ * SEALS commissioning moves from 12:45 all the way to 16:00, immediately
+ * before the Awards ceremony (now 16:30, not 16:00 — see
+ * SIGNATURE_OPPORTUNITIES below, which names that same slot and had to
+ * move with it). Closing remarks (17:00) and departure (17:30) are
+ * unchanged. See AGENDA_SOURCE below for how sure this is.
  */
 export const AGENDA: readonly AgendaSlot[] = [
   { time: "07:30", title: "Arrival and registration", note: "Allan Manthi, Master SEAL, I Choose Life – Africa", quiet: true },
@@ -930,19 +947,17 @@ export const AGENDA: readonly AgendaSlot[] = [
   { time: "11:30", title: "Tea break", quiet: true },
   {
     time: "12:00",
-    title: "Parallel sessions — five tracks",
+    title: "Parallel sessions — four tracks",
     sessions: [
       { title: "Finance, Capital & Investment", note: "Susan Ndungu, Head of MSME Banking, NCBA, with Prof. Kellen Kiambati (Karatina University), Dr. Eric Wamuya (Machakos University), Wanjau Nduba, Nils Lindh and Barbara Lutomia (the Swarm Initiative), and Patrick Maina (Intellect Illumini Advisory, MSEA)" },
-      { title: "Talent management", note: "Dr. James Nyamu, Tharaka University, and Prof. Kellen Kiambati, Karatina University" },
+      { title: "Climate action and sustainability", note: "Jenney Jakobsson, Co-Founder, Sustainable World Corporation, with Roam Electric; Peter Lemaron, CEO, Lemaxon Energy Solutions; Cooperative Bank of Kenya; Vincent Sila, CEO, Datalock; Canopy Insurance Company; ICEA Lion Insurance Company; and NTSA" },
       { title: "Industry and academia collaboration", note: "Dr. Henry Yatich, Principal, Graduate Studies and Research, Mount Kenya University; Dr. Faith Yator, Kabarak University; Jenny Jakobsson, Co-Founder, Sustainable World Corporation" },
       { title: "Paper presentations", note: "Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant" },
-      { title: "University Vice Chancellors and Industry Roundtable", note: `${GUEST_OF_HONOUR.name}, ${GUEST_OF_HONOUR.role}, ${GUEST_OF_HONOUR.org}` },
     ],
   },
-  { time: "12:45", title: "SEALS commissioning", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
-  { time: "13:15", title: "Lunch", quiet: true },
+  { time: "13:00", title: "Lunch", quiet: true },
   {
-    time: "14:15",
+    time: "14:00",
     title: "Parallel sessions — three tracks",
     sessions: [
       { title: "Adopting AI and technology for business growth and efficiency", note: "Victor Sila, Juapath Founder & Walmart, with Esther Mwangi (Zetech University), Dr. Njeri Ngaruya (Strathmore University), and Newton (South Sudan)" },
@@ -950,8 +965,9 @@ export const AGENDA: readonly AgendaSlot[] = [
       { title: "Kenya entrepreneurship ecosystem strengthening", note: "Mercy Kimalat, CEO, ASSEK, with Dr. Anastasia Nyalita (CECM, MSMEs, Nairobi City County), Phillip Kabii (Regional Coordinator, Children's Mission Africa), Prof. Stephen Muathe (Kenyatta University), Dr. Ruth Ruhiu (Technical University of Kenya), Henry Rithea (MSEA) and Anne Lawi" },
     ],
   },
-  { time: "15:15", title: "Networking, deal making, pitching, exhibition & poster presentations", note: "Track business clinics" },
-  { time: "16:00", title: "Africa SME Award 2026 winners ceremony", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
+  { time: "15:00", title: "Networking, deal making, pitching, exhibition & poster presentations", note: "Track business clinics" },
+  { time: "16:00", title: "SEALS commissioning", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
+  { time: "16:30", title: "Africa SME Award 2026 winners ceremony", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
   { time: "17:00", title: "Closing remarks", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
   { time: "17:30", title: "Closing prayers & departure", quiet: true },
 ] as const;
@@ -966,7 +982,7 @@ export const AGENDA: readonly AgendaSlot[] = [
  * rather than silence — a programme this detailed, with facilitators named
  * against every slot, is the kind of thing that gets a late substitution.
  */
-export const AGENDA_SOURCE = "Confirmed programme, published 16 September 2026.";
+export const AGENDA_SOURCE = "Confirmed programme, published 30 September 2026.";
 
 /**
  * When the day starts and ends, taken from the running order itself.
@@ -1461,10 +1477,15 @@ export const SPONSOR_TIERS = [
  * 21 September 2026, as its own section after the tier grid, so they read
  * as a different kind of offer rather than a fifth row bolted onto the
  * table above.
+ *
+ * The Award's `time` here must match its AGENDA slot above — moved from
+ * 16:00 to 16:30 on 30 September 2026, when the confirmed programme
+ * shifted the whole afternoon and slotted SEALS commissioning in ahead of
+ * it at 16:00.
  */
 export const SIGNATURE_OPPORTUNITIES = [
   {
-    time: "16:00",
+    time: "16:30",
     moment: "The peak of the day",
     name: "The Africa SME Award 2026",
     body: "The winners are announced from the stage in front of the entire summit, at the emotional high point of the programme. Naming rights place a partner's brand permanently against Kenyan enterprise achievement — the most photographed, most reported moment of the day.",
