@@ -3,7 +3,7 @@ import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import StandBooking from "@/components/StandBooking";
 import Btn from "@/components/Btn";
-import { EVENT, STAND_OPTIONS, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
+import { EVENT, STAND_OPTIONS, FLOOR_PLAN, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
@@ -13,6 +13,11 @@ export const metadata: Metadata = {
 };
 
 export default function Exhibit() {
+  /* Derived, not typed — this page must never fall out of sync with
+     FLOOR_PLAN the way its old "thirty-one stands across two floors" copy
+     did after the venue moved and the plan shrank to one hall. */
+  const totalStands = FLOOR_PLAN.reduce((n, f) => n + f.spots.length, 0);
+
   return (
     <PageShell
       current="/exhibit"
@@ -64,29 +69,19 @@ export default function Exhibit() {
       </section>
 
       {/* Reserve a stand. The plan is the picker, so this section runs full
-          width rather than the two-column split it used before — thirty-one
-          stands over two floors do not fit in half a page. */}
+          width rather than the two-column split it used before — every
+          stand in the hall does not fit in half a page. */}
       <section className="border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-white mb-5">Reserve a stand</p>
             <h2 className="h-lg text-white text-3xl sm:text-4xl">Choose your spot in the hall</h2>
             <p className="lede mt-5 text-white text-[17px] max-w-2xl">
-              Thirty-one stands across the two floors. Pick the one you want and
+              {totalStands} stands in {FLOOR_PLAN[0].name}. Pick the one you want and
               tell us what you are bringing — stands are allocated in the order
               enquiries arrive, and we confirm within two working days.
             </p>
           </Reveal>
-
-          <div className="mt-10 border-l-2 border-clay bg-raise px-6 py-5 max-w-2xl">
-            <p className="font-mono text-[12px] uppercase tracking-widest text-clay-t">Venue update</p>
-            <p className="lede mt-2 text-[16px] text-white">
-              The summit has moved to Ole Sereni. The floor plan below still shows the
-              previous venue&rsquo;s layout — stand letters and positions are being redrawn
-              for the new hall. You can still reserve a stand now; we will confirm your
-              exact spot once the new plan is ready.
-            </p>
-          </div>
 
           <div className="mt-12">
             <StandBooking />

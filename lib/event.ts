@@ -1493,40 +1493,47 @@ export const TRACK_EXTRAS: Record<string, TrackExtra> = {
  * anything, and the page must not imply that it does.
  */
 /**
- * Pride Hall, Ole Sereni — replaced 25 September 2026 when the venue moved
- * from the old two-floor plan above (6th/5th floor, 10 corporate + 21
- * startup spots) to this single hall. Source: "ceo_ready_summit_floor_plan.pdf",
- * a one-page rendered floor plan with no PDF text layer, so
- * scripts/build-floorplan.py's bbox-extraction approach does not apply here
- * — coordinates below were read off the rendered page with OCR (tesseract)
- * plus manual verification (markers overlaid on the image and checked
- * against every label) rather than pulled from real vector text boxes.
- * Re-derive by the same means if this plan changes; do not eyeball it fresh.
- * Legend was 9 corporate (EB1-EB9) + 9 startup (T1-T9) = 18 spots total.
+ * Mara Hall, Ole Sereni — replaced 30 September 2026 when ICL supplied the
+ * final, approved floor plan ("Final. Mara Hall Ole Sereni Floor Plan.pdf"),
+ * confirming the single-hall layout that replaced the old Pride Hall mock-up
+ * (which was itself a placeholder standing in for the real plan while the
+ * venue's actual drawing was pending — see git history for both prior
+ * versions). This PDF is a real architectural drawing: EB1-EB8 and T11 sit
+ * on live vector text (read via `pdftotext -bbox`, exact), and the
+ * remaining stands (T1-T10, T12-T14) are part of a flattened background
+ * layer with no text boxes, so those were read off the rendered page with a
+ * fine pixel grid and confirmed by overlaying markers back onto the image
+ * and checking each one lands on its label. Re-derive by the same means if
+ * this plan changes; do not eyeball it fresh.
+ * Legend is 8 corporate (EB1-EB8) + 14 startup (T1-T14) = 22 spots total.
  */
 export const FLOOR_PLAN = [
   {
-    slug: "pride-hall", name: "Pride Hall",
-    image: "/img/floorplan/pride-hall.webp", w: 1900, h: 1386,
+    slug: "mara-hall", name: "Mara Hall",
+    image: "/img/floorplan/mara-hall.webp", w: 1500, h: 1500,
     spots: [
-      { id: "EB1", kind: "corporate", x: 22.4, y: 60.5 },
-      { id: "EB2", kind: "corporate", x: 26.9, y: 60.4 },
-      { id: "EB3", kind: "corporate", x: 41.0, y: 60.5 },
-      { id: "EB4", kind: "corporate", x: 84.9, y: 24.4 },
-      { id: "EB5", kind: "corporate", x: 84.9, y: 30.8 },
-      { id: "EB6", kind: "corporate", x: 84.9, y: 37.2 },
-      { id: "EB7", kind: "corporate", x: 85.0, y: 43.7 },
-      { id: "EB8", kind: "corporate", x: 85.1, y: 50.5 },
-      { id: "EB9", kind: "corporate", x: 85.0, y: 57.1 },
-      { id: "T1", kind: "startup", x: 82.7, y: 10.7 },
-      { id: "T2", kind: "startup", x: 91.3, y: 10.7 },
-      { id: "T3", kind: "startup", x: 91.1, y: 17.5 },
-      { id: "T4", kind: "startup", x: 91.3, y: 24.9 },
-      { id: "T5", kind: "startup", x: 91.3, y: 33.0 },
-      { id: "T6", kind: "startup", x: 91.3, y: 41.2 },
-      { id: "T7", kind: "startup", x: 91.3, y: 49.3 },
-      { id: "T8", kind: "startup", x: 91.3, y: 57.4 },
-      { id: "T9", kind: "startup", x: 91.3, y: 65.1 },
+      { id: "EB1", kind: "corporate", x: 72.4, y: 41.7 },
+      { id: "EB2", kind: "corporate", x: 64.7, y: 41.7 },
+      { id: "EB3", kind: "corporate", x: 49.5, y: 41.7 },
+      { id: "EB4", kind: "corporate", x: 43.1, y: 41.7 },
+      { id: "EB5", kind: "corporate", x: 35.5, y: 41.7 },
+      { id: "EB6", kind: "corporate", x: 29.6, y: 41.7 },
+      { id: "EB7", kind: "corporate", x: 21.9, y: 41.8 },
+      { id: "EB8", kind: "corporate", x: 18.3, y: 41.7 },
+      { id: "T1", kind: "startup", x: 45.0, y: 66.7 },
+      { id: "T2", kind: "startup", x: 46.2, y: 60.9 },
+      { id: "T3", kind: "startup", x: 46.2, y: 53.8 },
+      { id: "T4", kind: "startup", x: 46.7, y: 46.2 },
+      { id: "T5", kind: "startup", x: 66.7, y: 46.2 },
+      { id: "T6", kind: "startup", x: 74.7, y: 46.2 },
+      { id: "T7", kind: "startup", x: 74.7, y: 51.7 },
+      { id: "T8", kind: "startup", x: 74.7, y: 57.6 },
+      { id: "T9", kind: "startup", x: 74.7, y: 63.4 },
+      { id: "T10", kind: "startup", x: 74.7, y: 67.8 },
+      { id: "T11", kind: "startup", x: 68.7, y: 70.6 },
+      { id: "T12", kind: "startup", x: 64.2, y: 71.0 },
+      { id: "T13", kind: "startup", x: 59.2, y: 71.0 },
+      { id: "T14", kind: "startup", x: 54.2, y: 71.0 },
     ],
   },
 ] as const;
