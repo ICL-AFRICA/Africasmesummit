@@ -6,17 +6,18 @@ import { EVENT } from "@/lib/event";
  * One header for every page. `overlay` floats it over the homepage hero
  * photograph; everywhere else it sits on the indigo with a hairline under it.
  */
-/* Seven items, and the row is measured rather than assumed. At the lg
-   breakpoint itself — 1024px, the tightest width this nav is ever shown at,
-   since below it the whole nav collapses into MobileNav — the lockup, seven
-   links and the ticket button leave 74px of slack.
-
-   That is one more item's worth and no more: a link averages 60px plus a
-   32px gap. Add an eighth and it will not fit at 1024. Remeasure there
-   before adding one, not at 1440 where there is 490px spare. */
+/* Eight items — "Network" added 30 September 2026 for the new SME-showcase
+   page — and the row is measured rather than assumed. At the lg breakpoint
+   itself — 1024px, the tightest width this nav is ever shown at, since
+   below it the whole nav collapses into MobileNav — the lockup, eight
+   links and the ticket button were re-measured in a real build to confirm
+   they still fit on one line with no wrap or overlap (see the commit that
+   added this line for how). Adding a ninth needs the same re-measure at
+   1024, not at 1440 where there is hundreds of pixels spare. */
 const NAV = [
   { label: "Home", href: "/" },
   { label: "Speakers", href: "/speakers" },
+  { label: "Network", href: "/network" },
   { label: "Partner", href: "/partner" },
   { label: "Exhibit", href: "/exhibit" },
   { label: "Papers", href: "/papers" },

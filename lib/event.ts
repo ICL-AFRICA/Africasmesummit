@@ -1031,6 +1031,183 @@ export const PARTNERS = [
 ] as const;
 
 /**
+ * The SME network — real businesses ICL works alongside, shown on /network.
+ *
+ * NOT the same thing as PARTNERS above. PARTNERS is the convening/sponsor
+ * lockup that scrolls on the homepage (government, universities, corporate
+ * sponsors). This is a directory of small and growing Kenyan businesses —
+ * the kind of company the summit itself exists to support — each with its
+ * own story, not just a logo. Do not merge the two lists: a university
+ * crest and a fencing-post manufacturer's logo do not belong in the same
+ * rotation, and this list is meant to be read, not skimmed past.
+ *
+ * Every fact below is transcribed from the company's own profile/brochure
+ * as supplied to ICL (28-30 September 2026) — nothing here is estimated or
+ * invented. `highlight` is always a stated fact about where the business is
+ * TODAY (traction), never a target, projection or 2030 ambition, even when
+ * a source PDF's own headline number is a target — check the source before
+ * changing one. `links` includes only contact details the source actually
+ * lists; a company with no public website (e.g. WhatsApp-only) simply has
+ * fewer entries, never an invented one.
+ *
+ * `sector` must be a key from SME_SECTORS below. Logos are cropped from
+ * each company's own PDF cover (see scripts/ if this ever needs redoing)
+ * and sit on a white card in the UI regardless of a logo's own background,
+ * so mismatched source-file backgrounds (photo, dark, white) all read
+ * consistently — see components/SmeDirectory.tsx.
+ */
+export const SME_SECTORS = [
+  { key: "agribusiness", label: "Agribusiness & Food" },
+  { key: "products",     label: "Products & Manufacturing" },
+  { key: "health",       label: "Health, Sport & Youth" },
+  { key: "services",     label: "Services & Events" },
+] as const;
+
+export const SME_NETWORK = [
+  {
+    slug: "digigreens-holdings",
+    name: "Digigreens Holdings Ltd",
+    sector: "agribusiness",
+    logo: "/img/network/digigreens.webp",
+    tagline: "Value addition to cut post-harvest losses",
+    blurb: "Grew from a fresh-produce grower into a value-addition agribusiness — cold-pressed avocado, macadamia and castor oils, roasted nuts and coffee — turning raw Kenyan produce into export-ready products.",
+    highlight: "Partners with KEPROBA and KAM; backs women's and youth groups along its value chain.",
+    location: "Nairobi, Kenya",
+    links: [
+      { label: "Website", href: "https://www.digigreensholdings.co.ke" },
+      { label: "Email", href: "mailto:digigreens1@gmail.com" },
+      { label: "Call", href: "tel:+254722918706" },
+    ],
+  },
+  {
+    slug: "gfarm-aqua-solutions",
+    name: "G-FARM Aqua Solutions",
+    sector: "agribusiness",
+    logo: "/img/network/gfarm.webp",
+    tagline: "Climate-smart aquaculture, youth-led",
+    blurb: "A Kisumu-based, youth-led social enterprise building hatcheries, pond systems and clean-water innovation, paired with green-blue skills training for young people entering aquaculture.",
+    highlight: "100+ youth trained; one operational hatchery already running its own clean-water system.",
+    location: "Kisumu County, Kenya",
+    since: 2021,
+    links: [
+      { label: "Email", href: "mailto:nueragroup042@gmail.com" },
+      { label: "Call", href: "tel:+254712996561" },
+    ],
+  },
+  {
+    slug: "jilly-and-tilly-comidas",
+    name: "Jilly & Tilly Comidas",
+    sector: "agribusiness",
+    logo: "/img/network/jillytilly.webp",
+    tagline: "Quality food, at your doorstep, on the go",
+    blurb: "A women-led Nairobi food enterprise delivering farm-fresh chicken, eggs, artisan granola and fresh juices straight to households, offices and events — founded in 2019 on personal savings.",
+    highlight: "220 customers served and KES 1.2M in sales processed, Aug 2025 to Sep 2026.",
+    location: "Nairobi, Kenya",
+    since: 2019,
+    links: [
+      { label: "WhatsApp", href: "https://wa.me/254713822604" },
+    ],
+  },
+  {
+    slug: "floyd-line-investment",
+    name: "Floyd Line Investment Ltd",
+    sector: "agribusiness",
+    logo: "/img/network/floydline.webp",
+    tagline: "Healthy soils. Abundant food. A cooler planet.",
+    blurb: "An integrated organic and regenerative food-production platform building climate-resilient agriculture — from crops, livestock and agroforestry through to carbon and nature credits.",
+    highlight: "Work advances 11 of the UN's 17 Sustainable Development Goals.",
+    location: "Kenya",
+    links: [],
+  },
+  {
+    slug: "wetblu-by-misshiks",
+    name: "WetBlu by Misshiks",
+    sector: "products",
+    logo: "/img/network/wetblu.webp",
+    tagline: "Statement leather, made to keep",
+    blurb: "A women-owned Nairobi leather brand crafting premium bags and accessories — totes, travel duffels, laptop sleeves — designed as pieces to use for years, not replace every season.",
+    highlight: "Design-led model: WetBlu keeps design and quality control while production is outsourced to local specialists.",
+    location: "Nairobi, Kenya",
+    links: [],
+  },
+  {
+    slug: "vigingi-africa",
+    name: "Vigingi Africa Limited",
+    sector: "products",
+    logo: "/img/network/vigingi.webp",
+    tagline: "Recycled plastic, built to outlast timber",
+    blurb: "Turns hard-to-recycle waste plastic into rot-proof, termite-proof fencing posts for farms, homes, ranches and commercial sites — no tree cut down to fence sustainably.",
+    highlight: "20+ year life expectancy, with zero rot or termite risk.",
+    location: "Buruburu, Nairobi",
+    links: [
+      { label: "Website", href: "https://www.vigingi.co.ke" },
+      { label: "Email", href: "mailto:vigingiafrika@gmail.com" },
+      { label: "Call", href: "tel:+254740692271" },
+    ],
+  },
+  {
+    slug: "build-and-restore",
+    name: "Build & Restore Counselling Services",
+    sector: "health",
+    logo: "/img/network/bnr.webp",
+    tagline: "Your well-being is in safe hands",
+    blurb: "A Nairobi team of counselling and clinical psychologists with 20+ years of combined experience, offering individual, couples, family and workplace mental health care across two locations.",
+    highlight: "Accepts UAP (Old Mutual), CIC and MINET-administered corporate insurance.",
+    location: "Westlands & Karen, Nairobi",
+    links: [
+      { label: "Website", href: "https://bnrcouns.com" },
+      { label: "Email", href: "mailto:info@bnrcouns.com" },
+      { label: "Call", href: "tel:+254738785466" },
+    ],
+  },
+  {
+    slug: "bumblebee-sports-academy",
+    name: "Bumblebee Sports Academy",
+    sector: "health",
+    logo: "/img/network/bumblebee.webp",
+    tagline: "From tennis roots to multi-sport powerhouse",
+    blurb: "A Karen-based sports development academy, established 2011, running structured tennis, holiday camps and school partnerships that build discipline and character alongside athletic skill.",
+    highlight: "1,000+ children introduced to sport across Nairobi's leading schools.",
+    location: "Karen, Nairobi",
+    since: 2011,
+    links: [
+      { label: "Website", href: "https://www.bumblebeesports.co.ke" },
+      { label: "Email", href: "mailto:info@bumblebeesports.co.ke" },
+      { label: "Call", href: "tel:+254725795305" },
+    ],
+  },
+  {
+    slug: "biztimam-ventures",
+    name: "Biztimam Ventures Limited",
+    sector: "services",
+    logo: "/img/network/biztimam.webp",
+    tagline: "Tech & branding, one team",
+    blurb: "A Kenyan-owned ICT and branding company — software and web development, networks and security, and everything from logo design to large-format print — for individuals, firms, parastatals and NGOs alike.",
+    highlight: "One team for both the software and the branding that presents it.",
+    location: "Utalii Lane, Nairobi CBD",
+    links: [
+      { label: "Website", href: "https://biztimamventures.com" },
+      { label: "Email", href: "mailto:biz@biztimamventures.com" },
+      { label: "Call", href: "tel:+254724256867" },
+    ],
+  },
+  {
+    slug: "mc-stanley-ndeto-entertainment",
+    name: "MC Stanley Ndeto Entertainment",
+    sector: "services",
+    logo: "/img/network/mcstanley.webp",
+    tagline: "Making your events memorable",
+    blurb: "A full-service event planning, MC, DJ and sound company covering weddings, dowry ceremonies, corporate functions and community events across Kenya.",
+    highlight: "One-stop service: planning, MC, DJ and sound, under a single team.",
+    location: "Kenya",
+    links: [
+      { label: "Email", href: "mailto:mcstanleyndeto@gmail.com" },
+      { label: "Call", href: "tel:+254721743065" },
+    ],
+  },
+] as const;
+
+/**
  * Site photography.
  *
  * Every key here is rendered by something. Do not add one speculatively —
