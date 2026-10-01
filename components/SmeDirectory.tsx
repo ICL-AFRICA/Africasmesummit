@@ -18,12 +18,17 @@ const ACCENT: Record<string, string> = {
   products: "text-clay-t",
   health: "text-indigo-t",
   services: "text-marigold-t",
+  // "tech" (added 1 October 2026) reuses marigold rather than a 5th
+  // colour — see the note above SME_SECTORS in lib/event.ts for why that
+  // repeat doesn't read as a mix-up in the two-column grid.
+  tech: "text-marigold-t",
 };
 const ACCENT_BORDER: Record<string, string> = {
   agribusiness: "border-palm",
   products: "border-clay",
   health: "border-indigo",
   services: "border-marigold",
+  tech: "border-marigold",
 };
 /* Sector-card top rule: flat by default, takes the sector's colour on
    hover — the same "only the rule moves" affordance the homepage tracks
@@ -33,12 +38,14 @@ const CARD_BORDER: Record<string, string> = {
   products: "border-line hover:border-clay",
   health: "border-line hover:border-indigo",
   services: "border-line hover:border-marigold",
+  tech: "border-line hover:border-marigold",
 };
 const CARD_TITLE_HOVER: Record<string, string> = {
   agribusiness: "group-hover:text-palm-t",
   products: "group-hover:text-clay-t",
   health: "group-hover:text-indigo-t",
   services: "group-hover:text-marigold-t",
+  tech: "group-hover:text-marigold-t",
 };
 
 type Sector = (typeof SME_SECTORS)[number]["key"];

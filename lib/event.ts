@@ -1080,6 +1080,19 @@ export const PARTNERS = [
  * sector card, then see its businesses — there is no "All" filter sitting
  * above a flat list of all ten any more, by explicit request. See
  * components/SmeDirectory.tsx.
+ *
+ * 1 October 2026: added MikeLabs, Serene Global Healthcare Consultant and
+ * Salato from newly supplied profiles, after checking each against what
+ * was already here (Vigingi Africa and WetBlu by Misshiks had already been
+ * added earlier and were left alone). MikeLabs and Salato are both
+ * software companies with no existing sector that fit them, so this added
+ * a fifth sector, "tech" — label "Technology & Innovation" — rather than
+ * force-fitting them into "services". Its card reuses marigold (see
+ * components/SmeDirectory.tsx's colour maps): five sectors and four
+ * brand colours means one colour repeats, and marigold (already on
+ * "services", card 4) is never adjacent to or stacked on tech (card 5,
+ * alone in its own row) in the two-column grid, so the repeat doesn't
+ * read as a mix-up.
  */
 export const SME_SECTORS = [
   {
@@ -1097,6 +1110,10 @@ export const SME_SECTORS = [
   {
     key: "services", label: "Services & Events",
     blurb: "Tech, branding and entertainment — the businesses behind other businesses' events.",
+  },
+  {
+    key: "tech", label: "Technology & Innovation",
+    blurb: "Software and AI builders turning real operations — from the back office to the ticket gate — into working digital systems.",
   },
 ] as const;
 
@@ -1214,6 +1231,21 @@ export const SME_NETWORK = [
     ],
   },
   {
+    slug: "serene-global-healthcare-consultant",
+    name: "Serene Global Healthcare Consultant",
+    sector: "health",
+    logo: "/img/network/serene.webp",
+    tagline: "Transforming Healthcare Across Africa",
+    blurb: "A healthcare consultancy partnering with hospitals and health institutions to strengthen how they operate — facility design, patient journeys, staffing, insurance claims and revenue-process flow.",
+    highlight: "Partners with hospitals on everything from facility design to insurance-claims recovery and revenue-process optimisation.",
+    location: "Kenya",
+    links: [
+      { label: "Website", href: "https://sereneconsultancies.manus.space/" },
+      { label: "Email", href: "mailto:info@sereneconsultancies.co.ke" },
+      { label: "Call", href: "tel:+254729616026" },
+    ],
+  },
+  {
     slug: "biztimam-ventures",
     name: "Biztimam Ventures Limited",
     sector: "services",
@@ -1240,6 +1272,36 @@ export const SME_NETWORK = [
     links: [
       { label: "Email", href: "mailto:mcstanleyndeto@gmail.com" },
       { label: "Call", href: "tel:+254721743065" },
+    ],
+  },
+  {
+    slug: "mikelabs",
+    name: "MikeLabs",
+    sector: "tech",
+    logo: "/img/network/mikelabs.webp",
+    tagline: "Build. Break. Secure.",
+    blurb: "An AI-first technology company based in Nairobi, engineering practical digital systems — AI assistants, websites, databases, dashboards, automation and cloud deployments — for schools, SMEs and service businesses that want to operate digitally.",
+    highlight: "One team covering AI systems, web apps, databases, automation, cloud and security — not six separate vendors.",
+    location: "Shujaa Mall, Kayole, Kenya",
+    links: [
+      { label: "Website", href: "https://mikelabs.co.ke" },
+      { label: "WhatsApp", href: "https://wa.me/254792805340" },
+    ],
+  },
+  {
+    slug: "salato",
+    name: "Salato",
+    sector: "tech",
+    logo: "/img/network/salato.webp",
+    tagline: "Events. Tickets. Experiences.",
+    blurb: "A Nairobi event-ticketing platform where organisers sell tickets online, take payment securely through Paystack, and issue every ticket as a PDF with its own QR code — delivered by email and WhatsApp, and scanned at the gate.",
+    highlight: "A flat 6% per ticket sold, with payouts paid directly to each organiser's own Paystack subaccount.",
+    location: "Nairobi, Kenya",
+    since: 2026,
+    links: [
+      { label: "Website", href: "https://salato.app" },
+      { label: "Email", href: "mailto:hello@salato.app" },
+      { label: "Call", href: "tel:+254701450691" },
     ],
   },
 ] as const;
