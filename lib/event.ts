@@ -1245,6 +1245,73 @@ export const SME_NETWORK = [
 ] as const;
 
 /**
+ * Service provider categories, shown on /providers — the finance, legal,
+ * talent, tech and growth-support partners SMEs need, browsed the same
+ * sector-cards-first way SME_NETWORK is on /network (see
+ * components/ServiceProviderDirectory.tsx). Added 1 October 2026 at ICL's
+ * (boss's) request. Colour rotates across the six the same sequence
+ * TRACKS and /tracks use (marigold, clay, indigo, palm, marigold, clay) —
+ * never a fifth colour of its own.
+ *
+ * `blurb` fronts that category's own card, same job SME_SECTORS' blurb
+ * does on /network.
+ */
+export const SERVICE_PROVIDER_CATEGORIES = [
+  {
+    key: "finance", label: "Finance, Capital & Investment",
+    blurb: "Lenders, investors and structured-finance partners who fund SME growth.",
+  },
+  {
+    key: "market-access", label: "Market Access & Cross-Border Trade",
+    blurb: "Partners who help a business sell beyond its own county, and beyond Kenya.",
+  },
+  {
+    key: "talent", label: "Talent Management",
+    blurb: "Recruitment, HR and workforce partners who help a growing business hire well.",
+  },
+  {
+    key: "ai-technology", label: "AI & Technology",
+    blurb: "Tech vendors and AI tools built for the Kenyan MSME context, not enterprise budgets.",
+  },
+  {
+    key: "legal", label: "Legal Services",
+    blurb: "Lawyers and compliance partners who keep a growing business on the right side of the law.",
+  },
+  {
+    key: "incubators-accelerators", label: "Incubators & Accelerators",
+    blurb: "Programmes that take a business from early traction to investment-ready.",
+  },
+] as const;
+
+type ServiceProviderLink = { label: string; href: string };
+type ServiceProvider = {
+  slug: string;
+  name: string;
+  category: (typeof SERVICE_PROVIDER_CATEGORIES)[number]["key"];
+  logo: string;
+  tagline: string;
+  blurb: string;
+  highlight: string;
+  location: string;
+  since?: number;
+  links: readonly ServiceProviderLink[];
+};
+
+/**
+ * Service providers themselves — empty at launch, 1 October 2026.
+ * /providers ships with the six categories above and zero providers
+ * listed: ICL is distributing a profile template (same field shape as
+ * ServiceProvider above) to companies for the first intake, so this fills
+ * in after that comes back — populate it the same way SME_NETWORK was
+ * populated, transcribing only facts the provider's own submission states,
+ * nothing invented. components/ServiceProviderDirectory.tsx handles the
+ * zero-providers-per-category state explicitly (an invitation to apply,
+ * not a broken-looking empty grid), so this staying empty for a while is
+ * an expected state, not a bug.
+ */
+export const SERVICE_PROVIDERS: readonly ServiceProvider[] = [];
+
+/**
  * Site photography.
  *
  * Every key here is rendered by something. Do not add one speculatively —

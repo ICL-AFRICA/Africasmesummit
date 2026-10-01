@@ -6,22 +6,28 @@ import { EVENT } from "@/lib/event";
  * One header for every page. `overlay` floats it over the homepage hero
  * photograph; everywhere else it sits on the indigo with a hairline under it.
  */
-/* Eight items — "SMEs" (/network) added 30 September 2026 for the new
+/* Nine items — "SMEs" (/network) added 30 September 2026 for the new
    SME-showcase page, relabelled from "Network" on 1 October 2026 at ICL's
    (boss's) request when the page itself was redesigned. "Papers" (/papers)
    relabelled to "Academia" the same day, same request — the href is
-   unchanged, still /papers, only the link text changed. The row is
-   measured rather than assumed. At the lg breakpoint itself — 1024px, the
-   tightest width this nav is ever shown at, since below it the whole nav
-   collapses into MobileNav — the lockup, eight links and the ticket button
-   were re-measured in a real build to confirm they still fit on one line
-   with no wrap or overlap (see the commit that added this line for how).
-   Adding a ninth needs the same re-measure at 1024, not at 1440 where
+   unchanged, still /papers, only the link text changed. "Providers"
+   (/providers) added 1 October 2026, same request, for the new service
+   providers directory — "Service Providers" was too long/wide for this
+   row (every other label is one short word), so the nav text is the
+   shortened "Providers" while the page itself is titled "Service
+   Providers" in full. The row is measured rather than assumed, every time
+   an item is added. At the lg breakpoint itself — 1024px, the tightest
+   width this nav is ever shown at, since below it the whole nav collapses
+   into MobileNav — the lockup, nine links and the ticket button were
+   re-measured in a real build to confirm they still fit on one line with
+   no wrap or overlap (see the commit that added this line for how).
+   Adding a tenth needs the same re-measure at 1024, not at 1440 where
    there is hundreds of pixels spare. */
 const NAV = [
   { label: "Home", href: "/" },
   { label: "Speakers", href: "/speakers" },
   { label: "SMEs", href: "/network" },
+  { label: "Providers", href: "/providers" },
   { label: "Partner", href: "/partner" },
   { label: "Exhibit", href: "/exhibit" },
   { label: "Academia", href: "/papers" },
@@ -60,7 +66,7 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
           : "sticky top-0 z-40 bg-paper border-b border-rule lg:static"
       }
     >
-      <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 sm:py-5 flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-5 xl:px-8 py-4 sm:py-5 flex items-center justify-between gap-4">
         {/* Lockup: mark on the left, name stacked in three lines beside it.
             Stacking the name lets each line sit at a readable size instead
             of one long line shrinking to fit the bar — and it squares the
@@ -75,7 +81,7 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
             SUMMIT
           </span>
         </Link>
-        <nav className="hidden lg:flex items-center gap-8 text-[16px]">
+        <nav className="hidden lg:flex items-center gap-2.5 xl:gap-8 text-[16px]">
           {NAV.map((n) => (
             <Link
               key={n.href}
@@ -92,7 +98,7 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
           <MobileNav nav={NAV} current={current} />
           <a
             href={EVENT.ticketUrl}
-            className="rounded-lg bg-ink text-white px-4 sm:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
+            className="rounded-lg bg-ink text-white px-4 sm:px-6 lg:px-4 xl:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
           >
             Get ticket
           </a>
