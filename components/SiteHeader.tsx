@@ -8,7 +8,9 @@ import { EVENT } from "@/lib/event";
  */
 /* Eight items — "SMEs" (/network) added 30 September 2026 for the new
    SME-showcase page, relabelled from "Network" on 1 October 2026 at ICL's
-   (boss's) request when the page itself was redesigned — the row is
+   (boss's) request when the page itself was redesigned. "Papers" (/papers)
+   relabelled to "Academia" the same day, same request — the href is
+   unchanged, still /papers, only the link text changed. The row is
    measured rather than assumed. At the lg breakpoint itself — 1024px, the
    tightest width this nav is ever shown at, since below it the whole nav
    collapses into MobileNav — the lockup, eight links and the ticket button
@@ -22,7 +24,7 @@ const NAV = [
   { label: "SMEs", href: "/network" },
   { label: "Partner", href: "/partner" },
   { label: "Exhibit", href: "/exhibit" },
-  { label: "Papers", href: "/papers" },
+  { label: "Academia", href: "/papers" },
   { label: "Press", href: "/press" },
   { label: "Contact", href: "/contact" },
 ];

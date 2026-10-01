@@ -1782,8 +1782,13 @@ export const PAPERS_TICKET = { price: "6,800", currency: "KES" } as const;
    notified has even closed). Kept the same 7-day review gap the previous
    dates used (21→28) rather than inventing a new one: 30 September + 7
    days = 7 October. */
+/* Notify date moved in again, 1 October 2026 at ICL's (boss's) request:
+   confirmations now go out 2 October 23:59 EAT, not 7 October — the
+   submission deadline itself (30 September) is unchanged and has already
+   passed as of this edit, so PAPERS_SUBMISSIONS_OPEN is already false;
+   only the notify date moved. */
 export const PAPERS_SUBMISSION_DEADLINE = "2026-09-30T23:59:00+03:00";
-export const PAPERS_NOTIFY_DATE = "2026-10-07T23:59:00+03:00";
+export const PAPERS_NOTIFY_DATE = "2026-10-02T23:59:00+03:00";
 
 /** Build-time flags, same mechanism as EARLY_BIRD_ACTIVE above — true only
  *  if the site is rebuilt before the date in question. A redeploy on or
