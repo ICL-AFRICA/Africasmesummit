@@ -1071,12 +1071,33 @@ export const PARTNERS = [
  * and sit on a white card in the UI regardless of a logo's own background,
  * so mismatched source-file backgrounds (photo, dark, white) all read
  * consistently — see components/SmeDirectory.tsx.
+ *
+ * SME_SECTORS' `blurb` is a short, sector-level line written from the
+ * companies actually grouped under it (never generic category copy) — it
+ * fronts that sector's own card on /network, before any business appears.
+ * /network was redesigned 1 October 2026 at ICL's (boss's) request, renamed
+ * from "Network" to "SMEs" and rebuilt sector-cards-first: visitors pick a
+ * sector card, then see its businesses — there is no "All" filter sitting
+ * above a flat list of all ten any more, by explicit request. See
+ * components/SmeDirectory.tsx.
  */
 export const SME_SECTORS = [
-  { key: "agribusiness", label: "Agribusiness & Food" },
-  { key: "products",     label: "Products & Manufacturing" },
-  { key: "health",       label: "Health, Sport & Youth" },
-  { key: "services",     label: "Services & Events" },
+  {
+    key: "agribusiness", label: "Agribusiness & Food",
+    blurb: "Growers, processors and food brands turning Kenyan produce into export-ready products.",
+  },
+  {
+    key: "products", label: "Products & Manufacturing",
+    blurb: "Leather goods and recycled-plastic manufacturing, built to outlast what they replace.",
+  },
+  {
+    key: "health", label: "Health, Sport & Youth",
+    blurb: "Mental health care and youth sport, building resilience on and off the field.",
+  },
+  {
+    key: "services", label: "Services & Events",
+    blurb: "Tech, branding and entertainment — the businesses behind other businesses' events.",
+  },
 ] as const;
 
 export const SME_NETWORK = [

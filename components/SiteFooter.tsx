@@ -28,7 +28,7 @@ export default function SiteFooter() {
           <p className="eyebrow text-marigold mb-3">The summit</p>
           <ul className="space-y-1.5">
             {[["Speakers", "/speakers"], ["The day", "/#agenda"], ["Tracks", "/tracks"],
-              ["Our network", "/network"], ["Tickets", "/#tickets"], ["Questions", "/#faq"]].map(([l, h]) => (
+              ["SMEs", "/network"], ["Tickets", "/#tickets"], ["Questions", "/#faq"]].map(([l, h]) => (
               <li key={h}><Link href={h} className="hover:text-white transition-colors">{l}</Link></li>
             ))}
           </ul>
