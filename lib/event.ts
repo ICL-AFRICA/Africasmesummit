@@ -459,13 +459,13 @@ export const SPEAKERS = [
     bio: ["Ruth Mawia is CEO of Koola Waters."],
   },
   {
-    slug: "kelvin-karobio",
-    name: "Kelvin Karobio",
+    slug: "kelvin-waihura",
+    name: "Kelvin Waihura",
     role: "Director",
     org: "Biztimam Ventures Limited",
     topic: "Industry and Academia collaboration",
     draft: true,
-    bio: ["Kelvin Karobio is Director of Biztimam Ventures Limited."],
+    bio: ["Kelvin Waihura is Director of Biztimam Ventures Limited."],
   },
   {
     slug: "jacqueline-tsuma",
@@ -1434,7 +1434,9 @@ export const PHOTOS = {
     "/img/speaker-14.jpg",
     "/img/speaker-15.jpg",
     "/img/speaker-16.jpg",
-    "/img/speaker-17.jpg",
+    "/img/speaker-17.jpg", // Kelvin Waihura (ex "Kelvin Karobio" — name
+                           // corrected and photo replaced 1 October 2026,
+                           // supplied portrait already 4:5, resized not cropped)
     "/img/speaker-18.jpg",
     "/img/speaker-19.jpg",
     "/img/speaker-20.jpg",
