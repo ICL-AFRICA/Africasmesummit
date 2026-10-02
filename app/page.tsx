@@ -10,7 +10,7 @@ import SiteFooter from "@/components/SiteFooter";
 import VenueHoverButton from "@/components/VenueHoverButton";
 import Reveal from "@/components/Reveal";
 import AgendaPreview from "@/components/AgendaPreview";
-import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
+import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, STUDENT_SOLD_OUT, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -433,15 +433,22 @@ export default function Page() {
             </Reveal>
             <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
               {TICKETS.map((t, i) => {
-                /* The Early Bird tile is the one card whose deal can expire
-                   under it. Once EARLY_BIRD_ACTIVE flips false (a redeploy
-                   after EARLY_BIRD_ENDS — see the comment on that constant),
-                   this tile goes flat and mute rather than still inviting a
-                   click on a price that no longer exists: struck-through
-                   price, "Sold out" instead of the countdown note, and a CTA
-                   that pushes toward booking at the standard rate right now
-                   instead of pretending the early tier is still open. */
-                const justClosed = t.tier === "Early bird" && !EARLY_BIRD_ACTIVE;
+                /* Early Bird's deal can expire under it, and Student has a
+                   fixed allocation that can run out at any time — two
+                   different reasons a tile goes "sold out", same shared
+                   treatment either way. Early Bird flips the moment
+                   EARLY_BIRD_ACTIVE goes false (a redeploy after
+                   EARLY_BIRD_ENDS — see the comment on that constant);
+                   Student flips on STUDENT_SOLD_OUT, set by hand since there
+                   is no date to compute it from (see that constant's
+                   comment). Either way the tile goes flat and mute rather
+                   than still inviting a click on a tier that no longer
+                   sells: struck-through price, "Sold out" instead of the
+                   note, and a CTA that pushes toward booking Standard right
+                   now instead of pretending the tier is still open. */
+                const justClosed =
+                  (t.tier === "Early bird" && !EARLY_BIRD_ACTIVE) ||
+                  (t.tier === "Student" && STUDENT_SOLD_OUT);
                 return (
                   <Reveal
                     key={t.tier}

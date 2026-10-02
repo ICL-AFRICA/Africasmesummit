@@ -277,6 +277,26 @@ export const TICKET_CTA = `Grab a ticket — ${TICKET_PRICE}`;
 export const EARLY_BIRD_PRICE = `${TICKETS[0].currency} ${TICKETS[0].price}`;
 
 /**
+ * Student tickets sold out — set manually, 2 October 2026, at ICL's
+ * request. Unlike EARLY_BIRD_ACTIVE above, there is no date this flips on
+ * automatically: the Student tier has a fixed allocation rather than a
+ * deadline, so a batch can sell out at any point with no build-time
+ * calculation to drive it. This stays `true` until ICL releases more
+ * student tickets (flip to `false`) or the tier is retired outright.
+ *
+ * Drives the exact same "sold out" treatment on the ticket tile that
+ * EARLY_BIRD_ACTIVE drives for Early bird (see the `justClosed` check in
+ * app/page.tsx) — struck-through price, "Sold out" badge, muted
+ * checklist, and a CTA that points at Standard instead of a tier that is
+ * no longer sellable. Nothing else on the site (the sticky bar, the
+ * floating ticker, SUMMIT_UPDATES) singles out Student the way those
+ * surfaces single out Early bird, since none of them were built to
+ * reference a specific tier by name — this flag only touches the one
+ * place that is.
+ */
+export const STUDENT_SOLD_OUT = true;
+
+/**
  * Titles exactly as they appear on the printed poster.
  *
  * `bio` is an array of paragraphs, not a string. Five of the seven are
