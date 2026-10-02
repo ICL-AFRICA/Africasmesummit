@@ -3,12 +3,15 @@
 import { useState } from "react";
 import { SERVICE_PROVIDER_CATEGORIES, SERVICE_PROVIDERS } from "@/lib/event";
 
-/* Same six-rotating-through-four brand colours TRACKS and /tracks use
-   (marigold, clay, indigo, palm, marigold, clay) — never a fifth. Whole
-   class strings only, never `hover:${colour}` (Tailwind only generates
-   what it can read literally in the source — see app/page.tsx's tracks
-   grid for the failure this avoids). */
-const ROTATION = ["marigold", "clay", "indigo", "palm", "marigold", "clay"] as const;
+/* Same four brand colours TRACKS and /tracks use — never a colour of its
+   own. `colourOf` below indexes a category's position modulo 4 into this
+   array, so it cycles correctly (marigold, clay, indigo, palm, marigold,
+   clay, indigo, ...) at any category count — seven today, more later
+   without this array needing to grow to match. Whole class strings only,
+   never `hover:${colour}` (Tailwind only generates what it can read
+   literally in the source — see app/page.tsx's tracks grid for the
+   failure this avoids). */
+const ROTATION = ["marigold", "clay", "indigo", "palm"] as const;
 
 const ACCENT: Record<string, string> = {
   marigold: "text-marigold-t", clay: "text-clay-t", indigo: "text-indigo-t", palm: "text-palm-t",

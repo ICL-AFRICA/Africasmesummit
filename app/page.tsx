@@ -56,8 +56,16 @@ export default function Page() {
             <HeroMosaic />
             <div className="absolute inset-x-0 bottom-0">
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-10 sm:pb-14">
+                {/* The hero spells out the year ("Africa SME Summit 2026"),
+                    added 2 October 2026 at ICL's (boss's) request — scoped
+                    to this one headline rather than to EVENT.name itself,
+                    since EVENT.name is also used bare elsewhere (the header
+                    lockup, and other spots that append EVENT.year
+                    themselves, e.g. the ticker's "Until {EVENT.name}
+                    {EVENT.year}" — changing EVENT.name would have doubled
+                    the year there). */}
                 <h1 className="h-xl text-white text-[15vw] sm:text-[9vw] lg:text-[7.5rem]">
-                  {EVENT.name.split(" ").map((word, i) => (
+                  {`${EVENT.name} ${EVENT.year}`.split(" ").map((word, i) => (
                     <span
                       key={word + i}
                       className="hero-word"

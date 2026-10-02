@@ -15,10 +15,20 @@ import { EVENT } from "@/lib/event";
    providers directory — "Service Providers" was too long/wide for this
    row (every other label is one short word), so the nav text is the
    shortened "Providers" while the page itself is titled "Service
-   Providers" in full. The row is measured rather than assumed, every time
-   an item is added. At the lg breakpoint itself — 1024px, the tightest
-   width this nav is ever shown at, since below it the whole nav collapses
-   into MobileNav — the lockup, nine links and the ticket button were
+   Providers" in full.
+
+   Reordered 2 October 2026 at ICL's (boss's) request: Exhibit now comes
+   before Partner (was the other way round), and Providers moved from
+   right after SMEs to right after Partner. Home, Press and Contact were
+   not mentioned in that request and keep their existing positions — first
+   and last two respectively.
+
+   The row is measured rather than assumed, every time an item is added OR
+   reordered — a reorder changes nothing about total width, but is still
+   re-measured here on the belief that an untested change is an unverified
+   one. At the lg breakpoint itself — 1024px, the tightest width this nav
+   is ever shown at, since below it the whole nav collapses into
+   MobileNav — the lockup, nine links and the ticket button were
    re-measured in a real build to confirm they still fit on one line with
    no wrap or overlap (see the commit that added this line for how).
    Adding a tenth needs the same re-measure at 1024, not at 1440 where
@@ -27,9 +37,9 @@ const NAV = [
   { label: "Home", href: "/" },
   { label: "Speakers", href: "/speakers" },
   { label: "SMEs", href: "/network" },
-  { label: "Providers", href: "/providers" },
-  { label: "Partner", href: "/partner" },
   { label: "Exhibit", href: "/exhibit" },
+  { label: "Partner", href: "/partner" },
+  { label: "Providers", href: "/providers" },
   { label: "Academia", href: "/papers" },
   { label: "Press", href: "/press" },
   { label: "Contact", href: "/contact" },

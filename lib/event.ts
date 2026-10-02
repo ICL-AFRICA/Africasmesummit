@@ -1311,12 +1311,21 @@ export const SME_NETWORK = [
  * talent, tech and growth-support partners SMEs need, browsed the same
  * sector-cards-first way SME_NETWORK is on /network (see
  * components/ServiceProviderDirectory.tsx). Added 1 October 2026 at ICL's
- * (boss's) request. Colour rotates across the six the same sequence
- * TRACKS and /tracks use (marigold, clay, indigo, palm, marigold, clay) —
- * never a fifth colour of its own.
+ * (boss's) request.
+ *
+ * Colour comes from `colourOf` in ServiceProviderDirectory.tsx, which
+ * indexes a category's position in this array modulo 4 into the same
+ * four brand colours TRACKS and /tracks use (marigold, clay, indigo,
+ * palm) — never a fifth colour of its own, and it keeps working
+ * correctly at any array length, seven included.
  *
  * `blurb` fronts that category's own card, same job SME_SECTORS' blurb
  * does on /network.
+ *
+ * 2 October 2026: "AI & Technology" relabelled "AI, Technology &
+ * Innovations" and "Climate Action & Sustainability" added as a seventh
+ * category, both at ICL's (boss's) request — climate/clean-energy
+ * partners (solar, waste, water, carbon) didn't fit any of the other six.
  */
 export const SERVICE_PROVIDER_CATEGORIES = [
   {
@@ -1332,7 +1341,7 @@ export const SERVICE_PROVIDER_CATEGORIES = [
     blurb: "Recruitment, HR and workforce partners who help a growing business hire well.",
   },
   {
-    key: "ai-technology", label: "AI & Technology",
+    key: "ai-technology", label: "AI, Technology & Innovations",
     blurb: "Tech vendors and AI tools built for the Kenyan MSME context, not enterprise budgets.",
   },
   {
@@ -1342,6 +1351,10 @@ export const SERVICE_PROVIDER_CATEGORIES = [
   {
     key: "incubators-accelerators", label: "Incubators & Accelerators",
     blurb: "Programmes that take a business from early traction to investment-ready.",
+  },
+  {
+    key: "climate-action-sustainability", label: "Climate Action & Sustainability",
+    blurb: "Partners helping SMEs adopt cleaner energy, cut waste and build climate-resilient operations.",
   },
 ] as const;
 
