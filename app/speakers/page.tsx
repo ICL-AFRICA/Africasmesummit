@@ -42,15 +42,16 @@ export default function Speakers() {
         {/* ── Keynote speakers ──────────────────────────────────────── */}
         {/* Full-width alternating rows, same shape this page always used for
             every profile — kept deliberately larger than the panelist grid
-            below, since there are three of these rather than nineteen. */}
+            below, since there are six of these rather than nineteen. */}
         <section className="border-b border-line bg-raise/40 tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-12 sm:pt-16">
             <Reveal as="p" className="eyebrow text-marigold mb-2">Keynote</Reveal>
             <h2 className="h-sm text-white text-2xl sm:text-3xl">Before the tracks open</h2>
             <p className="lede mt-3 text-white/70 max-w-2xl text-[16px]">
               Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
-              Teachers Service Commission, and Nairobi County&rsquo;s CECM for Business
-              and Hustler Opportunities, on stage before the panel speakers below.
+              Teachers Service Commission, Nairobi County&rsquo;s CECM for Business
+              and Hustler Opportunities, and the Principal Secretary for Basic
+              Education, on stage before the panel speakers below.
             </p>
           </div>
           {KEYNOTES.map((k, i) => (

@@ -158,16 +158,20 @@ export default function Page() {
             row. Widened again to 2-up/3-up/5-up on 24 September 2026 when
             Anastasia Nyalita joined as the fifth: 5-up at desktop keeps one
             clean row instead of 4-then-1, and the added md:3-up step gives
-            tablet widths a balanced 3+2 instead of 2+2+1.
+            tablet widths a balanced 3+2 instead of 2+2+1. Widened once more
+            to 2-up/3-up/6-up on 2 October 2026 when John Ololtuaa joined as
+            the sixth — 6-up at desktop is one clean row again (5-then-1
+            would have orphaned him), and 2-up/3-up both divide six evenly
+            too, so no breakpoint shows a short last row.
 
             The portraits also picked up .keynote-frame the same day —
             rounded corners, a soft shadow and a faint sheen, at ICL's
             request for a "classy, floating" feel. That's a deliberate
             departure from the flat/hairline rule atop globals.css (no
-            shadows, no rounded corners) for these five portraits
-            specifically, same as .venue-float and the glow-* classes
-            already are elsewhere on the page — not a reversal of the flat
-            rule everywhere else. */}
+            shadows, no rounded corners) for these portraits specifically,
+            same as .venue-float and the glow-* classes already are
+            elsewhere on the page — not a reversal of the flat rule
+            everywhere else. */}
         <section className="bg-card border-t border-rule tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
             <Reveal className="text-center mb-14" as="div">
@@ -177,11 +181,12 @@ export default function Page() {
               </h2>
               <p className="lede mt-5 text-ink/60 max-w-2xl mx-auto text-[16px]">
                 Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
-                Teachers Service Commission, and Nairobi County&rsquo;s CECM for Business
-                and Hustler Opportunities, setting the tone before six tracks open.
+                Teachers Service Commission, Nairobi County&rsquo;s CECM for Business
+                and Hustler Opportunities, and the Principal Secretary for Basic
+                Education, setting the tone before six tracks open.
               </p>
             </Reveal>
-            <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
               {KEYNOTES.map((k, i) => (
                 <Reveal key={k.slug} delay={Math.min(i, 5) * 80}>
                   <div className="keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise">

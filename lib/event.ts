@@ -799,17 +799,33 @@ export const GUEST_OF_HONOUR = {
  * is a small source image (265×265) upscaled to the 800×1000 convention.
  *
  * Display order is Gitau, then Mutungi, then Munene, then Mitei, then
- * Nyalita (Munene/Mitei set 19–21 September 2026 at ICL's request — UoN's
- * VC, the convener, Zetech's VC, then TSC's CEO; Nyalita added 24 September
- * 2026, appended last as the newest addition — Nairobi County's CECM for
- * Business and Hustler Opportunities. Bio supplied by ICL communications;
- * her photo is a supplied portrait (506×605) cropped and upscaled to the
- * site's 800×1000 headshot convention, same treatment as Munene's and
- * Mitei's smaller source photos above). Array order IS display order on both the
+ * Nyalita, then Ololtuaa (Munene/Mitei set 19–21 September 2026 at ICL's
+ * request — UoN's VC, the convener, Zetech's VC, then TSC's CEO; Nyalita
+ * added 24 September 2026 — Nairobi County's CECM for Business and Hustler
+ * Opportunities. Bio supplied by ICL communications; her photo is a
+ * supplied portrait (506×605) cropped and upscaled to the site's
+ * 800×1000 headshot convention, same treatment as Munene's and Mitei's
+ * smaller source photos above). Array order IS display order on both the
  * homepage and /speakers, so reordering this array is the only thing
  * needed to change it. Whenever this array's length changes, KEYNOTE_COUNT
  * below and the hardcoded speaker-count copy on the homepage and /speakers
  * need a look — see the comment there.
+ *
+ * John Lekakeny Ololtuaa is new as of 2 October 2026, confirmed as a
+ * keynote speaker and appended last as the newest addition — Principal
+ * Secretary for Basic Education in Kenya's Ministry of Education. Unlike
+ * Munene, Mitei and Nyalita, whose bios came from ICL communications
+ * essentially in their own words, his bio is condensed from public
+ * biographical research supplied alongside the request that added him (his
+ * Ministry and Transition Authority career history), since no
+ * first-person bio was supplied — flag for ICL to confirm before the
+ * printed programme goes to press. His photo is a small supplied portrait
+ * (436×374, not the house 4:5 ratio) — centre-cropped narrower rather
+ * than taller, then upscaled to the site's 800×1000 convention, the same
+ * treatment as Munene's, Mitei's and Nyalita's smaller source photos
+ * above. His addition is also what pushed the homepage keynote grid from
+ * five-up to a clean six-up at desktop — see the comment on that grid in
+ * app/page.tsx.
  */
 export const KEYNOTES = [
   {
@@ -864,6 +880,18 @@ export const KEYNOTES = [
     label: "Keynote speaker",
     bio: [
       "Dr. Anastasia Mutethya Nyalita is a distinguished Kenyan pharmacist, healthcare specialist, and public administrator who serves as the Nairobi City County Government's County Executive Committee Member (CECM) for Business and Hustler Opportunities. With over 20 years of senior leadership experience spanning multinational corporations, trade associations, and public service, she has built a reputation as a highly efficient, action-oriented corporate governance expert.",
+    ],
+  },
+  {
+    slug: "john-ololtuaa",
+    name: "John Lekakeny Ololtuaa",
+    role: "Principal Secretary, Basic Education",
+    org: "Ministry of Education",
+    photo: "/img/keynote-john-ololtuaa.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "John Lekakeny Ololtuaa is Principal Secretary for Basic Education in Kenya's Ministry of Education, appointed to the role in June 2026. Born in Kilgoris, Narok County, he holds a Bachelor of Education (Arts) and a Master's degree in Education Administration, both from Kenyatta University.",
+      "He began his career in the education sector as a teacher in 1993, later serving as a school principal and as a district and county director of education. He went on to serve in the Transition Authority as County Transition Coordinator for Narok County, helping oversee Kenya's shift to a devolved system of governance, and was appointed Principal Secretary in the State Department of Tourism in September 2022 before his transfer to Basic Education.",
     ],
   },
 ] as const;
