@@ -1386,6 +1386,38 @@ export const SERVICE_PROVIDER_CATEGORIES = [
   },
 ] as const;
 
+/**
+ * The service-provider profile template, downloadable from /providers —
+ * same static-asset pattern as BROCHURE_URL, PROGRAMME_URL and
+ * PARTNERSHIP_PROPOSAL_URL above: no server, no download-tracking beyond
+ * whatever the host provides.
+ *
+ * Built 1 October 2026, revised into a full professional template (cover
+ * page, story, mission/vision/values, products, target market, team,
+ * achievements, portfolio, contact, worked example) 2 October 2026, and
+ * its category checklist corrected the same day to match
+ * SERVICE_PROVIDER_CATEGORIES above exactly (seven categories now, "AI,
+ * Technology & Innovations" rather than the stale "AI & Technology") —
+ * the template and the live category list must never drift apart, since a
+ * provider picks their category straight off this sheet.
+ *
+ * SERVICE_PROVIDER_EMAIL below is the address the template itself already
+ * tells providers to send it back to; the "Email your profile" button on
+ * /providers just opens the same address with a pre-filled subject, so
+ * clicking it and emailing the completed template are the same action.
+ */
+export const SERVICE_PROVIDER_TEMPLATE_URL = "/templates/africa-sme-summit-service-provider-template.docx";
+
+/**
+ * Where a filled-in service-provider template gets sent — ICL's own
+ * communications inbox, not EVENT.email (the named event-coordinator
+ * address used for ticketing, sponsorship and general contact). Kept
+ * deliberately separate: this is the first intake for /providers, so
+ * completed templates should land wherever ICL actually triages them,
+ * rather than through the main contact line alongside everything else.
+ */
+export const SERVICE_PROVIDER_EMAIL = "communications@ichooselife.or.ke";
+
 type ServiceProviderLink = { label: string; href: string };
 type ServiceProvider = {
   slug: string;
