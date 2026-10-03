@@ -779,7 +779,11 @@ export const BENEFITS = [
  */
 export const GUEST_OF_HONOUR = {
   name: "Prof. Eng. Ayub Gitau",
-  role: "Vice Chancellor",
+  // Was "Vice Chancellor" (no hyphen) until 3 October 2026, when the
+  // keynote titles were normalised sitewide — Munene's own "Vice-Chancellor"
+  // entry in KEYNOTES below was already hyphenated, so the two matching VC
+  // titles read as two different job titles until this was caught.
+  role: "Vice-Chancellor",
   org: "University of Nairobi",
   photo: "/img/guest-ayub-gitau.jpg",
   bio: [
@@ -831,29 +835,89 @@ export const GUEST_OF_HONOUR = {
  * below and the hardcoded speaker-count copy on the homepage and /speakers
  * need a look — see the comment there.
  *
- * John Lekakeny Ololtuaa is new as of 2 October 2026, confirmed as a
- * keynote speaker and appended last as the newest addition — Principal
- * Secretary for Basic Education in Kenya's Ministry of Education. Unlike
- * Munene, Mitei and Nyalita, whose bios came from ICL communications
- * essentially in their own words, his bio is condensed from public
- * biographical research supplied alongside the request that added him (his
- * Ministry and Transition Authority career history), since no
- * first-person bio was supplied — flag for ICL to confirm before the
- * printed programme goes to press. His photo is a small supplied portrait
- * (436×374, not the house 4:5 ratio) — centre-cropped narrower rather
- * than taller, then upscaled to the site's 800×1000 convention, the same
- * treatment as Munene's, Mitei's and Nyalita's smaller source photos
- * above. His addition is also what pushed the homepage keynote grid from
- * five-up to a clean six-up at desktop — see the comment on that grid in
- * app/page.tsx.
+ * John Lekakeny Ololtuaa was added 2 October 2026 — Principal Secretary for
+ * Basic Education in Kenya's Ministry of Education. Unlike Munene, Mitei
+ * and Nyalita, whose bios came from ICL communications essentially in their
+ * own words, his bio is condensed from public biographical research
+ * supplied alongside the request that added him (his Ministry and
+ * Transition Authority career history), since no first-person bio was
+ * supplied — flag for ICL to confirm before the printed programme goes to
+ * press. His photo is a small supplied portrait (436×374, not the house
+ * 4:5 ratio) — centre-cropped narrower rather than taller, then upscaled to
+ * the site's 800×1000 convention, the same treatment as Munene's, Mitei's
+ * and Nyalita's smaller source photos above.
+ *
+ * Prof. Shaukat Abdulrazak was added 3 October 2026, at ICL's request, from
+ * public biographical research the same way Ololtuaa's bio was (no
+ * first-person bio supplied — flag for ICL to confirm before print) — he is
+ * Principal Secretary for the State Department for Science, Research and
+ * Innovation, a department hived off under the Ministry of Education the
+ * same way Basic Education is, which is why his `org` below matches
+ * Ololtuaa's ("Ministry of Education") rather than naming the department
+ * as if it were its own ministry. Former Director for Africa at the IAEA
+ * and former CEO of NACOSTI. His photo is a supplied 593×593 square
+ * headshot, centre-cropped to the house 4:5 ratio and upscaled to 800×1000,
+ * same treatment as every other keynote whose source wasn't already that
+ * shape.
+ *
+ * Display order and every role/org string were overhauled the same day,
+ * both at ICL's explicit request:
+ *
+ * Order is now Abdulrazak, Ololtuaa, Mutungi, Gitau, Munene, Mitei, Nyalita
+ * — the two Principal Secretaries first (Research, then Basic Education),
+ * then the summit's own convener, then the three Vice-Chancellor/CEO
+ * institutional heads, Nyalita last. This replaces every previous ordering
+ * rule in this comment's older paragraphs above (Gitau-first existed only
+ * because he opens the agenda, not because of seniority) — array order IS
+ * display order on both the homepage and /speakers, so this reordering is
+ * the only change needed to move someone.
+ *
+ * Titles were uniformed at the same time — several had drifted to visibly
+ * different lengths and styles on the keynote cards (one spelled-out
+ * "Chief Executive Officer" next to another's abbreviated "Founder & CEO";
+ * one "County Executive Committee Member, Business and Hustler
+ * Opportunities" running two or three times longer than "Vice-Chancellor"
+ * next to it). Every role here now follows the same house shorthand:
+ * standard abbreviations over spelled-out titles (CEO, CECM), "&" over
+ * "and" inside a title, "Principal Secretary, <department>" as one shared
+ * shape for both PS roles. This is scoped to the KEYNOTES role/org fields
+ * specifically — the card title a visitor actually reads — not to prose
+ * mentions of these same people elsewhere (AGENDA notes, SUMMIT_UPDATES),
+ * which keep their own full phrasing and were not part of this request.
+ *
+ * Two keynotes now share "Ministry of Education" as `org` with different
+ * `role` strings (the department name lives in the role, same shape
+ * Ololtuaa already used alone) — this is intentional, not a duplicate.
+ *
+ * Adding Abdulrazak is also what pushed the homepage keynote grid from a
+ * clean six-up to seven-up at desktop, with the tablet step widened from
+ * 3-up to 4-up to avoid orphaning the seventh card alone on its own row —
+ * see the comment on that grid in app/page.tsx.
  */
 export const KEYNOTES = [
   {
-    slug: "ayub-gitau",
-    ...GUEST_OF_HONOUR,
-    // Was "Guest of Honour · 10:45" — that slot doesn't exist in the
-    // confirmed programme. He opens the day; corrected 19 September 2026.
-    label: "Welcome remarks · 8:50",
+    slug: "shaukat-abdulrazak",
+    name: "Prof. Shaukat Abdulrazak",
+    role: "Principal Secretary, Science, Research & Innovation",
+    org: "Ministry of Education",
+    photo: "/img/keynote-shaukat-abdulrazak.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "Prof. Shaukat Abdulrazak is Principal Secretary for the State Department for Science, Research and Innovation in Kenya's Ministry of Education, appointed by President William Ruto on 17 April 2025 to lead a department hived off specifically to drive science, technology, research and innovation. He previously served as Director for Africa at the International Atomic Energy Agency (IAEA) and as Chief Executive Officer of the Kenya National Commission for Science, Technology and Innovation (NACOSTI).",
+      "He has led the launch of Kenya's National Bioeconomy Strategy (2026–2036), an integrated framework for harnessing biological resources across agriculture, health, forestry, fisheries and manufacturing, and is pushing universities and research bodies toward research-to-commercialisation — lifting the share of research output that reaches the market from under 10% while scaling national R&D investment toward 2% of GDP.",
+    ],
+  },
+  {
+    slug: "john-ololtuaa",
+    name: "John Lekakeny Ololtuaa",
+    role: "Principal Secretary, Basic Education",
+    org: "Ministry of Education",
+    photo: "/img/keynote-john-ololtuaa.jpg",
+    label: "Keynote speaker",
+    bio: [
+      "John Lekakeny Ololtuaa is Principal Secretary for Basic Education in Kenya's Ministry of Education, appointed to the role in June 2026. Born in Kilgoris, Narok County, he holds a Bachelor of Education (Arts) and a Master's degree in Education Administration, both from Kenyatta University.",
+      "He began his career in the education sector as a teacher in 1993, later serving as a school principal and as a district and county director of education. He went on to serve in the Transition Authority as County Transition Coordinator for Narok County, helping oversee Kenya's shift to a devolved system of governance, and was appointed Principal Secretary in the State Department of Tourism in September 2022 before his transfer to Basic Education.",
+    ],
   },
   {
     slug: "mike-mutungi",
@@ -866,6 +930,13 @@ export const KEYNOTES = [
       "Eng. Mike Mutungi is Founder and CEO of I Choose Life – Africa (ICL) and Chairman of the Association of Startup and SME Enablers of Kenya (ASSEK). He holds a Bachelor of Science in Geospatial and Space Technology from the University of Nairobi and a Master of Divinity from NIST.",
       "For over 20 years, Mike has designed programs spanning health, education, economic empowerment, leadership and governance, and institutional strengthening. He currently chairs the NGOs Network (HENNET) and sits on the boards of several organizations, including Planning Interiors and Jiinue Microcredit. He has overseen the development of strategic plans for programs and organizations across Africa, Europe, and the Middle East, and is the author of Kenya Mpya: Selecting and Holding Leaders to Account.",
     ],
+  },
+  {
+    slug: "ayub-gitau",
+    ...GUEST_OF_HONOUR,
+    // Was "Guest of Honour · 10:45" — that slot doesn't exist in the
+    // confirmed programme. He opens the day; corrected 19 September 2026.
+    label: "Welcome remarks · 8:50",
   },
   {
     slug: "njenga-munene",
@@ -882,7 +953,7 @@ export const KEYNOTES = [
   {
     slug: "evaleen-mitei",
     name: "Evaleen Mitei",
-    role: "Chief Executive Officer",
+    role: "CEO",
     org: "Teachers Service Commission",
     photo: "/img/keynote-evaleen-mitei.jpg",
     label: "Keynote speaker",
@@ -894,24 +965,12 @@ export const KEYNOTES = [
   {
     slug: "anastasia-nyalita",
     name: "Dr. Anastasia Mutethya Nyalita",
-    role: "County Executive Committee Member, Business and Hustler Opportunities",
+    role: "CECM, Business & Hustler Opportunities",
     org: "Nairobi City County Government",
     photo: "/img/keynote-anastasia-nyalita.jpg",
     label: "Keynote speaker",
     bio: [
       "Dr. Anastasia Mutethya Nyalita is a distinguished Kenyan pharmacist, healthcare specialist, and public administrator who serves as the Nairobi City County Government's County Executive Committee Member (CECM) for Business and Hustler Opportunities. With over 20 years of senior leadership experience spanning multinational corporations, trade associations, and public service, she has built a reputation as a highly efficient, action-oriented corporate governance expert.",
-    ],
-  },
-  {
-    slug: "john-ololtuaa",
-    name: "John Lekakeny Ololtuaa",
-    role: "Principal Secretary, Basic Education",
-    org: "Ministry of Education",
-    photo: "/img/keynote-john-ololtuaa.jpg",
-    label: "Keynote speaker",
-    bio: [
-      "John Lekakeny Ololtuaa is Principal Secretary for Basic Education in Kenya's Ministry of Education, appointed to the role in June 2026. Born in Kilgoris, Narok County, he holds a Bachelor of Education (Arts) and a Master's degree in Education Administration, both from Kenyatta University.",
-      "He began his career in the education sector as a teacher in 1993, later serving as a school principal and as a district and county director of education. He went on to serve in the Transition Authority as County Transition Coordinator for Narok County, helping oversee Kenya's shift to a devolved system of governance, and was appointed Principal Secretary in the State Department of Tourism in September 2022 before his transfer to Basic Education.",
     ],
   },
 ] as const;

@@ -176,6 +176,19 @@ export default function Page() {
             would have orphaned him), and 2-up/3-up both divide six evenly
             too, so no breakpoint shows a short last row.
 
+            Widened to 2-up/4-up/7-up on 3 October 2026 when Shaukat
+            Abdulrazak joined as the seventh — seven has no clean even
+            split, so this picks the breakpoints that avoid a lone orphan
+            card at tablet and desktop rather than chasing a perfect grid
+            everywhere: 7-up at desktop is still one full row, and md:4-up
+            gives tablet a balanced 4+3 instead of 3-up's 3+3+1. sm:2-up is
+            the one spot that still ends in a single trailing card (2+2+2+1)
+            — same tradeoff this grid already accepted at five keynotes,
+            left as-is rather than fixed with a breakpoint no other size
+            needs. Order within the grid is also no longer "Gitau first" —
+            see the KEYNOTES comment in lib/event.ts for the full reasoning;
+            array order is still display order, full stop.
+
             The portraits also picked up .keynote-frame the same day —
             rounded corners, a soft shadow and a faint sheen, at ICL's
             request for a "classy, floating" feel. That's a deliberate
@@ -194,11 +207,12 @@ export default function Page() {
               <p className="lede mt-5 text-ink/60 max-w-2xl mx-auto text-[16px]">
                 Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
                 Teachers Service Commission, Nairobi County&rsquo;s CECM for Business
-                and Hustler Opportunities, and the Principal Secretary for Basic
-                Education, setting the tone before six tracks open.
+                and Hustler Opportunities, and two Principal Secretaries &mdash;
+                Basic Education, and Science, Research &amp; Innovation &mdash;
+                setting the tone before six tracks open.
               </p>
             </Reveal>
-            <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+            <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
               {KEYNOTES.map((k, i) => (
                 <Reveal key={k.slug} delay={Math.min(i, 5) * 80}>
                   <div className="keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise">
