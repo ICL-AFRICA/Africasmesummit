@@ -36,10 +36,7 @@ import { EVENT } from "@/lib/event";
    relabelled to "Academia" the same day, same request — the href is
    unchanged, still /papers, only the link text changed. "Providers"
    (/providers) added 1 October 2026, same request, for the new service
-   providers directory — "Service Providers" was too long/wide for this
-   row (every other label is one short word), so the nav text is the
-   shortened "Providers" while the page itself is titled "Service
-   Providers" in full.
+   providers directory.
 
    Reordered 2 October 2026 at ICL's (boss's) request: Exhibit now comes
    before Partner (was the other way round), and Providers moved from
@@ -47,23 +44,80 @@ import { EVENT } from "@/lib/event";
    not mentioned in that request and keep their existing positions — first
    and last two respectively.
 
-   The row is measured rather than assumed, every time an item is added OR
-   reordered — a reorder changes nothing about total width, but is still
-   re-measured here on the belief that an untested change is an unverified
-   one. At the lg breakpoint itself — 1024px, the tightest width this nav
-   is ever shown at, since below it the whole nav collapses into
-   MobileNav — the lockup, nine links and the ticket button were
-   re-measured in a real build to confirm they still fit on one line with
-   no wrap or overlap (see the commit that added this line for how).
-   Adding a tenth needs the same re-measure at 1024, not at 1440 where
-   there is hundreds of pixels spare. */
+   "Speakers" relabelled "Speakers & Panelists" and "Providers" relabelled
+   "Service Provider" on 3 October 2026, at ICL's explicit request for
+   these exact strings — hrefs unchanged (/speakers, /providers), this is
+   display text only. This reopens a tradeoff flagged when "Providers" was
+   first added: "Service Providers" was deliberately shortened back then
+   because every other label was one short word and the longer name didn't
+   fit; ICL's request this time names the exact, longer strings to use
+   instead, so the row is now visibly uneven in label length — a known,
+   requested tradeoff, not an oversight.
+
+   That length increase is also what pushed the desktop/mobile switch from
+   lg (1024px) — measured, not assumed, same as every change to this row
+   before it. With the two longer labels and whitespace-nowrap (added the
+   same day — without it the longer labels wrapped onto 2-3 lines inside
+   their own link instead of widening the row, which is worse than what it
+   replaced), the nine links plus lockup plus ticket button no longer fit
+   at 1024 even after tightening this row's gaps and padding as far as they
+   reasonably go — the floating pill treatment on the homepage (`overlay`,
+   inset-x-8 on both sides) is the tightest case, and a real build at 1024
+   still overflowed the header's own right edge by ~90px after tightening.
+   CLAUDE.md's "nothing below 16px" rule rules out shrinking the text
+   further to close that gap, and cramming gaps/padding any tighter started
+   to look broken rather than merely cosy, so spacing was abandoned as the
+   fix and the breakpoint itself moved instead.
+
+   xl (1280px) was tried first, reusing a value this file already uses
+   elsewhere (ticket button padding), on the theory that a named breakpoint
+   is cleaner than a bespoke one — but with the full-width labels and
+   generous spacing restored, a real build at 1280 still overflowed by
+   ~115px (ticket button's right edge well past the header's own right
+   edge on the homepage's floating pill). xl was not close enough to be a
+   rounding choice; it was the wrong breakpoint outright.
+
+   The actual natural-fit width was then found by force-rendering the nav
+   at full width (bypassing its hidden/flex breakpoint class entirely) and
+   measuring its unconstrained right edge against the header at a range of
+   viewport widths, on the homepage (worst case, `overlay`'s inset-x-8
+   floating pill) and confirmed on an interior page too. That put the bare
+   minimum fit at ~1400px (essentially flush, ~5px of overflow still at
+   1400 itself). `min-[1440px]` — a bespoke Tailwind arbitrary-value
+   breakpoint — was chosen as the first round number clear of that
+   minimum, leaving about 32px of margin rather than sitting flush against
+   it; `2xl` (1536px) was rejected as an unnecessarily large compromise
+   that would hide the full nav on a wider range of ordinary desktop
+   widths (1440–1535px) than the measured minimum requires.
+
+   Below min-[1440px], `nav` and MobileNav's hamburger now swap at the same
+   breakpoint (both were `lg:hidden`/`hidden lg:flex`, both are now
+   `min-[1440px]:hidden`/`hidden min-[1440px]:flex` — see
+   components/MobileNav.tsx). The header's own shape — background, and the
+   `overlay` variant's absolute/rounded/floating treatment — still switches
+   at lg, unchanged: between 1024 and 1440 the homepage now shows the
+   floating white pill with just the lockup, hamburger and ticket button
+   inside it, which is a clean, intentional state, not a half-migrated one.
+   --header-flow in globals.css is keyed to the header's own lg breakpoint,
+   not to the nav's, so it did not need to change.
+
+   The row is measured rather than assumed, every time an item is added,
+   reordered OR relabelled — a reorder or relabel changes total width even
+   when the item count doesn't, so it gets the same re-measure as an
+   addition would. At the min-[1440px] breakpoint itself — now the
+   tightest width this nav is ever shown at, since below it the whole nav
+   collapses into MobileNav — the lockup, nine links and the ticket button
+   were re-measured in a real build to confirm they still fit on one line
+   with real margin (~32px) to spare. Adding a tenth, or lengthening a
+   label again, needs the same re-measure at 1440 now, not at 1024 or
+   1280. */
 const NAV = [
   { label: "Home", href: "/" },
-  { label: "Speakers", href: "/speakers" },
+  { label: "Speakers & Panelists", href: "/speakers" },
   { label: "SMEs", href: "/network" },
   { label: "Exhibit", href: "/exhibit" },
   { label: "Partner", href: "/partner" },
-  { label: "Providers", href: "/providers" },
+  { label: "Service Provider", href: "/providers" },
   { label: "Academia", href: "/papers" },
   { label: "Press", href: "/press" },
   { label: "Contact", href: "/contact" },
@@ -115,12 +169,12 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
             SUMMIT
           </span>
         </Link>
-        <nav className="hidden lg:flex items-center gap-2.5 xl:gap-8 text-[16px]">
+        <nav className="hidden min-[1440px]:flex items-center gap-8 text-[16px]">
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
-              className={current === n.href ? "text-ink" : "text-ink/60 hover:text-ink transition-colors"}
+              className={`whitespace-nowrap ${current === n.href ? "text-ink" : "text-ink/60 hover:text-ink transition-colors"}`}
             >
               {n.label}
             </Link>
