@@ -99,7 +99,50 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── The statement ─────────────────────────────────────────── */}
+        {/* ── Trailer ────────────────────────────────────────────── */}
+        {/* Added 3 October 2026 at ICL's (boss's) request — purely additive:
+            HeroMosaic above is untouched, nothing was removed or replaced,
+            so there is nothing to "revert" here beyond deleting this one
+            section if it doesn't work out. Placed right after the hero
+            rather than folded into it, because the clip is a complete,
+            narrated promo reel with its own titles, stats and a closing
+            call-to-action (ending on "AfricaSMESummit.com") — content
+            meant to be watched and heard, not muted background texture
+            behind other text the way HeroMosaic's photography is. Native
+            controls, not autoplay: the clip carries real narration/music
+            (-12.4dB mean volume, not silence), and autoplaying 47 seconds
+            of sound at anyone who lands on the page is the wrong call even
+            where browsers would allow it.
+
+            Source file was 1920x1080, 60MB for 47 seconds (~10.2 Mbps) —
+            far past the "keep it to a few MB" rule in
+            public/video/updates/README.md. Re-encoded to 1280x720, CRF 26,
+            96kbps AAC audio kept: 5.6MB, same rule this site already
+            applies to every other clip, just a bigger source to start
+            from. `poster` is a clean frame grabbed before the logo
+            wipe-transition starts (0.5s in already shows it), so the card
+            doesn't show the brand mark twice before anyone presses play. */}
+        <section className="bg-ink tint-indigo">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
+            <Reveal>
+              <Head eyebrow="Watch" dark>
+                See the summit before you walk in
+              </Head>
+            </Reveal>
+            <Reveal delay={80} className="mt-10">
+              <video
+                controls
+                preload="none"
+                poster="/video/hero/africa-sme-summit-trailer-poster.webp"
+                className="w-full aspect-video bg-raise"
+              >
+                <source src="/video/hero/africa-sme-summit-trailer.mp4" type="video/mp4" />
+              </video>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ── The statement ───────────────────────────── */}
         <section className="bg-card tint-marigold">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-32 text-center">
             <Reveal>

@@ -5,6 +5,14 @@ import { EVENT } from "@/lib/event";
 /**
  * One header for every page. `overlay` floats it over the homepage hero
  * photograph; everywhere else it sits on the indigo with a hairline under it.
+ *
+ * Background changed from bg-paper (the site's warm #FBF8F3 ivory, used
+ * everywhere else) to a true bg-white 3 October 2026, at ICL's request to
+ * read as a crisp, government-site-style white bar rather than blending
+ * into the page's warm tone — referencing the Office of the Data
+ * Protection Commissioner's site as the look to match. Scoped to this one
+ * component: the warm paper tone is unchanged everywhere else on the site,
+ * this is purely the header's own background.
  */
 /* Nine items — "SMEs" (/network) added 30 September 2026 for the new
    SME-showcase page, relabelled from "Network" on 1 October 2026 at ICL's
@@ -70,10 +78,10 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
     <header
       className={
         overlay
-          ? `sticky top-0 z-40 bg-paper border-b border-rule lg:absolute lg:inset-x-0 lg:border-b-0 lg:bg-paper/95 lg:backdrop-blur ${
+          ? `sticky top-0 z-40 bg-white border-b border-rule lg:absolute lg:inset-x-0 lg:border-b-0 lg:bg-white/95 lg:backdrop-blur ${
               barOnMobile ? "lg:top-0" : "lg:top-11"
             }`
-          : "sticky top-0 z-40 bg-paper border-b border-rule lg:static"
+          : "sticky top-0 z-40 bg-white border-b border-rule lg:static"
       }
     >
       <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-5 xl:px-8 py-4 sm:py-5 flex items-center justify-between gap-4">
