@@ -47,12 +47,24 @@ export default function Page() {
       <SiteHeader overlay barOnMobile current="/" />
 
       <main>
-        {/* ── Hero: photography does the work ───────────────────────── */}
+        {/* ── Hero: the trailer fills the whole first screen ──────────── */}
         <section className="relative bg-ink">
-          {/* Height and floor both shrink by the header's flow height below
-              lg, so the headline keeps the position it had when the header
-              overlaid the hero rather than sitting above it. */}
-          <div className="relative h-[calc(86vh-var(--header-flow))] min-h-[calc(560px-var(--header-flow))] w-full overflow-hidden">
+          {/* Changed from 86vh to a full 100svh 3 October 2026 at ICL's
+            request ("the video to cover the full page") — now that the
+            hero is HeroVideo rather than a photo mosaic, "full page" reads
+            as the whole first screen on load, not the page's entire
+            scrollable length (a video background for every section below
+            would fight the legibility of their own text and copy real
+            bandwidth on every scroll). svh rather than vh: on a phone vh
+            includes the browser chrome that slides away on scroll, which
+            used to make the hero taller than the visible viewport at
+            first paint; svh is the space actually visible right now.
+            Height and floor both still shrink by the header's flow height
+            below lg, same reasoning as before — the header is sticky and
+            in-flow there, so without this the hero would be pushed down by
+            its own height and run past one full screen instead of filling
+            it exactly. */}
+          <div className="relative h-[calc(100svh-var(--header-flow))] min-h-[calc(640px-var(--header-flow))] w-full overflow-hidden">
             <HeroVideo />
             <div className="absolute inset-x-0 bottom-0">
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-10 sm:pb-14">

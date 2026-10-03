@@ -307,6 +307,25 @@ body {
   .hero-track { transform: translate3d(0, -12%, 0); }
 }
 
+/* ── Homepage nav: floating bar over the hero video ──────────────────
+   Added 3 October 2026 at ICL's request, once the homepage hero became a
+   full-bleed video (see components/HeroVideo.tsx and HeroMosaic's own
+   "superseded" note above): "a curved rectangle bar around the buttons,
+   hovering above the video" — the previous edge-to-edge white strip is
+   now an inset, rounded floating bar so footage shows through on all four
+   sides (components/SiteHeader.tsx, the `overlay` variant, lg+ only; see
+   its own doc comment for why this is already scoped to the homepage).
+   Same ink-tinted floating shadow .panel-card/.keynote-frame already use
+   for "lifted off the page" surfaces elsewhere on this site, reused
+   rather than invented fresh — minus their hover-lift transform, since a
+   persistent nav bar should hold still under the cursor the way a
+   clickable card does not. */
+.nav-float {
+  box-shadow:
+    0 24px 38px -20px rgba(25, 21, 57, 0.35),
+    0 8px 14px -8px rgba(25, 21, 57, 0.18);
+}
+
 /* ── Hero video ───────────────────────────────────────────────────────
    Added 3 October 2026, replacing the mosaic above as the homepage hero
    (components/HeroVideo.tsx; see its doc comment and HERO_VIDEO in

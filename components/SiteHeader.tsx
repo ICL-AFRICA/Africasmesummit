@@ -4,7 +4,7 @@ import { EVENT } from "@/lib/event";
 
 /**
  * One header for every page. `overlay` floats it over the homepage hero
- * photograph; everywhere else it sits on the indigo with a hairline under it.
+ * video; everywhere else it sits on the indigo with a hairline under it.
  *
  * Background changed from bg-paper (the site's warm #FBF8F3 ivory, used
  * everywhere else) to a true bg-white 3 October 2026, at ICL's request to
@@ -13,6 +13,22 @@ import { EVENT } from "@/lib/event";
  * Protection Commissioner's site as the look to match. Scoped to this one
  * component: the warm paper tone is unchanged everywhere else on the site,
  * this is purely the header's own background.
+ *
+ * At lg and up, the `overlay` variant changed again the same day from a
+ * full-width bar flush with the viewport's edges to an inset, rounded
+ * floating bar — ICL's request once the hero became a full-bleed video
+ * (components/HeroVideo.tsx): "a curved rectangle bar around the buttons,
+ * hovering above the video", so the footage reads as visible on all four
+ * sides of the nav rather than disappearing behind an edge-to-edge strip.
+ * `overlay` is only ever passed by app/page.tsx (grep it — nowhere else
+ * does), so this floating treatment is already scoped to the homepage with
+ * no extra prop needed; every other page keeps the plain full-width bar.
+ * Below lg this is untouched — still the plain full-width sticky bar it
+ * already was, since an inset pill at phone width would eat into already
+ * scarce side margin, and the .nav-float shadow (globals.css) is lg+ only
+ * for the same reason. Corner radius reuses 1.25rem, the exact value
+ * .panel-card/.keynote-frame already use for "lifted off the page"
+ * surfaces elsewhere on this site, rather than introducing a third radius.
  */
 /* Nine items — "SMEs" (/network) added 30 September 2026 for the new
    SME-showcase page, relabelled from "Network" on 1 October 2026 at ICL's
@@ -78,8 +94,8 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
     <header
       className={
         overlay
-          ? `sticky top-0 z-40 bg-white border-b border-rule lg:absolute lg:inset-x-0 lg:border-b-0 lg:bg-white/95 lg:backdrop-blur ${
-              barOnMobile ? "lg:top-0" : "lg:top-11"
+          ? `sticky top-0 z-40 bg-white border-b border-rule lg:absolute lg:inset-x-8 lg:border-b-0 lg:rounded-[1.25rem] lg:bg-white/95 lg:backdrop-blur nav-float ${
+              barOnMobile ? "lg:top-6" : "lg:top-[4.25rem]"
             }`
           : "sticky top-0 z-40 bg-white border-b border-rule lg:static"
       }
