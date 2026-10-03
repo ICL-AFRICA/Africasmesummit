@@ -2212,7 +2212,13 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
 
 
 /** Hero mosaic photography — East African enterprises at work.
-    Order matters: the first two of each column load eagerly. */
+    Order matters: the first two of each column load eagerly.
+
+    Superseded as the hero background 3 October 2026 (see HERO_VIDEO below
+    and components/HeroVideo.tsx) — kept here, still exported, still fully
+    wired into components/HeroMosaic.tsx, purely so a revert back to the
+    photo mosaic is a one-line import swap in app/page.tsx rather than a
+    rebuild. Do not delete either side while that's true. */
 export const HERO_IMAGES = [
   "/img/hero/basket-weaver.webp",
   "/img/hero/shopkeeper.webp",
@@ -2231,3 +2237,38 @@ export const HERO_IMAGES = [
   "/img/hero/studio.webp",
   "/img/hero/fruit-seller.webp",
 ] as const;
+
+/**
+ * The hero background video — the summit's own trailer, muted and looping
+ * behind the headline, replacing HERO_IMAGES/HeroMosaic above as the
+ * homepage's hero visual. Added 3 October 2026 at ICL's (boss's) explicit
+ * request: the trailer IS the landing-page video now, not a separate
+ * "Watch" section further down the page (an earlier pass built it as that
+ * separate section first, on a literal read of "add this video" — this
+ * replaces that with what was actually meant).
+ *
+ * This is the one place on the site that resolves the old `heroVideo` key
+ * the PHOTOS comment above still warns about — that key sat unused for
+ * weeks because no video existed yet to point it at. It is not revived
+ * here: a video isn't a photo, so it gets its own export instead of a slot
+ * inside PHOTOS.
+ *
+ * `src` is the exact file committed for the earlier "Watch" section
+ * (1280x720 h264/aac, re-encoded from a 1920x1080/60MB source — see the
+ * compression note that used to live here), with one change: its audio
+ * track has been stripped (`ffmpeg -an -c:v copy`, video stream untouched,
+ * 5.56MB → 4.97MB). "No audio" was explicit in ICL's request, and a muted
+ * <video> element still ships the silent audio track to every visitor's
+ * device unless the file itself has none — removing it is both the more
+ * literal fix and the smaller download.
+ *
+ * `poster` is unchanged — the same clean pre-logo-wipe frame the standalone
+ * player used, now doing double duty as the paint-before-video-loads frame
+ * AND as the entire visual for anyone with prefers-reduced-motion set (see
+ * .hero-video / .hero-video-poster in globals.css — swapped with CSS only,
+ * no JavaScript pausing a video element).
+ */
+export const HERO_VIDEO = {
+  src: "/video/hero/africa-sme-summit-trailer.mp4",
+  poster: "/video/hero/africa-sme-summit-trailer-poster.webp",
+} as const;

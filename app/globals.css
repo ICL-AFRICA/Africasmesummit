@@ -307,6 +307,20 @@ body {
   .hero-track { transform: translate3d(0, -12%, 0); }
 }
 
+/* ── Hero video ───────────────────────────────────────────────────────
+   Added 3 October 2026, replacing the mosaic above as the homepage hero
+   (components/HeroVideo.tsx; see its doc comment and HERO_VIDEO in
+   lib/event.ts). Both elements always exist in the DOM — the media query
+   below is the only thing deciding which one paints, so reduced-motion
+   visitors never have a <video> element autoplay out from under them in
+   the first place; nothing here calls .pause() or touches the DOM. */
+.hero-video { display: block; }
+.hero-video-poster { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+  .hero-video-poster { display: block; }
+}
+
 /* ── Mobile navigation panel ───────────────────────────────────────────
    A short fade and 10px settle, not a slide across the screen. The rest
    of this page holds still on purpose — the only motion is colour
