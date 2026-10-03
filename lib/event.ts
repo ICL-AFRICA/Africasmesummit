@@ -934,9 +934,15 @@ export const KEYNOTES = [
   {
     slug: "ayub-gitau",
     ...GUEST_OF_HONOUR,
-    // Was "Guest of Honour · 10:45" — that slot doesn't exist in the
-    // confirmed programme. He opens the day; corrected 19 September 2026.
-    label: "Welcome remarks · 8:50",
+    // Was "Welcome remarks · 8:50" until 3 October 2026 (itself corrected
+    // 19 September 2026 from an invented "Guest of Honour · 10:45" that
+    // didn't exist in the confirmed programme). ICL's request this time was
+    // to label him a keynote speaker like everyone else in this array,
+    // rather than call out his specific agenda slot on the card — he still
+    // opens the day with Welcome Remarks at 08:50 in the real running
+    // order (AGENDA below reads that straight from GUEST_OF_HONOUR, not
+    // from this label), this only changes what the card itself displays.
+    label: "Keynote speaker",
   },
   {
     slug: "njenga-munene",

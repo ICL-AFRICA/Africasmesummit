@@ -158,11 +158,13 @@ export default function Page() {
             grid, so the summit's headline names get room to breathe before
             the panel wall. Gitau still fills the running order's Welcome
             Remarks slot at 08:50 (see AGENDA — corrected 19 September 2026
-            against the confirmed programme, which has no 10:45 slot);
-            Mutungi, Munene and Mitei are keynote speakers without a single
-            fixed slot label of their own (Mitei does have her own AGENDA
-            session, at 10:00, but the card just says "Keynote speaker"
-            like Mutungi's and Munene's — see the KEYNOTES comment).
+            against the confirmed programme, which has no 10:45 slot), but
+            his card has said plain "Keynote speaker" since 3 October 2026,
+            same as everyone else's — ICL's request, to label him a keynote
+            speaker like the rest of this grid rather than call out his
+            specific slot here (see the comment on his KEYNOTES entry).
+            Mitei also has her own AGENDA session, at 10:00, and her card
+            says "Keynote speaker" too, same reasoning.
 
             Grid widened from a fixed 3-up to 2-up/4-up on 21 September 2026
             when Evaleen Mitei joined as the fourth keynote — a straight
