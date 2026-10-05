@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import Btn from "@/components/Btn";
 import {
-  EVENT, DATE_LONG, TICKET_CTA, SIGNATURE_OPPORTUNITIES,
+  EVENT, DATE_LONG, TICKET_CTA, SIGNATURE_OPPORTUNITIES, AGENDA,
   ACCELERATOR, ACCELERATOR_FACULTY, ACCELERATOR_SESSIONS,
   ACCELERATOR_GRADUATES, ACCELERATOR_CERTIFICATION, ACCELERATOR_AWARD_WINNERS,
 } from "@/lib/event";
 
 export const metadata: Metadata = {
-  title: `The Jiinue Business Accelerator — ${EVENT.name} ${EVENT.year}`,
+  title: `${ACCELERATOR.name} — ${EVENT.name} ${EVENT.year}`,
   description:
-    `${ACCELERATOR.tagline}, launching from the ${EVENT.name} stage, ${DATE_LONG} at ${EVENT.venue}.`,
+    `${ACCELERATOR.tagline}, live today at jiinuehub.com and introduced from the ${EVENT.name} stage, ${DATE_LONG} at ${EVENT.venue}.`,
   alternates: { canonical: "https://africasmesummit.com/accelerator" },
 };
 
@@ -19,6 +20,16 @@ export const metadata: Metadata = {
    (shared with /partner) — read from there rather than retyping the 16:30
    slot and its description a third time. */
 const AWARD = SIGNATURE_OPPORTUNITIES.find((o) => o.name === "The Africa SME Award 2026")!;
+
+/* The 10:30 "Launches" slot already carries Jiinue's own introduction,
+   alongside the three other things launching the same moment (Juapath's
+   research study, the SLP Project, next year's summit) — read straight
+   from AGENDA rather than retyped, so this stays correct if the running
+   order ever moves again. Rendered below as a real excerpt of the day's
+   schedule with Jiinue's own row picked out, not a separate claim about
+   the agenda that could drift from it. */
+const LAUNCHES = AGENDA.find((a) => a.title === "Launches")!;
+const LAUNCH_SESSIONS = LAUNCHES.sessions ?? [];
 
 /**
  * Shared "nothing to show yet" panel for a section whose backing list in
@@ -45,23 +56,89 @@ export default function Accelerator() {
       title={ACCELERATOR.name}
       lede={`${ACCELERATOR.tagline} — launching live from the summit stage at ${ACCELERATOR.launchTime} on ${EVENT.dateLabel}, introduced by the ${ACCELERATOR.launchIntroRole}.`}
     >
-      {/* About — what Jiinue actually does, in plain terms. Plain bg-ink,
-          no tint: this is the page's own read-this-first paragraph, not
-          one of the five named sections Mike asked for, so it stays
-          visually quieter than they are. */}
-      <section className="border-b border-line">
+      {/* About + "Live now" — what Jiinue actually does, then the actual
+          way in. Added 5 October 2026 when ICL corrected the page's own
+          premise: Jiinue isn't a future project, it's already built and
+          live at jiinuehub.com — so the page's job is getting a business,
+          service provider or academic institution to click through and
+          start, not just describing something not built yet. The two
+          halves below are deliberately paired in one section rather than
+          stacked as separate ones: left is the platform's own name as a
+          live link plus the direct call to action (ICL's exact line, in
+          ACCELERATOR.ctaLine); right is the real agenda slot it launches
+          in, pulled from AGENDA itself rather than retyped, with its own
+          row picked out from the other three things launching alongside
+          it at 10:30. Read together they tell the actual story — already
+          live today, AND introduced to the whole room on the day — rather
+          than making a reader piece that together from two separate
+          sections. */}
+      <section className="border-b border-line tint-indigo">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
-          <Reveal>
-            <p className="lede max-w-2xl text-[18px] text-white">{ACCELERATOR.body}</p>
-          </Reveal>
+          <div className="grid gap-12 lg:grid-cols-2 items-start">
+            <Reveal>
+              <p className="eyebrow text-indigo-t mb-3">Live now</p>
+              <h2 className="h-lg text-3xl sm:text-4xl max-w-xl">
+                <a
+                  href={ACCELERATOR.url}
+                  className="text-white underline decoration-white/30 underline-offset-8 hover:decoration-white transition-colors"
+                >
+                  {ACCELERATOR.name}
+                  <span aria-hidden="true" className="text-[20px] ml-2">↗</span>
+                </a>
+              </h2>
+              <p className="lede mt-5 max-w-xl text-[17px] text-white">{ACCELERATOR.body}</p>
+              <p className="h-sm text-white text-xl mt-7 max-w-xl">{ACCELERATOR.ctaLine}</p>
+              <Btn href={ACCELERATOR.url} tone="gold" className="mt-6">{ACCELERATOR.ctaButton}</Btn>
+            </Reveal>
+
+            <Reveal delay={90}>
+              <p className="eyebrow text-indigo-t mb-3">On the agenda</p>
+              <h3 className="h-sm text-white text-xl sm:text-2xl max-w-md">
+                Introduced live, {LAUNCHES.time} on {EVENT.dateLabel}
+              </h3>
+              <div className="mt-6 panel-card bg-ink p-5 sm:p-6">
+                {LAUNCH_SESSIONS.map((s) => {
+                  const isJiinue = s.title.toLowerCase().includes("jiinue");
+                  return (
+                    <div
+                      key={s.title}
+                      className="flex items-baseline gap-3 py-3 border-b border-line last:border-b-0"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`h-1.5 w-1.5 shrink-0 rounded-full mt-1.5 ${isJiinue ? "bg-marigold" : "bg-white/20"}`}
+                      />
+                      <span className="font-mono tabular-nums text-[12px] text-white/50 shrink-0 w-11">
+                        {LAUNCHES.time}
+                      </span>
+                      <div>
+                        <p className={`text-[15px] text-white ${isJiinue ? "font-semibold" : ""}`}>{s.title}</p>
+                        <p className="text-[13px] text-white/60 mt-0.5">{s.note}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="mt-4 text-[14px] text-white/60">
+                <Link href="/#agenda" className="underline underline-offset-4 hover:text-white transition-colors">
+                  See the full day&rsquo;s agenda
+                </Link>
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ── Faculty ────────────────────────────────────────────────── */}
-      <section className="border-b border-line tint-indigo">
+      {/* tint-palm, not indigo — the new "Live now" section above this
+          one (added 5 October 2026) already uses tint-indigo, and two
+          identically-tinted sections back to back reads as one long
+          block rather than two. Palm was otherwise next unused going
+          into Sessions (plain) and Graduants (marigold) below. */}
+      <section className="border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
-            <p className="eyebrow text-indigo-t mb-3">Faculty</p>
+            <p className="eyebrow text-palm-t mb-3">Faculty</p>
             <h2 className="h-lg text-white text-3xl sm:text-4xl max-w-2xl">
               The mentors and instructors behind each module
             </h2>
@@ -110,8 +187,9 @@ export default function Accelerator() {
             {ACCELERATOR_SESSIONS.length === 0 ? (
               <Reveal>
                 <ComingSoon>
-                  The session list is published once the first cohort's modules
-                  are set — each one will appear here with what it covers.
+                  Capacity-building runs as modules on Jiinue Hub itself — the
+                  published list of sessions will appear here once the first
+                  cohort's modules are set.
                 </ComingSoon>
               </Reveal>
             ) : (
@@ -168,12 +246,19 @@ export default function Accelerator() {
       </section>
 
       {/* ── Certification ──────────────────────────────────────────── */}
+      {/* Unlike Faculty/Sessions/Graduants/Award winners above and below,
+          this isn't a "to be announced" section — certification is a real,
+          already-live mechanism of the platform itself, confirmed by ICL
+          5 October 2026 (see the doc comment on ACCELERATOR_CERTIFICATION
+          in lib/event.ts). No ComingSoon panel here; the body states the
+          mechanism plainly, with a direct way to start it. */}
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-palm-t mb-3">Certification</p>
-            <h2 className="h-lg text-white text-3xl sm:text-4xl max-w-2xl">What graduating earns you</h2>
+            <h2 className="h-lg text-white text-3xl sm:text-4xl max-w-2xl">What completing it earns you</h2>
             <p className="lede mt-5 max-w-2xl text-[17px] text-white">{ACCELERATOR_CERTIFICATION.body}</p>
+            <Btn href={ACCELERATOR.url} tone="onDark" className="mt-7">Get certified on Jiinue Hub</Btn>
           </Reveal>
         </div>
       </section>

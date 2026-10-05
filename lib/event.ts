@@ -1824,37 +1824,47 @@ export const SIGNATURE_OPPORTUNITIES = [
 ] as const;
 
 /**
- * /accelerator — a new page for the Jiinue Business Accelerator, added
- * 5 October 2026 at Mike's (ICL CEO's) request, in five sections: Faculty,
- * Sessions, Graduants, Certification, and Africa SME Award winners.
+ * /accelerator — a new page for the Jiinue Business Accelerator Platform,
+ * added 5 October 2026 at Mike's (ICL CEO's) request, in five sections:
+ * Faculty, Sessions, Graduants, Certification, and Africa SME Award
+ * winners.
  *
- * The Accelerator does not exist as a running programme yet — it launches
- * from the summit stage at 10:30 on EVENT.dateLabel (see the matching
- * AGENDA slot and the "platform launch" entry in SIGNATURE_OPPORTUNITIES
- * above, both of which this reuses rather than retyping). That means there
- * is no faculty, session list, graduate or certification detail to publish
- * today, and the Africa SME Award's winners aren't named until the
- * ceremony at 16:30 the same day. Rather than invent placeholder names,
- * every list below (ACCELERATOR_FACULTY, _SESSIONS, _GRADUATES,
- * _AWARD_WINNERS) starts empty and /accelerator shows an honest "to be
- * announced"-style notice in its place — the same convention
- * SUMMIT_UPDATES/TAG_ORDER already uses on /press ("a tag with nothing
- * posted to it yet simply renders no section at all"). Add real entries
- * here once the programme actually has faculty, a session list, graduates
- * or named winners, in the same shape KEYNOTES/SPEAKERS already use, and
- * the matching notice on /accelerator disappears on its own.
+ * CORRECTED 5 October 2026, same day: the platform is not a future
+ * project — it is already built and live at jiinuehub.com, and already
+ * handles assessments, capacity-building, matching businesses to service
+ * providers and investors, and certifying attendees. The page's job
+ * changed from "describe something not built yet" to "get the right
+ * people (businesses, service providers, academia) to click through and
+ * start" — ACCELERATOR.url, .ctaLine and .ctaButton below exist for that,
+ * and ACCELERATOR_CERTIFICATION now states the real mechanism (certified
+ * on the platform itself) rather than holding the detail back.
  *
- * ACCELERATOR_CERTIFICATION is a single description rather than a list —
- * there is one certificate, not several — and stays equally honest: what
- * it is in general terms, with the issuing details held back until they
- * are actually confirmed rather than guessed at here.
+ * What is still unconfirmed is the summit-day specifics: who is on the
+ * faculty roster, what the first cohort's individual sessions are called,
+ * and who the actual graduates and Africa SME Award winners are — the
+ * platform launches live from the summit stage at 10:30 on
+ * EVENT.dateLabel (see the matching AGENDA slot and the "platform launch"
+ * entry in SIGNATURE_OPPORTUNITIES above, both reused rather than
+ * retyped), and the Award's winners aren't named until the 16:30 ceremony
+ * the same day. Rather than invent placeholder names, every list below
+ * (ACCELERATOR_FACULTY, _SESSIONS, _GRADUATES, _AWARD_WINNERS) starts
+ * empty and /accelerator shows an honest "to be announced"-style notice
+ * in its place — the same convention SUMMIT_UPDATES/TAG_ORDER already
+ * uses on /press ("a tag with nothing posted to it yet simply renders no
+ * section at all"). Add real entries here once the programme actually has
+ * a faculty roster, a session list, graduates or named winners, in the
+ * same shape KEYNOTES/SPEAKERS already use, and the matching notice on
+ * /accelerator disappears on its own.
  */
 export const ACCELERATOR = {
-  name: "The Jiinue Business Accelerator",
+  name: "The Jiinue Business Accelerator Platform",
+  url: "https://jiinuehub.com",
   tagline: "Kenya's enterprise assessment and investor-matching platform",
   launchTime: "10:30",
   launchIntroRole: "Principal Secretary, State Department for Science, Research & Innovation",
-  body: "Jiinue assesses a business, then matches it with the investors, lenders and partners most likely to actually back it — built to shorten the distance between a business that is ready to grow and the capital that could get it there. It launches live from the summit stage, then continues as a working programme afterwards.",
+  body: "Jiinue assesses a business, then matches it with the investors, lenders and service providers most likely to actually back it — built to shorten the distance between a business that is ready to grow and the capital that could get it there. The platform is live today at jiinuehub.com; the summit stage is where it's introduced to the room, not where it begins.",
+  ctaLine: "If you're a business, a service provider or in academia — click to start today.",
+  ctaButton: "Start on Jiinue Hub",
 } as const;
 
 export const ACCELERATOR_FACULTY: readonly {
@@ -1867,8 +1877,15 @@ export const ACCELERATOR_GRADUATES: readonly {
   name: string; business: string; photo?: string;
 }[] = [];
 
+/**
+ * Unlike the other four ACCELERATOR_* lists, this one isn't "to be
+ * announced" — certification is a real, already-live mechanism of the
+ * platform itself (confirmed by ICL 5 October 2026), not a detail waiting
+ * on the first cohort. `body` says so plainly; see the ACCELERATOR doc
+ * comment above for why this differs from the others.
+ */
 export const ACCELERATOR_CERTIFICATION = {
-  body: "Businesses that complete the Accelerator's programme receive a certificate of completion. The issuing partners and the requirements behind it will be published here once the programme's modules are confirmed.",
+  body: "Certification happens on the platform itself. Complete your assessment and capacity-building modules on Jiinue Hub, and your certificate of completion is issued from there — there's no separate process to chase.",
 } as const;
 
 export const ACCELERATOR_AWARD_WINNERS: readonly {
