@@ -60,26 +60,28 @@ export default function Partner() {
               <span aria-hidden="true" className="text-[12px]">↓</span>
             </a>
           </Reveal>
-          {/* Changed 20 September 2026 at ICL's request: each card now spells
-              out everything that tier actually gets — the full cumulative
-              list, flattened from every tier up to and including this one
-              (SPONSOR_TIERS itself still only stores what's NEW at each
-              tier; see the comment there) — rather than "everything in the
-              tier before, plus" and just the new bullets. A sponsor reading
-              only the Platinum card should see all seventeen things they
-              get without having to add up three other cards first.
+          {/* Each card spells out everything that tier actually gets.
+              Until 5 October 2026 this was a cumulative list flattened
+              from every tier up to and including this one, because
+              SPONSOR_TIERS only stored what was NEW at each tier — that
+              broke once ICL's replacement package lists gave each tier
+              its own absolute delegate-pass count and Gold/Platinum
+              different speaking-slot lengths, which flattening would have
+              shown as two contradictory counts on one card. SPONSOR_TIERS
+              now stores each tier's complete list directly, so this just
+              reads `t.includes` — see the matching comment in lib/event.ts.
               Deliberately NOT equal-height any more (items-start, no
-              flex-1 slack-absorber): a four-bullet Bronze card and a
-              seventeen-bullet Platinum card are supposed to look like
-              different amounts of value, not be forced to the same size.
-              The "Book" button sits right after each card's own content,
-              wherever that lands. */}
+              flex-1 slack-absorber): a six-bullet Bronze card and a
+              nine-bullet Platinum card are supposed to look like different
+              amounts of value, not be forced to the same size. The "Book"
+              button sits right after each card's own content, wherever
+              that lands. */}
           {/* .panel-card (globals.css) — real gap + floating shadow,
               replacing the shared-hairline seam, same as every other card
               grid on the site now. */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 items-start">
             {SPONSOR_TIERS.map((t, i) => {
-              const included = SPONSOR_TIERS.slice(0, i + 1).flatMap((tier) => tier.includes);
+              const included = t.includes;
               return (
                 <Reveal
                   key={t.tier}

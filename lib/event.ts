@@ -1704,11 +1704,13 @@ export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
 export const PARTNERSHIP_PROPOSAL_URL = "/partnership/africa-sme-summit-2026-partnership-proposal.pdf";
 
 /**
- * Sponsorship packages, sourced 21 September 2026 from the actual
- * partnership proposal document (PARTNERSHIP_PROPOSAL_URL above) — not
- * drafted, not TikoHub's name-and-price-only listing. Tier names and
- * prices still match TikoHub to the shilling; `title`, `limit`, `cta` and
- * every `includes` bullet now come from the signed-off proposal.
+ * Sponsorship packages. Tier names (`tier`) and prices are unchanged since
+ * the 21 September 2026 partnership-proposal sourcing; every `includes`
+ * list below was replaced 5 October 2026 with the four exact package
+ * lists ICL shared directly in chat (its own current, authoritative
+ * version — not the proposal PDF's wording, which this supersedes for
+ * `includes` only; PARTNERSHIP_PROPOSAL_URL above still links the PDF
+ * itself and was not asked to change).
  *
  * `title` is the proposal's own name for the tier ("Associate Partner" for
  * Bronze, and so on) — shown alongside the metal name on /partner, not in
@@ -1720,30 +1722,31 @@ export const PARTNERSHIP_PROPOSAL_URL = "/partnership/africa-sme-summit-2026-par
  * not a checkout, so its button points at the enquiry form on this page
  * rather than BOOKING_URL. See the tier === "Platinum" check on /partner.
  *
- * ORDER IS ASCENDING (Bronze → Platinum) AND IS LOAD-BEARING. Each tier's
- * `includes` should only ever list what is genuinely NEW at that tier,
- * never repeat what a lower tier already grants — /partner derives the
- * full cumulative list a tier actually gets by flattening `includes` from
- * every tier up to and including it (`SPONSOR_TIERS.slice(0, i + 1)`),
- * rather than retyping each tier's complete bullet list here. Reordering
- * this array changes what /partner claims every tier includes, not just
- * the order they're drawn in.
- *
- * Platinum's "Premium exhibition booth" is the one bullet that is not a
- * new grant so much as an upgrade of Silver's plain "Exhibition booth" —
- * the proposal's own table shows it the same way (the Platinum column
- * reads "Premium" in the row every other tier just ticks). Left as its own
- * bullet rather than modelled as a real upgrade mechanism — one word of
- * difference did not justify a second field.
+ * MODEL CHANGED 5 October 2026. `includes` USED TO hold only what was
+ * genuinely new at each tier, with /partner flattening every tier up to
+ * and including a card's own to build its full list
+ * (`SPONSOR_TIERS.slice(0, i + 1)`). That broke under the new lists: ICL
+ * gave each tier a different, absolute delegate-pass count (4, 5, 6, 8)
+ * and Gold/Platinum different speaking-slot lengths (7 min, 10 min), and
+ * flattening those as "new" bullets on top of lower tiers would show two
+ * contradictory counts on one card (e.g. Platinum reading "Six delegate
+ * passes" AND "Eight delegate passes"). `includes` now holds each tier's
+ * complete, standalone list, exactly as shared and in the order given,
+ * and /partner reads `t.includes` directly with no flattening — see the
+ * matching comment there. Reordering this array no longer changes what
+ * any other tier claims to include; each tier's card is just its own
+ * array now.
  */
 export const SPONSOR_TIERS = [
   {
     tier: "Bronze", title: "Associate Partner", price: "125,000", currency: "KES",
     limit: "Open", cta: "Secure Associate", featured: false,
     includes: [
-      "Logo on the website and the delegate pack",
-      "Two delegate passes",
+      "3×3m exhibition booth",
+      "Four delegate passes",
       "Materials in the delegate bag",
+      "Logo on the website, delegate pack and any related Summit communication",
+      "Copy of the post-summit report",
       "Named in the post-summit report",
     ],
   },
@@ -1751,31 +1754,43 @@ export const SPONSOR_TIERS = [
     tier: "Silver", title: "Platform Partner", price: "250,000", currency: "KES",
     limit: "Open", cta: "Secure Platform", featured: false,
     includes: [
-      "Panel or speaking slot",
-      "Exhibition booth",
-      "Four delegate passes",
-      "Logo on the printed programme",
+      "45-minute track panel slot",
+      "3×3m exhibition booth",
+      "Five delegate passes",
+      "Materials in the delegate bag",
+      "Logo on the website, delegate pack and any related Summit communication",
+      "Copy of the post-summit report",
+      "Named in the post-summit report",
     ],
   },
   {
     tier: "Gold", title: "Track Partner", price: "500,000", currency: "KES",
     limit: "6 — one per track", cta: "Claim a track", featured: false,
     includes: [
-      "Your name on one of the six tracks",
-      "Chair or co-chair that track's sessions",
+      "7-minute speaking opportunity to all delegates",
+      "45-minute track panel slot",
+      "Track chair or co-chair",
+      "3×3m exhibition booth",
       "Six delegate passes",
+      "Materials in the delegate bag",
+      "Logo on the website, delegate pack and any related Summit communication",
+      "Copy of the post-summit report",
+      "Named in the post-summit report",
     ],
   },
   {
     tier: "Platinum", title: "Convening Partner", price: "1,000,000", currency: "KES",
     limit: "1 only", cta: "Enquire", featured: true,
     includes: [
-      "Named alongside the summit on all materials",
-      "Opening address from your leadership",
-      "Premium exhibition booth",
-      "Ten delegate passes",
-      "Logo on stage, badges and the delegate pack",
-      "Profile across ICL platforms reaching 10,000+",
+      "10-minute speaking opportunity to all delegates",
+      "45-minute track panel slot",
+      "Track chair or co-chair",
+      "3×3m exhibition booth",
+      "Eight delegate passes",
+      "Materials in the delegate bag",
+      "Logo on the website, delegate pack and any related Summit communication",
+      "Copy of the post-summit report",
+      "Named in the post-summit report",
     ],
   },
 ] as const;
