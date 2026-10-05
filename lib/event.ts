@@ -316,18 +316,6 @@ export const STUDENT_SOLD_OUT = true;
  */
 export const SPEAKERS = [
   {
-    slug: "susan-ndungu",
-    name: "Ms. Susan Ndungu",
-    role: "Head of SME Banking",
-    org: "NCBA Bank Kenya",
-    topic: "Finance, Capital & Investment",
-    draft: false,
-    bio: [
-      "Susan Ndungu is Head of SME Banking at NCBA Bank Kenya, bringing over 20 years of banking experience with a focus on solutioning for micro, small, medium, and corporate businesses.",
-      "She leads the development and execution of strategies to empower small and medium-sized enterprises across Kenya, with an approach centered on sustainable growth, tailored financial solutions, and a deep understanding of local market dynamics to drive resilience within the SME sector. Susan currently oversees 100 branches and more than 100 branch relationship managers who champion the SME banking agenda across the network.",
-    ],
-  },
-  {
     slug: "michael-maddy",
     name: "Mr. Michael Maddy",
     role: "CEO and Co-Founder",
@@ -522,13 +510,13 @@ export const SPEAKERS = [
     /* Added 24 September 2026 at ICL's request, placed at the end of the
        array next to Esther Mwangi (no track order was specified). Topic
        set to Finance, Capital & Investment as the closest fit to a SACCO/
-       banking background — same track as Susan Ndungu — but this is an
-       inference, not an organiser-confirmed placement; correct it once one
-       is given. bio is drafted from public reporting (Kimisitu Sacco's own
-       leadership page, Co-op News, ZoomInfo), not her own submitted words
-       — hence draft: true, per the rule at the top of this array: nothing
-       here may be presented as her approved biography until she has
-       signed off on it. */
+       banking background, but this is an inference, not an organiser-
+       confirmed placement; correct it once one is given. bio is drafted
+       from public reporting (Kimisitu Sacco's own leadership page, Co-op
+       News, ZoomInfo), not her own submitted words — hence draft: true,
+       per the rule at the top of this array: nothing here may be
+       presented as her approved biography until she has signed off on
+       it. */
     topic: "Finance, Capital & Investment",
     draft: true,
     bio: [
@@ -1062,7 +1050,7 @@ export const AGENDA: readonly AgendaSlot[] = [
     time: "12:00",
     title: "Parallel sessions — four tracks",
     sessions: [
-      { title: "Finance, Capital & Investment", note: "Susan Ndungu, Head of MSME Banking, NCBA, with Prof. Kellen Kiambati (Karatina University), Dr. Eric Wamuya (Machakos University), Wanjau Nduba, Nils Lindh and Barbara Lutomia (the Swarm Initiative), and Patrick Maina (Intellect Illumini Advisory, MSEA)" },
+      { title: "Finance, Capital & Investment", note: "Prof. Kellen Kiambati (Karatina University), Dr. Eric Wamuya (Machakos University), Wanjau Nduba, Nils Lindh and Barbara Lutomia (the Swarm Initiative), and Patrick Maina (Intellect Illumini Advisory, MSEA)" },
       { title: "Climate action and sustainability", note: "Jenney Jakobsson, Co-Founder, Sustainable World Corporation, with Roam Electric; Peter Lemaron, CEO, Lemaxon Energy Solutions; Cooperative Bank of Kenya; Vincent Sila, CEO, Datalock; Canopy Insurance Company; ICEA Lion Insurance Company; and NTSA" },
       { title: "Industry and academia collaboration", note: "Dr. Henry Yatich, Principal, Graduate Studies and Research, Mount Kenya University; Dr. Faith Yator, Kabarak University; Jenny Jakobsson, Co-Founder, Sustainable World Corporation" },
       { title: "Paper presentations", note: "Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant" },
@@ -1577,7 +1565,6 @@ export const PHOTOS = {
      seeded Picsum URL, e.g.
        floor: "https://picsum.photos/seed/asm-floor/1600/900"                */
   speakers: [
-    "/img/speaker-1.jpg",
     "/img/speaker-3.jpg",
     "/img/speaker-4.jpg",
     "/img/speaker-5.jpg",
@@ -1947,7 +1934,7 @@ export const PRESS_RELEASE = {
     "The Africa SME Summit, a new one-day convening for Kenya's small business economy, will take place October 15, 2026, at the Chandaria Centre for Performing Arts, University of Nairobi. The summit is convened by I Choose Life – Africa in partnership with the University of Nairobi, and brings investors, banks, universities, and government together with the enterprises they exist to serve — for one day, in one room.",
     "Kenya is home to 7.4 million micro, small, and medium enterprises. Most of them operate informally, cut off from capital, from markets beyond their own county, and from the research being done about them at universities down the road. The Africa SME Summit was built to close that distance.",
     "The summit is organized around four constituencies — industry, academia, capital, and enterprise — meeting across six tracks: finance and investment, market access and cross-border trade, talent and human resources, AI and technology adoption, industry-academia collaboration, and strengthening Kenya's entrepreneurship ecosystem.",
-    "Confirmed speakers include Susan Ndungu, Head of SME Banking at NCBA Bank Kenya; Michael Maddy, CRO and Co-Founder of Fleet Planner; Dr. Henry K. Yatich, Principal of the College of Graduate Studies and Research at Mount Kenya University; Dr. Hilda Muteshi of SUS-AFRIC; Salome Ayugi, Associate Director at Sinapis; Victor Sila, founder of the AI learning platform JuaPath, who leads the summit's AI and Technology track; and Eng. Mike Mutungi, who convenes the summit and speaks on strengthening Kenya's entrepreneurship ecosystem.",
+    "Confirmed speakers include Michael Maddy, CRO and Co-Founder of Fleet Planner; Dr. Henry K. Yatich, Principal of the College of Graduate Studies and Research at Mount Kenya University; Dr. Hilda Muteshi of SUS-AFRIC; Salome Ayugi, Associate Director at Sinapis; Victor Sila, founder of the AI learning platform JuaPath, who leads the summit's AI and Technology track; and Eng. Mike Mutungi, who convenes the summit and speaks on strengthening Kenya's entrepreneurship ecosystem.",
     "Attendees will leave with more than information: mentor and investor matching within their track, templates and tools they can put to use immediately, and access to a papers call for those doing original research on the sector. The summit's institutional partners include the University of Nairobi, Mount Kenya University, Zetech University, and the Association of Startup and SME Enablers of Kenya (ASSEK), alongside county and international partners.",
   ],
   quotes: [
