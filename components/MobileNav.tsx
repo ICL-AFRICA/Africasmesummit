@@ -6,7 +6,7 @@ import Btn from "@/components/Btn";
 import { EVENT, TICKET_CTA } from "@/lib/event";
 
 /**
- * Navigation below min-[1440px] (a bespoke Tailwind breakpoint) — was below
+ * Navigation below min-[1560px] (a bespoke Tailwind breakpoint) — was below
  * 1024px (lg) until 3 October 2026, when "Speakers" and "Providers" were
  * relabelled to the much longer "Speakers & Panelists" and "Service
  * Provider" and the full nine-item row no longer fit at 1024 even after
@@ -18,11 +18,21 @@ import { EVENT, TICKET_CTA } from "@/lib/event";
  * Force-rendering the nav at full width and measuring against the header
  * across a range of viewports put the true minimum at ~1400px, so
  * min-[1440px] was picked as the nearest round number clear of that floor
- * (~32px to spare), rejecting 2xl (1536px) as a needlessly large
- * compromise. Both `lg:hidden` below were changed to `min-[1440px]:hidden`
- * to match SiteHeader's `hidden min-[1440px]:flex`, so the two stay in
- * lockstep — a screen shows either this hamburger or that full row, never
- * both or neither.
+ * (~32px to spare).
+ *
+ * Moved again 5 October 2026, when "Accelerator" (/accelerator) was added
+ * as a tenth nav item: the same re-measure (required on every add, not
+ * assumed) showed the homepage's natural zero-overflow point had moved
+ * out to ~1518px. 2xl (1536px) was tried and measured too tight against
+ * that new floor — only ~18px of margin. min-[1560px] was picked as the
+ * next round number clear of it, restoring this row's usual ~32px buffer
+ * on both the homepage and an interior page. See the fuller measurement
+ * history in components/SiteHeader.tsx.
+ *
+ * Both instances below were updated to `min-[1560px]:hidden` to match
+ * SiteHeader's `hidden min-[1560px]:flex`, so the two stay in lockstep —
+ * a screen shows either this hamburger or that full row, never both or
+ * neither.
  *
  * The bar itself only gains a hamburger — the ticket button stays visible
  * beside it at every width. Someone who arrived ready to buy should never
@@ -133,7 +143,7 @@ export default function MobileNav({
         aria-expanded={open}
         aria-controls={PANEL_ID}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="min-[1440px]:hidden inline-flex items-center justify-center h-11 w-11 flex-none text-ink"
+        className="min-[1560px]:hidden inline-flex items-center justify-center h-11 w-11 flex-none text-ink"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"
              fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -148,7 +158,7 @@ export default function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          className="nav-panel min-[1440px]:hidden fixed inset-0 z-[60] h-[100dvh] bg-paper flex flex-col"
+          className="nav-panel min-[1560px]:hidden fixed inset-0 z-[60] h-[100dvh] bg-paper flex flex-col"
         >
           <div className="flex-none flex items-center justify-between border-b border-rule px-5 sm:px-8 py-4 sm:py-5">
             <span className="eyebrow text-ink">Menu</span>

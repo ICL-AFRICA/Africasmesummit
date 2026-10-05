@@ -1824,6 +1824,58 @@ export const SIGNATURE_OPPORTUNITIES = [
 ] as const;
 
 /**
+ * /accelerator — a new page for the Jiinue Business Accelerator, added
+ * 5 October 2026 at Mike's (ICL CEO's) request, in five sections: Faculty,
+ * Sessions, Graduants, Certification, and Africa SME Award winners.
+ *
+ * The Accelerator does not exist as a running programme yet — it launches
+ * from the summit stage at 10:30 on EVENT.dateLabel (see the matching
+ * AGENDA slot and the "platform launch" entry in SIGNATURE_OPPORTUNITIES
+ * above, both of which this reuses rather than retyping). That means there
+ * is no faculty, session list, graduate or certification detail to publish
+ * today, and the Africa SME Award's winners aren't named until the
+ * ceremony at 16:30 the same day. Rather than invent placeholder names,
+ * every list below (ACCELERATOR_FACULTY, _SESSIONS, _GRADUATES,
+ * _AWARD_WINNERS) starts empty and /accelerator shows an honest "to be
+ * announced"-style notice in its place — the same convention
+ * SUMMIT_UPDATES/TAG_ORDER already uses on /press ("a tag with nothing
+ * posted to it yet simply renders no section at all"). Add real entries
+ * here once the programme actually has faculty, a session list, graduates
+ * or named winners, in the same shape KEYNOTES/SPEAKERS already use, and
+ * the matching notice on /accelerator disappears on its own.
+ *
+ * ACCELERATOR_CERTIFICATION is a single description rather than a list —
+ * there is one certificate, not several — and stays equally honest: what
+ * it is in general terms, with the issuing details held back until they
+ * are actually confirmed rather than guessed at here.
+ */
+export const ACCELERATOR = {
+  name: "The Jiinue Business Accelerator",
+  tagline: "Kenya's enterprise assessment and investor-matching platform",
+  launchTime: "10:30",
+  launchIntroRole: "Principal Secretary, State Department for Science, Research & Innovation",
+  body: "Jiinue assesses a business, then matches it with the investors, lenders and partners most likely to actually back it — built to shorten the distance between a business that is ready to grow and the capital that could get it there. It launches live from the summit stage, then continues as a working programme afterwards.",
+} as const;
+
+export const ACCELERATOR_FACULTY: readonly {
+  name: string; role: string; org: string; photo: string; bio: readonly string[];
+}[] = [];
+
+export const ACCELERATOR_SESSIONS: readonly { title: string; summary: string }[] = [];
+
+export const ACCELERATOR_GRADUATES: readonly {
+  name: string; business: string; photo?: string;
+}[] = [];
+
+export const ACCELERATOR_CERTIFICATION = {
+  body: "Businesses that complete the Accelerator's programme receive a certificate of completion. The issuing partners and the requirements behind it will be published here once the programme's modules are confirmed.",
+} as const;
+
+export const ACCELERATOR_AWARD_WINNERS: readonly {
+  name: string; business: string; category?: string; photo?: string;
+}[] = [];
+
+/**
  * The proposal's own deadline: a partner confirmed by this date appears in
  * the printed programme, on delegate badges and across the remaining
  * campaign; one confirmed after it still gets everything their tier

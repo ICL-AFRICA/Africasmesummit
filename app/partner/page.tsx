@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
@@ -205,7 +206,10 @@ export default function Partner() {
             <p className="lede mt-5 text-white text-[16px] max-w-md">
               A short note is enough. We will reply within two working days with
               options and what each one costs. This is also where a Convening
-              Partner enquiry, or a question about the Award or the Accelerator
+              Partner enquiry, or a question about the Award or the{" "}
+              <Link href="/accelerator" className="underline underline-offset-4 hover:text-marigold transition-colors">
+                Accelerator
+              </Link>{" "}
               launch, starts.
             </p>
             <div className="mt-8 pt-8 border-t border-line text-[16px] text-white space-y-1">

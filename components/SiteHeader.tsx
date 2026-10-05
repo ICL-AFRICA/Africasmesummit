@@ -82,20 +82,30 @@ import { EVENT } from "@/lib/event";
    measuring its unconstrained right edge against the header at a range of
    viewport widths, on the homepage (worst case, `overlay`'s inset-x-8
    floating pill) and confirmed on an interior page too. That put the bare
-   minimum fit at ~1400px (essentially flush, ~5px of overflow still at
-   1400 itself). `min-[1440px]` — a bespoke Tailwind arbitrary-value
-   breakpoint — was chosen as the first round number clear of that
-   minimum, leaving about 32px of margin rather than sitting flush against
-   it; `2xl` (1536px) was rejected as an unnecessarily large compromise
-   that would hide the full nav on a wider range of ordinary desktop
-   widths (1440–1535px) than the measured minimum requires.
+   minimum fit at ~1400px at the time. `min-[1440px]` was chosen as the
+   first round number clear of that minimum, leaving about 32px of margin.
 
-   Below min-[1440px], `nav` and MobileNav's hamburger now swap at the same
-   breakpoint (both were `lg:hidden`/`hidden lg:flex`, both are now
-   `min-[1440px]:hidden`/`hidden min-[1440px]:flex` — see
+   "Accelerator" (/accelerator) was added 5 October 2026 at Mike's (ICL
+   CEO's) request, between Partner and Service Provider — see NAV below —
+   making this a ten-item row for the first time. Per the rule two
+   paragraphs down, a tenth item gets the same re-measure an addition
+   always does, not an assumption that 1440 still holds: a real build
+   showed the homepage's natural zero-overflow point had moved out to
+   ~1518px (worst case again — `overlay`'s inset-x-8 floating pill).
+   min-[1440px] was no longer enough. `2xl` (1536px) was tried as the
+   nearest named breakpoint and measured too tight against the new
+   minimum — only ~18px of margin on the homepage, barely more than a
+   rounding error. `min-[1560px]` — the next round number — was measured
+   to give the same ~32px of margin this row has used as its standard
+   buffer since the very first breakpoint move, on both the homepage and
+   an interior page.
+
+   Below min-[1560px], `nav` and MobileNav's hamburger now swap at the same
+   breakpoint (both were `min-[1440px]:hidden`/`hidden min-[1440px]:flex`,
+   both are now `min-[1560px]:hidden`/`hidden min-[1560px]:flex` — see
    components/MobileNav.tsx). The header's own shape — background, and the
    `overlay` variant's absolute/rounded/floating treatment — still switches
-   at lg, unchanged: between 1024 and 1440 the homepage now shows the
+   at lg, unchanged: between 1024 and 1560 the homepage now shows the
    floating white pill with just the lockup, hamburger and ticket button
    inside it, which is a clean, intentional state, not a half-migrated one.
    --header-flow in globals.css is keyed to the header's own lg breakpoint,
@@ -104,19 +114,20 @@ import { EVENT } from "@/lib/event";
    The row is measured rather than assumed, every time an item is added,
    reordered OR relabelled — a reorder or relabel changes total width even
    when the item count doesn't, so it gets the same re-measure as an
-   addition would. At the min-[1440px] breakpoint itself — now the
+   addition would. At the min-[1560px] breakpoint itself — now the
    tightest width this nav is ever shown at, since below it the whole nav
-   collapses into MobileNav — the lockup, nine links and the ticket button
+   collapses into MobileNav — the lockup, ten links and the ticket button
    were re-measured in a real build to confirm they still fit on one line
-   with real margin (~32px) to spare. Adding a tenth, or lengthening a
-   label again, needs the same re-measure at 1440 now, not at 1024 or
-   1280. */
+   with real margin (~32px) to spare. Adding an eleventh, or lengthening a
+   label again, needs the same re-measure at 1560 now, not at 1024, 1280
+   or 1440. */
 const NAV = [
   { label: "Home", href: "/" },
   { label: "Speakers & Panelists", href: "/speakers" },
   { label: "SMEs", href: "/network" },
   { label: "Exhibit", href: "/exhibit" },
   { label: "Partner", href: "/partner" },
+  { label: "Accelerator", href: "/accelerator" },
   { label: "Service Provider", href: "/providers" },
   { label: "Academia", href: "/papers" },
   { label: "Press", href: "/press" },
@@ -169,7 +180,7 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
             SUMMIT
           </span>
         </Link>
-        <nav className="hidden min-[1440px]:flex items-center gap-8 text-[16px]">
+        <nav className="hidden min-[1560px]:flex items-center gap-8 text-[16px]">
           {NAV.map((n) => (
             <Link
               key={n.href}
