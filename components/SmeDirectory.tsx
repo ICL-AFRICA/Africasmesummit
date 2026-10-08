@@ -209,6 +209,24 @@ export default function SmeDirectory() {
                 ))}
               </div>
             )}
+
+            {/* Every company has a profile to take away, added 8 October
+                2026 — the company's own PDF where it supplied one, a
+                one-page summary generated from this card where not (see
+                the `profile` note above SME_NETWORK in lib/event.ts). Same
+                outlined download treatment as the partnership proposal
+                link on /partner, so a download reads as a download
+                everywhere on the site. `download` makes browsers save
+                the file rather than navigate to it. */}
+            <a
+              href={c.profile}
+              download
+              aria-label={`Download ${c.name} company profile (PDF)`}
+              className="btn-glow rounded-lg mt-5 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[14px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
+            >
+              Download company profile (PDF)
+              <span aria-hidden="true" className="text-[12px]">↓</span>
+            </a>
           </li>
         ))}
       </ul>

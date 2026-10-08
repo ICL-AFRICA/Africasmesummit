@@ -5,14 +5,32 @@ import Reveal from "@/components/Reveal";
 import Btn from "@/components/Btn";
 import {
   EVENT, DATE_LONG, TICKET_CTA, SIGNATURE_OPPORTUNITIES, AGENDA,
-  ACCELERATOR, ACCELERATOR_FACULTY, ACCELERATOR_SESSIONS,
+  ACCELERATOR, ACCELERATOR_FACULTY, ACCELERATOR_MONTHS, ACCELERATOR_SYLLABUS,
   ACCELERATOR_GRADUATES, ACCELERATOR_CERTIFICATION, ACCELERATOR_AWARD_WINNERS,
 } from "@/lib/event";
+
+/* Derived, never typed — the curriculum lives in ACCELERATOR_MONTHS. */
+const SESSION_COUNT = ACCELERATOR_MONTHS.reduce((n, m) => n + m.sessions.length, 0);
+
+/* One brand colour per month, rotated (marigold, indigo, palm — clay stays
+   reserved for the early-bird deadline). Whole class strings only, so
+   Tailwind can read every one literally. The order is also chosen so no
+   month sits next to an identically tinted section: Faculty above is
+   palm, Graduants below is marigold. The colour lives on the card rule,
+   the month bar and the ticks, never on small text: the site's "-t" text
+   tokens are tuned for paper and measure well under 3:1 on this dark
+   page (marigold-t is about 2.4:1), so labels here stay white and let
+   weight and size carry the hierarchy. */
+const MONTH_STYLE = [
+  { tint: "tint-marigold", bar: "bg-marigold", tick: "text-marigold", border: "border-marigold" },
+  { tint: "tint-indigo", bar: "bg-indigo", tick: "text-indigo", border: "border-indigo" },
+  { tint: "tint-palm", bar: "bg-palm", tick: "text-palm", border: "border-palm" },
+] as const;
 
 export const metadata: Metadata = {
   title: `${ACCELERATOR.name} — ${EVENT.name} ${EVENT.year}`,
   description:
-    `${ACCELERATOR.tagline}, live today at jiinuehub.com and introduced from the ${EVENT.name} stage, ${DATE_LONG} at ${EVENT.venue}.`,
+    `${ACCELERATOR.tagline}, live today at jiinuehub.com and introduced from the ${EVENT.name} stage, ${DATE_LONG} at ${EVENT.venue}. A ${SESSION_COUNT}-session, ${ACCELERATOR_MONTHS.length}-month curriculum from baseline assessment to investor pitch.`,
   alternates: { canonical: "https://africasmesummit.com/accelerator" },
 };
 
@@ -33,9 +51,9 @@ const LAUNCH_SESSIONS = LAUNCHES.sessions ?? [];
 
 /**
  * Shared "nothing to show yet" panel for a section whose backing list in
- * lib/event.ts is still empty — ACCELERATOR_FACULTY, _SESSIONS,
- * _GRADUATES and _AWARD_WINNERS are all empty until the programme
- * actually has faculty, a session list, graduates or named winners (see
+ * lib/event.ts is still empty — ACCELERATOR_FACULTY, _GRADUATES and
+ * _AWARD_WINNERS are all empty until the programme actually has faculty,
+ * graduates or named winners (see
  * the doc comment above ACCELERATOR in lib/event.ts). A plain honest
  * notice here, never an invented name or a blank heading with nothing
  * under it.
@@ -134,7 +152,7 @@ export default function Accelerator() {
           one (added 5 October 2026) already uses tint-indigo, and two
           identically-tinted sections back to back reads as one long
           block rather than two. Palm was otherwise next unused going
-          into Sessions (plain) and Graduants (marigold) below. */}
+          into the Sessions intro (plain) and the three month sections below. */}
       <section className="border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
@@ -174,37 +192,84 @@ export default function Accelerator() {
         </div>
       </section>
 
-      {/* ── Sessions ───────────────────────────────────────────────── */}
+      {/* ── Sessions: the curriculum ───────────────────────────────── */}
+      {/* Built 8 October 2026 from the curriculum ICL supplied (ACCELERATOR_
+          MONTHS in lib/event.ts), replacing what used to be an empty
+          "sessions to be announced" notice. An intro with the two actions
+          first (start on Jiinue Hub, or take the syllabus away), then one
+          section per month so the programme reads as a journey rather than
+          a flat list of twelve. Nothing here states how sessions are
+          delivered, when a cohort starts, who can join or what it costs —
+          the curriculum doesn't say, so the page doesn't either. */}
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
-            <p className="eyebrow text-marigold-t mb-3">Sessions</p>
+            <p className="eyebrow text-marigold mb-3">Sessions</p>
             <h2 className="h-lg text-white text-3xl sm:text-4xl max-w-2xl">
               What the programme actually covers
             </h2>
+            <p className="lede mt-5 max-w-2xl text-[17px] text-white">
+              {SESSION_COUNT} sessions across {ACCELERATOR_MONTHS.length} months, from a
+              baseline diagnostic to a final pitching competition and graduation.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Btn href={ACCELERATOR.url} tone="gold">{ACCELERATOR.ctaButton}</Btn>
+              <a
+                href={ACCELERATOR_SYLLABUS.url}
+                download
+                className="btn-glow rounded-lg inline-flex items-center gap-2 px-6 py-3.5 text-[16px] font-medium border border-line text-white transition-all hover:border-marigold hover:text-marigold-t"
+              >
+                {ACCELERATOR_SYLLABUS.label}
+                <span aria-hidden="true" className="text-[12px]">↓</span>
+              </a>
+            </div>
           </Reveal>
-          <div className="mt-10">
-            {ACCELERATOR_SESSIONS.length === 0 ? (
+        </div>
+      </section>
+
+      {ACCELERATOR_MONTHS.map((m, mi) => {
+        const style = MONTH_STYLE[mi % MONTH_STYLE.length];
+        return (
+          <section key={m.month} className={`border-b border-line ${style.tint}`}>
+            <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
               <Reveal>
-                <ComingSoon>
-                  Capacity-building runs as modules on Jiinue Hub itself — the
-                  published list of sessions will appear here once the first
-                  cohort's modules are set.
-                </ComingSoon>
+                <span aria-hidden="true" className={`block h-1 w-12 rounded-full mb-4 ${style.bar}`} />
+                <p className="eyebrow text-white mb-3">Month {m.month}</p>
+                <h2 className="h-lg text-white text-3xl sm:text-4xl max-w-2xl">{m.title}</h2>
               </Reveal>
-            ) : (
-              <div className="grid gap-6 sm:grid-cols-2">
-                {ACCELERATOR_SESSIONS.map((s, i) => (
-                  <Reveal key={s.title} as="div" delay={i * 70} className="panel-card bg-raise/60 p-7 sm:p-8">
-                    <h3 className="h-sm text-white text-xl">{s.title}</h3>
-                    <p className="lede mt-3 text-[16px] text-white">{s.summary}</p>
+              <div className="mt-10 grid gap-6 sm:grid-cols-2">
+                {m.sessions.map((s, i) => (
+                  <Reveal
+                    key={s.number}
+                    as="div"
+                    delay={i * 70}
+                    className={`panel-card bg-raise p-7 sm:p-8 flex flex-col border-t-2 ${style.border}`}
+                  >
+                    <p className="font-mono text-[12px] uppercase tracking-widest text-white">
+                      Session {String(s.number).padStart(2, "0")}
+                    </p>
+                    <h3 className="h-sm text-white text-xl sm:text-2xl mt-3">{s.title}</h3>
+                    {s.subtitle && (
+                      <p className="mt-1 text-[16px] font-semibold text-white">{s.subtitle}</p>
+                    )}
+                    <p className="eyebrow text-white mt-6">Learning objective</p>
+                    <p className="lede mt-2 text-[16px] text-white">{s.objective}</p>
+                    <p className="eyebrow text-white mt-6">Key deliverables</p>
+                    <ul className="mt-3 space-y-2.5">
+                      {s.deliverables.map((d) => (
+                        <li key={d} className="flex gap-2.5 text-[16px] text-white">
+                          <span aria-hidden="true" className={`flex-none ${style.tick}`}>✓</span>
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
                   </Reveal>
                 ))}
               </div>
-            )}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        );
+      })}
 
       {/* ── Graduants ──────────────────────────────────────────────── */}
       <section className="border-b border-line tint-marigold">
@@ -246,7 +311,7 @@ export default function Accelerator() {
       </section>
 
       {/* ── Certification ──────────────────────────────────────────── */}
-      {/* Unlike Faculty/Sessions/Graduants/Award winners above and below,
+      {/* Unlike Faculty/Graduants/Award winners above and below,
           this isn't a "to be announced" section — certification is a real,
           already-live mechanism of the platform itself, confirmed by ICL
           5 October 2026 (see the doc comment on ACCELERATOR_CERTIFICATION

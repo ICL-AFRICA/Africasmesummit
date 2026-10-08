@@ -1182,6 +1182,30 @@ export const PARTNERS = [
  * above a flat list of all ten any more, by explicit request. See
  * components/SmeDirectory.tsx.
  *
+ * Every entry carries a `profile`: the company's own profile PDF, served
+ * from /public/profiles/<slug>.pdf and offered as a download button on its
+ * card (components/SmeDirectory.tsx). Added 8 October 2026 from the PDFs
+ * ICL supplied that day (Digigreens, Bumblebee, Biztimam Technologies,
+ * WetBlu, Salato, Emon, Smartcom, Kibs, Pivot Point) plus the profiles
+ * supplied earlier for everyone else. Floyd Line Investment and MC Stanley
+ * Ndeto Entertainment have never supplied a PDF, so theirs are one-page
+ * summaries generated from the text on their card here. Drop a real PDF
+ * over the same filename when they send one. Smartcom Traders and Pivot
+ * Point also have no logo of their own in their profiles, so their tiles
+ * are plain typographic name tiles, not logos; swap in the real file at
+ * the same path (/img/network/smartcom.webp, /img/network/pivotpoint.webp)
+ * when supplied.
+ *
+ * 8 October 2026: Biztimam Ventures Limited replaced by Biztimam
+ * Technologies from its new profile. Same company as far as the site is
+ * concerned, but its new profile is software and systems only, so it moved
+ * from "services" to "tech". Emon Authentic Foods (spices) and Smartcom
+ * Traders (tallow and personal care) joined agribusiness; Kibs Auto Works
+ * and Pivot Point Consulting & Logistics joined services, whose blurb was
+ * reworded to stay true with them in it. Digigreens, Bumblebee and WetBlu
+ * copy refreshed from their new profiles; Salato's new profile matched
+ * what was already here.
+ *
  * 1 October 2026: added MikeLabs, Serene Global Healthcare Consultant and
  * Salato from newly supplied profiles, after checking each against what
  * was already here (Vigingi Africa and WetBlu by Misshiks had already been
@@ -1198,7 +1222,7 @@ export const PARTNERS = [
 export const SME_SECTORS = [
   {
     key: "agribusiness", label: "Agribusiness & Food",
-    blurb: "Growers, processors and food brands turning Kenyan produce into export-ready products.",
+    blurb: "Growers, processors and food brands turning Kenyan produce, spices and livestock by-products into market-ready products.",
   },
   {
     key: "products", label: "Products & Manufacturing",
@@ -1210,11 +1234,11 @@ export const SME_SECTORS = [
   },
   {
     key: "services", label: "Services & Events",
-    blurb: "Tech, branding and entertainment — the businesses behind other businesses' events.",
+    blurb: "Hands-on service businesses — events, vehicle repair, logistics and advisory — that keep other businesses running.",
   },
   {
     key: "tech", label: "Technology & Innovation",
-    blurb: "Software and AI builders turning real operations — from the back office to the ticket gate — into working digital systems.",
+    blurb: "Software, systems and AI builders turning real operations — from the back office to the ticket gate — into working digital systems.",
   },
 ] as const;
 
@@ -1224,14 +1248,16 @@ export const SME_NETWORK = [
     name: "Digigreens Holdings Ltd",
     sector: "agribusiness",
     logo: "/img/network/digigreens.webp",
+    profile: "/profiles/digigreens-holdings.pdf",
     tagline: "Value addition to cut post-harvest losses",
-    blurb: "Grew from a fresh-produce grower into a value-addition agribusiness — cold-pressed avocado, macadamia and castor oils, roasted nuts and coffee — turning raw Kenyan produce into export-ready products.",
-    highlight: "Partners with KEPROBA and KAM; backs women's and youth groups along its value chain.",
+    blurb: "Grew from a fresh-produce grower into a value-addition agribusiness — cold-pressed avocado, macadamia and castor oils, roasted nuts, coffee and herbs — connecting farm, processing, packaging and market so raw Kenyan produce earns more before it leaves the country.",
+    highlight: "Partners with KEPROBA and KAM, and backs women's and youth groups along its value chain to stabilise farmer incomes and cut post-harvest losses.",
     location: "Nairobi, Kenya",
     links: [
       { label: "Website", href: "https://www.digigreensholdings.co.ke" },
       { label: "Email", href: "mailto:digigreens1@gmail.com" },
       { label: "Call", href: "tel:+254722918706" },
+      { label: "Instagram", href: "https://www.instagram.com/digigreensholdings/" },
     ],
   },
   {
@@ -1239,6 +1265,7 @@ export const SME_NETWORK = [
     name: "G-FARM Aqua Solutions",
     sector: "agribusiness",
     logo: "/img/network/gfarm.webp",
+    profile: "/profiles/gfarm-aqua-solutions.pdf",
     tagline: "Climate-smart aquaculture, youth-led",
     blurb: "A Kisumu-based, youth-led social enterprise building hatcheries, pond systems and clean-water innovation, paired with green-blue skills training for young people entering aquaculture.",
     highlight: "100+ youth trained; one operational hatchery already running its own clean-water system.",
@@ -1254,6 +1281,7 @@ export const SME_NETWORK = [
     name: "Jilly & Tilly Comidas",
     sector: "agribusiness",
     logo: "/img/network/jillytilly.webp",
+    profile: "/profiles/jilly-and-tilly-comidas.pdf",
     tagline: "Quality food, at your doorstep, on the go",
     blurb: "A women-led Nairobi food enterprise delivering farm-fresh chicken, eggs, artisan granola and fresh juices straight to households, offices and events — founded in 2019 on personal savings.",
     highlight: "220 customers served and KES 1.2M in sales processed, Aug 2025 to Sep 2026.",
@@ -1268,6 +1296,7 @@ export const SME_NETWORK = [
     name: "Floyd Line Investment Ltd",
     sector: "agribusiness",
     logo: "/img/network/floydline.webp",
+    profile: "/profiles/floyd-line-investment.pdf",
     tagline: "Healthy soils. Abundant food. A cooler planet.",
     blurb: "An integrated organic and regenerative food-production platform building climate-resilient agriculture — from crops, livestock and agroforestry through to carbon and nature credits.",
     highlight: "Work advances 11 of the UN's 17 Sustainable Development Goals.",
@@ -1275,21 +1304,58 @@ export const SME_NETWORK = [
     links: [],
   },
   {
+    slug: "emon-authentic-foods",
+    name: "Emon Authentic Foods Enterprise",
+    sector: "agribusiness",
+    logo: "/img/network/emon.webp",
+    profile: "/profiles/emon-authentic-foods.pdf",
+    tagline: "Pure. Natural. Fresh.",
+    blurb: "A Nairobi spice maker trading as Mannu's Spices, producing pure ground spices and masalas — pilau, tea, chicken, meat and curry blends, plus ginger, cumin, turmeric and paprika — free of additives and preservatives, for retail shops, franchises, wholesalers, schools and hotels across Nairobi and Mombasa.",
+    highlight: "Reports sales growing from KSh 800,000 in 2023/24 to KSh 1.6 million in 2025/26.",
+    location: "Embakasi Central, Nairobi",
+    since: 2023,
+    links: [
+      { label: "Email", href: "mailto:em.ngonga@gmail.com" },
+      { label: "Call", href: "tel:+254723614201" },
+    ],
+  },
+  {
+    slug: "smartcom-traders",
+    name: "Smartcom Traders",
+    sector: "agribusiness",
+    logo: "/img/network/smartcom.webp",
+    profile: "/profiles/smartcom-traders.pdf",
+    tagline: "Natural wellness crafted with purpose",
+    blurb: "A woman-owned Nairobi enterprise turning responsibly sourced animal fats into packaged consumer products — Smartcom Signature Tallow for cooking, plus tallow body butter, lip balm and beard oil — and adding value to the livestock chain locally.",
+    highlight: "Signature Tallow reached the market in 2025; B2B partnerships, retail and regional reach are next.",
+    location: "Nairobi, Kenya",
+    since: 2012,
+    links: [
+      { label: "Email", href: "mailto:signaturetallow@gmail.com" },
+      { label: "Call", href: "tel:+254721823532" },
+    ],
+  },
+  {
     slug: "wetblu-by-misshiks",
     name: "WetBlu by Misshiks",
     sector: "products",
     logo: "/img/network/wetblu.webp",
+    profile: "/profiles/wetblu-by-misshiks.pdf",
     tagline: "Statement leather, made to keep",
-    blurb: "A women-owned Nairobi leather brand crafting premium bags and accessories — totes, travel duffels, laptop sleeves — designed as pieces to use for years, not replace every season.",
-    highlight: "Design-led model: WetBlu keeps design and quality control while production is outsourced to local specialists.",
+    blurb: "A women-owned Nairobi leather brand, founded by Doris Wanjiku, crafting premium bags and accessories — work and executive bags, travel duffels, laptop sleeves, eyewear cases and sandals — designed as pieces to use for years, not replace every season.",
+    highlight: "Lean, design-led model: WetBlu keeps design and quality control while cutting, stitching and assembly go to local specialists.",
     location: "Nairobi, Kenya",
-    links: [],
+    links: [
+      { label: "Email", href: "mailto:wetblubymisshiks26@gmail.com" },
+      { label: "WhatsApp", href: "https://wa.me/254704108810" },
+    ],
   },
   {
     slug: "vigingi-africa",
     name: "Vigingi Africa Limited",
     sector: "products",
     logo: "/img/network/vigingi.webp",
+    profile: "/profiles/vigingi-africa.pdf",
     tagline: "Recycled plastic, built to outlast timber",
     blurb: "Turns hard-to-recycle waste plastic into rot-proof, termite-proof fencing posts for farms, homes, ranches and commercial sites — no tree cut down to fence sustainably.",
     highlight: "20+ year life expectancy, with zero rot or termite risk.",
@@ -1305,6 +1371,7 @@ export const SME_NETWORK = [
     name: "Build & Restore Counselling Services",
     sector: "health",
     logo: "/img/network/bnr.webp",
+    profile: "/profiles/build-and-restore.pdf",
     tagline: "Your well-being is in safe hands",
     blurb: "A Nairobi team of counselling and clinical psychologists with 20+ years of combined experience, offering individual, couples, family and workplace mental health care across two locations.",
     highlight: "Accepts UAP (Old Mutual), CIC and MINET-administered corporate insurance.",
@@ -1320,9 +1387,10 @@ export const SME_NETWORK = [
     name: "Bumblebee Sports Academy",
     sector: "health",
     logo: "/img/network/bumblebee.webp",
+    profile: "/profiles/bumblebee-sports-academy.pdf",
     tagline: "From tennis roots to multi-sport powerhouse",
-    blurb: "A Karen-based sports development academy, established 2011, running structured tennis, holiday camps and school partnerships that build discipline and character alongside athletic skill.",
-    highlight: "1,000+ children introduced to sport across Nairobi's leading schools.",
+    blurb: "A Karen-based sports development company, established 2011. Tennis is the flagship, and the academy is growing into a multi-sport home for school programmes, holiday camps and talent development that build discipline and character alongside athletic skill.",
+    highlight: "1,000+ children introduced to sport across Nairobi's leading schools, with 15+ years of programme delivery.",
     location: "Karen, Nairobi",
     since: 2011,
     links: [
@@ -1336,6 +1404,7 @@ export const SME_NETWORK = [
     name: "Serene Global Healthcare Consultant",
     sector: "health",
     logo: "/img/network/serene.webp",
+    profile: "/profiles/serene-global-healthcare-consultant.pdf",
     tagline: "Transforming Healthcare Across Africa",
     blurb: "A healthcare consultancy partnering with hospitals and health institutions to strengthen how they operate — facility design, patient journeys, staffing, insurance claims and revenue-process flow.",
     highlight: "Partners with hospitals on everything from facility design to insurance-claims recovery and revenue-process optimisation.",
@@ -1347,25 +1416,11 @@ export const SME_NETWORK = [
     ],
   },
   {
-    slug: "biztimam-ventures",
-    name: "Biztimam Ventures Limited",
-    sector: "services",
-    logo: "/img/network/biztimam.webp",
-    tagline: "Tech & branding, one team",
-    blurb: "A Kenyan-owned ICT and branding company — software and web development, networks and security, and everything from logo design to large-format print — for individuals, firms, parastatals and NGOs alike.",
-    highlight: "One team for both the software and the branding that presents it.",
-    location: "Utalii Lane, Nairobi CBD",
-    links: [
-      { label: "Website", href: "https://biztimamventures.com" },
-      { label: "Email", href: "mailto:biz@biztimamventures.com" },
-      { label: "Call", href: "tel:+254724256867" },
-    ],
-  },
-  {
     slug: "mc-stanley-ndeto-entertainment",
     name: "MC Stanley Ndeto Entertainment",
     sector: "services",
     logo: "/img/network/mcstanley.webp",
+    profile: "/profiles/mc-stanley-ndeto-entertainment.pdf",
     tagline: "Making your events memorable",
     blurb: "A full-service event planning, MC, DJ and sound company covering weddings, dowry ceremonies, corporate functions and community events across Kenya.",
     highlight: "One-stop service: planning, MC, DJ and sound, under a single team.",
@@ -1376,10 +1431,41 @@ export const SME_NETWORK = [
     ],
   },
   {
+    slug: "kibs-auto-works",
+    name: "Kibs Auto Works Ltd",
+    sector: "services",
+    logo: "/img/network/kibs.webp",
+    profile: "/profiles/kibs-auto-works.pdf",
+    tagline: "We restore, maintain and keep you moving",
+    blurb: "A full-service motor workshop on Southern Bypass, off Lang'ata Road — mechanical repairs, servicing, auto electrical, panel beating, spray painting and spare parts for Toyota, Nissan, Mazda, Mercedes-Benz, BMW, Land Rover and more, with an itemised quotation on every job.",
+    highlight: "10 technicians serving around 300 customers a year, all under one roof.",
+    location: "Southern Bypass, Nairobi",
+    since: 2010,
+    links: [
+      { label: "Email", href: "mailto:kibsautoworks@gmail.com" },
+      { label: "Call", href: "tel:+254724311034" },
+    ],
+  },
+  {
+    slug: "pivot-point-consulting-logistics",
+    name: "Pivot Point Consulting & Logistics",
+    sector: "services",
+    logo: "/img/network/pivotpoint.webp",
+    profile: "/profiles/pivot-point-consulting-logistics.pdf",
+    tagline: "Sustainable value chains, climate-smart logistics",
+    blurb: "A Kenyan advisory and operations enterprise working across circular-economy business models, clean-energy integration and climate-aligned logistics, partnering with agribusinesses, non-profits, social enterprises and communities on supply chains, market research and field data systems.",
+    highlight: "Has built circular business models and solar-energy integration for agricultural partners across Western Kenya and Nairobi.",
+    location: "Nairobi & Kisumu, Kenya",
+    links: [
+      { label: "Call", href: "tel:+254799919163" },
+    ],
+  },
+  {
     slug: "mikelabs",
     name: "MikeLabs",
     sector: "tech",
     logo: "/img/network/mikelabs.webp",
+    profile: "/profiles/mikelabs.pdf",
     tagline: "Build. Break. Secure.",
     blurb: "An AI-first technology company based in Nairobi, engineering practical digital systems — AI assistants, websites, databases, dashboards, automation and cloud deployments — for schools, SMEs and service businesses that want to operate digitally.",
     highlight: "One team covering AI systems, web apps, databases, automation, cloud and security — not six separate vendors.",
@@ -1394,6 +1480,7 @@ export const SME_NETWORK = [
     name: "Salato",
     sector: "tech",
     logo: "/img/network/salato.webp",
+    profile: "/profiles/salato.pdf",
     tagline: "Events. Tickets. Experiences.",
     blurb: "A Nairobi event-ticketing platform where organisers sell tickets online, take payment securely through Paystack, and issue every ticket as a PDF with its own QR code — delivered by email and WhatsApp, and scanned at the gate.",
     highlight: "A flat 6% per ticket sold, with payouts paid directly to each organiser's own Paystack subaccount.",
@@ -1403,6 +1490,22 @@ export const SME_NETWORK = [
       { label: "Website", href: "https://salato.app" },
       { label: "Email", href: "mailto:hello@salato.app" },
       { label: "Call", href: "tel:+254701450691" },
+    ],
+  },
+  {
+    slug: "biztimam-technologies",
+    name: "Biztimam Technologies",
+    sector: "tech",
+    logo: "/img/network/biztimam.webp",
+    profile: "/profiles/biztimam-technologies.pdf",
+    tagline: "Technology that moves business forward",
+    blurb: "A Nairobi software and systems company building its own SaaS platforms — EasyQnA for live event questions and polls, Malipay for property management and GamiKonnect for grassroots esports — alongside systems integration and managed IT support for enterprises and public-sector bodies.",
+    highlight: "Three in-house platforms, each built for a different sector, plus end-to-end delivery from solution design to support.",
+    location: "Koinange Street, Nairobi",
+    links: [
+      { label: "Website", href: "https://www.biztimamtechnologies.com" },
+      { label: "Email", href: "mailto:tech@biztimamtechnologies.africa" },
+      { label: "Call", href: "tel:+254780405211" },
     ],
   },
 ] as const;
@@ -1826,15 +1929,27 @@ export const SIGNATURE_OPPORTUNITIES = [
  * and ACCELERATOR_CERTIFICATION now states the real mechanism (certified
  * on the platform itself) rather than holding the detail back.
  *
+ * 8 October 2026: ICL supplied the programme's real curriculum, so
+ * ACCELERATOR_SESSIONS (an empty list) became ACCELERATOR_MONTHS below —
+ * twelve sessions in three months, each with its learning objective and
+ * key deliverables, in the order ICL wrote them. Deliberately NOT stated
+ * anywhere, because the curriculum doesn't say: how sessions are
+ * delivered (online, in person, hybrid), cohort dates, eligibility, cost,
+ * places, or what it takes to earn the certificate beyond reaching
+ * Session 12. Add those here when ICL confirms them, never from
+ * assumption. Session 11 ends with the top three enterprises advancing to
+ * present at "the Africa SME Award" — no edition or year, on purpose: a
+ * 12-session programme can't finish before 15 October 2026, so this must
+ * not read as feeding the Award held the day of the summit.
+ *
  * What is still unconfirmed is the summit-day specifics: who is on the
- * faculty roster, what the first cohort's individual sessions are called,
- * and who the actual graduates and Africa SME Award winners are — the
+ * faculty roster, who the actual graduates and Africa SME Award winners are — the
  * platform launches live from the summit stage at 10:30 on
  * EVENT.dateLabel (see the matching AGENDA slot and the "platform launch"
  * entry in SIGNATURE_OPPORTUNITIES above, both reused rather than
  * retyped), and the Award's winners aren't named until the 16:30 ceremony
  * the same day. Rather than invent placeholder names, every list below
- * (ACCELERATOR_FACULTY, _SESSIONS, _GRADUATES, _AWARD_WINNERS) starts
+ * (ACCELERATOR_FACULTY, _GRADUATES, _AWARD_WINNERS) starts
  * empty and /accelerator shows an honest "to be announced"-style notice
  * in its place — the same convention SUMMIT_UPDATES/TAG_ORDER already
  * uses on /press ("a tag with nothing posted to it yet simply renders no
@@ -1858,7 +1973,161 @@ export const ACCELERATOR_FACULTY: readonly {
   name: string; role: string; org: string; photo: string; bio: readonly string[];
 }[] = [];
 
-export const ACCELERATOR_SESSIONS: readonly { title: string; summary: string }[] = [];
+/**
+ * The programme's curriculum, supplied by ICL 8 October 2026: three months,
+ * four sessions each, every session with one learning objective and its key
+ * deliverables, in ICL's own wording (trailing full stops dropped from the
+ * deliverables so they read as a list; nothing else reworded). Rendered on
+ * /accelerator and, from the same data, in the downloadable syllabus PDF
+ * (scripts/build-accelerator-syllabus.mjs) — change a session here and
+ * rebuild the PDF, never edit the two separately.
+ *
+ * `number` is the session's position across all twelve, not within its
+ * month. `subtitle` is the parenthetical ICL gave only Session 1.
+ */
+export const ACCELERATOR_MONTHS: readonly {
+  month: number;
+  title: string;
+  sessions: readonly {
+    number: number;
+    title: string;
+    subtitle?: string;
+    objective: string;
+    deliverables: readonly string[];
+  }[];
+}[] = [
+  {
+    month: 1,
+    title: "Foundation & Business Fundamentals",
+    sessions: [
+      {
+        number: 1,
+        title: "Stepping In Session",
+        subtitle: "Orientation & Baseline Assessment",
+        objective: "Align expectations, establish baseline performance metrics, and introduce participants to the accelerator journey and peer network.",
+        deliverables: [
+          "Completed enterprise baseline diagnostic scorecard",
+          "Signed accelerator participation agreement and milestone roadmap",
+        ],
+      },
+      {
+        number: 2,
+        title: "Financial Literacy & Cash Flow Management",
+        objective: "Master cash flow forecasting, decode financial statements, and understand working capital requirements for scaling SMEs.",
+        deliverables: [
+          "12-month rolling cash flow projection template",
+          "Unit economics and break-even analysis calculator for each enterprise",
+        ],
+      },
+      {
+        number: 3,
+        title: "Market Access & Value Proposition Refinement",
+        objective: "Sharpen customer segmentation, articulate a clear unique value proposition (UVP), and map out scalable distribution channels.",
+        deliverables: [
+          "Completed Business Model Canvas or Lean Canvas",
+          "Market entry or expansion strategy brief",
+        ],
+      },
+      {
+        number: 4,
+        title: "Operations, Governance, & Compliance",
+        objective: "Identify regulatory bottlenecks, implement robust internal controls, and establish solid legal and corporate governance foundations.",
+        deliverables: [
+          "Legal and regulatory compliance checklist",
+          "Core Standard Operating Procedures (SOPs) manual outline",
+        ],
+      },
+    ],
+  },
+  {
+    month: 2,
+    title: "Growth, Technology, & Scaling",
+    sessions: [
+      {
+        number: 5,
+        title: "Digital Transformation & AI Adoption",
+        objective: "Identify cost-effective digital tools and AI applications to automate workflows, streamline marketing, and improve customer service.",
+        deliverables: [
+          "Enterprise digital audit report",
+          "Customized tech-stack and automation implementation plan",
+        ],
+      },
+      {
+        number: 6,
+        title: "Talent Acquisition, Leadership, & Team Building",
+        objective: "Transition from founder-led sales and operations to building empowered, high-performing teams with clear Key Performance Indicators (KPIs).",
+        deliverables: [
+          "Organizational chart and core job description templates",
+          "Performance management and goal-setting framework",
+        ],
+      },
+      {
+        number: 7,
+        title: "Strategic Partnerships & Industry-Academia Collaboration",
+        objective: "Leverage institutional research, talent pipelines, and innovation ecosystems to fuel business growth.",
+        deliverables: [
+          "University-SME collaboration brief or R&D partnership concept note",
+        ],
+      },
+      {
+        number: 8,
+        title: "Product Development & Innovation Strategy",
+        objective: "Systematically gather customer feedback, manage product lifecycles, and iterate on core offerings to capture higher margins.",
+        deliverables: [
+          "Product roadmap and customer feedback loop framework",
+        ],
+      },
+    ],
+  },
+  {
+    month: 3,
+    title: "Investment Readiness & Culmination",
+    sessions: [
+      {
+        number: 9,
+        title: "Investment Readiness & Pitch Deck Masterclass",
+        objective: "Understand investor psychology, valuation metrics, and how to structure a compelling, data-backed funding request.",
+        deliverables: [
+          "A polished 12-slide investor pitch deck",
+          "Executive summary and one-pager for investors",
+        ],
+      },
+      {
+        number: 10,
+        title: "Mock Pitching & Feedback Round",
+        objective: "Test the pitch under simulated pressure, refine storytelling, and address tough questions regarding unit economics and risk.",
+        deliverables: [
+          "Individualized mentor feedback report with actionable critique",
+          "Refined script and Q&A defense playbook",
+        ],
+      },
+      {
+        number: 11,
+        title: "Final Pitching Competition",
+        objective: "Showcase business growth, strategic vision, and market traction before an expert judging panel.",
+        deliverables: [
+          "Live pitch presentation",
+          "Selection and announcement of the top three enterprises advancing to present at the Africa SME Award",
+        ],
+      },
+      {
+        number: 12,
+        title: "Graduation & Networking Showcase",
+        objective: "Celebrate milestone completion, establish enduring industry connections, and interface directly with prospective investors and partners.",
+        deliverables: [
+          "Jiinue Business Accelerator Certificate of Completion",
+          "Investor and stakeholder networking directory",
+        ],
+      },
+    ],
+  },
+];
+
+/** The curriculum as a download — built by scripts/build-accelerator-syllabus.mjs. */
+export const ACCELERATOR_SYLLABUS = {
+  url: "/programme/jiinue-business-accelerator-syllabus.pdf",
+  label: "Download the syllabus (PDF)",
+} as const;
 
 export const ACCELERATOR_GRADUATES: readonly {
   name: string; business: string; photo?: string;
@@ -1872,7 +2141,7 @@ export const ACCELERATOR_GRADUATES: readonly {
  * comment above for why this differs from the others.
  */
 export const ACCELERATOR_CERTIFICATION = {
-  body: "Certification happens on the platform itself. Complete your assessment and capacity-building modules on Jiinue Hub, and your certificate of completion is issued from there — there's no separate process to chase.",
+  body: "Your Jiinue Business Accelerator Certificate of Completion is issued at Session 12, the Graduation & Networking Showcase. Certification is handled on Jiinue Hub itself, so there's no separate process to chase.",
 } as const;
 
 export const ACCELERATOR_AWARD_WINNERS: readonly {
