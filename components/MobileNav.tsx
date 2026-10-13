@@ -34,6 +34,13 @@ import { EVENT, TICKET_CTA } from "@/lib/event";
  * a screen shows either this hamburger or that full row, never both or
  * neither.
  *
+ * Moved to min-[1660px] on 13 October 2026, when the Accelerator item was
+ * relabelled "Jiinue Accelerator" and given a dropdown chevron — re-measured,
+ * the row first fits at ~1630 and has ~32px of margin at 1660. Both
+ * instances below and SiteHeader's `hidden min-[1660px]:flex` changed
+ * together. Below 1660 this hamburger lists the dropdown's sections flat,
+ * indented under "Jiinue Accelerator".
+ *
  * The bar itself only gains a hamburger — the ticket button stays visible
  * beside it at every width. Someone who arrived ready to buy should never
  * have to open a menu to find the thing they came for.
@@ -42,7 +49,7 @@ import { EVENT, TICKET_CTA } from "@/lib/event";
  * is the only part that needs JavaScript, and it is the only part that
  * ships any.
  */
-type NavItem = { label: string; href: string };
+type NavItem = { label: string; href: string; children?: readonly { label: string; href: string }[] };
 
 const PANEL_ID = "mobile-nav-panel";
 
@@ -143,7 +150,7 @@ export default function MobileNav({
         aria-expanded={open}
         aria-controls={PANEL_ID}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="min-[1560px]:hidden inline-flex items-center justify-center h-11 w-11 flex-none text-ink"
+        className="min-[1660px]:hidden inline-flex items-center justify-center h-11 w-11 flex-none text-ink"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"
              fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -158,7 +165,7 @@ export default function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          className="nav-panel min-[1560px]:hidden fixed inset-0 z-[60] h-[100dvh] bg-paper flex flex-col"
+          className="nav-panel min-[1660px]:hidden fixed inset-0 z-[60] h-[100dvh] bg-paper flex flex-col"
         >
           <div className="flex-none flex items-center justify-between border-b border-rule px-5 sm:px-8 py-4 sm:py-5">
             <span className="eyebrow text-ink">Menu</span>
@@ -191,6 +198,25 @@ export default function MobileNav({
                   >
                     {n.label}
                   </Link>
+                  {/* An item with sections lists them flat, indented under
+                      itself — no accordion to open, since a menu this short
+                      doesn't need one and a collapsed item hides links from
+                      someone scanning the list. */}
+                  {n.children && (
+                    <ul className="pb-3 pl-5">
+                      {n.children.map((c) => (
+                        <li key={c.href}>
+                          <Link
+                            href={c.href}
+                            onClick={close}
+                            className="flex items-center min-h-[48px] text-[18px] text-ink"
+                          >
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>

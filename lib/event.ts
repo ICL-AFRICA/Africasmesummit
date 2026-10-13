@@ -1959,7 +1959,7 @@ export const SIGNATURE_OPPORTUNITIES = [
  * /accelerator disappears on its own.
  */
 export const ACCELERATOR = {
-  name: "The Jiinue Business Accelerator Platform",
+  name: "Jiinue Business Accelerator",
   url: "https://jiinuehub.com",
   tagline: "Kenya's enterprise assessment and investor-matching platform",
   launchTime: "10:30",
@@ -1968,6 +1968,21 @@ export const ACCELERATOR = {
   ctaLine: "If you're a business, a service provider or in academia — click to start today.",
   ctaButton: "Start on Jiinue Hub",
 } as const;
+
+/**
+ * The four sections of /accelerator that the nav's dropdown links to, in the
+ * order the boss asked for (13 October 2026). They are jump links down the
+ * one page, not separate routes: `id` must match the `id` on the matching
+ * <section> in app/accelerator/page.tsx. "Africa SMEs Award Winners" is the
+ * boss's label for the dropdown; the section's own on-page eyebrow still
+ * reads "Africa SME Award winners".
+ */
+export const ACCELERATOR_SECTIONS = [
+  { id: "faculty", label: "Faculty" },
+  { id: "sessions", label: "Sessions" },
+  { id: "graduants", label: "Graduants" },
+  { id: "award-winners", label: "Africa SMEs Award Winners" },
+] as const;
 
 export const ACCELERATOR_FACULTY: readonly {
   name: string; role: string; org: string; photo: string; bio: readonly string[];

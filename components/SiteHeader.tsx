@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MobileNav from "@/components/MobileNav";
-import { EVENT } from "@/lib/event";
+import NavDropdown from "@/components/NavDropdown";
+import { ACCELERATOR_SECTIONS, EVENT } from "@/lib/event";
 
 /**
  * One header for every page. `overlay` floats it over the homepage hero
@@ -120,16 +121,40 @@ import { EVENT } from "@/lib/event";
    were re-measured in a real build to confirm they still fit on one line
    with real margin (~32px) to spare. Adding an eleventh, or lengthening a
    label again, needs the same re-measure at 1560 now, not at 1024, 1280
-   or 1440. */
-const NAV = [
+   or 1440.
+
+   13 October 2026, at ICL's (boss's) request: the Accelerator item moved
+   from after Partner to after Academia (so: ... Service Provider,
+   Academia, Jiinue Accelerator, Press, Contact), was relabelled from
+   "Accelerator" to "Jiinue Accelerator" (the page itself is titled the
+   full "Jiinue Business Accelerator" — the shorter nav label was chosen
+   over the full name to limit how much the row grows), and gained a
+   dropdown of its four sections (ACCELERATOR_SECTIONS in lib/event.ts),
+   which adds a chevron beside the label. Both the longer label and the
+   chevron widen the row, so it was re-measured, the same way as every
+   earlier change: force-rendering the nav at widths from 1500 to 1780 in a
+   real build and measuring the gap to the lockup and to the ticket button.
+   At 1560 the row no longer fit (ticket button ~70px past the edge on the
+   homepage's floating pill, the worst case, ~5px on an interior page); it
+   first fits at ~1630 and reaches the usual ~32px of margin at 1660. So
+   the switch moved from min-[1560px] to min-[1660px] — here and in
+   MobileNav, which must stay in lockstep. From 1560 to 1660 the hamburger
+   now shows instead of the full row. */
+type NavLink = { label: string; href: string };
+type NavEntry = NavLink & { children?: readonly NavLink[] };
+
+const NAV: readonly NavEntry[] = [
   { label: "Home", href: "/" },
   { label: "Speakers & Panelists", href: "/speakers" },
   { label: "SMEs", href: "/network" },
   { label: "Exhibit", href: "/exhibit" },
   { label: "Partner", href: "/partner" },
-  { label: "Accelerator", href: "/accelerator" },
   { label: "Service Provider", href: "/providers" },
   { label: "Academia", href: "/papers" },
+  {
+    label: "Jiinue Accelerator", href: "/accelerator",
+    children: ACCELERATOR_SECTIONS.map((s) => ({ label: s.label, href: `/accelerator#${s.id}` })),
+  },
   { label: "Press", href: "/press" },
   { label: "Contact", href: "/contact" },
 ];
@@ -180,16 +205,26 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
             SUMMIT
           </span>
         </Link>
-        <nav className="hidden min-[1560px]:flex items-center gap-8 text-[16px]">
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className={`whitespace-nowrap ${current === n.href ? "text-ink" : "text-ink/60 hover:text-ink transition-colors"}`}
-            >
-              {n.label}
-            </Link>
-          ))}
+        <nav className="hidden min-[1660px]:flex items-center gap-8 text-[16px]">
+          {NAV.map((n) =>
+            n.children ? (
+              <NavDropdown
+                key={n.href}
+                label={n.label}
+                href={n.href}
+                items={n.children}
+                active={current === n.href}
+              />
+            ) : (
+              <Link
+                key={n.href}
+                href={n.href}
+                className={`whitespace-nowrap ${current === n.href ? "text-ink" : "text-ink/60 hover:text-ink transition-colors"}`}
+              >
+                {n.label}
+              </Link>
+            )
+          )}
         </nav>
         <div className="flex items-center gap-1 sm:gap-2 flex-none">
           {/* Hamburger sits left of the ticket button, and only the nav

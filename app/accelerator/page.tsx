@@ -147,13 +147,18 @@ export default function Accelerator() {
         </div>
       </section>
 
+      {/* The four section ids below (faculty, sessions, graduants,
+          award-winners) are the targets of the nav dropdown's jump links —
+          ACCELERATOR_SECTIONS in lib/event.ts. Rename one and the other
+          together. scroll-mt-24 keeps a section's heading clear of the
+          sticky header below lg. */}
       {/* ── Faculty ────────────────────────────────────────────────── */}
       {/* tint-palm, not indigo — the new "Live now" section above this
           one (added 5 October 2026) already uses tint-indigo, and two
           identically-tinted sections back to back reads as one long
           block rather than two. Palm was otherwise next unused going
           into the Sessions intro (plain) and the three month sections below. */}
-      <section className="border-b border-line tint-palm">
+      <section id="faculty" className="scroll-mt-24 border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-palm-t mb-3">Faculty</p>
@@ -201,7 +206,7 @@ export default function Accelerator() {
           a flat list of twelve. Nothing here states how sessions are
           delivered, when a cohort starts, who can join or what it costs —
           the curriculum doesn't say, so the page doesn't either. */}
-      <section className="border-b border-line">
+      <section id="sessions" className="scroll-mt-24 border-b border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-marigold mb-3">Sessions</p>
@@ -272,7 +277,7 @@ export default function Accelerator() {
       })}
 
       {/* ── Graduants ──────────────────────────────────────────────── */}
-      <section className="border-b border-line tint-marigold">
+      <section id="graduants" className="scroll-mt-24 border-b border-line tint-marigold">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-marigold-t mb-3">Graduants</p>
@@ -329,7 +334,7 @@ export default function Accelerator() {
       </section>
 
       {/* ── Africa SME Award winners ───────────────────────────────── */}
-      <section className="tint-palm">
+      <section id="award-winners" className="scroll-mt-24 tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-palm-t mb-3">Africa SME Award winners</p>
