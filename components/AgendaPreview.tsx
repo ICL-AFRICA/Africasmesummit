@@ -27,6 +27,10 @@ const ACCENT_BG = ["bg-marigold", "bg-clay", "bg-indigo", "bg-palm"];
  *     someone has seen the shape of the day and wants all of it. Works the
  *     same on touch and with a keyboard, which the hover version could not.
  *
+ * Centred on 14 October 2026, at ICL's request: the heading above and this
+ * button share one centre line, and the opened panel is held to a readable
+ * width (max-w-4xl) under them rather than running the full page width.
+ *
  * The download is deliberately inside the expanded panel, as asked — the
  * collapsed block is only the button. The footer's "The day" link and the
  * Accelerator page's agenda link both land on #agenda, i.e. on this heading
@@ -37,7 +41,7 @@ export default function AgendaPreview() {
   const panelId = useId();
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -56,7 +60,7 @@ export default function AgendaPreview() {
       </button>
 
       {open && (
-        <div id={panelId} className="mt-8 rounded-2xl border border-rule bg-paper">
+        <div id={panelId} className="mt-8 w-full max-w-4xl rounded-2xl border border-rule bg-paper">
           <div className="p-5 sm:p-8">
             {AGENDA.map((a, i) => (
               <div

@@ -315,7 +315,7 @@ export default function Page() {
             jumps here. */}
         <section id="agenda" className="scroll-mt-24 bg-card tint-clay">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal><Head eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head></Reveal>
+            <Reveal><Head center eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head></Reveal>
             <Reveal delay={80} className="mt-10">
               <AgendaPreview />
             </Reveal>
