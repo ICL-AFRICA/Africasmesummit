@@ -298,6 +298,30 @@ export default function Page() {
           </div>
         </section>
 
+        {/* ── Agenda ────────────────────────────────────────────────── */}
+        {/* Redesigned 19 September 2026 against the confirmed programme,
+            then 25 September 2026 at ICL's request (the always-visible
+            hour-by-hour list became a download bar with a hover preview —
+            see git history for that version).
+
+            Moved 14 October 2026, again at ICL's request: this section now
+            sits directly below the speakers ("panelist") section instead of
+            after the five reasons, and the hover preview became an
+            "Expand to see more of the programme" button with the PDF
+            download at the bottom of the expanded summary. The running
+            order and that button live in components/AgendaPreview.tsx —
+            see its own doc comment. scroll-mt-24 keeps the heading clear
+            of the sticky header below lg when the footer's "The day" link
+            jumps here. */}
+        <section id="agenda" className="scroll-mt-24 bg-card tint-clay">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
+            <Reveal><Head eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head></Reveal>
+            <Reveal delay={80} className="mt-10">
+              <AgendaPreview />
+            </Reveal>
+          </div>
+        </section>
+
         {/* ── Tracks over a photograph ──────────────────────────────── */}
         {/* The hairline earns its keep here specifically: this section and
             the speaker wall above it are both bg-ink, so without it the two
@@ -426,25 +450,6 @@ export default function Page() {
                 <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ── Agenda ────────────────────────────────────────────────── */}
-        {/* Redesigned 19 September 2026 against the confirmed programme,
-            then redesigned again 25 September 2026 at ICL's request: the
-            always-visible hour-by-hour list that used to render here (see
-            the git history for that version — `quiet` slots small and
-            muted, named slots busy, a rotating accent dot for rhythm) is
-            now a single line plus the download bar, with the full running
-            order living in components/AgendaPreview.tsx and showing only
-            on hover/focus. See that file's own doc comment for the full
-            reasoning. */}
-        <section id="agenda" className="bg-card tint-clay">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal><Head eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head></Reveal>
-            <Reveal delay={80} className="mt-10">
-              <AgendaPreview />
-            </Reveal>
           </div>
         </section>
 

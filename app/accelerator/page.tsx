@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 };
 
 /* The Award's own time/body already live in SIGNATURE_OPPORTUNITIES
-   (shared with /partner) — read from there rather than retyping the 16:30
+   (shared with /partner) — read from there rather than retyping the 15:45
    slot and its description a third time. */
 const AWARD = SIGNATURE_OPPORTUNITIES.find((o) => o.name === "The Africa SME Award 2026")!;
 

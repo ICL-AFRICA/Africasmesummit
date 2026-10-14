@@ -93,8 +93,9 @@ export const BROCHURE_URL = "/brochure/africa-sme-summit-brochure.pdf";
 
 /**
  * The confirmed running order, downloadable below the agenda on the
- * homepage — the same PDF AGENDA above is transcribed from ("AFRICA_SME_
- * SUMMIT_2026_Program_16.09.2026"), so anyone can carry the whole running
+ * homepage — the same programme AGENDA below is transcribed from
+ * ("Africa SME Summit 2026 Programme 13.10.2026", converted to PDF from
+ * the Word file ICL supplied), so anyone can carry the whole running
  * order rather than re-scrolling the page. Same static-asset pattern as
  * BROCHURE_URL just above: no server, no download-tracking.
  */
@@ -1008,30 +1009,49 @@ type AgendaSlot = {
 
 /**
  * The confirmed running order, transcribed from the programme I Choose Life
- * – Africa published 30 September 2026 ("Africa-SME-Summit-2026-programme_
- * 30.09.2026"), which supersedes the 16 September version this array held
- * before. What changed: the 12:00 midday block now runs four parallel
- * tracks rather than five — "Talent management" is replaced by "Climate
- * action and sustainability" (its own, unrelated facilitator list) and the
- * "University Vice Chancellors and Industry Roundtable" session is dropped
- * entirely — and the whole afternoon from lunch onward shifted: Lunch
- * moves to 13:00, the three-track block to 14:00, Networking to 15:00, and
- * SEALS commissioning moves from 12:45 all the way to 16:00, immediately
- * before the Awards ceremony (now 16:30, not 16:00 — see
- * SIGNATURE_OPPORTUNITIES below, which names that same slot and had to
- * move with it). Closing remarks (17:00) and departure (17:30) are
- * unchanged. See AGENDA_SOURCE below for how sure this is.
+ * – Africa published 13 October 2026 ("Africa SME Summit 2026 Programme
+ * 13.10.2026"), which supersedes the 30 September version this array held
+ * before. What changed:
+ *
+ * - The 09:00 slot is now two linked sessions — the Quadra Helix approach
+ *   (video and panel) and the Juapath and Zetech University case study —
+ *   instead of the case study alone.
+ * - Two morning slots are gone: Eng. Mike Mutungi's "The money exists. The
+ *   problem is the meeting." (09:40) and Evaleen Mitei's TSC session
+ *   (10:00). Nothing replaces them, so the Nyalita slot at 09:30 now runs
+ *   straight into the 10:10 Competency Based Curriculum slot.
+ * - The 2027 summit launch at 10:30 is now introduced by Nils Lindh (it was
+ *   Jenny Jakobsson), with the 2027 theme reworded to "digital and green
+ *   transition" in place of "cross-border trade".
+ * - Every parallel track now names a moderator and a different panel; the
+ *   AI and technology track is moderated by Esther Mwangi.
+ * - The afternoon from networking onward moved earlier: networking and tea
+ *   15:00, SEALS commissioning 15:30 (was 16:00), the Africa SME Award
+ *   ceremony 15:45 (was 16:30 — see SIGNATURE_OPPORTUNITIES below, which
+ *   names that same slot and moved with it). Closing remarks at 17:00 are
+ *   now given by Prof. Walter Jaoko, Board Chairman, and departure is still
+ *   17:30.
+ *
+ * Wording is the programme's own, with obvious typos corrected (see the
+ * 14 October 2026 commit message for the list). Where the programme says
+ * "Fleet Man" for Michael Maddy's company the site's existing "Fleet
+ * Planner" is used. See AGENDA_SOURCE below for how sure this is.
  */
 export const AGENDA: readonly AgendaSlot[] = [
   { time: "07:30", title: "Arrival and registration", note: "Allan Manthi, Master SEAL, I Choose Life – Africa", quiet: true },
   { time: "08:30", title: "National & East Africa anthem", note: "Led by the Master of Ceremony, Ian Muiga, Program Manager, I Choose Life – Africa", quiet: true },
-  { time: "08:35", title: "Opening prayer", quiet: true },
-  { time: "08:40", title: "Introductions and acknowledgements", note: "Master of Ceremony, Ian Muiga, Program Manager, I Choose Life – Africa", quiet: true },
+  { time: "08:35", title: "Opening prayer", note: "Comfort Mwanga, student, University of Nairobi", quiet: true },
+  { time: "08:40", title: "Introductions and acknowledgements", note: "Master of Ceremony, Ian Muiga, Program Manager, I Choose Life – Africa, and Neema Sere", quiet: true },
   { time: "08:50", title: "Welcome remarks", note: `${GUEST_OF_HONOUR.name}, ${GUEST_OF_HONOUR.role}, ${GUEST_OF_HONOUR.org}` },
-  { time: "09:00", title: "Industry – academia collaboration: the Juapath and Zetech University collaboration case study", note: "Victor Sila, Founder, Juapath & Walmart, and Esther Njuguna, Zetech University" },
+  {
+    time: "09:00",
+    title: "Industry – academia collaboration: the Quadra Helix approach, and the Juapath and Zetech University case study",
+    sessions: [
+      { title: "The Quadra Helix approach: video and panel", note: "Moderator: Eng. Mike Mutungi, I Choose Life – Africa. Panel: Julius Karina, Director, MSMEs, Nairobi County; Dr. Henry Yatich, Mount Kenya University; Doris Wanjiku, WetBlu Luxury Leather; a student participant of the Africa SME Award; James Gachiri, Acting CEO, ASSEK" },
+      { title: "Case study: Juapath and Zetech University collaboration", note: "Moderator: Eng. Mike Mutungi, I Choose Life – Africa. Panel: Kathiani Girls (Mr. Tom, Felista Mumo, Florence Chelule); Esther Mwangi, Zetech University; Mr. Sila; Dr. Tom Mboya, KICD" },
+    ],
+  },
   { time: "09:30", title: "Strengthening Kenya's entrepreneurship ecosystem for MSME growth, investment and job creation — a Nairobi County case study", note: "Dr. Anastasia Nyalita, County Executive Committee Member — Business and Hustler Opportunities, Nairobi City County Government" },
-  { time: "09:40", title: "The money exists. The problem is the meeting.", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
-  { time: "10:00", title: "Transforming education through technology: reimagining teacher management and service delivery", note: "Evaleen Mitei, CEO, Teachers Service Commission" },
   { time: "10:10", title: "Competency Based Curriculum (CBE), from classroom to economy: building future-ready skills for employability, entrepreneurship and economic growth", note: "John Lekakeny Ololtuaa, CBS, Principal Secretary, State Department for Basic Education, Ministry of Education" },
   { time: "10:20", title: "From innovation to enterprise: unlocking capital and markets for Africa's next generation of innovators", note: "Prof. Abdulrazak Shaukat, Principal Secretary, State Department for Science, Research & Innovation, Kenya" },
   {
@@ -1041,7 +1061,7 @@ export const AGENDA: readonly AgendaSlot[] = [
       { title: "Juapath Research study", note: "Prof. Njenga Munene, Vice Chancellor, Zetech University" },
       { title: "Jiinue Business Accelerator platform", note: "Prof. Abdulrazak Shaukat, Principal Secretary, State Department for Science, Research & Innovation, Kenya" },
       { title: "SLP Project", note: "Tom Owour, Mission Leader, Children's Mission Africa" },
-      { title: "Africa SME Summit 2027 — accelerating sustainable business growth and cross-border trade through AI and technology adoption", note: "Jenny Jakobsson, Co-Founder, Sustainable World Corporation" },
+      { title: "Africa SME Summit 2027 — accelerating sustainable business growth, digital and green transition through AI and technology adoption", note: "Nils Lindh, Co-Founder, Sustainable World Corporation" },
     ],
   },
   { time: "11:20", title: "Photo session", note: "All", quiet: true },
@@ -1050,9 +1070,9 @@ export const AGENDA: readonly AgendaSlot[] = [
     time: "12:00",
     title: "Parallel sessions — four tracks",
     sessions: [
-      { title: "Finance, Capital & Investment", note: "Prof. Kellen Kiambati (Karatina University), Dr. Eric Wamuya (Machakos University), Wanjau Nduba, Nils Lindh and Barbara Lutomia (the Swarm Initiative), and Patrick Maina (Intellect Illumini Advisory, MSEA)" },
-      { title: "Climate action and sustainability", note: "Jenney Jakobsson, Co-Founder, Sustainable World Corporation, with Roam Electric; Peter Lemaron, CEO, Lemaxon Energy Solutions; Cooperative Bank of Kenya; Vincent Sila, CEO, Datalock; Canopy Insurance Company; ICEA Lion Insurance Company; and NTSA" },
-      { title: "Industry and academia collaboration", note: "Dr. Henry Yatich, Principal, Graduate Studies and Research, Mount Kenya University; Dr. Faith Yator, Kabarak University; Jenny Jakobsson, Co-Founder, Sustainable World Corporation" },
+      { title: "Finance, Capital & Investment", note: "Moderator: Salome Ayugi, Associate Director, Sinapis. Panel: CPA Catherine Odhiambo, Chief Executive Officer, Kimisitu SACCO; Wanjau Nduba, Board Chairperson, Children's Mission Africa; Nils Lindh, Naventure; Ruth Mawia, Director, Koola Waters; CPA Patrick Maina, Intellect Illumini Advisory; CPA Thomas Ondigi, Nolands Kenya" },
+      { title: "Climate action and sustainability", note: "Moderator: Salome Temba, Norex. Panel: Habib Lukaya, Country Manager, Roam Electric; Equity Bank of Kenya; Vincent Sila, CEO, Datalock; Dennis Ochieng, Chairperson, Council of SACCOs" },
+      { title: "Industry and academia collaboration", note: "Moderator: Dr. Henry Yatich, Principal, Graduate Studies and Research, Mount Kenya University. Panel: Dr. Faith Yator, Kabarak University; Eric Nyamwaro, Partnerships Advisor, STEM Impact Center Kenya; Mini Muthoni, Smartcom Traders" },
       { title: "Paper presentations", note: "Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant" },
     ],
   },
@@ -1061,15 +1081,15 @@ export const AGENDA: readonly AgendaSlot[] = [
     time: "14:00",
     title: "Parallel sessions — three tracks",
     sessions: [
-      { title: "Adopting AI and technology for business growth and efficiency", note: "Victor Sila, Juapath Founder & Walmart, with Esther Mwangi (Zetech University), Dr. Njeri Ngaruya (Strathmore University), and Newton (South Sudan)" },
-      { title: "Market access and cross-border trade", note: "Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant, with Dr. Susan Chege (Daystar University), Dr. Faith Yator (Kabarak University), and Nabitnu (Congo DRC)" },
-      { title: "Kenya entrepreneurship ecosystem strengthening", note: "Mercy Kimalat, CEO, ASSEK, with Dr. Anastasia Nyalita (CECM, MSMEs, Nairobi City County), Phillip Kabii (Regional Coordinator, Children's Mission Africa), Prof. Stephen Muathe (Kenyatta University), Dr. Ruth Ruhiu (Technical University of Kenya), Henry Rithea (MSEA) and Anne Lawi" },
+      { title: "Adopting AI and technology for business growth and efficiency", note: "Moderator: Esther Mwangi, Director, Research and Postgraduate Studies, Zetech University. Panel: Zainabu Muti, Strathmore University; Michael Maddy, Co-Founder, Fleet Planner; David Ger, Salato; Dr. George Musumba, Dedan Kimathi University of Science and Technology; Allan Manthi, Juapath" },
+      { title: "Market access and cross-border trade", note: "Moderator: Dr. Hilda Muteshi, Expert Design Inclusive Business Model Consultant. Panel: Dr. Susan Chege, Daystar University; Mercy Kimalat, CEO, ASSEK; Caroline Njeri, Digi Greens Holdings Limited; Daniel Juma, Africa Regional Representative, Global Peace Foundation; Julius Karina, Director, MSMEs, Nairobi County" },
+      { title: "Kenya entrepreneurship ecosystem strengthening", note: "Moderator: Eng. Mike Mutungi, I Choose Life – Africa. Panel: Dr. Anastasia Nyalita, CECM, MSMEs, Nairobi City County; Phillip Kabii, Regional Coordinator, Children's Mission Africa; Dr. Ruth Ruhiu, Technical University of Kenya; Dr. Roselyn Kariithi, Allan Gray Philanthropy; James Gachiri, Acting CEO, ASSEK" },
     ],
   },
-  { time: "15:00", title: "Networking, deal making, pitching, exhibition & poster presentations", note: "Track business clinics" },
-  { time: "16:00", title: "SEALS commissioning", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
-  { time: "16:30", title: "Africa SME Award 2026 winners ceremony", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
-  { time: "17:00", title: "Closing remarks", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
+  { time: "15:00", title: "Tea, networking, deal making, pitching, exhibition & poster presentations", note: "Track business clinics" },
+  { time: "15:30", title: "SEALS commissioning", note: "Ian Muiga, Program Manager, I Choose Life – Africa" },
+  { time: "15:45", title: "Africa SME Award 2026 winners ceremony", note: "Eng. Mike Mutungi, Chief Executive Officer, I Choose Life – Africa" },
+  { time: "17:00", title: "Closing remarks", note: "Prof. Walter Jaoko, Board Chairman, I Choose Life – Africa" },
   { time: "17:30", title: "Closing prayers & departure", quiet: true },
 ] as const;
 
@@ -1083,7 +1103,7 @@ export const AGENDA: readonly AgendaSlot[] = [
  * rather than silence — a programme this detailed, with facilitators named
  * against every slot, is the kind of thing that gets a late substitution.
  */
-export const AGENDA_SOURCE = "Confirmed programme, published 30 September 2026.";
+export const AGENDA_SOURCE = "Confirmed programme, published 13 October 2026.";
 
 /**
  * When the day starts and ends, taken from the running order itself.
@@ -1895,12 +1915,13 @@ export const SPONSOR_TIERS = [
  *
  * The Award's `time` here must match its AGENDA slot above — moved from
  * 16:00 to 16:30 on 30 September 2026, when the confirmed programme
- * shifted the whole afternoon and slotted SEALS commissioning in ahead of
- * it at 16:00.
+ * shifted the whole afternoon, then from 16:30 to 15:45 on 14 October 2026
+ * with the 13 October programme (SEALS commissioning now precedes it at
+ * 15:30).
  */
 export const SIGNATURE_OPPORTUNITIES = [
   {
-    time: "16:30",
+    time: "15:45",
     moment: "The peak of the day",
     name: "The Africa SME Award 2026",
     body: "The winners are announced from the stage in front of the entire summit, at the emotional high point of the programme. Naming rights place a partner's brand permanently against Kenyan enterprise achievement — the most photographed, most reported moment of the day.",
@@ -1947,7 +1968,7 @@ export const SIGNATURE_OPPORTUNITIES = [
  * platform launches live from the summit stage at 10:30 on
  * EVENT.dateLabel (see the matching AGENDA slot and the "platform launch"
  * entry in SIGNATURE_OPPORTUNITIES above, both reused rather than
- * retyped), and the Award's winners aren't named until the 16:30 ceremony
+ * retyped), and the Award's winners aren't named until the 15:45 ceremony
  * the same day. Rather than invent placeholder names, every list below
  * (ACCELERATOR_FACULTY, _GRADUATES, _AWARD_WINNERS) starts
  * empty and /accelerator shows an honest "to be announced"-style notice

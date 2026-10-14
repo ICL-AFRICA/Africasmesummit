@@ -823,43 +823,6 @@ body {
   .cursor-glow { display: none; }
 }
 
-/* ── Agenda preview: hover the download button, see the running order ───
-   Added 25 September 2026 at ICL's request, replacing the always-visible
-   hour-by-hour list that used to sit above this download box (see the
-   comment on #agenda in app/page.tsx for why, and components/
-   AgendaPreview.tsx for the hover logic) — same entrance shape as
-   .venue-preview above (opacity + translateY, fading and lifting into
-   view), just anchored above a full-width bar instead of a corner button,
-   and considerably taller since a running order has more to show than a
-   handful of photos. max-height plus overflow-y so twenty-one slots at
-   16px never demand a panel taller than the viewport itself. */
-.agenda-preview {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(100% + 14px);
-  max-height: min(420px, 60vh);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border-radius: 1rem;
-  background: var(--color-card);
-  box-shadow:
-    0 24px 38px -20px rgba(25, 21, 57, 0.45),
-    0 8px 14px -8px rgba(25, 21, 57, 0.3);
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity 260ms ease, transform 260ms ease;
-}
-.agenda-preview-visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-@media (prefers-reduced-motion: reduce) {
-  .agenda-preview { transition: none; }
-}
-
 /* ── Hero title: fades in word by word on load ──────────────────────────
    Added 25 September 2026 at ICL's request ("Africa SME Summit" fading in
    word for word as the page opens). Plain CSS keyframes, not
