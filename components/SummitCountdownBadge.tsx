@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EVENT, SUMMIT_STARTS } from "@/lib/event";
+import { EVENT, NEXT_SUMMIT } from "@/lib/event";
 
 /**
  * Floating "days to the summit" badge — added 19 September 2026 alongside
@@ -20,7 +20,7 @@ import { EVENT, SUMMIT_STARTS } from "@/lib/event";
  * precision anyway.
  */
 export default function SummitCountdownBadge() {
-  const target = new Date(SUMMIT_STARTS).getTime();
+  const target = new Date(NEXT_SUMMIT.starts).getTime();
   const [days, setDays] = useState<number | null | undefined>(undefined);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function SummitCountdownBadge() {
         {days}
       </span>
       <span className="text-[12px] leading-tight text-white/70">
-        day{days === 1 ? "" : "s"} to<br />{EVENT.name} {EVENT.year}
+        day{days === 1 ? "" : "s"} to<br />{EVENT.name} {NEXT_SUMMIT.year}
       </span>
     </div>
   );

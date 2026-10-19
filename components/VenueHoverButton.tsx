@@ -4,7 +4,16 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * The homepage header's venue mention. Two joined pill segments —
+ * CHANGED 19 October 2026, at ICL's request: this was the "Venue | Ole
+ * Sereni" pill; with the 2026 summit over and the next one (March 2027)
+ * without a venue yet, it is now "Recap | 2026" and the whole pill is one
+ * link to /press, where the summit photographs now lead the page. The
+ * hover preview cycles summit photographs instead of venue photographs.
+ * The Ole Sereni roundel is gone from the left segment (the prop is
+ * optional; omit it for no logo). The older notes below describe the
+ * Venue version and are kept for the hover mechanics.
+ *
+ * Original note: the homepage header's venue mention. Two joined pill segments —
  * "Venue" (with Emara Ole Sereni's own roundel) and "Ole Sereni" — read
  * together as a labelled field, replacing the old plain-text "Ole Sereni,
  * Mombasa Road" (Mombasa Road dropped 25 September 2026 at ICL's request,
@@ -37,13 +46,17 @@ import { useEffect, useRef, useState } from "react";
 export default function VenueHoverButton({
   images,
   href,
+  tag,
   label,
   logoSrc,
 }: {
   images: readonly { src: string; alt: string }[];
   href: string;
+  /** Left segment, e.g. "Recap". */
+  tag: string;
+  /** Right segment, e.g. "2026". */
   label: string;
-  logoSrc: string;
+  logoSrc?: string;
 }) {
   const [hovered, setHovered] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -95,18 +108,19 @@ export default function VenueHoverButton({
         </span>
       )}
 
-      <span className="venue-toggle-pill">
-        {/* Label, not a link — see doc comment above for why this segment
-            has no keyboard/touch equivalent for its colour-swap hover. */}
+      {/* One link, two segments: tapping either half goes to the recap.
+          The left half still swaps fills with the right on hover (see
+          .venue-seg-venue in globals.css). */}
+      <Link href={href} className="venue-toggle-pill" aria-label={`${tag}, ${label}`}>
         <span className="venue-seg venue-seg-venue">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logoSrc} alt="" className="venue-seg-logo" />
-          Venue
+          {logoSrc && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logoSrc} alt="" className="venue-seg-logo" />
+          )}
+          {tag}
         </span>
-        <Link href={href} className="venue-seg venue-seg-name">
-          {label}
-        </Link>
-      </span>
+        <span className="venue-seg venue-seg-name">{label}</span>
+      </Link>
     </span>
   );
 }

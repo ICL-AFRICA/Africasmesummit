@@ -10,7 +10,7 @@ import SiteFooter from "@/components/SiteFooter";
 import VenueHoverButton from "@/components/VenueHoverButton";
 import Reveal from "@/components/Reveal";
 import AgendaPreview from "@/components/AgendaPreview";
-import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, STUDENT_SOLD_OUT, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, SUMMIT_STARTS } from "@/lib/event";
+import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, STUDENT_SOLD_OUT, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, NEXT_SUMMIT, SUMMIT_PHOTOS } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -68,7 +68,9 @@ export default function Page() {
             <HeroVideo />
             <div className="absolute inset-x-0 bottom-0">
               <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-10 sm:pb-14">
-                {/* The hero spells out the year ("Africa SME Summit 2026"),
+                {/* From 19 October 2026 the hero names the NEXT summit
+                    (NEXT_SUMMIT in lib/event.ts), not the one just held.
+                    Earlier note: the hero spells out the year ("Africa SME Summit 2026"),
                     added 2 October 2026 at ICL's (boss's) request — scoped
                     to this one headline rather than to EVENT.name itself,
                     since EVENT.name is also used bare elsewhere (the header
@@ -77,7 +79,7 @@ export default function Page() {
                     {EVENT.year}" — changing EVENT.name would have doubled
                     the year there). */}
                 <h1 className="h-xl text-white text-[15vw] sm:text-[9vw] lg:text-[7.5rem]">
-                  {`${EVENT.name} ${EVENT.year}`.split(" ").map((word, i) => (
+                  {`${EVENT.name} ${NEXT_SUMMIT.year}`.split(" ").map((word, i) => (
                     <span
                       key={word + i}
                       className="hero-word"
@@ -92,7 +94,7 @@ export default function Page() {
           </div>
           <div className="border-t border-line">
             <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3 text-[16px] text-white">
-              <p>{EVENT.dateLabel}</p>
+              <p>{NEXT_SUMMIT.label}</p>
               {/* Enclosed as a "Venue" / name toggle 24-25 September 2026,
                   at ICL's request — see VenueHoverButton.tsx. "Mombasa
                   Road" came out once "Venue" made the label explicit and
@@ -101,10 +103,10 @@ export default function Page() {
                   the other five keep the plain .venue-float hover-lift. */}
               <p className="text-white">
                 <VenueHoverButton
-                  images={PHOTOS.venue.slice(0, 5)}
-                  href="/press#venue"
-                  label={EVENT.venue}
-                  logoSrc={PHOTOS.venueLogo}
+                  images={SUMMIT_PHOTOS.slice(0, 5).map((p) => ({ src: p.thumb, alt: p.alt }))}
+                  href="/press"
+                  tag="Recap"
+                  label={String(EVENT.year)}
                 />
               </p>
             </div>
@@ -115,7 +117,7 @@ export default function Page() {
         <section className="bg-card tint-marigold">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-32 text-center">
             <Reveal>
-              <p className="eyebrow text-ink/45 mb-6">One day, {DATE_DAY_MONTH}</p>
+              <p className="eyebrow text-ink/45 mb-6">One day, {NEXT_SUMMIT.label}</p>
               <h2 className="h-lg text-4xl sm:text-6xl lg:text-[4.2rem] max-w-4xl mx-auto">
                 7.4 million enterprises.<br />One of them is yours.
               </h2>
@@ -139,8 +141,8 @@ export default function Page() {
             <div className="mt-14 flex justify-center">
               <Countdown
                 tone="light"
-                target={SUMMIT_STARTS}
-                activeLabel={`Until ${EVENT.name} ${EVENT.year}`}
+                target={NEXT_SUMMIT.starts}
+                activeLabel={`Until ${EVENT.name} ${NEXT_SUMMIT.year}`}
                 endedLabel="The summit is under way."
               />
             </div>

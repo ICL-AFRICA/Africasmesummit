@@ -1123,6 +1123,32 @@ export const AGENDA_END = AGENDA[AGENDA.length - 1].time;
  *  moment the homepage counts down to. */
 export const SUMMIT_STARTS = `${DATE_ISO}T${AGENDA_START}:00+03:00`;
 
+/**
+ * The NEXT summit — Africa SME Summit 2027 (19 October 2026, at ICL's
+ * request, four days after the 2026 summit at Ole Sereni).
+ *
+ * Everything the homepage says about "the next summit" reads from here: the
+ * hero headline and date line, the "One day" eyebrow, and both countdowns
+ * (the one in the statement section and the floating badge).
+ *
+ * ONLY THE MONTH IS CONFIRMED. ICL said "March 2027"; no day, venue or
+ * opening time has been given, and none is invented here. `starts` is
+ * therefore the first moment of March in East Africa Time, so the
+ * countdowns read "days until March 2027" and run out on 1 March at the
+ * latest. When the real date is fixed, change `starts` to that day's
+ * opening time (and `label` to e.g. "12 March 2027") — nothing else needs
+ * touching.
+ *
+ * The 2026 constants above (EVENT.year, DATE_ISO, SUMMIT_STARTS, the
+ * AGENDA, tickets and early bird) deliberately stay as the 2026 record:
+ * the press page and the recap use them. They are not the next summit.
+ */
+export const NEXT_SUMMIT = {
+  year: 2027,
+  label: "March 2027",
+  starts: "2027-03-01T00:00:00+03:00",
+} as const;
+
 export const FAQ = [
   { q: "Is lunch included?", a: "Yes. Every ticket includes lunch and refreshments through the day." },
   { q: "Can I send a colleague instead?", a: "Yes. Tickets are transferable up to 48 hours before the summit — send us both names on the contact page." },
