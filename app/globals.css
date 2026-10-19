@@ -852,3 +852,16 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-word { animation: none; opacity: 1; }
 }
+
+/* ── Summit photo slideshow ───────────────────────────────────────────
+   Added 19 October 2026 (components/SummitHero.tsx, top of /press). The
+   large frame re-keys its <img> on every change, so this plain fade-in
+   runs on each new photograph. Reduced-motion visitors get no fade. */
+@keyframes summit-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.summit-fade { animation: summit-fade 700ms ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .summit-fade { animation: none; }
+}

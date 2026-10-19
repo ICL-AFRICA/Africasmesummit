@@ -4,15 +4,18 @@ import StickyBar from "@/components/StickyBar";
 
 /** Every page except the homepage uses this: bar, header, indigo field, footer. */
 export default function PageShell({
-  current, eyebrow, title, lede, children,
+  current, eyebrow, title, lede, above, children,
 }: {
-  current: string; eyebrow: string; title: string; lede?: string; children: React.ReactNode;
+  current: string; eyebrow: string; title: string; lede?: string; above?: React.ReactNode; children: React.ReactNode;
 }) {
   return (
     <>
       <StickyBar />
       <SiteHeader current={current} />
       <main className="bg-ink">
+        {/* `above` (added 19 October 2026, for /press) renders before the
+            title block, so a page can lead with its pictures. */}
+        {above}
         <section className="border-b border-line">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-24">
             <p className="eyebrow text-white mb-5">{eyebrow}</p>

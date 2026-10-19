@@ -1750,6 +1750,81 @@ export const PHOTOS = {
   ],
 } as const;
 
+/**
+ * Photographs from the summit itself, 15 October 2026 at Ole Sereni — the
+ * set of 46 supplied by ICL on 19 October 2026, shown at the very top of
+ * /press as a large slideshow with a four-photo strip beneath it (see
+ * SummitHero.tsx), above the pre-summit updates.
+ *
+ * Each photo is two files made from the supplied JPEG: `src` at a 2000px
+ * long edge for the large frame, `thumb` at 720px for the strip and the
+ * "see all" grid, both WEBP. Order is a deliberate tour rather than
+ * filename order: the hall and the stage first, then discussions, the
+ * partnership moment on stage, the exhibition, the SEALS commissioning and
+ * the students' candle moment, and the certificate presentations last.
+ *
+ * `fit: "contain"` is for the two portrait photographs, which would be
+ * cut to a thin slice by the 16:9 frame; they are letterboxed instead.
+ * Alt text describes the scene only — nobody is named, since we do not
+ * have a verified caption list. Add a name here only once ICL has
+ * confirmed it. Several neighbouring frames are near-duplicates (the
+ * handshakes, the cake cutting, the certificates); they were supplied
+ * that way and are all kept.
+ *
+ * The photographer's mark sits in the bottom-right corner of every image,
+ * as supplied.
+ */
+export const SUMMIT_PHOTOS: readonly {
+  src: string; thumb: string; alt: string; fit?: "contain";
+}[] = [
+  { src: "/img/summit/8326.webp", thumb: "/img/summit/thumb/8326.webp", alt: "Panellists seated on stage in front of the screen listing the summit's keynote speakers" },
+  { src: "/img/summit/8321.webp", thumb: "/img/summit/thumb/8321.webp", alt: "The conference hall lit in pink and gold, delegates at round tables and a speaker on the large screen" },
+  { src: "/img/summit/8317.webp", thumb: "/img/summit/thumb/8317.webp", alt: "The stage and large screen at the front of the hall, with delegates seated at round tables" },
+  { src: "/img/summit/8320.webp", thumb: "/img/summit/thumb/8320.webp", alt: "Delegates at round tables watching a keynote on the large screen" },
+  { src: "/img/summit/8297.webp", thumb: "/img/summit/thumb/8297.webp", alt: "Delegates seated at round tables listening during a session" },
+  { src: "/img/summit/8281.webp", thumb: "/img/summit/thumb/8281.webp", alt: "Guests at a round table in the hall, listening to a speaker" },
+  { src: "/img/summit/8232.webp", thumb: "/img/summit/thumb/8232.webp", alt: "A speaker addressing the hall from the stage, with panellists seated beside the Africa SME Summit backdrop" },
+  { src: "/img/summit/8234.webp", thumb: "/img/summit/thumb/8234.webp", alt: "A speaker with a microphone on stage, panellists seated on either side" },
+  { src: "/img/summit/8266.webp", thumb: "/img/summit/thumb/8266.webp", alt: "A speaker in a mint-green jacket addressing the audience", fit: "contain" },
+  { src: "/img/summit/8263.webp", thumb: "/img/summit/thumb/8263.webp", alt: "A speaker in a mint-green jacket speaking beside the podium", fit: "contain" },
+  { src: "/img/summit/8257.webp", thumb: "/img/summit/thumb/8257.webp", alt: "Panellists seated in a row on stage, listening to a colleague speak" },
+  { src: "/img/summit/8241.webp", thumb: "/img/summit/thumb/8241.webp", alt: "Two panellists in conversation on stage, one speaking into a microphone" },
+  { src: "/img/summit/8387.webp", thumb: "/img/summit/thumb/8387.webp", alt: "Three panellists on stage in front of the Africa SME Summit 2026 screen, one speaking" },
+  { src: "/img/summit/8282.webp", thumb: "/img/summit/thumb/8282.webp", alt: "A speaker presenting from the podium in front of a large slide" },
+  { src: "/img/summit/8339.webp", thumb: "/img/summit/thumb/8339.webp", alt: "Students and delegates in discussion around a table" },
+  { src: "/img/summit/8348.webp", thumb: "/img/summit/thumb/8348.webp", alt: "Delegates and students in a group discussion" },
+  { src: "/img/summit/8304.webp", thumb: "/img/summit/thumb/8304.webp", alt: "Guests on stage shaking hands while others applaud behind them" },
+  { src: "/img/summit/8309.webp", thumb: "/img/summit/thumb/8309.webp", alt: "A group of guests standing together on stage, smiling" },
+  { src: "/img/summit/8310.webp", thumb: "/img/summit/thumb/8310.webp", alt: "Two men shaking hands on stage as a woman in a blue dress looks on" },
+  { src: "/img/summit/8311.webp", thumb: "/img/summit/thumb/8311.webp", alt: "Two men shaking hands on stage, a woman in a blue dress beside them" },
+  { src: "/img/summit/8312.webp", thumb: "/img/summit/thumb/8312.webp", alt: "A group posing together on stage in front of the screen" },
+  { src: "/img/summit/8316.webp", thumb: "/img/summit/thumb/8316.webp", alt: "A large group posing together across the stage" },
+  { src: "/img/summit/8418.webp", thumb: "/img/summit/thumb/8418.webp", alt: "Delegates, students and guests gathered for a group photograph in the hall" },
+  { src: "/img/summit/8419.webp", thumb: "/img/summit/thumb/8419.webp", alt: "Visitors at the Jiinue Business Accelerator and JuaPath exhibition stand" },
+  { src: "/img/summit/8420.webp", thumb: "/img/summit/thumb/8420.webp", alt: "Visitors talking at the exhibition stand beside the JuaPath banner" },
+  { src: "/img/summit/8468.webp", thumb: "/img/summit/thumb/8468.webp", alt: "An exhibitor showing jars of natural products to a visitor" },
+  { src: "/img/summit/8444.webp", thumb: "/img/summit/thumb/8444.webp", alt: "Three delegates wearing summit lanyards, smiling for the camera" },
+  { src: "/img/summit/8455.webp", thumb: "/img/summit/thumb/8455.webp", alt: "Delegates gathered around a phone, talking" },
+  { src: "/img/summit/8577.webp", thumb: "/img/summit/thumb/8577.webp", alt: "Two delegates seated at a table during a session" },
+  { src: "/img/summit/8477.webp", thumb: "/img/summit/thumb/8477.webp", alt: "The SEALS Commissioning 2026 cake, with partner logos behind it" },
+  { src: "/img/summit/8555.webp", thumb: "/img/summit/thumb/8555.webp", alt: "Guests and students cutting the SEALS Commissioning cake together" },
+  { src: "/img/summit/8557.webp", thumb: "/img/summit/thumb/8557.webp", alt: "Guests and students cutting the commissioning cake as the crowd applauds" },
+  { src: "/img/summit/8515.webp", thumb: "/img/summit/thumb/8515.webp", alt: "School students in uniform standing together, one speaking into a microphone" },
+  { src: "/img/summit/8525.webp", thumb: "/img/summit/thumb/8525.webp", alt: "Students standing with their hands on their hearts" },
+  { src: "/img/summit/8534.webp", thumb: "/img/summit/thumb/8534.webp", alt: "Two men lighting a candle on stage" },
+  { src: "/img/summit/8539.webp", thumb: "/img/summit/thumb/8539.webp", alt: "Students passing candlelight from one to another" },
+  { src: "/img/summit/8666.webp", thumb: "/img/summit/thumb/8666.webp", alt: "Delegates seated around a table" },
+  { src: "/img/summit/8549.webp", thumb: "/img/summit/thumb/8549.webp", alt: "A student receiving a certificate on stage in front of the Africa SME Summit backdrop" },
+  { src: "/img/summit/8550.webp", thumb: "/img/summit/thumb/8550.webp", alt: "A student shaking hands and receiving a certificate on stage" },
+  { src: "/img/summit/8553.webp", thumb: "/img/summit/thumb/8553.webp", alt: "A student receiving a certificate from a young woman on stage" },
+  { src: "/img/summit/8578.webp", thumb: "/img/summit/thumb/8578.webp", alt: "A school student receiving a certificate from a guest of honour" },
+  { src: "/img/summit/8589.webp", thumb: "/img/summit/thumb/8589.webp", alt: "Students in school uniform holding certificates and posing with a guest on stage" },
+  { src: "/img/summit/8590.webp", thumb: "/img/summit/thumb/8590.webp", alt: "Students holding up their certificates on stage" },
+  { src: "/img/summit/8603.webp", thumb: "/img/summit/thumb/8603.webp", alt: "A group of students and teachers holding certificates on stage" },
+  { src: "/img/summit/8616.webp", thumb: "/img/summit/thumb/8616.webp", alt: "Four students holding certificates beside a guest of honour" },
+  { src: "/img/summit/8625.webp", thumb: "/img/summit/thumb/8625.webp", alt: "A student holding her certificate of excellence" },
+];
+
 /** Why people actually give up a working day. Not features — reasons. */
 export const REASONS = [
   { n: "01", t: "Capital", d: "The head of SME banking at NCBA is in the room, and so are the funds and guarantee schemes most owners have never been walked through." },

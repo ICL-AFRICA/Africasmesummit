@@ -3,8 +3,9 @@ import Link from "next/link";
 import Btn from "@/components/Btn";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
+import SummitHero from "@/components/SummitHero";
 import UpdateGallery from "@/components/UpdateGallery";
-import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, PRESS_CONTACT, TICKET_CTA, DATE_LONG, PHOTOS } from "@/lib/event";
+import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, SUMMIT_PHOTOS, PRESS_CONTACT, TICKET_CTA, DATE_LONG, PHOTOS } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Press — ${EVENT.name} ${EVENT.year}`,
@@ -48,6 +49,24 @@ export default function Press() {
       eyebrow="On the way to the summit"
       title="Everything building up to October 15"
       lede="New partners, speakers, deadlines and milestones — in photos and video as they happen. Nothing here is embargoed, so quote or share whatever's useful."
+      above={
+        /* Photographs from the summit lead the page (19 October 2026, ICL):
+           a large slideshow frame with a four-photo strip under it, per
+           ICL's sketch; the logo in that sketch is the site header above.
+           The pre-summit updates keep their structure below. The page's
+           own h1 follows this block, so this heading is an h2. */
+        <section className="border-b border-line">
+          <div className="mx-auto max-w-[1600px] px-5 pt-6 pb-10 sm:px-8 sm:pt-8 sm:pb-14">
+            <div className="mx-auto mb-4 max-w-[1600px] text-center">
+              <p className="eyebrow mb-2 text-marigold">The summit, in pictures</p>
+              <h2 className="h-sm text-balance text-2xl text-white sm:text-3xl">
+                {EVENT.name} · {DATE_LONG} · {EVENT.venue}
+              </h2>
+            </div>
+            <SummitHero photos={SUMMIT_PHOTOS} />
+          </div>
+        </section>
+      }
     >
       {/* Redesigned 24 September 2026 at ICL's request: what was one flat
           two-up feed is now grouped into the same categories the tag colour
