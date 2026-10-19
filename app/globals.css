@@ -865,3 +865,27 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .summit-fade { animation: none; }
 }
+
+/* ── Sliding photo rail on /press (SummitHero.tsx) ───────────────────────
+   The rail holds the photo list twice, end to end; translating it by half
+   its own width and looping lands exactly where it began, so there is no
+   seam. One trip takes 6 seconds per photo (--n is the photo count), about
+   75px a second at desktop widths: a drift, not a scroll. It stops while the
+   cursor or keyboard focus is anywhere on it, so a thumbnail can be clicked
+   without chasing it. Reduced motion: no drift at all, the rail is a plain
+   row you scroll yourself, and the duplicate copy is dropped. */
+@keyframes summit-rail {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.summit-rail {
+  animation: summit-rail calc(var(--n, 36) * 6s) linear infinite;
+}
+.summit-rail-wrap:hover .summit-rail,
+.summit-rail-wrap:focus-within .summit-rail {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .summit-rail { animation: none; }
+  .summit-rail-dup { display: none; }
+}
