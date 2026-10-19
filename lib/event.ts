@@ -971,6 +971,21 @@ export const KEYNOTES = [
 ] as const;
 
 /**
+ * One sentence that says who the keynote speakers are, in words.
+ *
+ * Exists because the homepage and /press described the same lineup in two
+ * hand-typed paragraphs that drifted apart (19 October 2026, ICL spotted it):
+ * the homepage listed all seven keynotes while the /press Speakers card
+ * still said "Four names" and described four of them. Both now read this
+ * line, and /press takes its COUNT from KEYNOTES.length, so the next speaker
+ * added or dropped changes the number there on its own. The roles below still
+ * have to be kept true by hand when KEYNOTES changes — the count is derived,
+ * the description of who they are is not.
+ */
+export const KEYNOTE_SUMMARY =
+  "Two Vice-Chancellors, the summit\u2019s own convener, the CEO of the Teachers Service Commission, Nairobi County\u2019s CECM for Business and Hustler Opportunities, and two Principal Secretaries \u2014 Basic Education, and Science, Research & Innovation";
+
+/**
  * Written-out keynote count, same "derive, don't retype" reasoning as
  * SPEAKER_COUNT above: the homepage and /speakers both say how many
  * keynote speakers there are in prose ("Two Vice-Chancellors and the
@@ -2734,10 +2749,18 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     },
   },
   {
-    date: "2026-09-21",
+    /* Rewritten 19 October 2026 (ICL: the press page and the homepage
+       reported the speakers differently). This card used to say "Four names"
+       and describe four people, written when four were confirmed; the
+       lineup grew to seven and the homepage followed, this card did not.
+       The count and the description now come from KEYNOTES and
+       KEYNOTE_SUMMARY, the same sources the homepage reads. Dated 3 October,
+       the day the seventh keynote joined. Past tense, because the summit
+       has been held. */
+    date: "2026-10-03",
     tag: "Speakers",
-    title: "Four names taking the stage before the tracks open",
-    body: "Two Vice-Chancellors, the summit's own convener, and the CEO of Kenya's Teachers Service Commission — the keynote lineup is confirmed, and it sets the tone for everything that follows. This is the room you'll be walking into on October 15.",
+    title: `${countWordCap(KEYNOTES.length)} keynote speakers took the stage before the tracks opened`,
+    body: `${KEYNOTE_SUMMARY}: the keynote lineup that set the tone for everything that followed.`,
     link: { href: "/speakers", text: "Meet the full keynote lineup" },
     // Images and alt text pulled straight from KEYNOTES rather than
     // retyped — added 21 September 2026 at ICL's request, replacing the

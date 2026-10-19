@@ -889,3 +889,21 @@ body {
   .summit-rail { animation: none; }
   .summit-rail-dup { display: none; }
 }
+
+/* ── Slideshow change on /press (SummitHero.tsx) ─────────────────────────
+   Each photo fades in over the previous one (which the component keeps
+   underneath until the fade is done) while slowly zooming from 100% to 108%
+   for as long as it is on screen. The zoom outlasts the 5.5s a photo is
+   shown, so a photo is still moving when the next one covers it — no
+   abrupt stop mid-slide. Both are switched off for reduced motion. */
+@keyframes summit-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes summit-zoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+.summit-slide {
+  animation:
+    summit-in 1200ms ease both,
+    summit-zoom 8000ms ease-out both;
+  will-change: opacity, transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .summit-slide { animation: none; }
+}

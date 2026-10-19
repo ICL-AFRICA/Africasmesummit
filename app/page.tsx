@@ -10,7 +10,7 @@ import SiteFooter from "@/components/SiteFooter";
 import VenueHoverButton from "@/components/VenueHoverButton";
 import Reveal from "@/components/Reveal";
 import AgendaPreview from "@/components/AgendaPreview";
-import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, STUDENT_SOLD_OUT, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, NEXT_SUMMIT, SUMMIT_PHOTOS } from "@/lib/event";
+import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, STUDENT_SOLD_OUT, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, KEYNOTE_SUMMARY, NEXT_SUMMIT, SUMMIT_PHOTOS } from "@/lib/event";
 
 /* Section heading: mono eyebrow, then the line. Centred in the dark
    sections, left-aligned in the light ones, so the two fields read as
@@ -209,11 +209,7 @@ export default function Page() {
                 Before the tracks open
               </h2>
               <p className="lede mt-5 text-ink/60 max-w-2xl mx-auto text-[16px]">
-                Two Vice-Chancellors, the summit&rsquo;s own convener, the CEO of the
-                Teachers Service Commission, Nairobi County&rsquo;s CECM for Business
-                and Hustler Opportunities, and two Principal Secretaries &mdash;
-                Basic Education, and Science, Research &amp; Innovation &mdash;
-                setting the tone before six tracks open.
+                {KEYNOTE_SUMMARY} &mdash; setting the tone before six tracks open.
               </p>
             </Reveal>
             <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">

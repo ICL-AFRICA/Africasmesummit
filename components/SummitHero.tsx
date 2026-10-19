@@ -26,11 +26,20 @@ type Photo = { src: string; thumb: string; alt: string; fit?: "contain" };
  *    seam; the second copy is hidden from assistive tech and the tab order.
  *  - "See all" still opens every photo as a grid.
  *
- * The frame advances every few seconds by itself, pauses while the cursor or
- * focus is on it, and stops for good once a visitor picks a photo or uses an
- * arrow. Pause/Play is always on screen. Visitors who ask for reduced motion
- * get no autoplay and no drifting rail — the rail becomes a plain,
- * scrollable row.
+ * The frame advances every few seconds by itself and stops for good once a
+ * visitor picks a photo or uses an arrow. Pause/Play is always on screen and
+ * is the ONLY thing that pauses it. (An earlier version also paused while
+ * the cursor or focus was on the frame, which meant clicking Play, with the
+ * cursor necessarily on the frame, did nothing — ICL reported Play/Pause
+ * "has no effect". That hover/focus pause is gone.)
+ *
+ * Each change is a crossfade with a slow zoom-in: the new photo fades in over
+ * the old one, which stays underneath until the fade is done, and every
+ * photo drifts from 100% to 108% while it is on screen (.summit-slide in
+ * globals.css). Before, the old photo was removed at once and the new one
+ * faded in from the empty frame, which read as a flash rather than a
+ * transition. Visitors who ask for reduced motion get no autoplay, no
+ * zoom, no fade, and a rail that is a plain scrollable row.
  *
  * The one portrait photograph is shown whole over a blurred copy of itself,
  * since a full-width crop would keep a thin slice of it.
@@ -45,9 +54,12 @@ export default function SummitHero({
   heading: string;
 }) {
   const total = photos.length;
-  const [index, setIndex] = useState(0);
+  /* `prev` is the photo being faded out underneath the current one; it is
+     set in the same update as `index` so the old photo never unmounts for a
+     frame before the new one is in, and cleared once the fade has finished. */
+  const [view, setView] = useState<{ index: number; prev: number | null }>({ index: 0, prev: null });
+  const index = view.index;
   const [playing, setPlaying] = useState(true);
-  const [hovered, setHovered] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const reducedMotion = useRef(false);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -60,10 +72,19 @@ export default function SummitHero({
   }, []);
 
   useEffect(() => {
-    if (!playing || hovered || total < 2) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % total), 5500);
+    if (!playing || total < 2) return;
+    const id = setInterval(
+      () => setView((v) => ({ index: (v.index + 1) % total, prev: v.index })),
+      5500,
+    );
     return () => clearInterval(id);
-  }, [playing, hovered, total]);
+  }, [playing, total]);
+
+  useEffect(() => {
+    if (view.prev === null) return;
+    const id = setTimeout(() => setView((v) => ({ ...v, prev: null })), 1400);
+    return () => clearTimeout(id);
+  }, [view]);
 
   // Warm the next photograph so the change doesn't flash an empty frame.
   useEffect(() => {
@@ -74,7 +95,10 @@ export default function SummitHero({
   const go = useCallback(
     (to: number) => {
       setPlaying(false);
-      setIndex(((to % total) + total) % total);
+      setView((v) => {
+        const next = ((to % total) + total) % total;
+        return next === v.index ? v : { index: next, prev: v.index };
+      });
     },
     [total],
   );
@@ -84,8 +108,8 @@ export default function SummitHero({
     frameRef.current?.scrollIntoView({ behavior: reducedMotion.current ? "auto" : "smooth", block: "start" });
   };
 
-  const photo = photos[index];
-  const contain = photo.fit === "contain";
+  // Oldest first, so the incoming photo is painted on top of the outgoing one.
+  const slides = view.prev !== null ? [view.prev, view.index] : [view.index];
 
   const arrow =
     "absolute top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-ink text-white transition-colors hover:bg-raise focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
@@ -98,35 +122,37 @@ export default function SummitHero({
         aria-roledescription="carousel"
         aria-label="Africa SME Summit 2026 photographs"
         tabIndex={0}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") { e.preventDefault(); go(index + 1); }
           if (e.key === "ArrowLeft") { e.preventDefault(); go(index - 1); }
         }}
         className="relative h-[calc(100svh-15rem)] min-h-[24rem] w-full overflow-hidden bg-raise"
       >
-        {contain && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={`bg-${photo.src}`}
-            src={photo.thumb}
-            alt=""
-            aria-hidden="true"
-            className="summit-fade absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
-          />
-        )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          key={photo.src}
-          src={photo.src}
-          alt={photo.alt}
-          decoding="async"
-          fetchPriority={index === 0 ? "high" : undefined}
-          className={`summit-fade absolute inset-0 h-full w-full ${contain ? "object-contain" : "object-cover object-[50%_30%]"}`}
-        />
+        {slides.map((i) => {
+          const ph = photos[i];
+          const contain = ph.fit === "contain";
+          return (
+            <div key={ph.src} className="summit-slide absolute inset-0" aria-hidden={i === index ? undefined : true}>
+              {contain && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={ph.thumb}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
+                />
+              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={ph.src}
+                alt={i === index ? ph.alt : ""}
+                decoding="async"
+                fetchPriority={i === 0 ? "high" : undefined}
+                className={`absolute inset-0 h-full w-full ${contain ? "object-contain" : "object-cover object-[50%_30%]"}`}
+              />
+            </div>
+          );
+        })}
 
         {/* Darkens the lower part of the picture so the caption and the
             controls read on any photograph. */}
