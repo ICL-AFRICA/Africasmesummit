@@ -19,9 +19,21 @@ import { EVENT, NEXT_SUMMIT } from "@/lib/event";
  * thing on screen doing it. A days count doesn't need second-level
  * precision anyway.
  */
-export default function SummitCountdownBadge() {
+export default function SummitCountdownBadge({ afterHero = false }: { afterHero?: boolean } = {}) {
   const target = new Date(NEXT_SUMMIT.starts).getTime();
   const [days, setDays] = useState<number | null | undefined>(undefined);
+  /* `afterHero` (the 2027 homepage, 27 October 2026): the hero and the bright
+     benefits strip fill the first screen and the badge sits on top of the
+     first benefit, so it appears only once the visitor has scrolled past
+     them. Every other page shows it from the start. */
+  const [scrolled, setScrolled] = useState(!afterHero);
+  useEffect(() => {
+    if (!afterHero) return;
+    const on = () => setScrolled(window.scrollY > window.innerHeight * 0.85);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, [afterHero]);
 
   useEffect(() => {
     const tick = () => {
@@ -34,7 +46,7 @@ export default function SummitCountdownBadge() {
   }, [target]);
 
   // Before hydration, and once the summit is under way: show nothing.
-  if (days === undefined || days === null) return null;
+  if (days === undefined || days === null || !scrolled) return null;
 
   return (
     <div

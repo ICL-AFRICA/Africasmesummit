@@ -9,12 +9,13 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import VenueHoverButton from "@/components/VenueHoverButton";
 import Reveal from "@/components/Reveal";
-import HeroFrame from "@/components/HeroFrame";
+import HeroVideo from "@/components/HeroVideo";
+import EdgeMosaic from "@/components/EdgeMosaic";
 import AfricaCutout from "@/components/AfricaCutout";
 import RoadToTimeline from "@/components/RoadToTimeline";
 import EnquiryForm from "@/components/EnquiryForm";
 import {
-  EVENT, FAQ, PARTNERS, NEXT_SUMMIT, SUMMIT_PHOTOS, VENUE_SHORT,
+  EVENT, FAQ, PARTNERS, PHOTOS, NEXT_SUMMIT, SUMMIT_PHOTOS, VENUE_SHORT,
   AWARDS_2026, VOICES_2026, COMMITMENTS_2026, PLAN_2026_2030, DATE_LONG,
 } from "@/lib/event";
 
@@ -45,29 +46,30 @@ function Head({ eyebrow, children, center = false, dark = false }: {
   );
 }
 
-const ICON = { width: 26, height: 26, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
+const ICON = { width: 30, height: 30, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
 
-/* The four value props under the hero (mock-up copy, verbatim). */
+/* The four benefits under the hero (copy verbatim from ICL's brief). Line
+   icons drawn to one grid: 24px, 1.5 stroke, round caps. */
 const VALUE_PROPS = [
   {
     title: "Grow Your Business",
     body: "Access new markets, partners and opportunities.",
-    icon: <svg {...ICON}><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg>,
+    icon: <svg {...ICON}><path d="M4 20h16" /><rect x="5" y="13" width="3" height="7" /><rect x="10.500" y="10" width="3" height="10" /><rect x="16" y="7" width="3" height="13" /><path d="M5 9l5-4 3 2 6-4" /><path d="M16 3h3v3" /></svg>,
   },
   {
     title: "Meet Investors",
     body: "Connect with capital and strategic partners.",
-    icon: <svg {...ICON}><circle cx="12" cy="12" r="9" /><path d="M14.5 9.2c-.5-.8-1.4-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1.100 0-2-.4-2.500-1.200M12 6.500V8m0 8v1.500" /></svg>,
+    icon: <svg {...ICON}><path d="m11 17 2 2a1 1 0 1 0 3-3" /><path d="m14 14 2.500 2.500a1 1 0 1 0 3-3l-3.880-3.880a3 3 0 0 0-4.240 0l-.88.88a1 1 0 1 1-3-3l2.810-2.810a5.790 5.790 0 0 1 7.060-.87l.47.28a2 2 0 0 0 1.420.25L21 4" /><path d="m21 3 1 11h-2" /><path d="M3 3 2 14l6.500 6.500a1 1 0 1 0 3-3" /><path d="M3 4h8" /></svg>,
   },
   {
     title: "Share Ideas",
     body: "Learn from industry leaders and innovators.",
-    icon: <svg {...ICON}><path d="M9 18h6M10 21h4" /><path d="M12 3a6 6 0 00-3.500 10.900c.6.5 1 1.200 1 2V16h5v-.1c0-.8.4-1.500 1-2A6 6 0 0012 3z" /></svg>,
+    icon: <svg {...ICON}><path d="M15 14c.2-1 .7-1.700 1.500-2.500 1-.9 1.500-2.200 1.500-3.500A6 6 0 0 0 6 8c0 1 .2 2.200 1.500 3.500.7.7 1.300 1.500 1.500 2.500" /><path d="M9 18h6" /><path d="M10 21h4" /></svg>,
   },
   {
     title: "Build Lasting Networks",
     body: "Be part of a vibrant African business community.",
-    icon: <svg {...ICON}><circle cx="9" cy="8" r="3.500" /><path d="M2.500 20c0-3.600 2.900-6 6.500-6s6.500 2.400 6.500 6" /><path d="M16 4.500a3.500 3.500 0 010 7M18 14.300c2.200.7 3.500 2.700 3.500 5.700" /></svg>,
+    icon: <svg {...ICON}><circle cx="12" cy="5.500" r="2.500" /><circle cx="5.500" cy="17.500" r="2.500" /><circle cx="18.500" cy="17.500" r="2.500" /><path d="M10.500 7.800 6.600 15.200M13.500 7.800l3.900 7.400M8 17.500h8" /></svg>,
   },
 ] as const;
 
@@ -84,74 +86,99 @@ export default function Page() {
     <>
       <StickyBar mobileOnly />
       <TicketTicker />
-      <SummitCountdownBadge />
+      <SummitCountdownBadge afterHero />
 
-      <SiteHeader overlay barOnMobile current="/" />
+      <SiteHeader variant="glass" current="/" />
 
       <main>
-        {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-ink tint-marigold">
-          <div className="mx-auto max-w-[1600px] px-5 pb-14 pt-10 sm:px-8 sm:pb-20 lg:pb-16 lg:pt-40">
-            <div className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr] lg:gap-12">
-              <Reveal>
-                <HeroFrame
-                  image="/img/venue/venue-exterior.webp"
-                  imageAlt={`Aerial view of ${EVENT.venue}, Mombasa Road, Nairobi`}
-                  label={`${EVENT.venue} Hotel, Nairobi`}
-                />
-              </Reveal>
-              <Reveal delay={120} className="mx-auto w-full max-w-[34rem] lg:max-w-none">
+        {/* ── Hero: the trailer, full bleed ─────────────────────────────
+            Rebuilt 27 October 2026 from ICL's redesign brief. The glass
+            header above takes no space and floats over this section, which
+            therefore runs to the top of the page. Layers, back to front:
+            the trailer (muted, looping, poster as fallback); a navy wash; a
+            gradient behind the text; a vignette; the gold edge mosaic; then
+            the content. The whole first screen is nav + hero + benefits. */}
+        <section className="relative isolate min-h-[38rem] overflow-hidden bg-ink lg:h-[max(34rem,calc(100svh-12.5rem))] lg:max-h-[58rem]">
+          <HeroVideo cinema />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[rgba(12,14,46,0.5)]" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(90deg, rgba(10,12,40,0.9) 0%, rgba(10,12,40,0.72) 36%, rgba(10,12,40,0.2) 66%, rgba(10,12,40,0) 100%)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 lg:hidden" style={{ background: "linear-gradient(180deg, rgba(10,12,40,0.55) 0%, rgba(10,12,40,0.7) 100%)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(120% 90% at 50% 45%, rgba(6,8,30,0) 55%, rgba(6,8,30,0.6) 100%), linear-gradient(180deg, rgba(10,12,40,0.55) 0%, rgba(10,12,40,0) 22%)" }} />
+          <EdgeMosaic />
+
+          <div className="relative z-10 mx-auto flex h-full max-w-[1600px] items-center px-5 pb-14 pt-[calc(var(--glass-nav)+2.5rem)] sm:px-8 lg:px-12 lg:pb-8 lg:pt-[var(--glass-nav)]">
+            <div className="grid w-full items-center gap-12 md:grid-cols-2 md:gap-6">
+              <div>
+                <p className="hero-rise text-[16px] font-semibold uppercase tracking-[0.2em] text-gold sm:tracking-[0.3em]">
+                  Connect <span aria-hidden="true">•</span> Invest <span aria-hidden="true">•</span> Grow
+                </p>
+                <h1 className="hero-rise hero-serif mt-4 text-[clamp(2.9rem,12vw,4.5rem)] text-white md:text-[clamp(2.6rem,5.6vw,5.75rem)] lg:text-[clamp(3.2rem,6.4vw,5.75rem)]" style={{ ["--d" as string]: "120ms" }}>
+                  <span className="block">Africa SME</span>
+                  <span className="block">Summit <span className="text-gold">{NEXT_SUMMIT.year}</span></span>
+                </h1>
+                <p className="hero-rise mt-6 max-w-[30rem] text-[19px] leading-snug text-white sm:text-[22px]" style={{ ["--d" as string]: "240ms" }}>
+                  {NEXT_SUMMIT.tagline}
+                </p>
+                <p className="hero-rise mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-[17px] text-white" style={{ ["--d" as string]: "340ms" }}>
+                  <span className="flex items-center gap-3">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="text-gold">
+                      <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 17.500h.01M12 17.500h.01" />
+                    </svg>
+                    {NEXT_SUMMIT.label}
+                  </span>
+                  <span aria-hidden="true" className="h-6 w-px bg-white"></span>
+                  <span className="flex items-center gap-3">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="text-gold">
+                      <path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z" /><circle cx="12" cy="9.500" r="2.500" />
+                    </svg>
+                    {NEXT_SUMMIT.place}
+                  </span>
+                </p>
+                <div className="hero-rise mt-9 flex flex-wrap items-center gap-4" style={{ ["--d" as string]: "440ms" }}>
+                  <TicketBtn tone="gold" className="rounded-full px-8 text-[18px] font-semibold shadow-[0_12px_28px_-12px_rgba(227,164,40,0.9)]" />
+                  <VenueHoverButton
+                    images={SUMMIT_PHOTOS.slice(0, 5).map((p) => ({ src: p.thumb, alt: p.alt }))}
+                    href="/2026"
+                    tag="Recap"
+                    label={String(EVENT.year)}
+                  />
+                </div>
+              </div>
+
+              <div className="hero-map-in relative mx-auto w-full max-w-[34rem] md:max-w-none">
                 <AfricaCutout
                   src="/img/summit/8232.webp"
-                  alt="A speaker at the podium in front of the Africa SME Summit backdrop, framed in the outline of Africa"
-                  className="mx-auto h-auto w-full drop-shadow-[0_24px_40px_rgba(0,0,0,0.45)] lg:max-h-[27rem]"
+                  alt="A speaker at the podium at the 2026 summit, framed in the outline of Africa"
+                  className="mx-auto h-auto w-full max-w-[30rem] md:max-w-none lg:ml-auto lg:mr-14 lg:h-[min(36rem,calc(100svh-17.5rem))] lg:w-auto xl:mr-20"
                 />
-              </Reveal>
-            </div>
-
-            <div className="mx-auto mt-10 max-w-4xl text-center sm:mt-14 lg:mt-10">
-              <h1 className="hero-serif text-[2.6rem] text-white sm:text-7xl lg:text-[4.75rem]">
-                {EVENT.name} <span className="text-gold">{NEXT_SUMMIT.year}</span>
-              </h1>
-              <p className="lede mx-auto mt-6 max-w-2xl text-[19px] text-white sm:text-[21px]">
-                {NEXT_SUMMIT.tagline}
-              </p>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-                <p className="flex items-center gap-3 text-[17px] font-medium text-white">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="text-gold">
-                    <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" />
-                  </svg>
-                  {NEXT_SUMMIT.year} <span aria-hidden="true" className="text-gold">|</span> {NEXT_SUMMIT.place}
+                <p className="mt-5 text-center font-serif text-[22px] italic leading-tight text-gold lg:absolute lg:right-0 lg:top-0 lg:mt-0 lg:max-w-[12rem] lg:-rotate-6 lg:text-right lg:text-[26px]" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+                  Stronger SMEs.<br />A richer Africa.
                 </p>
-                <TicketBtn tone="gold" className="rounded-full" />
-                <VenueHoverButton
-                  images={SUMMIT_PHOTOS.slice(0, 5).map((p) => ({ src: p.thumb, alt: p.alt }))}
-                  href="/2026"
-                  tag="Recap"
-                  label={String(EVENT.year)}
-                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── Four reasons ─────────────────────────────────────────────── */}
-        <section className="border-y border-rule bg-paper">
-          <div className="mx-auto grid max-w-[1600px] gap-8 px-5 py-12 sm:grid-cols-2 sm:px-8 sm:py-14 lg:grid-cols-4 lg:gap-6">
+        {/* ── Four benefits: the bright band under the hero ───────────── */}
+        <section aria-label="Why attend" className="border-t-[3px] border-gold bg-paper">
+          <div className="mx-auto grid max-w-[1600px] gap-x-0 gap-y-7 px-5 py-9 sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:px-12 lg:py-8">
             {VALUE_PROPS.map((v, i) => (
-              <Reveal key={v.title} delay={i * 70} className="flex items-start gap-4">
-                <span className="flex h-14 w-14 flex-none items-center justify-center rounded-full bg-gold text-ink">{v.icon}</span>
+              <div
+                key={v.title}
+                className={`benefit flex items-center gap-5 lg:flex-col lg:gap-3 lg:px-6 lg:text-center ${i > 0 ? "lg:border-l lg:border-rule" : ""}`}
+              >
+                <span className="benefit-icon flex h-[60px] w-[60px] flex-none items-center justify-center rounded-full border-[1.5px] border-gold text-gold lg:h-[66px] lg:w-[66px]">{v.icon}</span>
                 <div>
                   <h2 className="h-sm text-[19px] font-semibold text-ink">{v.title}</h2>
-                  <p className="mt-1.5 text-[16px] leading-snug text-ink/75">{v.body}</p>
+                  <p className="mt-1 text-[16px] leading-snug text-ink/80">{v.body}</p>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </section>
 
         {/* ── The case ─────────────────────────────────────────────────── */}
-        <section className="bg-card tint-marigold">
+        <section id="about" className="scroll-mt-24 bg-card tint-marigold">
           <div className="mx-auto max-w-[1600px] px-5 py-24 text-center sm:px-8 sm:py-32">
             <Reveal>
               <p className="eyebrow mb-6 text-ink/45">Next: {NEXT_SUMMIT.label}</p>
@@ -263,6 +290,28 @@ export default function Page() {
             </div>
             <div className="mt-8">
               <Btn href="/2026" internal tone="onDark">See all {SUMMIT_PHOTOS.length} photos</Btn>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Venue ────────────────────────────────────────────────────── */}
+        <section id="venue" className="scroll-mt-24 border-t border-rule bg-paper tint-palm">
+          <div className="mx-auto grid max-w-[1600px] items-center gap-12 px-5 py-24 sm:px-8 sm:py-28 lg:grid-cols-[1fr_1.2fr]">
+            <Reveal>
+              <Head eyebrow="The venue">{NEXT_SUMMIT.venue}, Nairobi.</Head>
+              <p className="lede mt-6 max-w-lg text-[18px] text-ink/70">
+                {NEXT_SUMMIT.label} returns to {EVENT.venue}, {EVENT.venueDetail}, where the 2026
+                summit was held. The exact date will be announced here first.
+              </p>
+              <div className="mt-8"><Btn href="/2026" internal tone="outline">See the 2026 summit here</Btn></div>
+            </Reveal>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {PHOTOS.venue.slice(0, 3).map((p, i) => (
+                <Reveal key={p.src} delay={i * 90} className={i === 0 ? "col-span-2" : ""}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.src} alt={p.alt} loading="lazy" decoding="async" className={`w-full rounded-xl object-cover ${i === 0 ? "aspect-[16/8]" : "aspect-[4/3]"}`} />
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>

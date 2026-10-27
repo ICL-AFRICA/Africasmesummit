@@ -36,7 +36,7 @@ import { HERO_VIDEO } from "@/lib/event";
  * HeroMosaic used underneath the headline, unchanged — those two layers
  * don't care what kind of pixels are beneath them.
  */
-export default function HeroVideo() {
+export default function HeroVideo({ cinema = false }: { cinema?: boolean } = {}) {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
       <video
@@ -57,8 +57,13 @@ export default function HeroVideo() {
         src={HERO_VIDEO.poster}
         alt=""
       />
-      <div className="hero-tint" />
-      <div className="hero-scrim" />
+      {/* `cinema` (the 2027 homepage hero, 27 October 2026): the page lays
+          its own overlays over the footage (navy wash, a directional
+          gradient behind the text, a vignette), so the default scrim is
+          skipped and the colour tint is eased off so the footage stays
+          recognisable. */}
+      <div className="hero-tint" style={cinema ? { opacity: 0.4 } : undefined} />
+      {!cinema && <div className="hero-scrim" />}
     </div>
   );
 }

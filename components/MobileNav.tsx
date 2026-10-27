@@ -53,9 +53,13 @@ type NavItem = { label: string; href: string; children?: readonly { label: strin
 const PANEL_ID = "mobile-nav-panel";
 
 export default function MobileNav({
-  nav, current = "",
+  nav, current = "", always = false,
 }: {
   nav: readonly NavItem[]; current?: string;
+  /** Show the hamburger at every width (the glass header, 27 October 2026,
+   *  carries six links beside it instead of the full row, so the menu is
+   *  where the rest of the site lives at every width). */
+  always?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -149,7 +153,7 @@ export default function MobileNav({
         aria-expanded={open}
         aria-controls={PANEL_ID}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="min-[1660px]:hidden inline-flex items-center justify-center h-11 w-11 flex-none text-ink"
+        className={`${always ? "" : "min-[1660px]:hidden "}inline-flex items-center justify-center h-11 w-11 flex-none text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"
              fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -164,7 +168,7 @@ export default function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          className="nav-panel min-[1660px]:hidden fixed inset-0 z-[60] h-[100dvh] bg-paper flex flex-col"
+          className={`nav-panel ${always ? "" : "min-[1660px]:hidden "}fixed inset-0 z-[60] h-[100dvh] bg-paper flex flex-col`}
         >
           <div className="flex-none flex items-center justify-between border-b border-rule px-5 sm:px-8 py-4 sm:py-5">
             <span className="eyebrow text-ink">Menu</span>
