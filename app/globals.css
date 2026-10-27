@@ -907,3 +907,83 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .summit-slide { animation: none; }
 }
+
+/* ── Loading screen (components/Splash.tsx, SplashController.tsx) ────────
+   Off unless <head>'s script has put `splash-on` on <html> — so it is never
+   shown without JavaScript, and never twice in one visit. Brand dark field,
+   logo lockup, a progress line that eases towards 85% on its own and runs
+   out to 100% when the page has really finished loading, one line of text.
+   Ends by sliding up and fading (`splash-lifting`). The failsafe animation
+   hides it after 8 seconds whatever else happens. Text is white or
+   marigold on ink and nothing is below 16px. */
+.splash { display: none; }
+html.splash-on .splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ink);
+  color: var(--color-white);
+  animation: splash-failsafe 1ms linear 8s forwards;
+  transition: transform 800ms cubic-bezier(0.7, 0, 0.2, 1), opacity 800ms ease;
+}
+html.splash-on.splash-lifting .splash {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+@keyframes splash-failsafe { to { visibility: hidden; opacity: 0; pointer-events: none; } }
+
+.splash-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  padding: 0 1.25rem;
+  animation: splash-rise 700ms ease-out both;
+}
+@keyframes splash-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.splash-lockup { display: flex; align-items: center; gap: 0.75rem; }
+.splash-mark { height: 84px; width: auto; flex: none; }
+.splash-name {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  line-height: 1.12;
+  color: var(--color-white);
+}
+.splash-name-accent { color: var(--color-marigold); }
+.splash-track {
+  width: min(15rem, 62vw);
+  height: 3px;
+  border-radius: 3px;
+  background: var(--color-line);
+  overflow: hidden;
+}
+.splash-bar {
+  height: 100%;
+  background: var(--color-marigold);
+  transform-origin: left center;
+  animation: splash-bar 2600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes splash-bar { from { transform: scaleX(0); } to { transform: scaleX(0.85); } }
+@keyframes splash-bar-finish { from { transform: scaleX(0.85); } to { transform: scaleX(1); } }
+html.splash-ready .splash-bar { animation: splash-bar-finish 300ms ease-out both; }
+.splash-line { font-size: 16px; color: var(--color-white); text-align: center; }
+
+/* Hold the hero headline's entrance until the screen starts to lift, so it
+   plays in front of the visitor rather than behind the cover. */
+html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-inner { animation: none; }
+  .splash-bar { animation: none; transform: scaleX(0.85); }
+  html.splash-ready .splash-bar { animation: none; transform: scaleX(1); }
+  html.splash-on .splash { transition: opacity 250ms ease; }
+  html.splash-on.splash-lifting .splash { transform: none; }
+}

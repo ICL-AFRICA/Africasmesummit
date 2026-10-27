@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Analytics from "@/components/Analytics";
 import CursorGlow from "@/components/CursorGlow";
+import Splash from "@/components/Splash";
 import {
 EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END, SHARE_DESCRIPTION,
 } from "@/lib/event";
@@ -105,9 +106,19 @@ const faqJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-KE">
+    <html lang="en-KE" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#171442" />
+        {/* Loading screen switch (components/Splash.tsx). Runs before the
+            first paint: the screen is shown only if this tab has not been
+            shown it yet. If sessionStorage is blocked, the screen is left
+            off rather than repeated on every page. <html> carries
+            suppressHydrationWarning because of the class this adds. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: 'try{if(!sessionStorage.getItem("icl-splash"))document.documentElement.classList.add("splash-on")}catch(e){}',
+          }}
+        />
         {/* Progressive-enhancement fallback for .reveal (globals.css):
             without JavaScript, components/Reveal.tsx never runs and
             .reveal-in never gets added, so this forces every .reveal
@@ -127,6 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <Splash />
         {/* One instance, sitewide — see components/CursorGlow.tsx. */}
         <CursorGlow />
         {children}
