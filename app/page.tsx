@@ -91,28 +91,31 @@ export default function Page() {
       <SiteHeader variant="glass" current="/" />
 
       <main>
-        {/* ── Hero: the trailer, full bleed ─────────────────────────────
-            Rebuilt 27 October 2026 from ICL's redesign brief. The glass
-            header above takes no space and floats over this section, which
-            therefore runs to the top of the page. Layers, back to front:
-            the trailer (muted, looping, poster as fallback); a navy wash; a
-            gradient behind the text; a vignette; the gold edge mosaic; then
-            the content. The whole first screen is nav + hero + benefits. */}
-        <section className="relative isolate min-h-[38rem] overflow-hidden bg-ink lg:h-[max(34rem,calc(100svh-12.5rem))] lg:max-h-[58rem]">
+        {/* ── Hero: the trailer, full viewport ──────────────────────────
+            Refined 27 October 2026 ("cinematic, premium, immersive"). The
+            glass navigation is position:fixed and out of the flow, so this
+            section is the first thing in the page and the footage starts at
+            the very top edge, behind the panel — no bar, no frame. Layers,
+            back to front: the trailer (muted, looping, poster as fallback); a
+            light navy wash, graded rather than flat; a gradient behind the
+            text; a vignette; the faint gold edge mosaic; then the content.
+            Hierarchy, in order: the headline, the footage, the map, the call
+            to action, the details. */}
+        <section className="relative isolate min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh] lg:min-h-[40rem] lg:max-h-[72rem]">
           <HeroVideo cinema />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[rgba(12,14,46,0.5)]" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(90deg, rgba(10,12,40,0.9) 0%, rgba(10,12,40,0.72) 36%, rgba(10,12,40,0.2) 66%, rgba(10,12,40,0) 100%)" }} />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 lg:hidden" style={{ background: "linear-gradient(180deg, rgba(10,12,40,0.55) 0%, rgba(10,12,40,0.7) 100%)" }} />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(120% 90% at 50% 45%, rgba(6,8,30,0) 55%, rgba(6,8,30,0.6) 100%), linear-gradient(180deg, rgba(10,12,40,0.55) 0%, rgba(10,12,40,0) 22%)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,12,42,0.5) 0%, rgba(12,14,46,0.3) 40%, rgba(12,14,46,0.4) 100%)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(90deg, rgba(10,12,40,0.86) 0%, rgba(10,12,40,0.66) 34%, rgba(10,12,40,0.14) 64%, rgba(10,12,40,0) 100%)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 lg:hidden" style={{ background: "linear-gradient(180deg, rgba(10,12,40,0.5) 0%, rgba(10,12,40,0.68) 100%)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(120% 90% at 50% 45%, rgba(6,8,30,0) 55%, rgba(6,8,30,0.55) 100%)" }} />
           <EdgeMosaic />
 
-          <div className="relative z-10 mx-auto flex h-full max-w-[1600px] items-center px-5 pb-14 pt-[calc(var(--glass-nav)+2.5rem)] sm:px-8 lg:px-12 lg:pb-8 lg:pt-[var(--glass-nav)]">
-            <div className="grid w-full items-center gap-12 md:grid-cols-2 md:gap-6">
+          <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1600px] items-center px-5 pb-12 pt-28 sm:px-8 lg:h-full lg:min-h-0 lg:px-14 lg:pb-10 lg:pt-24 xl:px-20">
+            <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-8 lg:gap-12">
               <div>
                 <p className="hero-rise text-[16px] font-semibold uppercase tracking-[0.2em] text-gold sm:tracking-[0.3em]">
                   Connect <span aria-hidden="true">•</span> Invest <span aria-hidden="true">•</span> Grow
                 </p>
-                <h1 className="hero-rise hero-serif mt-4 text-[clamp(2.9rem,12vw,4.5rem)] text-white md:text-[clamp(2.6rem,5.6vw,5.75rem)] lg:text-[clamp(3.2rem,6.4vw,5.75rem)]" style={{ ["--d" as string]: "120ms" }}>
+                <h1 className="hero-rise hero-serif mt-4 text-[clamp(2.9rem,12vw,4.5rem)] text-white md:text-[clamp(2.6rem,5.6vw,5.75rem)] lg:text-[clamp(3.2rem,6.2vw,6.25rem)]" style={{ ["--d" as string]: "120ms" }}>
                   <span className="block">Africa SME</span>
                   <span className="block">Summit <span className="text-gold">{NEXT_SUMMIT.year}</span></span>
                 </h1>
@@ -145,14 +148,14 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="hero-map-in relative mx-auto w-full max-w-[34rem] md:max-w-none">
+              <div className="hero-map-in relative mx-auto flex w-full max-w-[34rem] flex-col items-center md:max-w-none md:items-end">
                 <AfricaCutout
                   src="/img/summit/8232.webp"
                   alt="A speaker at the podium at the 2026 summit, framed in the outline of Africa"
-                  className="mx-auto h-auto w-full max-w-[30rem] md:max-w-none lg:ml-auto lg:mr-14 lg:h-[min(36rem,calc(100svh-17.5rem))] lg:w-auto xl:mr-20"
+                  className="h-auto w-full max-w-[26rem] sm:max-w-[30rem] md:max-w-none lg:h-[min(38rem,calc(100svh-15rem))] lg:w-auto xl:mr-6"
                 />
-                <p className="mt-5 text-center font-serif text-[22px] italic leading-tight text-gold lg:absolute lg:right-0 lg:top-0 lg:mt-0 lg:max-w-[12rem] lg:-rotate-6 lg:text-right lg:text-[26px]" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                  Stronger SMEs.<br />A richer Africa.
+                <p className="mt-6 text-center font-serif text-[22px] italic leading-tight text-gold md:text-right lg:text-[26px] xl:mr-6" style={{ fontFamily: 'Georgia, "Times New Roman", serif', textShadow: "0 1px 12px rgba(6,8,30,0.9)" }}>
+                  Stronger SMEs. A richer Africa.
                 </p>
               </div>
             </div>

@@ -2,8 +2,9 @@
  * The fine gold geometric pattern that enters the hero from its left and
  * right edges (ICL's brief, 27 October 2026): nested diamonds on a lattice,
  * a few hairline links, and a single bright rule on the outermost edge —
- * architectural, not a wallpaper, and faded toward the centre so it never sits
- * behind the headline. The right edge carries more of it than the left.
+ * architectural, not a wallpaper. Toned down in the refinement the same day
+ * ("barely noticeable at first glance"): two slim strips hugging the outer
+ * edges, faint, fading to nothing well before the headline or the map.
  *
  * Pure SVG <pattern>, so it is a few hundred bytes, scales on any display and
  * needs no image. It is a decorative layer: aria-hidden, pointer-events none,
@@ -30,17 +31,17 @@ export default function EdgeMosaic() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
       {/* Left edge: slim, desktop only. */}
-      <svg className="mosaic-fade-l absolute inset-y-0 left-0 hidden h-full w-[clamp(5rem,11vw,13rem)] opacity-60 md:block" preserveAspectRatio="none">
+      <svg className="mosaic-fade-l absolute inset-y-0 left-0 hidden h-full w-[clamp(3rem,6vw,8rem)] opacity-30 md:block" preserveAspectRatio="none">
         <defs><Lattice id="mosaic-l" size={60} /></defs>
         <rect width="100%" height="100%" fill="url(#mosaic-l)" />
       </svg>
-      {/* Right edge: wider and a touch brighter, with a hairline on the very edge. */}
-      <svg className="mosaic-fade-r absolute inset-y-0 right-0 h-full w-[clamp(5rem,26vw,28rem)] opacity-40 md:w-[clamp(8rem,20vw,26rem)] md:opacity-75" preserveAspectRatio="none">
+      {/* Right edge: a little wider, still faint, with a hairline on the very edge. */}
+      <svg className="mosaic-fade-r absolute inset-y-0 right-0 h-full w-[clamp(2.5rem,10vw,5rem)] opacity-25 md:w-[clamp(4rem,8vw,10rem)] md:opacity-35" preserveAspectRatio="none">
         <defs><Lattice id="mosaic-r" size={64} /></defs>
         <rect width="100%" height="100%" fill="url(#mosaic-r)" />
       </svg>
-      <div className="absolute inset-y-0 right-0 hidden w-px bg-gradient-to-b from-transparent via-gold/60 to-transparent md:block" />
-      <div className="absolute inset-y-0 left-0 hidden w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent md:block" />
+      <div className="absolute inset-y-0 right-0 hidden w-px bg-gradient-to-b from-transparent via-gold/35 to-transparent md:block" />
+      <div className="absolute inset-y-0 left-0 hidden w-px bg-gradient-to-b from-transparent via-gold/25 to-transparent md:block" />
     </div>
   );
 }

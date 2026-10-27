@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MobileNav from "@/components/MobileNav";
 import NavDropdown from "@/components/NavDropdown";
+import GlassNav from "@/components/GlassNav";
 import { ACCELERATOR_SECTIONS, EVENT, TICKET_ACTION, NAV_CTA } from "@/lib/event";
 
 /**
@@ -159,70 +160,14 @@ const NAV: readonly NavEntry[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-/* The homepage's own, shorter row (27 October 2026, from ICL's redesign): six
-   links beside the logo, the rest of the site behind the hamburger. About
-   and Venue are sections on the homepage; Agenda is the tracks page, the
-   nearest thing to a programme until the 2027 agenda exists. */
-const HOME_NAV: readonly NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/#about" },
-  { label: "Speakers", href: "/speakers" },
-  { label: "Agenda", href: "/tracks" },
-  { label: "Venue", href: "/#venue" },
-  { label: "Contact", href: "/contact" },
-];
-
 export default function SiteHeader({ overlay = false, current = "", barOnMobile = false, variant = "default" }: {
   overlay?: boolean; current?: string; barOnMobile?: boolean;
-  /** "glass": the translucent, sticky bar that sits over the homepage hero
-   *  (see .nav-glass in globals.css). The page must pull its hero up under
-   *  it with margin — the header takes no space of its own. */
+  /** "glass": the floating translucent panel over the homepage hero
+   *  (components/GlassNav.tsx). It is position:fixed and takes no space, so
+   *  the hero runs to the very top of the page. */
   variant?: "default" | "glass";
 }) {
-  if (variant === "glass") {
-    return (
-      <header className="nav-glass sticky top-0 z-50 -mb-[var(--glass-nav)] h-[var(--glass-nav)]">
-        <div className="mx-auto flex h-full max-w-[1600px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
-          <Link href="/" className="flex min-w-0 flex-none items-center gap-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink" aria-label="Africa SME Summit, home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo/map-mark-tight.svg" alt="" width={96} height={96} className="h-[52px] w-auto flex-none sm:h-[58px] lg:h-[66px]" />
-            <span className="block text-[17px] font-semibold leading-[1.12] tracking-[0.09em] text-ink sm:text-[20px] lg:text-[22px]">
-              AFRICA<br />
-              <span className="text-marigold-t">SME</span><br />
-              SUMMIT
-            </span>
-          </Link>
-          <nav aria-label="Main" className="hidden items-center gap-9 text-[16px] font-medium lg:flex xl:gap-12">
-            {HOME_NAV.map((n) => {
-              const active = current === n.href;
-              return (
-                <Link
-                  key={n.label}
-                  href={n.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`relative whitespace-nowrap py-2 text-ink transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:bg-gold after:transition-transform after:duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink ${
-                    active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100"
-                  }`}
-                >
-                  {n.label}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className="flex flex-none items-center gap-1 sm:gap-3">
-            <MobileNav nav={NAV} current={current} always />
-            <Link
-              href={TICKET_ACTION.href}
-              className="inline-flex flex-none items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-[16px] font-semibold text-ink shadow-[0_6px_18px_-8px_rgba(227,164,40,0.9)] transition-all hover:brightness-110 active:translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink sm:px-6 sm:py-3"
-            >
-              {NAV_CTA}
-              <span aria-hidden="true" className="hidden sm:inline">→</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-    );
-  }
+  if (variant === "glass") return <GlassNav nav={NAV} current={current} />;
   return (
     /* Sticky below lg, static at lg and up.
 

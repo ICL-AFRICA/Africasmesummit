@@ -53,9 +53,11 @@ type NavItem = { label: string; href: string; children?: readonly { label: strin
 const PANEL_ID = "mobile-nav-panel";
 
 export default function MobileNav({
-  nav, current = "", always = false,
+  nav, current = "", always = false, tone = "light",
 }: {
   nav: readonly NavItem[]; current?: string;
+  /** "glass": white icon for the homepage's floating glass panel. */
+  tone?: "light" | "glass";
   /** Show the hamburger at every width (the glass header, 27 October 2026,
    *  carries six links beside it instead of the full row, so the menu is
    *  where the rest of the site lives at every width). */
@@ -153,7 +155,7 @@ export default function MobileNav({
         aria-expanded={open}
         aria-controls={PANEL_ID}
         aria-label={open ? "Close menu" : "Open menu"}
-        className={`${always ? "" : "min-[1660px]:hidden "}inline-flex items-center justify-center h-11 w-11 flex-none text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
+        className={`${always ? "" : "min-[1660px]:hidden "}inline-flex items-center justify-center h-11 w-11 flex-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${tone === "glass" ? "text-white rounded-[10px] transition-colors hover:bg-white/10 focus-visible:outline-gold" : "text-ink focus-visible:outline-ink"}`}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"
              fill="none" stroke="currentColor" strokeWidth="1.5">

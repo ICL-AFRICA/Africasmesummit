@@ -26,10 +26,14 @@ import Link from "next/link";
 type Item = { label: string; href: string };
 
 export default function NavDropdown({
-  label, href, items, active,
+  label, href, items, active, tone: mode = "light",
 }: {
   label: string; href: string; items: readonly Item[]; active: boolean;
+  /** "glass": white text and a dark glass menu, for the homepage's floating
+   *  panel (components/GlassNav.tsx). */
+  tone?: "light" | "glass";
 }) {
+  const glass = mode === "glass";
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -54,7 +58,7 @@ export default function NavDropdown({
     };
   }, [open]);
 
-  const tone = active ? "text-ink" : "text-ink/60 hover:text-ink";
+  const tone = glass ? "text-white" : active ? "text-ink" : "text-ink/60 hover:text-ink";
 
   return (
     <div
@@ -67,7 +71,7 @@ export default function NavDropdown({
       }}
     >
       <div className="flex items-center gap-1.5">
-        <Link href={href} className={`whitespace-nowrap transition-colors ${tone}`}>
+        <Link href={href} className={`whitespace-nowrap transition-colors ${tone} ${glass ? "glass-link relative py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" + (active ? " is-active" : "") : ""}`}>
           {label}
         </Link>
         <button
@@ -77,7 +81,7 @@ export default function NavDropdown({
           aria-controls={panelId}
           aria-label={`${label} sections`}
           onClick={() => setOpen((o) => !o)}
-          className={`inline-flex h-6 w-6 items-center justify-center transition-colors ${tone}`}
+          className={`inline-flex h-6 w-6 items-center justify-center transition-colors ${tone} ${glass ? "focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold" : ""}`}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none"
                stroke="currentColor" strokeWidth="1.5"
@@ -89,13 +93,13 @@ export default function NavDropdown({
 
       {open && (
         <div id={panelId} className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3">
-          <ul className="min-w-[280px] rounded-xl border border-rule bg-white py-2 shadow-lg">
+          <ul className={glass ? "glass-menu min-w-[280px] py-2" : "min-w-[280px] rounded-xl border border-rule bg-white py-2 shadow-lg"}>
             {items.map((it) => (
               <li key={it.href}>
                 <Link
                   href={it.href}
                   onClick={() => setOpen(false)}
-                  className="block whitespace-nowrap px-5 py-3 text-[16px] text-ink hover:bg-paper transition-colors"
+                  className={`block whitespace-nowrap px-5 py-3 text-[16px] transition-colors ${glass ? "text-white hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none" : "text-ink hover:bg-paper"}`}
                 >
                   {it.label}
                 </Link>

@@ -1004,30 +1004,84 @@ html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
    on it. Default is already fairly opaque (72%) because the logo's gold
    "SME" and the navy links must stay legible over any video frame; on
    touch screens, where there is no hover to firm it up, it stays at 88%. */
-:root { --glass-nav: 76px; }
-@media (min-width: 1024px) { :root { --glass-nav: 92px; } }
-
-.nav-glass {
-  background-color: rgba(251, 248, 243, 0.72);
-  -webkit-backdrop-filter: blur(14px) saturate(1.25);
-  backdrop-filter: blur(14px) saturate(1.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
-  transition: background-color 380ms ease, box-shadow 380ms ease, border-color 380ms ease;
+/* The floating navigation panel (components/GlassNav.tsx): translucent navy
+   glass, a fine warm-gold edge, a soft specular sheen. Relatively transparent
+   at rest; on hover / keyboard focus it firms up and blurs more, over ~320ms.
+   Touch screens, which cannot hover, rest at a firmer value. */
+.glass-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+  padding: 3px;
+  isolation: isolate;
+  background-color: rgba(12, 15, 46, 0.34);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(255, 255, 255, 0) 100%);
+  -webkit-backdrop-filter: blur(9px) saturate(1.2);
+  backdrop-filter: blur(9px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(232, 196, 120, 0.3),
+    inset 0 1px 0 rgba(255, 246, 220, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+    0 12px 30px -14px rgba(3, 5, 24, 0.7);
+  transition: background-color 320ms ease, backdrop-filter 320ms ease, -webkit-backdrop-filter 320ms ease, box-shadow 320ms ease;
 }
-.nav-glass:hover,
-.nav-glass:focus-within {
-  background-color: rgba(251, 248, 243, 0.97);
-  border-bottom-color: rgba(25, 21, 57, 0.12);
-  box-shadow: 0 12px 32px -14px rgba(8, 10, 40, 0.6);
+/* the reflection: a soft diagonal band of light across the glass */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0.12) 34%, rgba(255, 255, 255, 0) 50%);
 }
+.glass-panel:hover,
+.glass-panel:focus-within,
+.glass-panel[data-solid="true"] {
+  background-color: rgba(12, 15, 46, 0.7);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow:
+    inset 0 0 0 1px rgba(232, 196, 120, 0.5),
+    inset 0 1px 0 rgba(255, 246, 220, 0.7),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 16px 36px -14px rgba(3, 5, 24, 0.8);
+}
+.glass-panel[data-solid="true"] { background-color: rgba(12, 15, 46, 0.82); }
 @media (hover: none) {
-  .nav-glass { background-color: rgba(251, 248, 243, 0.9); }
+  .glass-panel { background-color: rgba(12, 15, 46, 0.5); }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .nav-glass { background-color: rgb(251, 248, 243); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass-panel, .glass-panel:hover, .glass-panel:focus-within, .glass-panel[data-solid="true"] {
+    background-color: rgb(14, 17, 52); -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav-glass { transition: none; }
+  .glass-panel { transition: none; }
+}
+/* gold underline that draws in under a link */
+.glass-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: #E3A428;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms ease;
+}
+.glass-link:hover::after,
+.glass-link:focus-visible::after,
+.glass-link.is-active::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .glass-link::after { transition: none; } }
+/* the accelerator's dropdown, in the same glass */
+.glass-menu {
+  border-radius: 12px;
+  background-color: rgba(12, 15, 46, 0.88);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: inset 0 0 0 1px rgba(232, 196, 120, 0.4), inset 0 1px 0 rgba(255, 246, 220, 0.5), 0 18px 40px -16px rgba(3, 5, 24, 0.85);
 }
 
 /* Hero entrance: text rises and fades in, the map settles. Plain CSS, no
