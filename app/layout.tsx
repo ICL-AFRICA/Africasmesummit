@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import Analytics from "@/components/Analytics";
 import CursorGlow from "@/components/CursorGlow";
 import Splash from "@/components/Splash";
-import {
-EVENT, EARLY_BIRD_ENDS, SPEAKERS, FAQ, ACTIVE_TICKET, TICKET_PRICE, TICKET_PRICE_PLAIN, DATE_LONG, AGENDA_START, AGENDA_END, SHARE_DESCRIPTION,
-} from "@/lib/event";
+import { EVENT, NEXT_SUMMIT, FAQ, TICKETING_OPEN, ACTIVE_TICKET, TICKET_PRICE_PLAIN, EARLY_BIRD_ENDS, SHARE_DESCRIPTION } from "@/lib/event";
 import "./globals.css";
 
 /**
@@ -14,41 +12,43 @@ import "./globals.css";
  * it for a long time. og.jpg keeps its filename when the card is rebuilt, so
  * without this those platforms would go on serving the old picture — the one
  * with the old date — and the fix would be invisible exactly where it
- * matters. The key is the event date, so it changes if and only if the thing
- * printed on the card changes.
+ * matters. The key is the summit's year and month label, so it changes if and
+ * only if the thing printed on the card changes (when the real 2027 date is
+ * set, NEXT_SUMMIT.label changes and the card must be rebuilt anyway).
  *
  * Rebuild the picture itself with `node scripts/build-og.mjs`.
  */
-const OG_IMAGE = `/og.jpg?v=${EVENT.dateISO}`;
+const OG_IMAGE = `/og.jpg?v=${encodeURIComponent(NEXT_SUMMIT.label.replace(/\s+/g, "-"))}`;
+
+const NAME_YEAR = `${EVENT.name} ${NEXT_SUMMIT.year}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://africasmesummit.com"),
-  title: `${EVENT.name} ${EVENT.year} — ${EVENT.dateShort}, Nairobi`,
-  // Tier name as well as price, so the sentence stays true after the early
-  // bird ends: "Early bird from KES 5,800" becomes "Standard from KES 6,800"
-  // rather than advertising an expired rate. Same length as before, which
-  // matters — this is the search snippet.
+  // 19 October 2026: the site now speaks of the NEXT summit. The 2026 event
+  // is over; its recap lives at /2026/.
+  title: `${NAME_YEAR} — ${NEXT_SUMMIT.label}, ${NEXT_SUMMIT.venue}, Nairobi`,
   description:
-    `One day where Kenya's SMEs meet capital, buyers, county government and 13 universities. ${DATE_LONG}, ${EVENT.venue}. ${ACTIVE_TICKET.tier} from ${TICKET_PRICE}.`,
+    `${NEXT_SUMMIT.tagline} Africa SME Summit returns to ${NEXT_SUMMIT.venue}, Nairobi in ${NEXT_SUMMIT.label}. See the 2026 recap and get the 2027 date first.`,
   keywords: [
+    "Africa SME Summit 2027",
     "SME conference Kenya",
     "SME summit Nairobi",
-    "MSME Kenya 2026",
+    "MSME Kenya 2027",
     "small business conference Kenya",
-    "industry academia collaboration Kenya",
+    "Nairobi entrepreneurship ecosystem",
   ],
   openGraph: {
-    title: `${EVENT.name} ${EVENT.year}`,
+    title: NAME_YEAR,
     description: SHARE_DESCRIPTION,
     url: "https://africasmesummit.com",
     siteName: EVENT.name,
     locale: "en_KE",
     type: "website",
-  images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${EVENT.name} ${EVENT.year}` }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: NAME_YEAR }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${EVENT.name} ${EVENT.year}`,
+    title: NAME_YEAR,
     description: SHARE_DESCRIPTION,
     images: [OG_IMAGE],
   },
@@ -56,14 +56,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://africasmesummit.com" },
 };
 
-// Event structured data — makes the summit eligible for Google's event
-// results, which matters more than any on-page SEO for a dated event.
+// Event structured data. Describes the NEXT summit (2027). Only the month is
+// confirmed, so startDate is the year-month "2027-03", which schema.org
+// accepts as an ISO 8601 partial date. Google's event rich results want a full
+// date and may skip this until a day is set — when NEXT_SUMMIT.dateConfirmed
+// goes true, set the real start/end here. No performers (the 2027 programme
+// does not exist yet — the 2026 speakers are not 2027 performers) and no
+// offers while TICKETING_OPEN is false: the 2026 price must not be attached to
+// the 2027 event.
 const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "BusinessEvent",
-  name: `${EVENT.name} ${EVENT.year}`,
-  startDate: `${EVENT.dateISO}T${AGENDA_START}:00+03:00`,
-  endDate: `${EVENT.dateISO}T${AGENDA_END}:00+03:00`,
+  name: NAME_YEAR,
+  startDate: NEXT_SUMMIT.starts.slice(0, NEXT_SUMMIT.dateConfirmed ? 25 : 7),
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {
@@ -71,27 +76,25 @@ const eventJsonLd = {
     name: `${EVENT.venue}, ${EVENT.venueDetail}`,
     address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
   },
-  description: EVENT.tagline,
+  description: `${NEXT_SUMMIT.tagline} ${NEXT_SUMMIT.purpose}`,
   organizer: {
     "@type": "Organization",
     name: EVENT.host,
     url: "https://ichooselife.global",
   },
   image: [`https://africasmesummit.com${OG_IMAGE}`],
-  performer: SPEAKERS.map((s) => ({
-    "@type": "Person",
-    name: s.name.replace(/^(Ms\.|Mr\.|Dr\.|Eng\.)\s+/, ""),
-    jobTitle: s.role,
-    worksFor: { "@type": "Organization", name: s.org },
-  })),
-  offers: {
-    "@type": "Offer",
-    price: TICKET_PRICE_PLAIN,
-    priceCurrency: ACTIVE_TICKET.currency,
-    url: EVENT.ticketUrl,
-    availability: "https://schema.org/InStock",
-    validThrough: EARLY_BIRD_ENDS.slice(0, 10),
-  },
+  ...(TICKETING_OPEN
+    ? {
+        offers: {
+          "@type": "Offer",
+          price: TICKET_PRICE_PLAIN,
+          priceCurrency: ACTIVE_TICKET.currency,
+          url: EVENT.ticketUrl,
+          availability: "https://schema.org/InStock",
+          validThrough: EARLY_BIRD_ENDS.slice(0, 10),
+        },
+      }
+    : {}),
 };
 
 const faqJsonLd = {

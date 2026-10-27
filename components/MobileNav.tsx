@@ -2,8 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Btn from "@/components/Btn";
-import { EVENT, TICKET_CTA } from "@/lib/event";
+import TicketBtn from "@/components/TicketBtn";
 
 /**
  * Navigation below min-[1560px] (a bespoke Tailwind breakpoint) — was below
@@ -223,9 +222,7 @@ export default function MobileNav({
           </nav>
 
           <div className="flex-none border-t border-rule px-5 sm:px-8 py-6">
-            <Btn href={EVENT.ticketUrl} tone="gold" className="w-full justify-center">
-              {TICKET_CTA}
-            </Btn>
+            <TicketBtn tone="gold" className="w-full justify-center" />
           </div>
         </div>
       )}

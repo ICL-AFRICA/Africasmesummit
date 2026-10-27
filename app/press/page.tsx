@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
+import TicketBtn from "@/components/TicketBtn";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import SummitHero from "@/components/SummitHero";
 import UpdateGallery from "@/components/UpdateGallery";
-import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, SUMMIT_PHOTOS, PRESS_CONTACT, TICKET_CTA, DATE_LONG, PHOTOS } from "@/lib/event";
+import { EVENT, VENUE_SHORT, SUMMIT_UPDATES, SUMMIT_PHOTOS, PRESS_CONTACT, DATE_LONG, PHOTOS } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Press — ${EVENT.name} ${EVENT.year}`,
   description:
-    `What's happening on the way to the Africa SME Summit, ${DATE_LONG} at ${EVENT.venue} — new partners, speakers, papers and ticket milestones, in photos and video.`,
+    `Photographs from the Africa SME Summit ${EVENT.year} (${DATE_LONG}, ${EVENT.venue}) and the updates that led up to it — partners, speakers, papers and milestones. Press contact included.`,
   alternates: { canonical: "https://africasmesummit.com/press" },
 };
 
@@ -46,9 +47,9 @@ export default function Press() {
   return (
     <PageShell
       current="/press"
-      eyebrow="On the way to the summit"
-      title="Everything building up to October 15"
-      lede="New partners, speakers, deadlines and milestones — in photos and video as they happen. Nothing here is embargoed, so quote or share whatever's useful."
+      eyebrow="Press · 2026 archive"
+      title="The 2026 summit, in pictures and updates"
+      lede="The photographs, and the partners, speakers and milestones announced on the way to 15 October. Nothing here is embargoed, so quote or share whatever's useful. For what came out of the day, see the recap."
       above={
         /* Photographs from the summit lead the page (19 October 2026, ICL):
            a full-width slideshow with a sliding rail of enlarged thumbnails
@@ -243,7 +244,7 @@ export default function Press() {
               <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}, {EVENT.dateLabel}.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+              <TicketBtn tone="gold" />
               <Btn href="/speakers" tone="onDark" internal>See the speakers</Btn>
             </div>
           </div>

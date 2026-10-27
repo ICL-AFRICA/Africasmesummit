@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EARLY_BIRD_PRICE, EVENT } from "@/lib/event";
+import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EARLY_BIRD_PRICE, EVENT, TICKETING_OPEN } from "@/lib/event";
 
 /**
  * The early-bird bar. Pinned to the top, present on every scroll position,
@@ -31,7 +31,8 @@ export default function StickyBar({ mobileOnly = false }: { mobileOnly?: boolean
     return () => clearInterval(id);
   }, [target]);
 
-  if (left === undefined || closed) return null;
+  // Not selling: no early-bird bar (TICKETING_OPEN, lib/event.ts).
+  if (!TICKETING_OPEN || left === undefined || closed) return null;
 
   const wrapClass = `${mobileOnly ? "sm:hidden " : ""}`;
 

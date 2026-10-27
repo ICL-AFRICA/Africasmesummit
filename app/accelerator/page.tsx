@@ -3,8 +3,9 @@ import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import Btn from "@/components/Btn";
+import TicketBtn from "@/components/TicketBtn";
 import {
-  EVENT, DATE_LONG, TICKET_CTA, SIGNATURE_OPPORTUNITIES, AGENDA,
+  EVENT, DATE_LONG, SIGNATURE_OPPORTUNITIES, AGENDA,
   ACCELERATOR, ACCELERATOR_FACULTY, ACCELERATOR_MONTHS, ACCELERATOR_SYLLABUS,
   ACCELERATOR_GRADUATES, ACCELERATOR_CERTIFICATION, ACCELERATOR_AWARD_WINNERS,
 } from "@/lib/event";
@@ -386,7 +387,7 @@ export default function Accelerator() {
             {EVENT.venue}, {EVENT.city}, {EVENT.dateLabel}.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+            <TicketBtn tone="gold" />
             <Btn href="/partner#enquire" tone="onDark" internal>Get in touch</Btn>
           </div>
         </div>

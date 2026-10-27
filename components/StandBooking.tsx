@@ -3,7 +3,7 @@
 import { useState } from "react";
 import EnquiryForm from "@/components/EnquiryForm";
 import FloorPicker from "@/components/FloorPicker";
-import { FLOOR_PLAN, STAND_OPTIONS, BOOKING_URL } from "@/lib/event";
+import { FLOOR_PLAN, STAND_OPTIONS, BOOKING_ACTION } from "@/lib/event";
 
 type Spot = { readonly id: string; readonly kind: string };
 
@@ -72,9 +72,9 @@ export default function StandBooking() {
           ]}
         />
         <p className="mt-5 text-[16px] text-white">
-          Already know what you want?{" "}
-          <a href={BOOKING_URL} className="text-marigold hover:text-white transition-colors">
-            Book and pay on TikoHub →
+          {BOOKING_ACTION.href === "#enquire" ? "Prefer to talk it through?" : "Already know what you want?"}{" "}
+          <a href={BOOKING_ACTION.href} className="text-marigold hover:text-white transition-colors">
+            {BOOKING_ACTION.pay}
           </a>
         </p>
       </div>

@@ -63,6 +63,74 @@ export const EVENT = {
 } as const;
 
 /**
+ * The NEXT summit — Africa SME Summit 2027 (19 October 2026, at ICL's
+ * request, four days after the 2026 summit at Ole Sereni).
+ *
+ * Declared up here, straight after EVENT, because the share description,
+ * the FAQ and the metadata all read it — a const cannot be read before the
+ * line that declares it.
+ *
+ * Everything the site says about "the next summit" reads from here: the
+ * homepage hero, the "One day" eyebrow, both countdowns, the loading
+ * screen, the search and share text, the schema.org event.
+ *
+ * WHAT IS CONFIRMED, and where it comes from: month, venue and city, and the
+ * purpose, are from the Summit Dispatch Issue 01 (October 2026): "March 2027
+ * · Ole Sereni, Nairobi. Launch of the Nairobi County Entrepreneurship
+ * Ecosystem Strengthening Strategic Plan 2026–2030 and a first look at
+ * progress since 2026. Exact date to be announced." THE DAY IS NOT SET and
+ * none is invented here. `starts` is therefore the first moment of March in
+ * East Africa Time, so the countdowns read "until March 2027" and run out on
+ * 1 March at the latest. When the real date is fixed: change `starts` to
+ * that day's opening time, `label` to e.g. "12 March 2027", set
+ * `dateConfirmed` to true — and see TICKETING_OPEN below.
+ *
+ * The 2026 constants (EVENT.year, DATE_ISO, SUMMIT_STARTS, the AGENDA, the
+ * tickets and the early bird) deliberately stay as the 2026 record: the
+ * recap page and the press page use them. They are not the next summit.
+ */
+export const NEXT_SUMMIT = {
+  year: 2027,
+  label: "March 2027",
+  /** True once a day has been announced; until then the label is month-only
+   *  and the schema.org start date is left at the month. */
+  dateConfirmed: false,
+  starts: "2027-03-01T00:00:00+03:00",
+  venue: "Ole Sereni",
+  place: "Nairobi, Kenya",
+  tagline: "Connecting African businesses, capital, markets and ideas.",
+  purpose:
+    "Launch of the Nairobi County Entrepreneurship Ecosystem Strengthening Strategic Plan 2026–2030, and a first look at progress since 2026.",
+} as const;
+
+/**
+ * THE PHASE SWITCH. false = nothing is for sale; true = tickets are on sale.
+ *
+ * Added 19 October 2026, when the 2026 summit was over and the 2027 one had a
+ * month but no date and no ticket listing. Until 2027 tickets exist, every
+ * "Get a ticket" button on the site (hero, nav, mobile menu, every page
+ * footer, the sticky bar and the ticker) becomes "Get 2027 updates" and goes
+ * to the sign-up form on the homepage (#updates); the early-bird bars and
+ * the ticket prices stop showing; the exhibit and partner booking buttons
+ * become enquiries; and the schema.org event carries no price.
+ *
+ * WHEN 2027 TICKETING OPENS — the whole checklist:
+ *   1. Create the 2027 event on TikoHub and put its URL in EVENT.ticketUrl
+ *      (and BOOKING_URL below) — they still point at the 2026 listing.
+ *   2. Set the 2027 prices in TICKETS and the early-bird deadline in
+ *      EARLY_BIRD_ENDS (still 15 September 2026).
+ *   3. Set NEXT_SUMMIT.starts, .label and .dateConfirmed, above.
+ *   4. Flip this to true.
+ *   5. Put a pricing section back on the homepage: it was removed when
+ *      selling stopped (the page was rebuilt around the 2027 announcement),
+ *      so restore it from git history — the app/page.tsx from before the
+ *      "stop selling 2026" change — and reprice it from TICKETS.
+ * Every button, bar, label and schema field follows from steps 1-4.
+ */
+export const TICKETING_OPEN = false;
+
+
+/**
  * Where the sponsorship tiers and the exhibition booths send people.
  *
  * A literal, not derived. It used to be `${EVENT.ticketUrl}/booking`, which
@@ -128,7 +196,7 @@ export const VENUE_SHORT = EVENT.venueDetail.replace(/,.*$/, "");
  * text half of the same fact.
  */
 export const SHARE_DESCRIPTION =
-  `${EVENT.dateLabel} · ${VENUE_SHORT}. ${EVENT.tagline}`;
+  `${NEXT_SUMMIT.label} · ${NEXT_SUMMIT.venue}, Nairobi. ${NEXT_SUMMIT.tagline}`;
 
 /** "15 October" — for prose that names the day without the year. */
 export const DATE_DAY_MONTH = fmtDate({ day: "numeric", month: "long" });
@@ -267,6 +335,32 @@ export const TICKET_PRICE_PLAIN = ACTIVE_TICKET.price.replace(/,/g, "");
  * uses elsewhere on the site.
  */
 export const TICKET_CTA = `Grab a ticket — ${TICKET_PRICE}`;
+
+/**
+ * What every ticket button actually does RIGHT NOW. Components never choose
+ * between "ticket" and "updates" themselves — they render <TicketBtn /> (or
+ * read this) and the switch above decides. Selling: the price label and the
+ * TikoHub listing. Not selling: "Get 2027 updates" and the sign-up form.
+ */
+export const TICKET_ACTION = TICKETING_OPEN
+  ? ({ label: TICKET_CTA, href: EVENT.ticketUrl, internal: false } as const)
+  : ({ label: "Get 2027 updates", href: "/#updates", internal: true } as const);
+
+/**
+ * Where a stand or sponsorship "Book" button goes. Selling: the TikoHub
+ * listing. Not selling: the enquiry form on the same page (the 2026 listing
+ * must not take 2027 bookings), and the button says so.
+ */
+export const BOOKING_ACTION = TICKETING_OPEN
+  ? ({ href: BOOKING_URL, book: "Book this booth", pay: "Book and pay on TikoHub →" } as const)
+  : ({ href: "#enquire", book: "Enquire about this booth", pay: "Ask about a 2027 stand →" } as const);
+
+/** Shown above 2026 price lists while TICKETING_OPEN is false. */
+export const RATES_NOTE_2026 =
+  "These are the 2026 rates, shown for reference. 2027 terms will be confirmed once the date is fixed — send an enquiry and you will hear first.";
+
+/** The nav bar's short form (the nav is the one place the full label does not fit). */
+export const NAV_CTA = TICKETING_OPEN ? "Get ticket" : "Get updates";
 
 /**
  * "KES 5,800" — always the early-bird price, whatever the date.
@@ -1138,43 +1232,13 @@ export const AGENDA_END = AGENDA[AGENDA.length - 1].time;
  *  moment the homepage counts down to. */
 export const SUMMIT_STARTS = `${DATE_ISO}T${AGENDA_START}:00+03:00`;
 
-/**
- * The NEXT summit — Africa SME Summit 2027 (19 October 2026, at ICL's
- * request, four days after the 2026 summit at Ole Sereni).
- *
- * Everything the homepage says about "the next summit" reads from here: the
- * hero headline and date line, the "One day" eyebrow, and both countdowns
- * (the one in the statement section and the floating badge).
- *
- * ONLY THE MONTH IS CONFIRMED. ICL said "March 2027"; no day, venue or
- * opening time has been given, and none is invented here. `starts` is
- * therefore the first moment of March in East Africa Time, so the
- * countdowns read "days until March 2027" and run out on 1 March at the
- * latest. When the real date is fixed, change `starts` to that day's
- * opening time (and `label` to e.g. "12 March 2027") — nothing else needs
- * touching.
- *
- * The 2026 constants above (EVENT.year, DATE_ISO, SUMMIT_STARTS, the
- * AGENDA, tickets and early bird) deliberately stay as the 2026 record:
- * the press page and the recap use them. They are not the next summit.
- */
-export const NEXT_SUMMIT = {
-  year: 2027,
-  label: "March 2027",
-  starts: "2027-03-01T00:00:00+03:00",
-} as const;
 
 export const FAQ = [
-  { q: "Is lunch included?", a: "Yes. Every ticket includes lunch and refreshments through the day." },
-  { q: "Can I send a colleague instead?", a: "Yes. Tickets are transferable up to 48 hours before the summit — send us both names on the contact page." },
-  /* Times here derive from AGENDA rather than being typed: registration opens
-     at its first entry, and the answer used to say "before the opening
-     keynote", which the real programme does not contain. */
-  { q: "Is there parking at Ole Sereni?", a: `Yes, on-site parking is available for delegates. Registration opens at ${AGENDA_START}, and spaces fill through the morning — come early.` },
-  { q: "Do exhibitors need a separate ticket?", a: `Exhibition booths include delegate passes — ${countWord(BOOTH_PASSES.startup)} with the Startup booth and ${countWord(BOOTH_PASSES.corporate)} with the Corporate booth. Additional team members need standard tickets.` },
-  { q: "Will I get a certificate?", a: "Yes. Certificates of participation are issued to all delegates at the close." },
-  { q: "How do I submit a paper?", a: "Submit an abstract on the call for papers page — it lists the tracks and the review timeline." },
-  { q: "Is there a group rate?", a: "Yes, for four or more from the same organisation. Ask on the contact page and we will send you a code." },
+  { q: `When is the Africa SME Summit ${NEXT_SUMMIT.year}?`, a: `${NEXT_SUMMIT.label}, at ${NEXT_SUMMIT.venue}, ${NEXT_SUMMIT.place}.${NEXT_SUMMIT.dateConfirmed ? "" : " The exact date is not set yet — it will be announced on this site and sent to everyone on the updates list."}` },
+  { q: "Are tickets on sale?", a: TICKETING_OPEN ? "Yes — tickets are on sale now. Use the ticket button on any page." : "Not yet. Tickets for 2027 have not been released. Join the updates list and you will be told when they open." },
+  { q: `What is the ${NEXT_SUMMIT.year} summit for?`, a: NEXT_SUMMIT.purpose },
+  { q: "What happened in 2026?", a: `The 2026 summit took place on ${DATE_LONG} at ${EVENT.venue}. The recap has the photographs, the award winners, what the speakers said and the six commitments made on the day.` },
+  { q: `Can I exhibit, sponsor or speak in ${NEXT_SUMMIT.year}?`, a: "Tell us. Stand, partnership and session enquiries are open now through the exhibit, partner and contact pages, and the team will confirm 2027 terms as the date is fixed." },
 ] as const;
 
 /**
@@ -2704,7 +2768,8 @@ export const SUMMIT_UPDATES: readonly SummitUpdate[] = [
     urgent: true,
     title: "Early bird sold out. The room is filling fast.",
     body: `The first release is gone — thank you for showing up for this the way you did. Standard tickets are live now at ${TICKET_PRICE}, and if the early bird's pace is anything to go by, this batch won't last long either. 7.4 million Kenyan SMEs are represented in that room on October 15 — don't be the one still deciding when it sells out again.`,
-    link: { href: EVENT.ticketUrl, text: TICKET_CTA, style: "button" },
+    // No ticket link: this is a 2026 archive entry and 2026 tickets are over
+    // (19 October 2026). The link used to be a "Grab a ticket" button.
     media: {
       type: "image",
       src: "/img/updates/early-bird-sold-out.webp",
@@ -2845,4 +2910,141 @@ export const HERO_IMAGES = [
 export const HERO_VIDEO = {
   src: "/video/hero/africa-sme-summit-trailer.mp4",
   poster: "/video/hero/africa-sme-summit-trailer-poster.webp",
+} as const;
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * THE 2026 RECAP — /2026/ and the homepage's "2026 in review".
+ *
+ * Added 19 October 2026 from "The Summit Dispatch", Issue 01 (October 2026,
+ * Post-summit edition), the newsletter ICL supplied. Every fact, figure and
+ * quotation below is from that issue and nothing is added to it: there are no
+ * attendance, exhibitor or satisfaction numbers because the newsletter does
+ * not give any and none have been supplied. The two figures it does give —
+ * 7.4M MSMEs, and the 75% closure rate — are shown with the newsletter's own
+ * caveat. When real 2026 numbers arrive, add them to RECAP_NUMBERS.
+ *
+ * The newsletter calls the hall "Emara, Ole Sereni". The summit was on
+ * 15 October 2026 (EVENT.dateISO).
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+export const NEWSLETTER = {
+  title: "The Summit Dispatch",
+  issue: "Issue 01 · October 2026",
+  blurb: "The post-summit newsletter: the awards, the five keynote voices, the six commitments, the road to 2027.",
+  /** Copied from the file ICL supplied, to public/newsletter/. */
+  pdf: "/newsletter/the-summit-dispatch-issue-01.pdf",
+} as const;
+
+/** The Africa SME Summit 2026 Awards, first to third. */
+export const AWARDS_2026 = [
+  {
+    place: "First place",
+    brand: "WetBlu by Misshiks",
+    who: "Doris Wanjiku",
+    line: "A women-owned Nairobi leather brand making premium, functional bags and accessories designed to last.",
+    detail:
+      "WetBlu keeps design, specifications, quality, branding and customer experience in-house and outsources specialist cutting, stitching and assembly — a lean model built to scale with control from Kenya into Rwanda and wider East Africa. The win comes as Kenya pushes for more value addition in leather: KIRDI notes that about 89% of the country's leather exports in 2023 were partially processed wet-blue leather.",
+    next: "Next, it says, is finding its ideal customer and reaching them well — support in market research, pricing and digital marketing.",
+  },
+  {
+    place: "Second place",
+    brand: "EMON Authentic Foods",
+    who: "Maker of Mannu's Spices",
+    line: "Natural ground spices and masalas, from pilau and tea to curry blends, without additives or preservatives.",
+    detail:
+      "Founded in 2023 in Embakasi Central. Revenue grew from KSh 800,000 in 2023/24 to KSh 1.6 million in 2025/26.",
+    next: null as string | null,
+  },
+  {
+    place: "Third place",
+    brand: "Smartcom Traders",
+    who: "A woman-owned firm, founded 2012",
+    line: "Turns tallow into a wellness range: camel tallow, body butter, lip balm and beard oil.",
+    detail:
+      "Launched Smartcom Signature Tallow in 2025. It is seeking working capital and partners to scale.",
+    next: null as string | null,
+  },
+] as const;
+
+/** Five voices from the main stage, quoted as printed in the newsletter. */
+export const VOICES_2026 = [
+  {
+    name: "Prof. Shaukat Abdulrazak",
+    role: "Principal Secretary, Research & Innovation, Ministry of Education",
+    quote: "Industry and academia must become strategic partners rather than occasional collaborators.",
+    gist: "Africa has no shortage of talent or ideas; the challenge is getting knowledge to market and to scale. He called for a financing continuum from research grant and proof of concept through seed capital, credit guarantees and blended finance to patient long-term investment.",
+  },
+  {
+    name: "Dr. Anastasia Mutethya",
+    role: "CECM, Business and Hustler Opportunities, Nairobi City County",
+    quote: "Success will not be measured by the number of programmes announced, but by the businesses that grow.",
+    gist: "Declaring the Summit open, she backed a tripartite technical working group of county, industry and academia. Trade is a devolved function, she said, so MSME development sits with the counties — and Nairobi will lead.",
+  },
+  {
+    name: "Prof. Njenga Munene",
+    role: "Vice Chancellor, Zetech University",
+    quote: "Universities should be measured not only by the graduates we produce, but by the enterprises our graduates and research help to grow.",
+    gist: "Ushered in by Zetech University students, he spoke on behalf of the vice chancellors, following the universities' week-long industry–academia residential training that prepared students and staff to work on real MSME challenges.",
+  },
+  {
+    name: "Mr. Philip Kabii, CMA",
+    role: "Coordinator, Sustainable Livelihoods Programme",
+    quote: "Programmes come and go, but the institutions that carry the function will remain.",
+    gist: "He described a programme built on income, resilience, food security and strong institutions, with proposals on enterprise ecosystems, peer learning, market linkages beyond borders, climate-smart enterprise and practical AI for small firms.",
+  },
+  {
+    name: "Eng. Mike Mutungi",
+    role: "Chief Executive Officer, I Choose Life – Africa",
+    quote: "I now charge you to carry the SEALs mission forward in your community and world.",
+    gist: "As convener, I Choose Life – Africa brought the four constituencies to one table with its partners. Eng. Mutungi closed the day by delivering the SEALs Charge and conferring the SEALs Certificate on a new cohort of young leaders.",
+  },
+] as const;
+
+/** What was agreed on the day — the six commitments, with who carries each. */
+export const COMMITMENTS_2026 = [
+  { what: "Set up the tripartite working group right after the Summit", who: "County, industry, academia" },
+  { what: "Name the county director as point of contact", who: "Nairobi City County" },
+  { what: "Map MSMEs on one platform; track growth yearly", who: "Working group, delivery partners" },
+  { what: "Build monitoring and evaluation into every intervention", who: "Working group, researchers" },
+  { what: "Link young entrepreneurs to SACCOs and affordable credit", who: "SACCOs, County" },
+  { what: "Explore subsidised, single-digit credit for qualifying SMEs", who: "County, financial partners" },
+] as const;
+
+/** The plan the 2027 summit launches, and the road to it. */
+export const PLAN_2026_2030 = {
+  name: "Nairobi County Entrepreneurship Ecosystem Strengthening Strategic Plan 2026–2030",
+  aim: "50 in every 100 supported MSMEs reaching a third year by 2030, up from 25 today.",
+  partner: "I Choose Life – Africa is delivery partner.",
+  /** The newsletter's own caveat, kept attached to the figure. */
+  stats: [
+    { value: "7.4M", label: "MSMEs power Kenya's economy." },
+    { value: "75%", label: "of Nairobi MSMEs close within two years. A planning figure from the County and ICL, to be tested in the 2027 baseline." },
+  ],
+} as const;
+
+export const ROAD_TO_2027 = [
+  { when: "15 Oct 2026", what: "Process starts at the Summit" },
+  { when: "Nov 2026", what: "Partnership agreement; steering committee" },
+  { when: "Jan 2027", what: "Diagnostic and baseline" },
+  { when: "Mar 2027", what: "Plan launch, Africa SME Summit 2027" },
+  { when: "Jun 2027", what: "Platform pilot; first 100-SME cohort" },
+  { when: "Sep–Oct 2027", what: "Borås exchange; first scorecard" },
+] as const;
+
+/** Track 04, AI & Technology — the one practical takeaway the newsletter ran. */
+export const AI_TRACK_INSIGHT = {
+  title: "Sell the savings, not the software",
+  body: "The AI and technology side track opened with a business visible on any Nairobi street: electric motorcycles. With trackers on the battery and the bike, fleet owners can manage riders, set geofences and switch off a battery when payments lapse. Leasing at around KES 550 a day is turning that into a business young people can start. The pitch to Kenyan firms, the panel argued, should lead with savings, then better service, then growth.",
+  quote: "Don't tell me how much you're going to make; tell me how much I'm going to save.",
+  quoteBy: "AI & Technology panel",
+  checklistTitle: "Before you buy tech, ask",
+  checklist: ["What problem does it solve?", "What does it really cost?", "Who owns my data?", "Can I exit if it fails?"],
+} as const;
+
+/** The close of the day: the SEALs commissioning. */
+export const SEALS_2026 = {
+  title: "Sealed for greatness",
+  body: "The Summit closed with the commissioning of a new cohort of SEALs, I Choose Life – Africa's youth leadership programme, supported by Children's Mission, Sweden (Sverige) and the Sustainable Livelihood Programme. Each SEAL pledged to lead by example, serve others and empower their peers — a channel for the goal of empowering one million young people. The ceremony ended with the song Go Light Your World, certificates and cake.",
+  values: ["Diversity", "Innovation", "Collaboration", "Excellence"],
+  charge: ["To live a healthy lifestyle", "To learn and innovate", "To be employable and entrepreneurial", "To be a responsible citizen"],
 } as const;

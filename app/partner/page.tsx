@@ -4,9 +4,10 @@ import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
+import TicketBtn from "@/components/TicketBtn";
 import {
   EVENT, SPONSOR_TIERS, SIGNATURE_OPPORTUNITIES, PARTNER_PRINT_LABEL,
-  TICKET_CTA, DATE_LONG, BOOKING_URL, BROCHURE_URL, PARTNERSHIP_PROPOSAL_URL,
+  DATE_LONG, BOOKING_ACTION, TICKETING_OPEN, BROCHURE_URL, PARTNERSHIP_PROPOSAL_URL,
 } from "@/lib/event";
 
 export const metadata: Metadata = {
@@ -107,10 +108,10 @@ export default function Partner() {
                     ))}
                   </ul>
                   <a
-                    href={t.tier === "Platinum" ? "#enquire" : BOOKING_URL}
+                    href={t.tier === "Platinum" ? "#enquire" : BOOKING_ACTION.href}
                     className="btn-glow rounded-lg mt-7 inline-flex justify-center px-5 py-3 text-[16px] font-medium transition-colors bg-ink text-white hover:bg-raise"
                   >
-                    {t.cta}
+                    {TICKETING_OPEN || t.tier === "Platinum" ? t.cta : "Enquire"}
                   </a>
                 </Reveal>
               );
@@ -243,7 +244,7 @@ export default function Partner() {
           <p className="lede text-white">Looking for an exhibition stand instead?</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Btn href="/exhibit" tone="onDark" internal>Book a stand</Btn>
-            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+            <TicketBtn tone="gold" />
           </div>
         </div>
       </section>

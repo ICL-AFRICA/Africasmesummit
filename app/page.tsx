@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Btn from "@/components/Btn";
-import HeroVideo from "@/components/HeroVideo";
+import TicketBtn from "@/components/TicketBtn";
 import StickyBar from "@/components/StickyBar";
 import TicketTicker from "@/components/TicketTicker";
 import SummitCountdownBadge from "@/components/SummitCountdownBadge";
@@ -9,12 +9,29 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import VenueHoverButton from "@/components/VenueHoverButton";
 import Reveal from "@/components/Reveal";
-import AgendaPreview from "@/components/AgendaPreview";
-import { EVENT, VENUE_SHORT, TICKETS, SPEAKERS, TRACKS, PATHS, FAQ, PARTNERS, PHOTOS, REASONS, EARLY_BIRD_LABEL, EARLY_BIRD_ACTIVE, STUDENT_SOLD_OUT, TICKET_CTA, SPEAKER_COUNT_CAP, DATE_DAY_MONTH, KEYNOTES, KEYNOTE_SUMMARY, NEXT_SUMMIT, SUMMIT_PHOTOS } from "@/lib/event";
+import HeroFrame from "@/components/HeroFrame";
+import AfricaCutout from "@/components/AfricaCutout";
+import RoadToTimeline from "@/components/RoadToTimeline";
+import EnquiryForm from "@/components/EnquiryForm";
+import {
+  EVENT, FAQ, PARTNERS, NEXT_SUMMIT, SUMMIT_PHOTOS, VENUE_SHORT,
+  AWARDS_2026, VOICES_2026, COMMITMENTS_2026, PLAN_2026_2030, DATE_LONG,
+} from "@/lib/event";
 
-/* Section heading: mono eyebrow, then the line. Centred in the dark
-   sections, left-aligned in the light ones, so the two fields read as
-   different kinds of space rather than the same layout recoloured. */
+/**
+ * The homepage, rebuilt 19 October 2026 around the NEXT summit (2027), from
+ * ICL's mock-up. The 2026 summit is over, so this page no longer sells it:
+ * the ticket sections, early-bird bars and per-tier booking buttons are gone
+ * from the homepage (the 2026 programme lives at /2026/ and its sub-pages),
+ * and every ticket button follows the TICKETING_OPEN switch in lib/event.ts.
+ *
+ * Order: hero (venue + trailer, Africa cut-out, headline, date, call to
+ * action) → four reasons to come → the case → 2026 in review → road to 2027
+ * → the summit in pictures → ways to take part → updates sign-up → partners
+ * → questions → close.
+ */
+
+/* Section heading: mono eyebrow, then the line. */
 function Head({ eyebrow, children, center = false, dark = false }: {
   eyebrow: string; children: React.ReactNode; center?: boolean; dark?: boolean;
 }) {
@@ -28,116 +45,129 @@ function Head({ eyebrow, children, center = false, dark = false }: {
   );
 }
 
+const ICON = { width: 26, height: 26, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
+
+/* The four value props under the hero (mock-up copy, verbatim). */
+const VALUE_PROPS = [
+  {
+    title: "Grow Your Business",
+    body: "Access new markets, partners and opportunities.",
+    icon: <svg {...ICON}><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg>,
+  },
+  {
+    title: "Meet Investors",
+    body: "Connect with capital and strategic partners.",
+    icon: <svg {...ICON}><circle cx="12" cy="12" r="9" /><path d="M14.5 9.2c-.5-.8-1.4-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1.100 0-2-.4-2.500-1.200M12 6.500V8m0 8v1.500" /></svg>,
+  },
+  {
+    title: "Share Ideas",
+    body: "Learn from industry leaders and innovators.",
+    icon: <svg {...ICON}><path d="M9 18h6M10 21h4" /><path d="M12 3a6 6 0 00-3.500 10.900c.6.5 1 1.200 1 2V16h5v-.1c0-.8.4-1.500 1-2A6 6 0 0012 3z" /></svg>,
+  },
+  {
+    title: "Build Lasting Networks",
+    body: "Be part of a vibrant African business community.",
+    icon: <svg {...ICON}><circle cx="9" cy="8" r="3.500" /><path d="M2.500 20c0-3.600 2.900-6 6.500-6s6.500 2.400 6.500 6" /><path d="M16 4.500a3.500 3.500 0 010 7M18 14.300c2.200.7 3.500 2.700 3.500 5.700" /></svg>,
+  },
+] as const;
+
+const TAKE_PART = [
+  { href: "/exhibit", title: "Exhibit", body: "Put your product in front of the buyers, investors and county officials in the room." },
+  { href: "/partner", title: "Partner", body: "Back the summit and the plan it launches — with your name where the delegates look." },
+  { href: "/contact", title: "Propose a session", body: "Have a lesson Kenya's small businesses should hear? Tell us what you would bring." },
+] as const;
+
 export default function Page() {
+  const award = AWARDS_2026[0];
+  const voice = VOICES_2026[0];
   return (
     <>
-      {/* One urgency mechanism per screen, never two at once. On a phone
-          that is the top bar; on desktop it is the floating ticker, which
-          has room to breathe there and none on a phone. The summit-date
-          badge is a separate thing (it never expires and never asks for a
-          click), so it sits in the opposite corner rather than competing
-          with the ticket urgency for the same visual attention. */}
       <StickyBar mobileOnly />
       <TicketTicker />
       <SummitCountdownBadge />
 
-      {/* ── Nav ──────────────────────────────────────────────────────── */}
-      {/* current="/" so the new Home link marks itself on the page it points
-          at, the same as every other nav item. */}
       <SiteHeader overlay barOnMobile current="/" />
 
       <main>
-        {/* ── Hero: the trailer fills the whole first screen ──────────── */}
-        <section className="relative bg-ink">
-          {/* Changed from 86vh to a full 100svh 3 October 2026 at ICL's
-            request ("the video to cover the full page") — now that the
-            hero is HeroVideo rather than a photo mosaic, "full page" reads
-            as the whole first screen on load, not the page's entire
-            scrollable length (a video background for every section below
-            would fight the legibility of their own text and copy real
-            bandwidth on every scroll). svh rather than vh: on a phone vh
-            includes the browser chrome that slides away on scroll, which
-            used to make the hero taller than the visible viewport at
-            first paint; svh is the space actually visible right now.
-            Height and floor both still shrink by the header's flow height
-            below lg, same reasoning as before — the header is sticky and
-            in-flow there, so without this the hero would be pushed down by
-            its own height and run past one full screen instead of filling
-            it exactly. */}
-          <div className="relative h-[calc(100svh-var(--header-flow))] min-h-[calc(640px-var(--header-flow))] w-full overflow-hidden">
-            <HeroVideo />
-            <div className="absolute inset-x-0 bottom-0">
-              <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-10 sm:pb-14">
-                {/* From 19 October 2026 the hero names the NEXT summit
-                    (NEXT_SUMMIT in lib/event.ts), not the one just held.
-                    Earlier note: the hero spells out the year ("Africa SME Summit 2026"),
-                    added 2 October 2026 at ICL's (boss's) request — scoped
-                    to this one headline rather than to EVENT.name itself,
-                    since EVENT.name is also used bare elsewhere (the header
-                    lockup, and other spots that append EVENT.year
-                    themselves, e.g. the ticker's "Until {EVENT.name}
-                    {EVENT.year}" — changing EVENT.name would have doubled
-                    the year there). */}
-                <h1 className="h-xl text-white text-[15vw] sm:text-[9vw] lg:text-[7.5rem]">
-                  {`${EVENT.name} ${NEXT_SUMMIT.year}`.split(" ").map((word, i) => (
-                    <span
-                      key={word + i}
-                      className="hero-word"
-                      style={{ animationDelay: `${i * 140}ms` }}
-                    >
-                      {word}
-                    </span>
-                  ))}
-                </h1>
-              </div>
+        {/* ── Hero ─────────────────────────────────────────────────────── */}
+        <section className="relative overflow-hidden bg-ink tint-marigold">
+          <div className="mx-auto max-w-[1600px] px-5 pb-14 pt-10 sm:px-8 sm:pb-20 lg:pb-16 lg:pt-40">
+            <div className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr] lg:gap-12">
+              <Reveal>
+                <HeroFrame
+                  image="/img/venue/venue-exterior.webp"
+                  imageAlt={`Aerial view of ${EVENT.venue}, Mombasa Road, Nairobi`}
+                  label={`${EVENT.venue} Hotel, Nairobi`}
+                />
+              </Reveal>
+              <Reveal delay={120} className="mx-auto w-full max-w-[34rem] lg:max-w-none">
+                <AfricaCutout
+                  src="/img/summit/8232.webp"
+                  alt="A speaker at the podium in front of the Africa SME Summit backdrop, framed in the outline of Africa"
+                  className="mx-auto h-auto w-full drop-shadow-[0_24px_40px_rgba(0,0,0,0.45)] lg:max-h-[27rem]"
+                />
+              </Reveal>
             </div>
-          </div>
-          <div className="border-t border-line">
-            <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3 text-[16px] text-white">
-              <p>{NEXT_SUMMIT.label}</p>
-              {/* Enclosed as a "Venue" / name toggle 24-25 September 2026,
-                  at ICL's request — see VenueHoverButton.tsx. "Mombasa
-                  Road" came out once "Venue" made the label explicit and
-                  the road name read as redundant. This is the one
-                  EVENT.venue mention on the site that got this treatment;
-                  the other five keep the plain .venue-float hover-lift. */}
-              <p className="text-white">
+
+            <div className="mx-auto mt-10 max-w-4xl text-center sm:mt-14 lg:mt-10">
+              <h1 className="hero-serif text-[2.6rem] text-white sm:text-7xl lg:text-[4.75rem]">
+                {EVENT.name} <span className="text-gold">{NEXT_SUMMIT.year}</span>
+              </h1>
+              <p className="lede mx-auto mt-6 max-w-2xl text-[19px] text-white sm:text-[21px]">
+                {NEXT_SUMMIT.tagline}
+              </p>
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+                <p className="flex items-center gap-3 text-[17px] font-medium text-white">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="text-gold">
+                    <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" />
+                  </svg>
+                  {NEXT_SUMMIT.year} <span aria-hidden="true" className="text-gold">|</span> {NEXT_SUMMIT.place}
+                </p>
+                <TicketBtn tone="gold" className="rounded-full" />
                 <VenueHoverButton
                   images={SUMMIT_PHOTOS.slice(0, 5).map((p) => ({ src: p.thumb, alt: p.alt }))}
-                  href="/press"
+                  href="/2026"
                   tag="Recap"
                   label={String(EVENT.year)}
                 />
-              </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ── The statement ───────────────────────────── */}
+        {/* ── Four reasons ─────────────────────────────────────────────── */}
+        <section className="border-y border-rule bg-paper">
+          <div className="mx-auto grid max-w-[1600px] gap-8 px-5 py-12 sm:grid-cols-2 sm:px-8 sm:py-14 lg:grid-cols-4 lg:gap-6">
+            {VALUE_PROPS.map((v, i) => (
+              <Reveal key={v.title} delay={i * 70} className="flex items-start gap-4">
+                <span className="flex h-14 w-14 flex-none items-center justify-center rounded-full bg-gold text-ink">{v.icon}</span>
+                <div>
+                  <h2 className="h-sm text-[19px] font-semibold text-ink">{v.title}</h2>
+                  <p className="mt-1.5 text-[16px] leading-snug text-ink/75">{v.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ── The case ─────────────────────────────────────────────────── */}
         <section className="bg-card tint-marigold">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-32 text-center">
+          <div className="mx-auto max-w-[1600px] px-5 py-24 text-center sm:px-8 sm:py-32">
             <Reveal>
-              <p className="eyebrow text-ink/45 mb-6">One day, {NEXT_SUMMIT.label}</p>
-              <h2 className="h-lg text-4xl sm:text-6xl lg:text-[4.2rem] max-w-4xl mx-auto">
+              <p className="eyebrow mb-6 text-ink/45">Next: {NEXT_SUMMIT.label}</p>
+              <h2 className="h-lg mx-auto max-w-4xl text-4xl sm:text-6xl lg:text-[4.2rem]">
                 7.4 million enterprises.<br />One of them is yours.
               </h2>
-              <p className="lede mt-8 max-w-2xl mx-auto text-[18px] text-ink/70">
-                Kenya&rsquo;s small businesses carry 80% of the workforce and get almost
-                none of the support. This is the one day that changes that — the capital,
-                the buyers, the county governments and the thirteen universities that can
-                move them forward, all in one room.
+              <p className="lede mx-auto mt-8 max-w-2xl text-[18px] text-ink/70">
+                {NEXT_SUMMIT.purpose} Capital, buyers, county government and the universities that
+                can move small businesses forward, in one room — and a plan to measure what changes.
               </p>
             </Reveal>
             <div className="mt-11 flex flex-wrap justify-center gap-3">
-              <Btn href={EVENT.ticketUrl}>{TICKET_CTA}</Btn>
-              <Btn href="/exhibit" tone="outline" internal>Book a stand</Btn>
+              <TicketBtn />
+              <Btn href="/exhibit" tone="outline" internal>Exhibit</Btn>
               <Btn href="/partner" tone="outline" internal>Partner with us</Btn>
             </div>
-
-            {/* Counts down to the summit itself rather than a ticket deadline
-                — the one urgency signal that never expires until the day
-                actually arrives, so it keeps working long after the early
-                bird (and every other deadline on the page) has closed. */}
             <div className="mt-14 flex justify-center">
               <Countdown
                 tone="light"
@@ -146,428 +176,151 @@ export default function Page() {
                 endedLabel="The summit is under way."
               />
             </div>
-          </div>
-        </section>
-
-        {/* ── Keynote speakers ──────────────────────────────────────── */}
-        {/* Moved ahead of the panel wall on 19 September 2026 — the original
-            brief was "the VC section above the panelist speakers," and this
-            page had it backwards (panel wall first, keynotes second) since
-            the restructuring landed. /speakers already had the order right;
-            this brings the homepage in line with it. A short curated list,
-            not the whole roster — deliberately bigger than the panel wall
-            tiles below, one portrait each instead of a shared edge-to-edge
-            grid, so the summit's headline names get room to breathe before
-            the panel wall. Gitau still fills the running order's Welcome
-            Remarks slot at 08:50 (see AGENDA — corrected 19 September 2026
-            against the confirmed programme, which has no 10:45 slot), but
-            his card has said plain "Keynote speaker" since 3 October 2026,
-            same as everyone else's — ICL's request, to label him a keynote
-            speaker like the rest of this grid rather than call out his
-            specific slot here (see the comment on his KEYNOTES entry).
-            Mitei also has her own AGENDA session, at 10:00, and her card
-            says "Keynote speaker" too, same reasoning.
-
-            Grid widened from a fixed 3-up to 2-up/4-up on 21 September 2026
-            when Evaleen Mitei joined as the fourth keynote — a straight
-            sm:grid-cols-3 would have orphaned her card alone on its own
-            row. Widened again to 2-up/3-up/5-up on 24 September 2026 when
-            Anastasia Nyalita joined as the fifth: 5-up at desktop keeps one
-            clean row instead of 4-then-1, and the added md:3-up step gives
-            tablet widths a balanced 3+2 instead of 2+2+1. Widened once more
-            to 2-up/3-up/6-up on 2 October 2026 when John Ololtuaa joined as
-            the sixth — 6-up at desktop is one clean row again (5-then-1
-            would have orphaned him), and 2-up/3-up both divide six evenly
-            too, so no breakpoint shows a short last row.
-
-            Widened to 2-up/4-up/7-up on 3 October 2026 when Shaukat
-            Abdulrazak joined as the seventh — seven has no clean even
-            split, so this picks the breakpoints that avoid a lone orphan
-            card at tablet and desktop rather than chasing a perfect grid
-            everywhere: 7-up at desktop is still one full row, and md:4-up
-            gives tablet a balanced 4+3 instead of 3-up's 3+3+1. sm:2-up is
-            the one spot that still ends in a single trailing card (2+2+2+1)
-            — same tradeoff this grid already accepted at five keynotes,
-            left as-is rather than fixed with a breakpoint no other size
-            needs. Order within the grid is also no longer "Gitau first" —
-            see the KEYNOTES comment in lib/event.ts for the full reasoning;
-            array order is still display order, full stop.
-
-            The portraits also picked up .keynote-frame the same day —
-            rounded corners, a soft shadow and a faint sheen, at ICL's
-            request for a "classy, floating" feel. That's a deliberate
-            departure from the flat/hairline rule atop globals.css (no
-            shadows, no rounded corners) for these portraits specifically,
-            same as .venue-float and the glow-* classes already are
-            elsewhere on the page — not a reversal of the flat rule
-            everywhere else. */}
-        <section className="bg-card border-t border-rule tint-clay">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
-            <Reveal className="text-center mb-14" as="div">
-              <p className="eyebrow text-ink/45 mb-5">Keynote</p>
-              <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
-                Before the tracks open
-              </h2>
-              <p className="lede mt-5 text-ink/60 max-w-2xl mx-auto text-[16px]">
-                {KEYNOTE_SUMMARY} &mdash; setting the tone before six tracks open.
+            {!NEXT_SUMMIT.dateConfirmed && (
+              <p className="mx-auto mt-5 max-w-md text-[16px] text-ink/70">
+                Counting to the start of {NEXT_SUMMIT.label}. The exact date is still to be announced.
               </p>
-            </Reveal>
-            <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-              {KEYNOTES.map((k, i) => (
-                <Reveal key={k.slug} delay={Math.min(i, 5) * 80}>
-                  <div className="keynote-frame portrait-tint aspect-[4/5] overflow-hidden bg-raise">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={k.photo}
-                      alt={k.name}
-                      className="portrait w-full h-full object-cover"
-                    />
-                  </div>
-                  <p className="eyebrow text-ink/45 mt-5 mb-2">{k.label}</p>
-                  <h3 className="h-sm text-2xl">{k.name}</h3>
-                  <p className="text-[16px] text-ink/70 mt-2">{k.role}</p>
-                  <p className="text-[16px] text-ink font-medium">{k.org}</p>
-                </Reveal>
-              ))}
-            </div>
+            )}
           </div>
         </section>
 
-        {/* ── Speaker wall: every panel speaker, one clean directory ─── */}
-        {/* Redesigned 19 September 2026 at ICL's request: all
-            {SPEAKER_COUNT_CAP} panel speakers now show here, not a curated
-            seven — a step down in visual weight from the keynote portraits
-            above on purpose (smaller photos, name and title only, no bio;
-            full bios still live on /speakers). A dense, gapped, uniform
-            grid rather than the old edge-to-edge tiles reads as a
-            professional directory rather than a features wall, and it
-            never leaves a hole in the last row the way the no-gap grid did
-            — a short row just trails off, which a gapped grid can afford. */}
-        <section id="speakers" className="bg-ink tint-indigo">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-14 text-center">
+        {/* ── 2026 in review ───────────────────────────────────────────── */}
+        <section className="border-t border-rule bg-paper tint-indigo">
+          <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
             <Reveal>
-              <p className="eyebrow text-white mb-5">On stage</p>
-              <h2 className="h-lg text-white text-4xl sm:text-5xl">The people you came to meet</h2>
-              <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
-                {SPEAKER_COUNT_CAP} panel speakers across six tracks, one room, one day.
+              <Head eyebrow={`${EVENT.year} in review`}>The summit happened. This is what came out of it.</Head>
+              <p className="lede mt-6 max-w-2xl text-[18px] text-ink/70">
+                {DATE_LONG}, {EVENT.venue}, {VENUE_SHORT}: an awards stage, five keynote voices and
+                six commitments from county, industry and academia.
               </p>
             </Reveal>
-          </div>
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-16">
-            <div className="grid gap-x-6 gap-y-11 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6">
-              {SPEAKERS.map((s, i) => (
-                <Reveal key={s.slug} delay={(i % 6) * 60}>
-                <Link
-                  href={`/speakers#${s.slug}`}
-                  className="group block"
-                  aria-label={`${s.name} — ${s.role}, ${s.org}`}
-                >
-                  <div className="portrait-tint aspect-[4/5] overflow-hidden bg-raise">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={PHOTOS.speakers[i]}
-                      alt={s.name}
-                      className="portrait w-full h-full object-cover"
-                    />
-                  </div>
-                  <p className="mt-3 h-sm text-white text-[14px] sm:text-[15px] leading-snug group-hover:text-marigold transition-colors">
-                    {s.name}
-                  </p>
-                  <p className="text-[12px] sm:text-[13px] text-white/55 leading-snug mt-0.5">
-                    {s.role}
-                  </p>
-                  <p className="text-[12px] sm:text-[13px] text-white/55 leading-snug">
-                    {s.org}
-                  </p>
-                </Link>
-                </Reveal>
-              ))}
+            <div className="mt-12 grid gap-5 lg:grid-cols-3">
+              <Reveal className="panel-card flex flex-col bg-ink p-7 text-white sm:p-8">
+                <p className="eyebrow text-marigold">{award.place} · Awards</p>
+                <h3 className="h-sm mt-4 text-3xl text-white">{award.brand}</h3>
+                <p className="mt-1 text-[16px] text-white">{award.who}</p>
+                <p className="mt-5 flex-1 text-[16px] leading-relaxed text-white">{award.line}</p>
+                <p className="mt-5 text-[16px] text-white">
+                  Second: {AWARDS_2026[1].brand}. Third: {AWARDS_2026[2].brand}.
+                </p>
+              </Reveal>
+              <Reveal delay={80} className="panel-card flex flex-col bg-ink p-7 text-white sm:p-8">
+                <p className="eyebrow text-marigold">In their words</p>
+                <blockquote className="h-sm mt-4 flex-1 text-2xl leading-snug text-white">
+                  &ldquo;{voice.quote}&rdquo;
+                </blockquote>
+                <p className="mt-6 border-t border-line pt-4 text-[16px] text-white">
+                  <span className="font-semibold">{voice.name}</span><br />{voice.role}
+                </p>
+              </Reveal>
+              <Reveal delay={160} className="panel-card flex flex-col bg-ink p-7 text-white sm:p-8">
+                <p className="eyebrow text-marigold">What was agreed</p>
+                <h3 className="h-sm mt-4 text-3xl text-white">{COMMITMENTS_2026.length} commitments</h3>
+                <ul className="mt-5 flex-1 space-y-3">
+                  {COMMITMENTS_2026.slice(0, 3).map((c) => (
+                    <li key={c.what} className="flex gap-3 text-[16px] leading-snug text-white">
+                      <span aria-hidden="true" className="flex-none text-marigold">✓</span>{c.what}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-[16px] text-white">…and {COMMITMENTS_2026.length - 3} more.</p>
+              </Reveal>
             </div>
-            <p className="mt-12 text-center text-[16px] text-white/70">
-              There is room on the programme for one more —{" "}
-              <Link href="/contact" className="text-marigold hover:text-white transition-colors underline underline-offset-4">
-                propose a session
-              </Link>.
-            </p>
-          </div>
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-16 flex flex-wrap justify-center gap-3">
-            <Btn href="/speakers" tone="onDark" internal>View all speakers</Btn>
-            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
-          </div>
-        </section>
-
-        {/* ── Agenda ────────────────────────────────────────────────── */}
-        {/* Redesigned 19 September 2026 against the confirmed programme,
-            then 25 September 2026 at ICL's request (the always-visible
-            hour-by-hour list became a download bar with a hover preview —
-            see git history for that version).
-
-            Moved 14 October 2026, again at ICL's request: this section now
-            sits directly below the speakers ("panelist") section instead of
-            after the five reasons, and the hover preview became an
-            "Expand to see more of the programme" button with the PDF
-            download at the bottom of the expanded summary. The running
-            order and that button live in components/AgendaPreview.tsx —
-            see its own doc comment. scroll-mt-24 keeps the heading clear
-            of the sticky header below lg when the footer's "The day" link
-            jumps here. */}
-        <section id="agenda" className="scroll-mt-24 bg-card tint-clay">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal><Head center eyebrow="The confirmed running order">{DATE_DAY_MONTH}, hour by hour</Head></Reveal>
-            <Reveal delay={80} className="mt-10">
-              <AgendaPreview />
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ── Tracks over a photograph ──────────────────────────────── */}
-        {/* The hairline earns its keep here specifically: this section and
-            the speaker wall above it are both bg-ink, so without it the two
-            read as one long dark run. Everywhere else on the site a section
-            boundary is drawn by the field changing colour.
-
-            Cards picked up .panel-card on 24 September 2026 at ICL's
-            request, same as every other card grid on the site — rounded
-            corners, a floating shadow, a hover lift. Each one is now a
-            solid bg-raise panel rather than transparent text over the
-            floor photo, so the shadow and gloss actually read; the photo
-            still shows through in the gaps between cards. */}
-        <section id="tracks" className="relative bg-ink border-t border-line">
-          <div className="absolute inset-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={PHOTOS.floor} alt="" className="w-full h-full object-cover opacity-25" />
-          </div>
-          <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal><Head eyebrow="Six tracks" dark>Pick what your business actually needs</Head></Reveal>
-            <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {TRACKS.map((t, i) => (
-                /* The whole card is the link, so the target is the card and
-                   not a five-word tail. The top rule takes the track's colour
-                   and thickens on hover — the only thing that moves, which is
-                   enough to say "this is clickable" without decoration. */
-                <Reveal key={t.n} delay={Math.min(i, 5) * 70}>
-                <Link
-                  href={`/tracks#track-${i + 1}`}
-                  /* Whole class strings, never `hover:${colour}`. Tailwind
-                     only generates what it can read literally in the source,
-                     so an interpolated variant compiles to nothing — which is
-                     exactly what happened here: marigold worked and the other
-                     three silently did not. No transition-colors utility
-                     here — .panel-card's own transition list already covers
-                     border-color, and a second `transition` shorthand on the
-                     same element would just overwrite the first. */
-                  className={`panel-card group block bg-raise p-6 sm:p-7 border-t-2 ${
-                    ["border-line hover:border-marigold",
-                     "border-line hover:border-clay",
-                     "border-line hover:border-indigo",
-                     "border-line hover:border-palm",
-                     "border-line hover:border-marigold",
-                     "border-line hover:border-clay"][i]
-                  }`}
-                >
-                  <p className={`font-mono text-[12px] mb-3 ${
-                    ["text-marigold","text-clay","text-indigo","text-palm","text-marigold","text-clay"][i]
-                  }`}>{t.n}</p>
-                  <h3 className="h-sm text-white text-lg group-hover:text-marigold transition-colors">{t.name}</h3>
-                  {/* Track 02 has no description yet — see TRACKS. A name on
-                      its own reads as incomplete; the old line left in place
-                      would have read as wrong. */}
-                  {t.line && <p className="lede mt-2.5 text-[16px] text-white">{t.line}</p>}
-                  {/* The line that helps someone self-select, which is the
-                      most useful thing the track copy added. */}
-                  {t.who && <p className="mt-3 text-[16px] font-light text-white">{t.who}</p>}
-                  <p className="mt-4 text-[16px] text-marigold">
-                    What you will leave with{" "}
-                    <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
-                  </p>
-                </Link>
-                </Reveal>
-              ))}
+            <div className="mt-10">
+              <Btn href="/2026" internal>Read the full 2026 recap</Btn>
             </div>
           </div>
         </section>
 
-        {/* ── Three paths ───────────────────────────────────────────── */}
-        {/* Cards use .panel-card (globals.css) for a real gap plus a
-            floating shadow, replacing the old shared-hairline seam — same
-            treatment now applied to every card grid on the site, at ICL's
-            request. See the comment on .panel-card for the full context. */}
-        <section id="why" className="bg-paper tint-palm">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal className="text-center" as="div">
-              <p className="eyebrow text-ink/45 mb-5">One day to attend</p>
-              <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
-                Built differently for three kinds of visitor
-              </h2>
-              <p className="lede mt-5 text-ink/60 max-w-xl mx-auto text-[16px]">
-                Same summit, three different reasons to be here — pick the one that
-                matches why you are coming.
-              </p>
-            </Reveal>
-            <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
-              {PATHS.map((p, i) => (
-                <Reveal key={p.who} delay={i * 90} className={`panel-card p-8 sm:p-10 flex flex-col ${i === 1 ? "bg-ink text-white" : "bg-card"}`}>
-                  <p className={`eyebrow ${i === 1 ? "text-marigold" : "text-ink/45"}`}>{p.who}</p>
-                  <h3 className={`h-sm text-2xl mt-4 ${i === 1 ? "text-white" : "text-ink"}`}>{p.lead}</h3>
-                  <p className={`lede mt-4 text-[16px] ${i === 1 ? "text-white" : "text-ink/65"}`}>{p.body}</p>
-                  <ul className={`mt-7 pt-6 space-y-3 border-t ${i === 1 ? "border-line" : "border-rule"}`}>
-                    {p.points.map((pt) => (
-                      <li key={pt} className={`flex gap-3 text-[16px] ${i === 1 ? "text-white" : "text-ink/75"}`}>
-                        <span className={i === 1 ? "text-marigold" : "text-ink/35"}>✓</span>
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Five reasons ──────────────────────────────────────────── */}
-        <section className="bg-ink tint-marigold">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal className="text-center" as="div">
-              <p className="eyebrow text-white mb-5">Why people give up a working day</p>
-              <h2 className="h-lg text-white text-4xl sm:text-5xl">
-                Five reasons the summit is worth it
-              </h2>
-              <p className="lede mt-5 text-white max-w-xl mx-auto text-[16px]">
-                Not five features — five things people actually leave with.
-              </p>
-            </Reveal>
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {REASONS.map((r, i) => (
-                <Reveal key={r.n} as="div" delay={i * 70} className="panel-card bg-raise p-8">
-                  <p className={`font-mono text-[12px] ${["text-marigold","text-clay","text-indigo","text-palm","text-marigold"][Number(r.n)-1]}`}>{r.n}</p>
-                  <h3 className="h-sm text-white text-lg mt-4">{r.t}</h3>
-                  <p className="lede mt-3 text-[16px] text-white">{r.d}</p>
-                </Reveal>
-              ))}
-              <div className="p-8 flex items-end">
-                <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Tickets ───────────────────────────────────────────────── */}
-        <section id="tickets" className="bg-paper tint-indigo">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal className="text-center" as="div">
-              <p className="eyebrow text-ink/45 mb-5">Tickets</p>
-              <h2 className="h-lg text-4xl sm:text-5xl max-w-2xl mx-auto">
-                {EARLY_BIRD_ACTIVE
-                  ? <>Book before <span className="text-clay">{EARLY_BIRD_LABEL}</span> and save KES 1,000</>
-                  : "Early bird sold out — book standard now before seats go"}
-              </h2>
-            </Reveal>
-            <div className="mt-14 grid gap-6 lg:gap-8 lg:grid-cols-3">
-              {TICKETS.map((t, i) => {
-                /* Early Bird's deal can expire under it, and Student has a
-                   fixed allocation that can run out at any time — two
-                   different reasons a tile goes "sold out", same shared
-                   treatment either way. Early Bird flips the moment
-                   EARLY_BIRD_ACTIVE goes false (a redeploy after
-                   EARLY_BIRD_ENDS — see the comment on that constant);
-                   Student flips on STUDENT_SOLD_OUT, set by hand since there
-                   is no date to compute it from (see that constant's
-                   comment). Either way the tile goes flat and mute rather
-                   than still inviting a click on a tier that no longer
-                   sells: struck-through price, "Sold out" instead of the
-                   note, and a CTA that pushes toward booking Standard right
-                   now instead of pretending the tier is still open. */
-                const justClosed =
-                  (t.tier === "Early bird" && !EARLY_BIRD_ACTIVE) ||
-                  (t.tier === "Student" && STUDENT_SOLD_OUT);
-                return (
-                  <Reveal
-                    key={t.tier}
-                    as="div"
-                    delay={i * 90}
-                    className={`ticket-card panel-card p-8 sm:p-10 flex flex-col ${
-                      justClosed ? "bg-card glow-clay" : t.urgent ? "bg-ink text-white" : "bg-card"
-                    }`}
-                  >
-                    <div className="flex items-baseline justify-between gap-4">
-                      <p className={`eyebrow ${justClosed ? "text-ink/35" : t.urgent ? "text-marigold" : "text-ink/45"}`}>
-                        {t.tier}
-                      </p>
-                      <p
-                        className={
-                          justClosed
-                            ? "sold-out-badge inline-flex items-center rounded-full bg-clay-t text-white font-mono text-[12px] font-semibold uppercase tracking-wide px-3 py-1 glow-clay"
-                            : t.urgent
-                              ? "font-mono text-[12px] text-marigold font-semibold"
-                              : "font-mono text-[12px] text-ink/45"
-                        }
-                      >
-                        {justClosed ? "Sold out" : t.note}
-                      </p>
-                    </div>
-                    <p className={`h-lg mt-6 text-5xl ${justClosed ? "text-clay-t line-through text-glow-clay" : t.urgent ? "text-white" : "text-ink"}`}>
-                      {t.currency && <span className="text-lg align-top mr-2 font-normal">{t.currency}</span>}
-                      {t.price}
-                    </p>
-                    <ul className={`mt-8 pt-6 space-y-3 border-t ${justClosed ? "border-rule" : t.urgent ? "border-line" : "border-rule"}`}>
-                      {t.includes.map((i) => (
-                        <li key={i} className={`flex gap-3 text-[16px] ${justClosed ? "text-ink/45" : t.urgent ? "text-white" : "text-ink/70"}`}>
-                          <span className={justClosed ? "text-ink/25" : t.urgent ? "text-marigold" : "text-ink/35"}>✓</span>
-                          {i}
-                        </li>
-                      ))}
-                    </ul>
-                    <a
-                      href={EVENT.ticketUrl}
-                      className={`rounded-lg mt-9 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-colors ${
-                        justClosed
-                          ? "cta-standard-book bg-paper text-ink/60 hover:text-ink border border-rule"
-                          : t.urgent
-                            ? "bg-gold text-ink hover:brightness-110"
-                            : "bg-ink text-white hover:bg-raise"
-                      }`}
-                    >
-                      {justClosed ? "Book standard now" : `Book ${t.tier.toLowerCase()}`}
-                    </a>
-                  </Reveal>
-                );
-              })}
-            </div>
-            <p className="mt-8 text-center text-[16px] text-ink/60">
-              Exhibiting or sponsoring? <Link href="/exhibit" className="underline underline-offset-4 hover:text-ink">Booths from KES 30,000</Link>{" "}
-              and <Link href="/partner" className="underline underline-offset-4 hover:text-ink">packages from KES 125,000</Link>.
-            </p>
-            <p className="mt-2 text-center text-[16px] text-ink/60">
-              Group rate for four or more from one organisation —{" "}
-              <Link href="/contact" className="underline underline-offset-4 hover:text-ink">ask us for a code</Link>.
-            </p>
-          </div>
-        </section>
-
-        {/* ── Partners ──────────────────────────────────────────────── */}
-        {/* Redesigned 19 September 2026 at ICL's request: the fixed 5×2
-            grid (with two hidden filler cells just to keep the row counts
-            even at every breakpoint) is gone in favour of one continuously
-            scrolling strip, which sidesteps that filler-cell bookkeeping
-            entirely — a scrolling row has no "leftover slot" to fill no
-            matter how many partners there are. The list is duplicated once
-            (see .partner-track in globals.css for why) so it loops without
-            a visible seam; the second copy is aria-hidden so screen readers
-            only hear each partner named once. */}
-        <section className="bg-card border-t border-rule overflow-hidden tint-palm">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20">
+        {/* ── The road to 2027 ─────────────────────────────────────────── */}
+        <section className="bg-ink tint-palm">
+          <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
             <Reveal>
-              <p className="eyebrow text-ink/45 mb-4">2026 partners</p>
-              <h2 className="h-lg text-3xl sm:text-4xl max-w-2xl">
-                Convened alongside
-              </h2>
+              <Head eyebrow="The road to 2027" dark>From this summit to the next.</Head>
+              <p className="lede mt-6 max-w-2xl text-[18px] text-white">
+                {PLAN_2026_2030.name}. {PLAN_2026_2030.aim} {NEXT_SUMMIT.label} is where the plan launches.
+              </p>
+            </Reveal>
+            <Reveal className="mt-14"><RoadToTimeline /></Reveal>
+          </div>
+        </section>
+
+        {/* ── The summit in pictures ───────────────────────────────────── */}
+        <section className="border-t border-line bg-ink">
+          <div className="mx-auto max-w-[1600px] px-5 pb-24 pt-16 sm:px-8 sm:pb-28">
+            <Reveal>
+              <p className="eyebrow mb-5 text-white">{EVENT.year}, in pictures</p>
+            </Reveal>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6">
+              {SUMMIT_PHOTOS.slice(0, 6).map((p, i) => (
+                <Reveal key={p.src} delay={i * 50}>
+                  <Link href="/2026" className="block aspect-[3/2] overflow-hidden rounded-xl bg-raise transition-transform duration-300 hover:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.thumb} alt={p.alt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+            <div className="mt-8">
+              <Btn href="/2026" internal tone="onDark">See all {SUMMIT_PHOTOS.length} photos</Btn>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Take part ────────────────────────────────────────────────── */}
+        <section className="bg-card tint-clay">
+          <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
+            <Reveal><Head eyebrow={`Take part in ${NEXT_SUMMIT.year}`}>Three ways to be in the room.</Head></Reveal>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {TAKE_PART.map((t, i) => (
+                <Reveal key={t.href} delay={i * 80}>
+                  <Link href={t.href} className="panel-card block h-full bg-ink p-8 text-white transition-colors hover:bg-raise">
+                    <h3 className="h-sm text-3xl text-white">{t.title} →</h3>
+                    <p className="mt-4 text-[16px] leading-relaxed text-white">{t.body}</p>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Updates sign-up ──────────────────────────────────────────── */}
+        <section id="updates" className="scroll-mt-24 bg-ink tint-marigold">
+          <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-24 sm:px-8 sm:py-28 lg:grid-cols-2">
+            <Reveal>
+              <Head eyebrow="Be first to know" dark>Get {NEXT_SUMMIT.year} updates.</Head>
+              <p className="lede mt-6 max-w-lg text-[18px] text-white">
+                Tell us who you are and where to reach you. We will send you the date as soon as it
+                is fixed, and tell you when tickets open — nothing in between.
+              </p>
+            </Reveal>
+            <Reveal delay={100}>
+              <EnquiryForm
+                subject={`${EVENT.name} ${NEXT_SUMMIT.year} — updates sign-up`}
+                cta="Send me the updates"
+                successTitle="You are on the list."
+                successBody={`We will email you the ${NEXT_SUMMIT.year} date and when tickets open.`}
+                fields={[
+                  { name: "name", label: "Your name", required: true },
+                  { name: "email", label: "Email", type: "email", required: true },
+                  { name: "interest", label: "I am interested as", options: ["Attendee", "Exhibitor", "Partner or sponsor", "Speaker", "Press"] },
+                ]}
+              />
             </Reveal>
           </div>
-          {/* Full-bleed, outside the max-width wrapper above, so the strip
-              can scroll edge to edge and the fade mask has room to work
-              against the section's own background rather than a hard
-              content-column edge. */}
-          <div className="relative mt-12 [mask-image:linear-gradient(to_right,transparent,black_64px,black_calc(100%-64px),transparent)]">
+        </section>
+
+        {/* ── Partners ─────────────────────────────────────────────────── */}
+        <section className="overflow-hidden border-t border-rule bg-card tint-palm">
+          <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8">
+            <Reveal>
+              <p className="eyebrow mb-4 text-ink/45">2026 partners</p>
+              <h2 className="h-lg max-w-2xl text-3xl sm:text-4xl">Convened alongside</h2>
+            </Reveal>
+          </div>
+          {/* Full-bleed strip, duplicated once so it loops without a seam
+              (.partner-track in globals.css); the second copy is aria-hidden. */}
+          <div className="relative pb-16 [mask-image:linear-gradient(to_right,transparent,black_64px,black_calc(100%-64px),transparent)]">
             <div className="partner-track flex w-max items-center gap-16 py-4">
               {[...PARTNERS, ...PARTNERS].map((p, i) => (
                 <div
@@ -583,7 +336,7 @@ export default function Page() {
                     height={192}
                     loading="lazy"
                     decoding="async"
-                    className="w-full max-w-[190px] h-auto"
+                    className="h-auto w-full max-w-[190px]"
                   />
                 </div>
               ))}
@@ -591,13 +344,13 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── FAQ ───────────────────────────────────────────────────── */}
+        {/* ── FAQ ──────────────────────────────────────────────────────── */}
         <section id="faq" className="bg-paper tint-marigold">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-24 sm:py-28">
-            <Reveal><Head eyebrow="Before you book">Questions</Head></Reveal>
-            <dl className="mt-14 grid sm:grid-cols-2 gap-x-16 border-t border-rule">
+          <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
+            <Reveal><Head eyebrow="Questions">What people ask</Head></Reveal>
+            <dl className="mt-14 grid gap-x-16 border-t border-rule sm:grid-cols-2">
               {FAQ.map((f, i) => (
-                <Reveal key={f.q} as="div" delay={Math.min(i, 5) * 60} className="py-6 border-b border-rule">
+                <Reveal key={f.q} as="div" delay={Math.min(i, 5) * 60} className="border-b border-rule py-6">
                   <dt className="h-sm text-[18px]">{f.q}</dt>
                   <dd className="lede mt-2 text-[16px] text-ink/65">{f.a}</dd>
                 </Reveal>
@@ -606,24 +359,24 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── Close ─────────────────────────────────────────────────── */}
+        {/* ── Close ────────────────────────────────────────────────────── */}
         <section className="bg-ink tint-clay">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pt-24 pb-16 text-center">
+          <div className="mx-auto max-w-[1600px] px-5 pb-16 pt-24 text-center sm:px-8">
             <Reveal>
-              <h2 className="h-lg text-white text-4xl sm:text-6xl max-w-3xl mx-auto">
+              <h2 className="h-lg mx-auto max-w-3xl text-4xl text-white sm:text-6xl">
                 One day. One room. Bring the business.
               </h2>
               <p className="lede mt-6 text-white">
-                {EVENT.dateLabel} · <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
+                {NEXT_SUMMIT.label} · <span className="venue-float">{NEXT_SUMMIT.venue}</span>, {VENUE_SHORT}
               </p>
             </Reveal>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
-              <Btn href="/exhibit" tone="onDark" internal>Book a stand</Btn>
+              <TicketBtn tone="gold" />
+              <Btn href="/exhibit" tone="onDark" internal>Exhibit</Btn>
             </div>
           </div>
           <div className="overflow-hidden border-t border-line">
-            <p className="outline-type text-[10vw] leading-[1.05] whitespace-nowrap text-center py-8 select-none">
+            <p className="outline-type select-none whitespace-nowrap py-8 text-center text-[10vw] leading-[1.05]">
               #SMESUMMITKE
             </p>
           </div>

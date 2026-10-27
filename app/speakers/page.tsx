@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
+import TicketBtn from "@/components/TicketBtn";
 import Reveal from "@/components/Reveal";
 import StickyBar from "@/components/StickyBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { EVENT, VENUE_SHORT, SPEAKERS, PHOTOS, TICKET_CTA, SPEAKER_COUNT, DATE_LONG, DATE_DAY_MONTH, KEYNOTES, KEYNOTE_COUNT, KEYNOTE_COUNT_CAP } from "@/lib/event";
+import { EVENT, VENUE_SHORT, SPEAKERS, PHOTOS, SPEAKER_COUNT, DATE_LONG, DATE_DAY_MONTH, KEYNOTES, KEYNOTE_COUNT, KEYNOTE_COUNT_CAP } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Speakers — ${EVENT.name} ${EVENT.year}`,
@@ -138,7 +139,7 @@ export default function Speakers() {
               <span className="venue-float">{EVENT.venue}</span>, {VENUE_SHORT}
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+              <TicketBtn tone="gold" />
               <Btn href="/" tone="onDark" internal>Back to the summit</Btn>
             </div>
           </div>

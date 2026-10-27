@@ -17,9 +17,11 @@ import { FORM_ENDPOINT, EVENT } from "@/lib/event";
 type Field = { name: string; label: string; type?: string; required?: boolean; options?: string[]; value?: string };
 
 export default function EnquiryForm({
-  subject, fields, cta = "Send enquiry",
+  subject, fields, cta = "Send enquiry", successTitle, successBody,
 }: {
   subject: string; fields: Field[]; cta?: string;
+  /** Override the confirmation (the updates sign-up is not an enquiry that gets a two-day reply). */
+  successTitle?: string; successBody?: string;
 }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -55,10 +57,12 @@ export default function EnquiryForm({
   if (state === "sent") {
     return (
       <div className="border border-line bg-raise p-8">
-        <p className="h-sm text-white text-xl">Thank you — that has reached us.</p>
+        <p className="h-sm text-white text-xl">{successTitle ?? "Thank you — that has reached us."}</p>
         <p className="lede mt-3 text-[16px] text-white">
-          Someone from the team will reply within two working days. If it is
-          urgent, call {EVENT.phone[0]}.
+          {successBody ?? (
+            <>Someone from the team will reply within two working days. If it is
+            urgent, call {EVENT.phone[0]}.</>
+          )}
         </p>
       </div>
     );

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import MobileNav from "@/components/MobileNav";
 import NavDropdown from "@/components/NavDropdown";
-import { ACCELERATOR_SECTIONS, EVENT } from "@/lib/event";
+import { ACCELERATOR_SECTIONS, EVENT, TICKET_ACTION, NAV_CTA } from "@/lib/event";
 
 /**
  * One header for every page. `overlay` floats it over the homepage hero
@@ -155,7 +155,7 @@ const NAV: readonly NavEntry[] = [
     label: "Jiinue Accelerator", href: "/accelerator",
     children: ACCELERATOR_SECTIONS.map((s) => ({ label: s.label, href: `/accelerator#${s.id}` })),
   },
-  { label: "Press", href: "/press" },
+  { label: "Recap", href: "/2026" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -230,12 +230,14 @@ export default function SiteHeader({ overlay = false, current = "", barOnMobile 
           {/* Hamburger sits left of the ticket button, and only the nav
               collapses — the ticket action is never behind a menu. */}
           <MobileNav nav={NAV} current={current} />
-          <a
-            href={EVENT.ticketUrl}
-            className="rounded-lg bg-ink text-white px-4 sm:px-6 lg:px-4 xl:px-6 py-2.5 sm:py-3 text-[16px] sm:text-[16px] font-medium hover:bg-raise transition-colors flex-none"
+          {/* Gold, per the 2027 design. NAV_CTA / TICKET_ACTION follow the
+              TICKETING_OPEN switch in lib/event.ts. */}
+          <Link
+            href={TICKET_ACTION.href}
+            className="rounded-lg bg-gold text-ink px-4 sm:px-6 lg:px-4 xl:px-6 py-2.5 sm:py-3 text-[16px] font-medium hover:brightness-110 transition-all flex-none"
           >
-            Get ticket
-          </a>
+            {NAV_CTA}
+          </Link>
         </div>
       </div>
     </header>

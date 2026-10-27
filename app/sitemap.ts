@@ -15,8 +15,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
     { url: `${BASE}/`,         lastModified: now, changeFrequency: "weekly",  priority: 1.0 },
+    { url: `${BASE}/2026/`,     lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/speakers`, lastModified: now, changeFrequency: "weekly",  priority: 0.9 },
     { url: `${BASE}/tracks`,   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/network`,  lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE}/providers`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/partner`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/exhibit`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/accelerator`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import Btn from "@/components/Btn";
+import TicketBtn from "@/components/TicketBtn";
 import Countdown from "@/components/Countdown";
 import Link from "next/link";
 import {
-  EVENT, TRACKS, PAPERS_TICKET, TICKET_CTA, DATE_DAY_MONTH,
+  EVENT, TICKETING_OPEN, TRACKS, PAPERS_TICKET, DATE_DAY_MONTH,
   PAPERS_SUBMISSION_DEADLINE, PAPERS_SUBMISSION_LABEL, PAPERS_SUBMISSIONS_OPEN,
   PAPERS_NOTIFY_DATE, PAPERS_NOTIFY_LABEL, PAPERS_NOTIFY_PENDING,
 } from "@/lib/event";
@@ -125,7 +126,7 @@ export default function Papers() {
               Includes full delegate access on the day.
             </p>
           </Reveal>
-          <Btn href={EVENT.ticketUrl} tone="gold">Book the papers ticket</Btn>
+          <TicketBtn tone="gold">{TICKETING_OPEN ? "Book the papers ticket" : "Get 2027 updates"}</TicketBtn>
         </div>
       </section>
       <section className="border-b border-line">
@@ -162,7 +163,7 @@ export default function Papers() {
       <section>
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <div className="flex flex-wrap justify-center gap-3">
-            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+            <TicketBtn tone="gold" />
             <Btn href="/contact" tone="onDark" internal>Ask a question</Btn>
           </div>
         </div>

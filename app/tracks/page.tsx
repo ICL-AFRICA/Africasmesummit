@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Btn from "@/components/Btn";
+import TicketBtn from "@/components/TicketBtn";
 import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
-import { EVENT, TRACKS, TRACK_EXTRAS, SPEAKERS, PHOTOS, TICKET_CTA, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
+import { EVENT, TRACKS, TRACK_EXTRAS, SPEAKERS, PHOTOS, DATE_LONG, DATE_DAY_MONTH } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `The six tracks — ${EVENT.name} ${EVENT.year}`,
@@ -159,7 +160,7 @@ export default function Tracks() {
               advance. <span className="venue-float">{EVENT.venue}</span>, {EVENT.dateLabel}.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+              <TicketBtn tone="gold" />
               <Btn href="/papers" tone="onDark" internal>Submit a paper</Btn>
             </div>
           </Reveal>

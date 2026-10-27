@@ -1,8 +1,28 @@
 # Africa SME Summit
 
-Marketing site for a one-day conference, Thursday 15 October 2026, University
-of Nairobi. Next.js 15 static export, Tailwind v4, on Vercel. No database, no
-server, no env vars.
+Marketing site for the Africa SME Summit. The 2026 summit was held on
+15 October 2026 at Ole Sereni, Nairobi, and is over; the site now announces
+the **2027 summit (March 2027, Ole Sereni — exact day not yet set)** and keeps
+2026 as a recap at `/2026/`. Next.js 15 static export, Tailwind v4, on Vercel.
+No database, no server, no env vars.
+
+## Phase: not selling (since 19 October 2026)
+
+`TICKETING_OPEN` in `lib/event.ts` is the phase switch. While it is `false`
+nothing is for sale: every ticket button (`<TicketBtn />`, the nav, the mobile
+menu, every page footer) reads "Get 2027 updates" and goes to the sign-up form
+on the homepage (`/#updates`); the early-bird bar and ticker render nothing;
+stand and sponsor "Book" buttons become enquiries (`BOOKING_ACTION`); and the
+schema.org event carries no price. **Never write a ticket button by hand** —
+use `<TicketBtn />` or read `TICKET_ACTION`, so the switch reaches it.
+`NEXT_SUMMIT` is the single source for the 2027 date line, year and
+countdowns; only the month is confirmed, so the countdown targets 1 March 2027
+until `dateConfirmed` is set. The checklist for opening 2027 sales is in the
+comment on `TICKETING_OPEN`. The 2026 constants (`EVENT.year`, `DATE_ISO`,
+`AGENDA`, tickets, early bird) stay as the 2026 record. After changing the
+label or date, run `node scripts/build-og.mjs` to rebuild `public/og.jpg`.
+Pages not yet rewritten for 2027 (accelerator, speakers, tracks, papers,
+network, providers, contact, privacy) still describe the 2026 programme.
 
 ## Stack and toolchain
 
@@ -71,8 +91,11 @@ typography change and needs a visual pass, not a one-line fix.
   on dark comes from size and weight. On paper `#6E6884` is fine.
 - **Rotate the four brand colours.** None is "the brand colour". Clay red is
   reserved for the early-bird deadline, so red always means time is running out.
-- **The ticket action always reads "Get a ticket — KES 5,800"**, every page,
-  every section. The nav is the one exception, for space at 390px.
+- **While tickets are on sale the ticket action always reads "Get a ticket —
+  KES 5,800"** (the current price), every page, every section; the nav is the
+  one exception, for space at 390px. While `TICKETING_OPEN` is false it reads
+  "Get 2027 updates" (nav: "Get updates"). Either way it comes from
+  `TICKET_ACTION` / `<TicketBtn />`, never typed.
 - **Track anchors are positional, not slug-based.** `/tracks` renders
   `#track-1` … `#track-6` from the array index, so **reordering `TRACKS`
   silently repoints every inbound link** — including any live paid ad or

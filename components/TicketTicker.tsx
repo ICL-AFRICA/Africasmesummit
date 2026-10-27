@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EVENT } from "@/lib/event";
+import { EARLY_BIRD_ENDS, EARLY_BIRD_LABEL, EVENT, TICKETING_OPEN } from "@/lib/event";
 import { readConsent, subscribeConsent } from "@/lib/consent";
 
 const KEY = "asm-ticker-dismissed";
@@ -64,7 +64,8 @@ export default function TicketTicker() {
     try { localStorage.setItem(KEY, "1"); } catch { /* ignore */ }
   }
 
-  if (closed || left === undefined) return null;
+  // Not selling: no ticker (TICKETING_OPEN, lib/event.ts).
+  if (!TICKETING_OPEN || closed || left === undefined) return null;
 
   const cardShell = "hidden sm:block fixed z-50 right-8 bottom-8";
 

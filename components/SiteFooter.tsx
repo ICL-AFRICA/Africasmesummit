@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { EVENT } from "@/lib/event";
+import { EVENT, NEXT_SUMMIT, TICKETING_OPEN } from "@/lib/event";
 
 /**
  * One footer for every page, and the site's safety net: every page is
@@ -20,15 +20,15 @@ export default function SiteFooter() {
               SUMMIT
             </span>
           </div>
-          <p className="mt-5">{EVENT.dateLabel}</p>
+          <p className="mt-5">{NEXT_SUMMIT.label} · {NEXT_SUMMIT.venue}, Nairobi</p>
           <p className="mt-2">Convened by {EVENT.host}</p>
         </div>
 
         <div>
           <p className="eyebrow text-marigold mb-3">The summit</p>
           <ul className="space-y-1.5">
-            {[["Speakers", "/speakers"], ["The day", "/#agenda"], ["Tracks", "/tracks"],
-              ["SMEs", "/network"], ["Tickets", "/#tickets"], ["Questions", "/#faq"]].map(([l, h]) => (
+            {[["2026 recap", "/2026"], ["Speakers", "/speakers"], ["Tracks", "/tracks"],
+              ["SMEs", "/network"], [TICKETING_OPEN ? "Tickets" : "Get 2027 updates", TICKETING_OPEN ? EVENT.ticketUrl : "/#updates"], ["Questions", "/#faq"]].map(([l, h]) => (
               <li key={h}><Link href={h} className="hover:text-white transition-colors">{l}</Link></li>
             ))}
           </ul>
@@ -63,7 +63,7 @@ export default function SiteFooter() {
 
       <div className="border-t border-line">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-5 flex flex-wrap gap-4 justify-between text-[12px] font-mono">
-          <span>© {EVENT.year} {EVENT.host}</span>
+          <span>© {EVENT.year}–{NEXT_SUMMIT.year} {EVENT.host}</span>
           <span className="flex gap-5">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
             <span>Nairobi</span>

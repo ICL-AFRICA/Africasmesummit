@@ -987,3 +987,13 @@ html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
   html.splash-on .splash { transition: opacity 250ms ease; }
   html.splash-on.splash-lifting .splash { transform: none; }
 }
+
+/* The 2027 hero headline (19 October 2026, from ICL's mock-up): a serif.
+   Archivo, the site's heading face, is not loaded, so this is the system
+   serif stack — Georgia where it exists, the platform's serif elsewhere. */
+.hero-serif {
+  font-family: Georgia, "Times New Roman", "Iowan Old Style", "Palatino Linotype", serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+}

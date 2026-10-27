@@ -3,7 +3,8 @@ import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import StandBooking from "@/components/StandBooking";
 import Btn from "@/components/Btn";
-import { EVENT, STAND_OPTIONS, FLOOR_PLAN, TICKET_CTA, DATE_LONG, BOOKING_URL } from "@/lib/event";
+import TicketBtn from "@/components/TicketBtn";
+import { EVENT, STAND_OPTIONS, FLOOR_PLAN, DATE_LONG, BOOKING_ACTION, TICKETING_OPEN, RATES_NOTE_2026 } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
@@ -51,19 +52,20 @@ export default function Exhibit() {
                   ))}
                 </ul>
                 <a
-                  href={BOOKING_URL}
+                  href={BOOKING_ACTION.href}
                   className={`rounded-lg mt-8 inline-flex justify-center px-6 py-3.5 text-[16px] font-medium transition-all ${
                     i === 0 ? "bg-gold text-ink hover:brightness-110"
                             : "border border-line text-white hover:border-gold hover:text-marigold-t"}`}
                 >
-                  Book this booth
+                  {BOOKING_ACTION.book}
                 </a>
               </Reveal>
             ))}
           </div>
           <p className="mt-6 text-[16px] text-white">
-            Booths are bookable directly and allocated in the order they are paid for.
-            Questions about position or what fits? Ask below.
+            {TICKETING_OPEN
+              ? "Booths are bookable directly and allocated in the order they are paid for. Questions about position or what fits? Ask below."
+              : RATES_NOTE_2026}
           </p>
         </div>
       </section>
@@ -71,7 +73,7 @@ export default function Exhibit() {
       {/* Reserve a stand. The plan is the picker, so this section runs full
           width rather than the two-column split it used before — every
           stand in the hall does not fit in half a page. */}
-      <section className="border-b border-line tint-palm">
+      <section id="enquire" className="border-b border-line tint-palm">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
           <Reveal>
             <p className="eyebrow text-white mb-5">Reserve a stand</p>
@@ -99,7 +101,7 @@ export default function Exhibit() {
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Attending rather than exhibiting?</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+            <TicketBtn tone="gold" />
             <Btn href="/partner" tone="onDark" internal>Become a partner</Btn>
           </div>
         </div>

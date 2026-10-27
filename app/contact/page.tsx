@@ -3,7 +3,8 @@ import PageShell from "@/components/PageShell";
 import Reveal from "@/components/Reveal";
 import EnquiryForm from "@/components/EnquiryForm";
 import Btn from "@/components/Btn";
-import { EVENT, TICKET_CTA, DATE_LONG } from "@/lib/event";
+import TicketBtn from "@/components/TicketBtn";
+import { EVENT, DATE_LONG } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Contact — ${EVENT.name} ${EVENT.year}`,
@@ -82,7 +83,7 @@ export default function Contact() {
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 text-center">
           <p className="lede text-white">Ready to book?</p>
           <div className="mt-6">
-            <Btn href={EVENT.ticketUrl} tone="gold">{TICKET_CTA}</Btn>
+            <TicketBtn tone="gold" />
           </div>
         </div>
       </section>
