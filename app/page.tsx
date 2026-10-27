@@ -73,6 +73,13 @@ const VALUE_PROPS = [
   },
 ] as const;
 
+/* The two pictures that play inside the Africa outline in the hero. Portrait
+   dance picture: centred on the jumper, who sits above its middle. */
+const MAP_SLIDES = [
+  { src: "/img/hero/map-lion.webp", ratio: 1, cx: 0.5, cy: 0.48, zoom: 1.14 },
+  { src: "/img/hero/map-dance.webp", ratio: 1392 / 816, cx: 0.5, cy: 0.35, zoom: 1.0 },
+] as const;
+
 const TAKE_PART = [
   { href: "/exhibit", title: "Exhibit", body: "Put your product in front of the buyers, investors and county officials in the room." },
   { href: "/partner", title: "Partner", body: "Back the summit and the plan it launches — with your name where the delegates look." },
@@ -150,8 +157,8 @@ export default function Page() {
 
               <div className="hero-map-in relative mx-auto flex w-full max-w-[34rem] flex-col items-center md:max-w-none md:items-end">
                 <AfricaCutout
-                  src="/img/summit/8232.webp"
-                  alt="A speaker at the podium at the 2026 summit, framed in the outline of Africa"
+                  slides={MAP_SLIDES}
+                  alt="The outline of Africa, with a charging lion and a Maasai jumping dance at sunset shown in turn inside it"
                   className="h-auto w-full max-w-[26rem] sm:max-w-[30rem] md:max-w-none lg:h-[min(38rem,calc(100svh-15rem))] lg:w-auto xl:mr-6"
                 />
                 <p className="mt-6 text-center font-serif text-[22px] italic leading-tight text-gold md:text-right lg:text-[26px] xl:mr-6" style={{ fontFamily: 'Georgia, "Times New Roman", serif', textShadow: "0 1px 12px rgba(6,8,30,0.9)" }}>

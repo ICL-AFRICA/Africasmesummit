@@ -1138,3 +1138,28 @@ html.splash-on:not(.splash-lifting) .hero-map-in { animation-play-state: paused;
 /* Gold mosaic along the hero's edges: fades toward the centre. */
 .mosaic-fade-l { -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 100%); mask-image: linear-gradient(to right, #000 0%, transparent 100%); }
 .mosaic-fade-r { -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 100%); mask-image: linear-gradient(to left, #000 0%, transparent 100%); }
+
+/* The slideshow inside the Africa outline (components/AfricaCutout.tsx): two
+   pictures on a 10s loop. The first sits underneath at full opacity, always;
+   the second fades in over it (0.8s), holds, and fades out again — so the
+   cross-fade never shows the hero video through the outline. Both drift in
+   slowly (a gentle zoom, easing back). Reduced motion: no animation, the first
+   picture only. */
+@keyframes map-fade {
+  0%   { opacity: 0; }
+  42%  { opacity: 0; }
+  50%  { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes map-zoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.07); }
+}
+.map-slide { transform-box: fill-box; transform-origin: center; animation: map-zoom 10s ease-in-out infinite alternate; }
+.map-slide-b { opacity: 0; animation: map-zoom 10s ease-in-out infinite alternate, map-fade 10s linear infinite; }
+html.splash-on:not(.splash-lifting) .map-slide { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .map-slide { animation: none; }
+  .map-slide-b { display: none; }
+}

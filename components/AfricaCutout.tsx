@@ -8,7 +8,9 @@
  * brand's own silhouette), plus Madagascar, drawn here as a simplified shape
  * since the logo mark leaves it out. Pure vector, so the coastline is crisp at
  * any size or pixel density; the photograph is an <image> clipped by the
- * outline.
+ * outline. The pictures (two or more) cross-fade slowly inside it, with a
+ * gentle zoom — see .map-slide in globals.css, which is pure CSS and is held
+ * on the first picture for people who ask for reduced motion.
  *
  * The gold is built, not drawn, in SVG filters (no raster images):
  *
@@ -36,11 +38,19 @@ const MADAGASCAR =
 const VB = [2, 2, 122, 126] as const;
 const IMG = [9.75, 6.07, 110.5, 117.43] as const;
 
+/** One picture in the slideshow. `ratio` is its height / width; `cx`, `cy`
+ *  (0-1) is the point of the picture to centre in the continent; `zoom` is the
+ *  picture's width as a multiple of the continent's width (keep >= 1 so it
+ *  always covers it). */
+export type MapSlide = { src: string; ratio: number; cx?: number; cy?: number; zoom?: number };
+
 export default function AfricaCutout({
-  src, alt, className = "",
-}: { src: string; alt: string; className?: string }) {
+  slides, alt, className = "",
+}: { slides: readonly MapSlide[]; alt: string; className?: string }) {
   const [x, y, w, h] = VB;
   const [ix, iy, iw, ih] = IMG;
+  const bcx = ix + iw / 2;
+  const bcy = iy + ih / 2;
   return (
     <svg viewBox={`${x} ${y} ${w} ${h}`} role="img" aria-label={alt} className={className} style={{ overflow: "visible" }}>
       <defs>
@@ -132,8 +142,23 @@ export default function AfricaCutout({
       {/* the photograph, inside the outline */}
       <g clipPath="url(#af-clip)">
         <rect x={x} y={y} width={w} height={h} fill="#0C0E30" />
-        <image href={src} x={ix - iw * 0.55} y={iy} width={iw * 2.1} height={ih} preserveAspectRatio="xMidYMid slice" />
-        <rect x={x} y={y} width={w} height={h} fill="#14184A" opacity="0.3" />
+        {slides.map((sl, i) => {
+          const iw2 = iw * (sl.zoom ?? 1.05);
+          const ih2 = iw2 * sl.ratio;
+          return (
+            <image
+              key={sl.src}
+              href={sl.src}
+              x={bcx - (sl.cx ?? 0.5) * iw2}
+              y={bcy - (sl.cy ?? 0.5) * ih2}
+              width={iw2}
+              height={ih2}
+              preserveAspectRatio="none"
+              className={slides.length > 1 ? `map-slide ${i === 0 ? "map-slide-a" : "map-slide-b"}` : undefined}
+            />
+          );
+        })}
+        <rect x={x} y={y} width={w} height={h} fill="#14184A" opacity="0.1" />
         <rect x={x} y={y} width={w} height={h} fill="url(#af-shade)" />
       </g>
 
