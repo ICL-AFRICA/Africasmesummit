@@ -237,10 +237,10 @@ export default function Recap2026() {
       <section>
         <div className="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 sm:py-24">
           <Reveal as="h2" className="h-lg max-w-3xl text-4xl text-white sm:text-6xl">
-            See you in <span className="text-marigold">{NEXT_SUMMIT.label}</span>.
+            See you {NEXT_SUMMIT.dateConfirmed ? "on" : "in"} <span className="text-marigold">{NEXT_SUMMIT.label}</span>.
           </Reveal>
           <Reveal as="p" className="lede mt-6 max-w-2xl text-[18px] text-white">
-            {NEXT_SUMMIT.purpose} The exact date will be announced here first.
+            {NEXT_SUMMIT.purpose}{NEXT_SUMMIT.dateConfirmed ? "" : " The exact date will be announced here first."}
           </Reveal>
           <Reveal className="mt-9 flex flex-wrap gap-4">
             <TicketBtn tone="gold" />

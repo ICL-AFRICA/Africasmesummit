@@ -303,8 +303,8 @@ export default function Page() {
             <Reveal>
               <Head eyebrow="The venue">{NEXT_SUMMIT.venue}, Nairobi.</Head>
               <p className="lede mt-6 max-w-lg text-[18px] text-ink/70">
-                {NEXT_SUMMIT.label} returns to {EVENT.venue}, {EVENT.venueDetail}, where the 2026
-                summit was held. The exact date will be announced here first.
+                The summit returns on {NEXT_SUMMIT.label} to {EVENT.venue}, {EVENT.venueDetail},
+                where the 2026 summit was held.
               </p>
               <div className="mt-8"><Btn href="/2026" internal tone="outline">See the 2026 summit here</Btn></div>
             </Reveal>

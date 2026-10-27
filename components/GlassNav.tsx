@@ -8,7 +8,7 @@ import NavDropdown from "@/components/NavDropdown";
 /**
  * The homepage's navigation (27 October 2026, ICL's "cinematic" refinement):
  * no bar, no logo — a small floating panel of translucent navy glass at the
- * top right, over the hero video, which therefore starts at the very top of
+ * top (centred on desktop, top right on phones and tablets), over the hero video, which therefore starts at the very top of
  * the page.
  *
  * The links ARE the hamburger's pages — same labels, same routes, same
@@ -43,7 +43,7 @@ export default function GlassNav({ nav, current = "" }: { nav: readonly Entry[];
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
-      <div className="flex justify-end px-4 pt-4 sm:px-6 sm:pt-5 lg:px-10 lg:pt-6">
+      <div className="flex justify-end px-4 pt-4 sm:px-6 sm:pt-5 lg:justify-center lg:px-10 lg:pt-6">
         <div className="glass-panel pointer-events-auto" data-solid={solid ? "true" : undefined}>
           <nav aria-label="Main" className="hidden items-center gap-5 pl-6 pr-2 text-[16px] font-medium lg:flex xl:gap-6 2xl:gap-8">
             {nav.map((n) => {

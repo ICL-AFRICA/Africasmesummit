@@ -1008,6 +1008,10 @@ html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
    glass, a fine warm-gold edge, a soft specular sheen. Relatively transparent
    at rest; on hover / keyboard focus it firms up and blurs more, over ~320ms.
    Touch screens, which cannot hover, rest at a firmer value. */
+/* NB: the blur and the fill live on pseudo-elements, not on .glass-panel
+   itself. An element with backdrop-filter becomes the containing block for
+   position:fixed descendants, which squashed the full-screen menu (inside
+   this panel) into the 50px button. */
 .glass-panel {
   position: relative;
   display: flex;
@@ -1015,18 +1019,24 @@ html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
   border-radius: 14px;
   padding: 3px;
   isolation: isolate;
+  box-shadow: 0 12px 30px -14px rgba(3, 5, 24, 0.7);
+  transition: box-shadow 320ms ease;
+}
+/* the glass: translucent navy fill, blur of the video behind */
+.glass-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  pointer-events: none;
   background-color: rgba(12, 15, 46, 0.34);
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(255, 255, 255, 0) 100%);
   -webkit-backdrop-filter: blur(9px) saturate(1.2);
   backdrop-filter: blur(9px) saturate(1.2);
-  box-shadow:
-    inset 0 0 0 1px rgba(232, 196, 120, 0.3),
-    inset 0 1px 0 rgba(255, 246, 220, 0.6),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
-    0 12px 30px -14px rgba(3, 5, 24, 0.7);
-  transition: background-color 320ms ease, backdrop-filter 320ms ease, -webkit-backdrop-filter 320ms ease, box-shadow 320ms ease;
+  transition: background-color 320ms ease, backdrop-filter 320ms ease, -webkit-backdrop-filter 320ms ease;
 }
-/* the reflection: a soft diagonal band of light across the glass */
+/* the gold edge, the top highlight and the reflection: a diagonal band of light */
 .glass-panel::before {
   content: "";
   position: absolute;
@@ -1035,30 +1045,43 @@ html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
   border-radius: inherit;
   pointer-events: none;
   background: linear-gradient(112deg, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0.12) 34%, rgba(255, 255, 255, 0) 50%);
+  box-shadow:
+    inset 0 0 0 1px rgba(232, 196, 120, 0.3),
+    inset 0 1px 0 rgba(255, 246, 220, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+  transition: box-shadow 320ms ease;
 }
 .glass-panel:hover,
 .glass-panel:focus-within,
 .glass-panel[data-solid="true"] {
+  box-shadow: 0 16px 36px -14px rgba(3, 5, 24, 0.8);
+}
+.glass-panel:hover::after,
+.glass-panel:focus-within::after,
+.glass-panel[data-solid="true"]::after {
   background-color: rgba(12, 15, 46, 0.7);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
   backdrop-filter: blur(20px) saturate(1.3);
+}
+.glass-panel:hover::before,
+.glass-panel:focus-within::before,
+.glass-panel[data-solid="true"]::before {
   box-shadow:
     inset 0 0 0 1px rgba(232, 196, 120, 0.5),
     inset 0 1px 0 rgba(255, 246, 220, 0.7),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 16px 36px -14px rgba(3, 5, 24, 0.8);
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
-.glass-panel[data-solid="true"] { background-color: rgba(12, 15, 46, 0.82); }
+.glass-panel[data-solid="true"]::after { background-color: rgba(12, 15, 46, 0.82); }
 @media (hover: none) {
-  .glass-panel { background-color: rgba(12, 15, 46, 0.5); }
+  .glass-panel::after { background-color: rgba(12, 15, 46, 0.5); }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .glass-panel, .glass-panel:hover, .glass-panel:focus-within, .glass-panel[data-solid="true"] {
+  .glass-panel::after, .glass-panel:hover::after, .glass-panel:focus-within::after, .glass-panel[data-solid="true"]::after {
     background-color: rgb(14, 17, 52); -webkit-backdrop-filter: none; backdrop-filter: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .glass-panel { transition: none; }
+  .glass-panel, .glass-panel::after, .glass-panel::before { transition: none; }
 }
 /* gold underline that draws in under a link */
 .glass-link::after {

@@ -78,12 +78,12 @@ export const EVENT = {
  * purpose, are from the Summit Dispatch Issue 01 (October 2026): "March 2027
  * · Ole Sereni, Nairobi. Launch of the Nairobi County Entrepreneurship
  * Ecosystem Strengthening Strategic Plan 2026–2030 and a first look at
- * progress since 2026. Exact date to be announced." THE DAY IS NOT SET and
- * none is invented here. `starts` is therefore the first moment of March in
- * East Africa Time, so the countdowns read "until March 2027" and run out on
- * 1 March at the latest. When the real date is fixed: change `starts` to
- * that day's opening time, `label` to e.g. "12 March 2027", set
- * `dateConfirmed` to true — and see TICKETING_OPEN below.
+ * progress since 2026. Exact date to be announced." The DAY was then set by
+ * ICL on 27 October 2026: 9 March (2027 — the message said "2026", which is
+ * already past, so 2027 is assumed; confirm). No opening time has been given,
+ * so `starts` is the first moment of 9 March in East Africa Time and the
+ * countdowns run to the start of that day. When the opening time is known,
+ * change `starts` to it. See also TICKETING_OPEN below.
  *
  * The 2026 constants (EVENT.year, DATE_ISO, SUMMIT_STARTS, the AGENDA, the
  * tickets and the early bird) deliberately stay as the 2026 record: the
@@ -91,11 +91,11 @@ export const EVENT = {
  */
 export const NEXT_SUMMIT = {
   year: 2027,
-  label: "March 2027",
+  label: "9 March 2027",
   /** True once a day has been announced; until then the label is month-only
    *  and the schema.org start date is left at the month. */
-  dateConfirmed: false,
-  starts: "2027-03-01T00:00:00+03:00",
+  dateConfirmed: true,
+  starts: "2027-03-09T00:00:00+03:00",
   venue: "Ole Sereni",
   place: "Nairobi, Kenya",
   tagline: "Connecting African businesses, capital, markets and ideas.",
