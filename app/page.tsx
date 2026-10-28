@@ -171,7 +171,7 @@ export default function Page() {
         </section>
 
         {/* ── Four benefits: the bright band under the hero ───────────── */}
-        <section aria-label="Why attend" className="border-t-[3px] border-gold bg-paper">
+        <section aria-label="Why attend" className="bg-paper">
           <div className="mx-auto grid max-w-[1600px] gap-x-0 gap-y-7 px-5 py-9 sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:px-12 lg:py-8">
             {VALUE_PROPS.map((v, i) => (
               <div
@@ -206,12 +206,12 @@ export default function Page() {
               {HOME_FIGURES.map((id) => {
                 const f = figure(id);
                 return (
-                  <Reveal key={id} as="div" className="border-t-[3px] border-gold pt-5">
+                  <Reveal key={id} as="div">
                     <p className="h-lg text-4xl text-ink sm:text-[2.6rem]">{f.value}</p>
                     <p className="mt-2 text-[17px] leading-snug text-ink">{f.label}</p>
                     <p className="mt-3 text-[16px] leading-snug text-ink/70">
                       {f.scope}.{" "}
-                      <a href={f.url} target="_blank" rel="noopener noreferrer" className="underline decoration-gold decoration-2 underline-offset-4 hover:text-ink">
+                      <a href={f.url} target="_blank" rel="noopener noreferrer" className="underline decoration-ink/40 decoration-1 underline-offset-4 hover:decoration-ink">
                         {figureCredit(f)}
                       </a>
                     </p>
@@ -221,7 +221,7 @@ export default function Page() {
             </div>
             <p className="mx-auto mt-9 max-w-3xl text-[16px] leading-snug text-ink/70">
               Host country, for scale: {figure(HOST_FIGURE).value} {figure(HOST_FIGURE).label} in Kenya.{" "}
-              <a href={figure(HOST_FIGURE).url} target="_blank" rel="noopener noreferrer" className="underline decoration-gold decoration-2 underline-offset-4 hover:text-ink">
+              <a href={figure(HOST_FIGURE).url} target="_blank" rel="noopener noreferrer" className="underline decoration-ink/40 decoration-1 underline-offset-4 hover:decoration-ink">
                 {figureCredit(figure(HOST_FIGURE))}
               </a>
             </p>

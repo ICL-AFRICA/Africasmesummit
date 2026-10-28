@@ -11,7 +11,7 @@ export default function NotFound() {
     <>
       <SiteHeader />
       <main className="bg-ink">
-        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-28 sm:py-36">
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-28 pt-36 sm:pb-36 sm:pt-44">
           <p className="eyebrow text-marigold mb-5">404</p>
           <h1 className="h-lg text-white text-4xl sm:text-6xl max-w-3xl">
             That page is not here — but the summit still is.

@@ -27,7 +27,7 @@ export default function Speakers() {
       <main className="bg-ink">
         {/* Header */}
         <section className="border-b border-line">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-20 sm:py-24">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 pb-20 pt-28 sm:pb-24 sm:pt-36">
             <p className="eyebrow text-white mb-5">On stage · {EVENT.dateShort}</p>
             <h1 className="h-lg text-white text-5xl sm:text-6xl lg:text-7xl max-w-4xl">
               The people you came to meet

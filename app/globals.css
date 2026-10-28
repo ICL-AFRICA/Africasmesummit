@@ -1083,21 +1083,13 @@ html.splash-on:not(.splash-lifting) .hero-word { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
   .glass-panel, .glass-panel::after, .glass-panel::before { transition: none; }
 }
-/* gold underline that draws in under a link */
-.glass-link::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -1px;
-  height: 2px;
-  background: #E3A428;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 300ms ease;
-}
-.glass-link:hover::after,
-.glass-link:focus-visible::after,
-.glass-link.is-active::after { transform: scaleX(1); }
-@media (prefers-reduced-motion: reduce) { .glass-link::after { transition: none; } }
+/* nav links: no lines — a soft pill lights behind the link on hover or focus,
+   and stays behind the current page (which is also set a weight heavier). */
+.glass-link { transition: background-color 250ms ease; }
+.glass-link:hover,
+.glass-link:focus-visible { background-color: rgba(255, 255, 255, 0.12); }
+.glass-link.is-active { background-color: rgba(255, 255, 255, 0.16); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .glass-link { transition: none; } }
 /* the accelerator's dropdown, in the same glass */
 .glass-menu {
   border-radius: 12px;

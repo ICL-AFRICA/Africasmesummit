@@ -31,7 +31,11 @@ type Entry = Link_ & { children?: readonly Link_[] };
 /* Collapsed into the hamburger below xl. */
 const SECONDARY = new Set(["/providers", "/papers", "/2026"]);
 
-export default function GlassNav({ nav, current = "" }: { nav: readonly Entry[]; current?: string }) {
+export default function GlassNav({ nav, current = "", solid: alwaysSolid = false }: {
+  nav: readonly Entry[]; current?: string;
+  /** Hold the firmer glass from the first pixel (every page but the homepage). */
+  solid?: boolean;
+}) {
   const [solid, setSolid] = useState(false);
 
   useEffect(() => {
@@ -44,8 +48,8 @@ export default function GlassNav({ nav, current = "" }: { nav: readonly Entry[];
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
       <div className="flex justify-end px-4 pt-4 sm:px-6 sm:pt-5 lg:justify-center lg:px-10 lg:pt-6">
-        <div className="glass-panel pointer-events-auto" data-solid={solid ? "true" : undefined}>
-          <nav aria-label="Main" className="hidden items-center gap-5 pl-6 pr-2 text-[16px] font-medium lg:flex xl:gap-6 2xl:gap-8">
+        <div className="glass-panel pointer-events-auto" data-solid={solid || alwaysSolid ? "true" : undefined}>
+          <nav aria-label="Main" className="hidden items-center gap-1 pl-3 pr-1 text-[16px] font-medium lg:flex 2xl:gap-3">
             {nav.map((n) => {
               const active = current === n.href;
               const wrap = SECONDARY.has(n.href) ? "hidden xl:block" : "";
@@ -57,7 +61,7 @@ export default function GlassNav({ nav, current = "" }: { nav: readonly Entry[];
                     <Link
                       href={n.href}
                       aria-current={active ? "page" : undefined}
-                      className={`glass-link relative block whitespace-nowrap py-2 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold ${active ? "is-active" : ""}`}
+                      className={`glass-link block whitespace-nowrap rounded-lg px-3 py-2 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${active ? "is-active" : ""}`}
                     >
                       {n.label}
                     </Link>
@@ -66,7 +70,7 @@ export default function GlassNav({ nav, current = "" }: { nav: readonly Entry[];
               );
             })}
           </nav>
-          <span aria-hidden="true" className="mx-1 hidden h-6 w-px bg-gold/50 lg:block" />
+          <span aria-hidden="true" className="mx-1 hidden h-6 w-px bg-white/30 lg:block" />
           <MobileNav nav={nav} current={current} always tone="glass" />
         </div>
       </div>

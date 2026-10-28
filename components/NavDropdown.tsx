@@ -71,7 +71,7 @@ export default function NavDropdown({
       }}
     >
       <div className="flex items-center gap-1.5">
-        <Link href={href} className={`whitespace-nowrap transition-colors ${tone} ${glass ? "glass-link relative py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" + (active ? " is-active" : "") : ""}`}>
+        <Link href={href} className={`whitespace-nowrap transition-colors ${tone} ${glass ? "glass-link rounded-lg px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold" + (active ? " is-active" : "") : ""}`}>
           {label}
         </Link>
         <button
