@@ -41,11 +41,11 @@ Nothing on this site stops working if you do.`,
   },
   {
     h: "What we do with it",
-    p: `We use what you send us to reply to you and to organise the summit. If you register for a ticket, that transaction happens on TikoHub under its own terms and we receive your name and contact details for the delegate list. Payment details never reach this website.`,
+    p: `We use what you send us to reply to you and to organise the summit. If you register for a ticket, that transaction happens with our ticketing provider under its own terms and we receive your name and contact details for the delegate list. Payment details never reach this website.`,
   },
   {
     h: "Who else sees it",
-    p: `Four companies process information on our behalf, all of them outside Kenya: Formspree receives form submissions, Vercel hosts the site and keeps standard server logs including IP addresses, and Meta and LinkedIn each receive the page-view information described above. Ticketing is handled by TikoHub.`,
+    p: `Four companies process information on our behalf, all of them outside Kenya: Formspree receives form submissions, Vercel hosts the site and keeps standard server logs including IP addresses, and Meta and LinkedIn each receive the page-view information described above. Ticketing is handled by a separate ticketing provider, which we will name here when tickets open.`,
   },
   {
     h: "What we do not do",

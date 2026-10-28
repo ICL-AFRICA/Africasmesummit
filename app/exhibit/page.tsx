@@ -4,12 +4,12 @@ import Reveal from "@/components/Reveal";
 import StandBooking from "@/components/StandBooking";
 import Btn from "@/components/Btn";
 import TicketBtn from "@/components/TicketBtn";
-import { EVENT, STAND_OPTIONS, FLOOR_PLAN, DATE_LONG, BOOKING_ACTION, TICKETING_OPEN, RATES_NOTE_2026 } from "@/lib/event";
+import { EVENT, STAND_OPTIONS, FLOOR_PLAN, DATE_LONG, BOOKING_ACTION, TICKETING_OPEN, RATES_NOTE_2026, USD_NOTE, usdFromKes } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Book a stand — ${EVENT.name} ${EVENT.year}`,
   description:
-    `Exhibition stands at the Africa SME Summit, ${DATE_LONG}, ${EVENT.venue}. Show your product to buyers, banks, universities and county government.`,
+    `Exhibition stands at the Africa SME Summit, ${DATE_LONG}, ${EVENT.venue}. Show your product to buyers, banks, universities and government.`,
   alternates: { canonical: "https://africasmesummit.com/exhibit" },
 };
 
@@ -44,6 +44,7 @@ export default function Exhibit() {
                   <span className="text-lg align-top mr-2 font-normal">{s.currency}</span>
                   {s.price}
                 </p>
+                <p className="mt-1 text-[16px] text-white">≈ {usdFromKes(s.price)}</p>
                 <ul className="mt-7 pt-6 space-y-3 border-t border-line flex-1">
                   {s.includes.map((x) => (
                     <li key={x} className="flex gap-3 text-[16px] text-white">
@@ -64,7 +65,7 @@ export default function Exhibit() {
           </div>
           <p className="mt-6 text-[16px] text-white">
             {TICKETING_OPEN
-              ? "Booths are bookable directly and allocated in the order they are paid for. Questions about position or what fits? Ask below."
+              ? "Booths are bookable directly and allocated in the order they are paid for. Questions about position or what fits? Ask below. " + USD_NOTE
               : RATES_NOTE_2026}
           </p>
         </div>

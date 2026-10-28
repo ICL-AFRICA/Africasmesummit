@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FORM_ENDPOINT, EVENT } from "@/lib/event";
+import { FORM_ENDPOINT, EVENT, COUNTRIES } from "@/lib/event";
 
 /**
  * Shared enquiry form.
@@ -17,13 +17,28 @@ import { FORM_ENDPOINT, EVENT } from "@/lib/event";
 type Field = { name: string; label: string; type?: string; required?: boolean; options?: string[]; value?: string };
 
 export default function EnquiryForm({
-  subject, fields, cta = "Send enquiry", successTitle, successBody,
+  subject, fields: given, cta = "Send enquiry", successTitle, successBody, countryRequired = true,
 }: {
   subject: string; fields: Field[]; cta?: string;
+  /** Every form asks which country the sender is in (a pan-African summit has
+   *  to know where its enquiries come from). It is required unless the form
+   *  is a light sign-up that passes false. */
+  countryRequired?: boolean;
   /** Override the confirmation (the updates sign-up is not an enquiry that gets a two-day reply). */
   successTitle?: string; successBody?: string;
 }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  /* The country field is added here, once, so no page has to remember it: it
+     goes just before the free-text message, or at the end if there is none.
+     A form that already defines its own `country` keeps that one. */
+  const fields: Field[] = given.some((f) => f.name === "country")
+    ? given
+    : (() => {
+        const country: Field = { name: "country", label: "Country", required: countryRequired, options: [...COUNTRIES] };
+        const at = given.findIndex((f) => f.type === "textarea");
+        return at === -1 ? [...given, country] : [...given.slice(0, at), country, ...given.slice(at)];
+      })();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -79,7 +94,7 @@ export default function EnquiryForm({
         ) : (
         <div key={f.name}>
           <label htmlFor={f.name} className="eyebrow text-white block mb-2">
-            {f.label}{f.required && <span className="text-marigold-t"> *</span>}
+            {f.label}{f.name === "phone" && " (with country code)"}{f.required && <span className="text-marigold-t"> *</span>}
           </label>
           {f.type === "textarea" ? (
             <textarea id={f.name} name={f.name} required={f.required} rows={5} className={input} />
@@ -91,7 +106,14 @@ export default function EnquiryForm({
               ))}
             </select>
           ) : (
-            <input id={f.name} name={f.name} type={f.type || "text"} required={f.required} className={input} />
+            <input
+              id={f.name}
+              name={f.name}
+              type={f.name === "phone" ? "tel" : f.type || "text"}
+              required={f.required}
+              autoComplete={f.name === "phone" ? "tel" : undefined}
+              className={input}
+            />
           )}
         </div>
         )

@@ -31,18 +31,20 @@ export const metadata: Metadata = {
     `${NEXT_SUMMIT.tagline} Africa SME Summit returns to ${NEXT_SUMMIT.venue}, Nairobi in ${NEXT_SUMMIT.label}. See the 2026 recap and get the 2027 date first.`,
   keywords: [
     "Africa SME Summit 2027",
-    "SME conference Kenya",
+    "African SME summit",
+    "SME conference Africa",
+    "MSME Africa 2027",
+    "small business conference Africa",
+    "African entrepreneurship",
+    "AfCFTA small business",
     "SME summit Nairobi",
-    "MSME Kenya 2027",
-    "small business conference Kenya",
-    "Nairobi entrepreneurship ecosystem",
   ],
   openGraph: {
     title: NAME_YEAR,
     description: SHARE_DESCRIPTION,
     url: "https://africasmesummit.com",
     siteName: EVENT.name,
-    locale: "en_KE",
+    locale: "en",
     type: "website",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: NAME_YEAR }],
   },
@@ -109,7 +111,7 @@ const faqJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-KE" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#171442" />
         {/* Loading screen switch (components/Splash.tsx). Runs before the

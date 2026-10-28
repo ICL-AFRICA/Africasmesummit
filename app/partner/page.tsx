@@ -8,12 +8,13 @@ import TicketBtn from "@/components/TicketBtn";
 import {
   EVENT, SPONSOR_TIERS, SIGNATURE_OPPORTUNITIES, PARTNER_PRINT_LABEL,
   DATE_LONG, BOOKING_ACTION, TICKETING_OPEN, BROCHURE_URL, PARTNERSHIP_PROPOSAL_URL,
+  usdFromKes, USD_NOTE,
 } from "@/lib/event";
 
 export const metadata: Metadata = {
   title: `Become a partner — ${EVENT.name} ${EVENT.year}`,
   description:
-    `Partnership and sponsorship for the Africa SME Summit, ${DATE_LONG}. Reach Kenyan SME owners, 13 universities and four county governments in one day.`,
+    `Partnership and sponsorship for the Africa SME Summit, ${DATE_LONG}. Reach African SME owners, universities, investors and governments in one day.`,
   alternates: { canonical: "https://africasmesummit.com/partner" },
 };
 
@@ -43,7 +44,7 @@ export default function Partner() {
       current="/partner"
       eyebrow="Partnership"
       title="Reach the businesses you are trying to serve"
-      lede="Everyone in this room runs or supports a small business in Kenya. If that is who you sell to, fund, regulate or research, this is a day of direct access rather than a logo on a banner."
+      lede="Everyone in this room runs or supports a small business in Africa. If that is who you sell to, fund, regulate or research, this is a day of direct access rather than a logo on a banner."
     >
       <section className="border-b border-line tint-marigold">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 py-16 sm:py-20">
@@ -81,6 +82,7 @@ export default function Partner() {
           {/* .panel-card (globals.css) — real gap + floating shadow,
               replacing the shared-hairline seam, same as every other card
               grid on the site now. */}
+          <p className="mb-6 text-[16px] text-white">{USD_NOTE}</p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 items-start">
             {SPONSOR_TIERS.map((t, i) => {
               const included = t.includes;
@@ -100,6 +102,7 @@ export default function Partner() {
                     <span className="text-base align-top mr-1.5 font-normal">{t.currency}</span>
                     {t.price}
                   </p>
+                  <p className="mt-1 text-[16px] text-ink">≈ {usdFromKes(t.price)}</p>
                   <ul className="mt-6 pt-5 space-y-2.5 border-t border-ink/60">
                     {included.map((x) => (
                       <li key={x} className="flex gap-2.5 text-[16px] text-ink">

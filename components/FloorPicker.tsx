@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FLOOR_PLAN, STAND_OPTIONS } from "@/lib/event";
+import { FLOOR_PLAN, STAND_OPTIONS, usdFromKes } from "@/lib/event";
 
 /* FLOOR_PLAN is `as const`, so each floor's `spots` is its own tuple type and
    the two will not unify across a flatMap. One shared shape to read them by. */
@@ -57,7 +57,7 @@ export default function FloorPicker({
             <p key={k} className="flex items-center gap-2.5">
               <span className={`inline-block w-4 h-4 border ${
                 k === "corporate" ? "bg-ink/85 border-line" : "bg-white/90 border-rule"}`} />
-              {s.name} · {s.currency} {s.price} · {n} available
+              {s.name} · {s.currency} {s.price} (≈ {usdFromKes(s.price)}) · {n} available
             </p>
           );
         })}
@@ -99,7 +99,7 @@ export default function FloorPicker({
                   >
                     {s.id}
                     <span className="sr-only">
-                      {" — "}{priceOf(s.kind).name}, {priceOf(s.kind).currency} {priceOf(s.kind).price}
+                      {" — "}{priceOf(s.kind).name}, {priceOf(s.kind).currency} {priceOf(s.kind).price} (about {usdFromKes(priceOf(s.kind).price)})
                     </span>
                   </button>
                 );

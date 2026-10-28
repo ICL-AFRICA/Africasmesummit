@@ -9,6 +9,7 @@ import {
   EVENT, TICKETING_OPEN, TRACKS, PAPERS_TICKET, DATE_DAY_MONTH,
   PAPERS_SUBMISSION_DEADLINE, PAPERS_SUBMISSION_LABEL, PAPERS_SUBMISSIONS_OPEN,
   PAPERS_NOTIFY_DATE, PAPERS_NOTIFY_LABEL, PAPERS_NOTIFY_PENDING,
+  usdFromKes, USD_NOTE,
 } from "@/lib/event";
 
 export const metadata: Metadata = {
@@ -122,6 +123,7 @@ export default function Papers() {
               <span className="text-base align-top mr-2 font-normal">{PAPERS_TICKET.currency}</span>
               {PAPERS_TICKET.price}
             </p>
+            <p className="mt-1 text-[16px] text-white">≈ {usdFromKes(PAPERS_TICKET.price)}. {USD_NOTE}</p>
             <p className="lede mt-2 text-[16px] text-white">
               Includes full delegate access on the day.
             </p>

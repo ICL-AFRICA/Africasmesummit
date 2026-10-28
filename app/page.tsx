@@ -12,6 +12,7 @@ import Reveal from "@/components/Reveal";
 import HeroVideo from "@/components/HeroVideo";
 import EdgeMosaic from "@/components/EdgeMosaic";
 import AfricaCutout from "@/components/AfricaCutout";
+import { HEADLINE, HOME_FIGURES, HOST_FIGURE, figure, figureCredit } from "@/lib/africa-data";
 import RoadToTimeline from "@/components/RoadToTimeline";
 import EnquiryForm from "@/components/EnquiryForm";
 import {
@@ -81,9 +82,9 @@ const MAP_SLIDES = [
 ] as const;
 
 const TAKE_PART = [
-  { href: "/exhibit", title: "Exhibit", body: "Put your product in front of the buyers, investors and county officials in the room." },
+  { href: "/exhibit", title: "Exhibit", body: "Put your product in front of the buyers, investors and government officials in the room." },
   { href: "/partner", title: "Partner", body: "Back the summit and the plan it launches — with your name where the delegates look." },
-  { href: "/contact", title: "Propose a session", body: "Have a lesson Kenya's small businesses should hear? Tell us what you would bring." },
+  { href: "/contact", title: "Propose a session", body: "Have a lesson Africa's small businesses should hear? Tell us what you would bring." },
 ] as const;
 
 export default function Page() {
@@ -193,13 +194,37 @@ export default function Page() {
             <Reveal>
               <p className="eyebrow mb-6 text-ink/45">Next: {NEXT_SUMMIT.label}</p>
               <h2 className="h-lg mx-auto max-w-4xl text-4xl sm:text-6xl lg:text-[4.2rem]">
-                7.4 million enterprises.<br />One of them is yours.
+                {figure(HEADLINE).value} businesses.<br />One of them is yours.
               </h2>
-              <p className="lede mx-auto mt-8 max-w-2xl text-[18px] text-ink/70">
-                {NEXT_SUMMIT.purpose} Capital, buyers, county government and the universities that
-                can move small businesses forward, in one room — and a plan to measure what changes.
+              <p className="lede mx-auto mt-6 max-w-3xl text-[18px] text-ink/70">
+                {NEXT_SUMMIT.purpose}
               </p>
             </Reveal>
+            {/* Every figure below is read from lib/africa-data.ts, with its
+                source and year printed under it. To update one, edit that file. */}
+            <div className="mx-auto mt-12 grid max-w-6xl gap-x-8 gap-y-9 text-left sm:grid-cols-2 lg:grid-cols-4">
+              {HOME_FIGURES.map((id) => {
+                const f = figure(id);
+                return (
+                  <Reveal key={id} as="div" className="border-t-[3px] border-gold pt-5">
+                    <p className="h-lg text-4xl text-ink sm:text-[2.6rem]">{f.value}</p>
+                    <p className="mt-2 text-[17px] leading-snug text-ink">{f.label}</p>
+                    <p className="mt-3 text-[16px] leading-snug text-ink/70">
+                      {f.scope}.{" "}
+                      <a href={f.url} target="_blank" rel="noopener noreferrer" className="underline decoration-gold decoration-2 underline-offset-4 hover:text-ink">
+                        {figureCredit(f)}
+                      </a>
+                    </p>
+                  </Reveal>
+                );
+              })}
+            </div>
+            <p className="mx-auto mt-9 max-w-3xl text-[16px] leading-snug text-ink/70">
+              Host country, for scale: {figure(HOST_FIGURE).value} {figure(HOST_FIGURE).label} in Kenya.{" "}
+              <a href={figure(HOST_FIGURE).url} target="_blank" rel="noopener noreferrer" className="underline decoration-gold decoration-2 underline-offset-4 hover:text-ink">
+                {figureCredit(figure(HOST_FIGURE))}
+              </a>
+            </p>
             <div className="mt-11 flex flex-wrap justify-center gap-3">
               <TicketBtn />
               <Btn href="/exhibit" tone="outline" internal>Exhibit</Btn>
@@ -357,6 +382,7 @@ export default function Page() {
               <EnquiryForm
                 subject={`${EVENT.name} ${NEXT_SUMMIT.year} — updates sign-up`}
                 cta="Send me the updates"
+                countryRequired={false}
                 successTitle="You are on the list."
                 successBody={`We will email you the ${NEXT_SUMMIT.year} date and when tickets open.`}
                 fields={[

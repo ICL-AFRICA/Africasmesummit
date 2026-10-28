@@ -3,7 +3,7 @@
 import { useState } from "react";
 import EnquiryForm from "@/components/EnquiryForm";
 import FloorPicker from "@/components/FloorPicker";
-import { FLOOR_PLAN, STAND_OPTIONS, BOOKING_ACTION } from "@/lib/event";
+import { FLOOR_PLAN, STAND_OPTIONS, BOOKING_ACTION, usdFromKes } from "@/lib/event";
 
 type Spot = { readonly id: string; readonly kind: string };
 
@@ -44,7 +44,7 @@ export default function StandBooking() {
               {spot.id} — {stand.name}
             </p>
             <p className="lede mt-2 text-[16px] text-white">
-              {stand.currency} {stand.price}. Send the enquiry below and we will
+              {stand.currency} {stand.price} (about {usdFromKes(stand.price)}). Send the enquiry below and we will
               confirm {spot.id} is free and take you through payment. Choosing a
               stand here does not hold it.
             </p>

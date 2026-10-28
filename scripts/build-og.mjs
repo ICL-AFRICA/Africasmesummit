@@ -68,7 +68,7 @@ writeFileSync(path.join(dir, "card.html"), `<!doctype html><meta charset="utf-8"
   svg{position:absolute;right:56px;top:55px}
 </style>
 <div class="card">
-  <div class="eyebrow">Nairobi · Kenya</div>
+  <div class="eyebrow">Connect · Invest · Grow</div>
   <h1>Africa SME<br>Summit <span>${year}</span></h1>
   <div class="tag">${tagline}</div>
   <div class="when"><span class="pill">${label}</span><span>${venue}, Nairobi</span></div>

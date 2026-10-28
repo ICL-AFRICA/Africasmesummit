@@ -36,7 +36,12 @@ export const EVENT = {
   venue: "Ole Sereni",
   venueDetail: "Mombasa Road, Nairobi",
   city: "Nairobi, Kenya",
-  ticketUrl: "https://tikohub.com/events/562",
+  /* NO TICKETING PROVIDER YET (28 October 2026): the organisation is
+     reconsidering who sells its tickets, so no provider link may appear on the
+     site. This points at the homepage sign-up. When a provider is chosen, put
+     its event URL here and in BOOKING_URL, then see the checklist on
+     TICKETING_OPEN. */
+  ticketUrl: "/#updates",
   /* ONE email address for the whole site. Everything that invites a reply
      uses it: the footer, the contact page, the exhibit and partner pages,
      the privacy page's contact for exercising data rights, and the enquiry
@@ -57,10 +62,50 @@ export const EVENT = {
      the form quotes `phone[0]`. Collapse them if one number everywhere is
      wanted — nothing depends on there being two. */
   email: "sharon@africasmesummit.com",
-  conferencePhone: "0724 255822",
-  phone: ["0717 605151", "0724 255822"],
+  conferencePhone: "+254 724 255822",
+  phone: ["+254 717 605151", "+254 724 255822"],
   host: "I Choose Life – Africa",
 } as const;
+
+/**
+ * Prices are set in Kenya shillings. For visitors elsewhere in Africa and
+ * beyond, every price on the site also shows an approximate US-dollar figure
+ * worked out HERE, from one rate, so changing the rate changes them all.
+ *
+ *   KES_PER_USD       the rate used. 129.93 on 26 October 2026 (valutafx.com),
+ *                     rounded to 130 so the dollar figures are not falsely precise.
+ *   KES_PER_USD_DATE  the day that rate was checked. Update both together.
+ *
+ * `usdFromKes("125,000")` -> "USD 960". Rounded to the nearest 5 under USD 1,000
+ * and the nearest 10 above, because "USD 961" would claim a precision a moving
+ * exchange rate does not have. USD_NOTE is the sentence to print beside prices.
+ */
+export const KES_PER_USD = 130;
+export const KES_PER_USD_DATE = "26 October 2026";
+export function usdFromKes(price: string): string {
+  const kes = Number(price.replace(/[^\d.]/g, ""));
+  const usd = kes / KES_PER_USD;
+  const step = usd < 1000 ? 5 : 10;
+  const n = Math.max(step, Math.round(usd / step) * step);
+  return `USD ${n.toLocaleString("en-US")}`;
+}
+export const USD_NOTE = `US-dollar amounts are approximate, at KES ${KES_PER_USD} to the dollar (checked ${KES_PER_USD_DATE}). Prices are set in Kenya shillings.`;
+
+/**
+ * The country field on every form: the 54 African Union member states that
+ * the UN recognises, alphabetical, then "Outside Africa". Kept here so every
+ * form shows the same list.
+ */
+export const COUNTRIES = [
+  "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon",
+  "Central African Republic", "Chad", "Comoros", "Congo (Republic)", "Côte d'Ivoire",
+  "DR Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia",
+  "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya",
+  "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia",
+  "Niger", "Nigeria", "Rwanda", "São Tomé and Príncipe", "Senegal", "Seychelles", "Sierra Leone",
+  "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda",
+  "Zambia", "Zimbabwe", "Outside Africa",
+] as const;
 
 /**
  * The NEXT summit — Africa SME Summit 2027 (19 October 2026, at ICL's
@@ -99,8 +144,12 @@ export const NEXT_SUMMIT = {
   venue: "Ole Sereni",
   place: "Nairobi, Kenya",
   tagline: "Connecting African businesses, capital, markets and ideas.",
+  /* Rewritten 28 October 2026: the 2027 theme is Africa. The summit is hosted
+     in Nairobi; its agenda is African business. The Nairobi County plan launch
+     (from the Summit Dispatch Issue 01) stays, as one item in the programme,
+     in the last sentence — it is no longer the purpose. */
   purpose:
-    "Launch of the Nairobi County Entrepreneurship Ecosystem Strengthening Strategic Plan 2026–2030, and a first look at progress since 2026.",
+    "Africa SME Summit 2027 brings together the people who build, finance and serve Africa's small and medium businesses — founders, investors, banks, universities and governments — to open markets across borders and close the gap between African SMEs and the capital they need. Nairobi hosts; the agenda is Africa's. The programme also carries the launch of the Nairobi County Entrepreneurship Ecosystem Strengthening Strategic Plan 2026–2030.",
 } as const;
 
 /**
@@ -115,8 +164,9 @@ export const NEXT_SUMMIT = {
  * become enquiries; and the schema.org event carries no price.
  *
  * WHEN 2027 TICKETING OPENS — the whole checklist:
- *   1. Create the 2027 event on TikoHub and put its URL in EVENT.ticketUrl
- *      (and BOOKING_URL below) — they still point at the 2026 listing.
+ *   1. Choose the ticketing provider, create the 2027 event there and put its
+ *      URL in EVENT.ticketUrl and BOOKING_URL — both point at the sign-up
+ *      form for now, deliberately: no provider link may appear until then.
  *   2. Set the 2027 prices in TICKETS and the early-bird deadline in
  *      EARLY_BIRD_ENDS (still 15 September 2026).
  *   3. Set NEXT_SUMMIT.starts, .label and .dateConfirmed, above.
@@ -147,7 +197,7 @@ export const TICKETING_OPEN = false;
  * The odd-looking "sme-s" is correct: the listing is titled "Africa SME's
  * Summit". Verified — the tidier africa-sme-summit returns 404.
  */
-export const BOOKING_URL = "https://tikohub.com/events/africa-sme-s-summit";
+export const BOOKING_URL = "/#updates";
 
 /**
  * The sponsorship/partnership brochure, downloadable from /partner.
@@ -352,12 +402,12 @@ export const TICKET_ACTION = TICKETING_OPEN
  * must not take 2027 bookings), and the button says so.
  */
 export const BOOKING_ACTION = TICKETING_OPEN
-  ? ({ href: BOOKING_URL, book: "Book this booth", pay: "Book and pay on TikoHub →" } as const)
+  ? ({ href: BOOKING_URL, book: "Book this booth", pay: "Book and pay online →" } as const)
   : ({ href: "#enquire", book: "Enquire about this booth", pay: "Ask about a 2027 stand →" } as const);
 
 /** Shown above 2026 price lists while TICKETING_OPEN is false. */
 export const RATES_NOTE_2026 =
-  "These are the 2026 rates, shown for reference. 2027 terms will be confirmed once the date is fixed — send an enquiry and you will hear first.";
+  `These are the 2026 rates, shown for reference. 2027 terms will be confirmed once the date is fixed — send an enquiry and you will hear first. ${USD_NOTE}`;
 
 /** The nav bar's short form (the nav is the one place the full label does not fit). */
 export const NAV_CTA = TICKETING_OPEN ? "Get ticket" : "Get updates";
@@ -686,7 +736,7 @@ export const TRACKS = [
     who: "Business owners ready to raise capital, or fix the finances they already have.",
     format: "Panel discussion + Q&A",
     outcomes: [
-      "A clear map of Kenya's financing options today — grants, debt, equity, and digital lending — and which one actually fits your stage",
+      "A clear map of Africa's financing options today — grants, debt, equity, and digital lending — and which one actually fits your stage",
       "What investors and lenders are really evaluating before they say yes",
       "The financing mistakes that quietly stall growth-stage businesses, and how to avoid them",
     ],
@@ -708,13 +758,13 @@ export const TRACKS = [
        press release paragraph names it too. */
     n: "02", slug: "market-access-cross-border-trade",
     name: "Market access & Cross-border trade",
-    line: "Getting your product past the county line and across the border, and building the partners to keep it there.",
-    who: "Businesses ready to expand beyond their local market, especially within the East African region.",
+    line: "Getting your product across a border and into a new market, and building the partners to keep it there.",
+    who: "Businesses ready to expand beyond their local market, within Africa and under the African Continental Free Trade Area.",
     format: "Panel discussion + Q&A",
     outcomes: [
       "Opportunities and requirements under AfCFTA and EAC trade frameworks",
       "Export documentation, compliance, and logistics essentials",
-      "Case studies of Kenyan SMEs that successfully scaled cross-border",
+      "Case studies of African SMEs that successfully scaled cross-border",
       "Building distributor and partner networks abroad",
     ],
   },
@@ -743,7 +793,7 @@ export const TRACKS = [
     outcomes: [
       "Practical, low-cost ways to cut energy, water and waste costs that pay for themselves within a year",
       "What buyers, lenders and export markets are starting to require on sustainability — and how to get ahead of it",
-      "Real examples of Kenyan SMEs that turned environmental practice into a market advantage, not just a compliance cost",
+      "Real examples of African SMEs that turned environmental practice into a market advantage, not just a compliance cost",
       "Where to find climate financing and green business support already available to MSMEs",
     ],
   },
@@ -755,7 +805,7 @@ export const TRACKS = [
     format: "Demo + panel",
     outcomes: [
       "Four specific AI use cases you can try before you leave the room — not theory",
-      "A live demo of at least one tool built for the Kenyan MSME context",
+      "A live demo of at least one tool built for the African MSME context",
       "Three questions to run any new tool through, so you stop chasing hype and only adopt tools that pay for themselves",
       "The data protection basics you need before adopting any new tech",
     ],
@@ -768,7 +818,7 @@ export const TRACKS = [
     format: "Panel discussion",
     outcomes: [
       "How MSMEs can tap into university research, talent pipelines, and innovation hubs",
-      "Concrete examples of industry-academia partnerships that have worked in Kenya",
+      "Concrete examples of industry-academia partnerships that have worked in Africa",
       "Where the real doors are — internships, incubation, applied-research partnerships",
       "Confirmed academic partners: Mount Kenya University",
     ],
@@ -807,20 +857,20 @@ export const PATHS = [
   {
     who: "SMEs & corporates",
     lead: "You run an SME, or you serve one",
-    body: "Meet the person who runs SME banking at NCBA. Put a university research team on a problem in your business, exhibit, speak, or sponsor a track — and meet enterprises already screened through the ICL programme, whichever side of that table you're on.",
+    body: "Meet lenders and investors who back African SMEs. Put a university research team on a problem in your business, exhibit, speak, or sponsor a track — and meet enterprises already screened through the ICL programme, whichever side of that table you're on.",
     points: ["Capital and market access", "Research support at no cost to you", "Exhibition and speaking slots", "Profile to 10,000+ across ICL platforms"],
   },
   {
     who: "Universities",
     lead: "You teach or research",
-    body: "Submit a paper through the call. Place your students on live enterprise problems that count towards their qualification. Join 13 universities already in the programme.",
+    body: "Submit a paper through the call. Place your students on live enterprise problems that count towards their qualification. Join the universities already in the programme.",
     points: ["Papers call and publishing", "Student placement into real businesses", "Industry partners for ongoing research"],
   },
   {
-    who: "County government",
+    who: "Governments & agencies",
     lead: "You govern where they operate",
-    body: "Nairobi, Machakos, Laikipia and Uasin Gishu county governments are all in the room — a direct line to the MSMEs registered in your jurisdiction, and to the corporates who procure from them.",
-    points: ["Direct access to registered MSMEs", "Buyers, banks and business owners in one room", "Policy conversations grounded in real businesses"],
+    body: "National and local governments and trade bodies meet the people building enterprises in their jurisdiction — and the corporates who procure from them.",
+    points: ["Direct access to the MSMEs in your jurisdiction", "Buyers, banks and business owners in one room", "Policy conversations grounded in real businesses"],
   },
 ] as const;
 
@@ -829,8 +879,8 @@ export const BENEFITS = [
   { t: "Show what you have built", d: "Innovation Expo and gallery walk for products and services." },
   { t: "Take the stage", d: "Speaking and panel opportunities across six tracks." },
   { t: "Get seen after the day", d: "Profile across ICL platforms and newsletters reaching over 10,000." },
-  { t: "Meet the universities", d: "13 institutions with a combined 250,000 students." },
-  { t: "Meet government", d: "Nairobi, Machakos, Laikipia and Uasin Gishu county participation." },
+  { t: "Meet the universities", d: "Research teams and student groups looking for live business problems." },
+  { t: "Meet government", d: "Governments and public agencies in the room." },
 ] as const;
 
 /**
@@ -1663,7 +1713,7 @@ export const SERVICE_PROVIDER_CATEGORIES = [
   },
   {
     key: "market-access", label: "Market Access & Cross-Border Trade",
-    blurb: "Partners who help a business sell beyond its own county, and beyond Kenya.",
+    blurb: "Partners who help a business sell beyond its own market, and across Africa.",
   },
   {
     key: "talent", label: "Talent Management",
@@ -1671,7 +1721,7 @@ export const SERVICE_PROVIDER_CATEGORIES = [
   },
   {
     key: "ai-technology", label: "AI, Technology & Innovations",
-    blurb: "Tech vendors and AI tools built for the Kenyan MSME context, not enterprise budgets.",
+    blurb: "Tech vendors and AI tools built for the African MSME context, not enterprise budgets.",
   },
   {
     key: "legal", label: "Legal Services",
@@ -1935,11 +1985,11 @@ export const SUMMIT_PHOTOS: readonly {
 
 /** Why people actually give up a working day. Not features — reasons. */
 export const REASONS = [
-  { n: "01", t: "Capital", d: "The head of SME banking at NCBA is in the room, and so are the funds and guarantee schemes most owners have never been walked through." },
-  { n: "02", t: "Research", d: "Thirteen universities looking for live enterprise problems. Bring yours and leave with a team on it." },
-  { n: "03", t: "Buyers", d: "Four county governments participating, plus the corporates who procure from businesses this size." },
+  { n: "01", t: "Capital", d: "Banks, funds and guarantee schemes that finance African SMEs, and people who will walk you through what they look for." },
+  { n: "02", t: "Research", d: "Universities looking for live enterprise problems. Bring yours and leave with a team on it." },
+  { n: "03", t: "Buyers", d: "Corporates and public buyers who procure from businesses this size, in more than one market." },
   { n: "04", t: "Proof", d: "The gallery walk puts your product in front of people who can place an order, not just admire it." },
-  { n: "05", t: "The room", d: "Everyone here runs or serves a small business in Kenya. No tourists." },
+  { n: "05", t: "The room", d: "Everyone here runs or serves a small business in Africa. No tourists." },
 ] as const;
 
 /**
@@ -2459,7 +2509,7 @@ export const PRESS_CONTACT = {
   name: "Ian Muiga Wangari",
   org: "I Choose Life – Africa",
   email: "ian.wangari@ichooselife.or.ke",
-  phone: "(+254) 717 605 151",
+  phone: "+254 717 605151",
   address: "Nine Planets Apartments HSE No. S3, Nairobi",
 } as const;
 

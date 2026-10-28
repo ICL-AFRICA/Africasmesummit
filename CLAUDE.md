@@ -144,3 +144,10 @@ it — do not fix it in passing.
   `SPONSOR_INCLUDES_NOTE` until the real sponsorship document arrives —
   delete that note when it does.
 - **No Standard Delegate Pass exists on TikoHub yet** — see `SETUP.md`.
+
+## Africa theme (28 October 2026)
+
+- **Figures about African business live in `lib/africa-data.ts`**, each with its source, link, publication date and last-checked date. Never type a statistic into a page. To update one, edit that file, then run `node scripts/check-figures.mjs` (flags anything published over 2 years ago or unchecked for 12 months) before each release.
+- **Prices are set in KES; US-dollar amounts come from `usdFromKes()` and one rate (`KES_PER_USD`) in `lib/event.ts`.** Change the rate and its date together.
+- **No ticketing-provider link may appear on the site** until the organisation chooses a new provider: `EVENT.ticketUrl` and `BOOKING_URL` point at the homepage sign-up (`/#updates`). Put the provider's URL in both, then follow the checklist on `TICKETING_OPEN`.
+- **Every form has a Country field** (added centrally in `components/EnquiryForm.tsx`, list in `COUNTRIES`) and phone numbers are written with +254.
