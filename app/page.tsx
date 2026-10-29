@@ -14,7 +14,7 @@ import EdgeMosaic from "@/components/EdgeMosaic";
 import AfricaCutout from "@/components/AfricaCutout";
 import { HEADLINE, HOME_FIGURES, HOST_FIGURE, figure, figureCredit } from "@/lib/africa-data";
 import RoadToTimeline from "@/components/RoadToTimeline";
-import EnquiryForm from "@/components/EnquiryForm";
+import TicketSignupForm from "@/components/TicketSignupForm";
 import {
   EVENT, FAQ, PARTNERS, PHOTOS, NEXT_SUMMIT, SUMMIT_PHOTOS, VENUE_SHORT,
   AWARDS_2026, VOICES_2026, COMMITMENTS_2026, PLAN_2026_2030, DATE_LONG,
@@ -343,7 +343,7 @@ export default function Page() {
                 Book early and save KES {EARLY_BIRD_SAVING_2027.toLocaleString("en-US")}
               </h2>
               <p className="lede mx-auto mt-6 max-w-xl text-[18px] text-ink/70">
-                Planned delegate prices for {NEXT_SUMMIT.label}. Booking is not open yet — join the list and you will hear the moment it is.
+                Planned delegate prices for {NEXT_SUMMIT.label}. Choose a ticket below and an Africa SME Summit associate will reach out to complete your booking.
               </p>
             </Reveal>
             <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2 lg:gap-8">
@@ -373,12 +373,12 @@ export default function Page() {
                   </ul>
                   <div className="mt-auto pt-9">
                     <Link
-                      href="/#updates"
+                      href={`/?ticket=${t.slug}#updates`}
                       className={`inline-flex w-full justify-center rounded-lg px-6 py-3.5 text-[16px] font-medium transition-colors ${
                         t.urgent ? "bg-gold text-ink hover:brightness-110" : "bg-ink text-white hover:bg-raise"
                       }`}
                     >
-                      Get 2027 updates
+                      Choose {t.tier.toLowerCase()}
                     </Link>
                   </div>
                 </Reveal>
@@ -437,23 +437,13 @@ export default function Page() {
             <Reveal>
               <Head eyebrow="Be first to know" dark>Get {NEXT_SUMMIT.year} updates.</Head>
               <p className="lede mt-6 max-w-lg text-[18px] text-white">
-                Tell us who you are and where to reach you. We will send you the date as soon as it
-                is fixed, and tell you when tickets open — nothing in between.
+                Tell us who you are, pick the tracks you care about and choose a ticket. You will see
+                your price straight away, and an Africa SME Summit associate will reach out to complete
+                your booking. We will also send you the date and tell you when tickets open.
               </p>
             </Reveal>
             <Reveal delay={100}>
-              <EnquiryForm
-                subject={`${EVENT.name} ${NEXT_SUMMIT.year} — updates sign-up`}
-                cta="Send me the updates"
-                countryRequired={false}
-                successTitle="You are on the list."
-                successBody={`We will email you the ${NEXT_SUMMIT.year} date and when tickets open.`}
-                fields={[
-                  { name: "name", label: "Your name", required: true },
-                  { name: "email", label: "Email", type: "email", required: true },
-                  { name: "interest", label: "I am interested as", options: ["Attendee", "Exhibitor", "Partner or sponsor", "Speaker", "Press"] },
-                ]}
-              />
+              <TicketSignupForm />
             </Reveal>
           </div>
         </section>

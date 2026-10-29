@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FORM_ENDPOINT, EVENT, COUNTRIES } from "@/lib/event";
+import { FORM_ENDPOINT, SIGNUP_ENDPOINT, EVENT, COUNTRIES } from "@/lib/event";
+import { saveToSheet } from "@/lib/submit";
 
 /**
  * Shared enquiry form.
@@ -45,6 +46,23 @@ export default function EnquiryForm({
     const form = e.currentTarget;
     const data = new FormData(form);
     data.append("_subject", subject);
+
+    /* Preferred path (29 October 2026): save to the Google Sheet. Each form
+       is its own tab, named by `subject`; the keys are the field labels. */
+    if (SIGNUP_ENDPOINT) {
+      if (data.get("_gotcha")) { setState("sent"); return; }
+      const values: Record<string, string> = {};
+      for (const f of fields) {
+        const v = String(data.get(f.name) ?? "").trim();
+        if (v) values[f.type === "hidden" ? f.name : f.label] = v;
+      }
+      values["Page"] = window.location.href;
+      setState("sending");
+      const ok = await saveToSheet(subject, values);
+      setState(ok ? "sent" : "error");
+      if (ok) form.reset();
+      return;
+    }
 
     if (!FORM_ENDPOINT) {
       const body = Array.from(data.entries())
@@ -132,7 +150,7 @@ export default function EnquiryForm({
       </button>
 
       {state === "error" && (
-        <p className="text-[16px] text-marigold-t">
+        <p role="alert" className="border border-gold bg-raise px-4 py-3 text-[16px] text-white">
           That did not send. Email {EVENT.email} or call {EVENT.phone[0]} and we will pick it up.
         </p>
       )}

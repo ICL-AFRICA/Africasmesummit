@@ -358,8 +358,8 @@ const INCLUDES_2027 = [
   "Delegate pack and certificate",
 ] as const;
 export const TICKETS_2027 = [
-  { tier: "Early bird", price: "9,000", currency: "KES", note: "Limited release", urgent: true, includes: INCLUDES_2027 },
-  { tier: "Standard", price: "10,000", currency: "KES", note: "Full rate", urgent: false, includes: INCLUDES_2027 },
+  { slug: "early-bird", tier: "Early bird", price: "9,000", currency: "KES", note: "Limited release", urgent: true, includes: INCLUDES_2027 },
+  { slug: "standard", tier: "Standard", price: "10,000", currency: "KES", note: "Full rate", urgent: false, includes: INCLUDES_2027 },
 ] as const;
 /** What the early bird saves, derived from the two prices above. */
 export const EARLY_BIRD_SAVING_2027 = Number(TICKETS_2027[1].price.replace(/,/g, "")) - Number(TICKETS_2027[0].price.replace(/,/g, ""));
@@ -2060,6 +2060,20 @@ export const LINKEDIN_PARTNER_ID = "9923012";
  * people who would otherwise have filled the form in.
  */
 export const FORM_ENDPOINT = "https://formspree.io/f/xeajeyqa";
+
+/**
+ * Where every website form is saved: a Google Sheet, through a small Google
+ * Apps Script web app (scripts/google-sheet-signups.gs has the script and the
+ * 5-minute setup). Added 29 October 2026 because the Formspree form above
+ * failed for visitors ("That did not send") and gave ICL no place to read the
+ * sign-ups.
+ *
+ * Paste the web app URL (it ends in /exec) between the quotes. While it is
+ * empty: the ticket sign-up opens a pre-filled email instead of saving, and
+ * the other forms keep using FORM_ENDPOINT above. Once it is set, ALL forms
+ * save to the sheet, each form on its own tab, and Formspree is not used.
+ */
+export const SIGNUP_ENDPOINT = "https://script.google.com/macros/s/AKfycbyNMFw8ZTcY709B1OJbHyTxfOcXoA3VvKLClYTRy8xaK7HyyQz_VwlPyhPOxEGR9WSI/exec";
 
 /**
  * The partnership proposal PDF, downloadable from /partner — the actual
