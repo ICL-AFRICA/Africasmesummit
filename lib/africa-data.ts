@@ -30,11 +30,13 @@
  * Africa" must not become "Africa"), do not drop the year. If a source gives
  * no data year, `publishedOn` is the year shown.
  *
- * STATE OF THE FIGURES ON 28 OCTOBER 2026 — read this before relying on them.
- * The three oldest are from 2018 and are the most recent that could be
- * verified to a primary page that day; they are exactly the kind that should be
- * replaced the moment a newer release is found (the IFC publishes MSME finance
- * gap estimates; the ILO publishes a new informality edition). The AfCFTA
+ * STATE OF THE FIGURES ON 29 OCTOBER 2026 — read this before relying on them.
+ * The headline (244 million) and the informality share are from the IFC /
+ * World Bank paper of January 2025, reference year 2020. The USD 331 billion
+ * finance gap is from 2018 and is the one most in need of a newer release (the
+ * IFC publishes MSME finance gap estimates). "Businesses" here includes
+ * one-person enterprises: only about 12.7 million of the 244 million employ
+ * anyone, and the page says so under the number. The AfCFTA
  * numbers are the African Union Secretariat's, as reported in August 2026 —
  * replace with the AfCFTA Secretariat's own page when it can be cited.
  */
@@ -60,14 +62,14 @@ export type Figure = {
 export const AFRICA_FIGURES: readonly Figure[] = [
   {
     id: "msmes",
-    value: "44 million+",
-    label: "formal small and medium businesses",
-    scope: "Sub-Saharan Africa",
-    source: "IFC / SME Finance Forum",
-    url: "https://findevgateway.org/news/ifc-sme-finance-forum-target-solutions-africas-usd-331-billion-sme-finance-gap",
-    publishedOn: "2018-05-16",
-    checkedOn: "2026-10-28",
-    note: "Source says \"at least 44 million formal MSMEs\"; 51% of them need more finance than they can access.",
+    value: "244 million",
+    label: "businesses — about 12.7 million employ other people; the rest are one-person enterprises",
+    scope: "Africa, 2020 estimate",
+    source: "IFC / World Bank, Estimating the Number of Firms in Africa",
+    url: "https://documents1.worldbank.org/curated/en/099303501132511121/pdf/IDU-a8a9daa7-ded8-4485-a4fb-967dc953ac1a.pdf",
+    publishedOn: "2025-01-01",
+    checkedOn: "2026-10-29",
+    note: "Policy Research Working Paper 11032, January 2025 (day of month not stated). Table 2: 244.4 million businesses in total = 12.7 million employers + 231.7 million own-account businesses with no employees. Reference year 2020, from ILO modelled employment data. The authors call it a first attempt. Covers all African countries listed, North Africa included. Supplied to ICL as \"244 million\" and confirmed against this paper on 29 October 2026.",
   },
   {
     id: "finance-gap",
@@ -93,13 +95,14 @@ export const AFRICA_FIGURES: readonly Figure[] = [
   },
   {
     id: "informal",
-    value: "85.8%",
-    label: "of employment is informal — most of Africa's work is done by small, unregistered businesses",
-    scope: "Africa",
-    source: "ILO, Women and men in the informal economy (3rd ed.)",
-    url: "https://www.ilo.org/resource/news/more-60-cent-worlds-employed-population-are-informal-economy",
-    publishedOn: "2018-04-30",
-    checkedOn: "2026-10-28",
+    value: "93%",
+    label: "of those businesses are informal",
+    scope: "Africa, 2020 estimate",
+    source: "IFC / World Bank, Estimating the Number of Firms in Africa",
+    url: "https://documents1.worldbank.org/curated/en/099303501132511121/pdf/IDU-a8a9daa7-ded8-4485-a4fb-967dc953ac1a.pdf",
+    publishedOn: "2025-01-01",
+    checkedOn: "2026-10-29",
+    note: "Same paper as the headline: about 227.7 million of the 244.4 million are informal (73% of employers, 94% of own-account businesses). The previous figure here, the ILO's 85.8% of EMPLOYMENT, was a different measure from 2018 and was replaced so the two numbers describe the same thing.",
   },
   {
     id: "kenya-msmes",
