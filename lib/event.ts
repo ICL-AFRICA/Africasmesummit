@@ -337,6 +337,34 @@ export const TICKETS = [
 ] as const;
 
 /**
+ * 2027 delegate pricing — set 29 October 2026, at ICL's boss's instruction:
+ * Standard KES 10,000, Early bird KES 9,000. These are SEPARATE from TICKETS
+ * above, which stays as the 2026 record (the recap and press pages use it).
+ *
+ * Shown on the homepage as the planned prices while TICKETING_OPEN is false.
+ * Nothing can be bought yet: no ticketing provider is chosen, so the buttons
+ * lead to the updates sign-up, not to a checkout.
+ *
+ * No early-bird closing date has been given, so none is shown or invented —
+ * when one is announced, add `ends: "yyyy-mm-dd"` handling here and say it on
+ * the card. No Student tier was mentioned for 2027, so there is none.
+ * The `includes` lines are carried over from 2026 and must be confirmed
+ * against the 2027 programme before tickets go on sale.
+ */
+const INCLUDES_2027 = [
+  "Full-day access to the summit programme",
+  "Innovation Expo and gallery walk",
+  "Lunch and refreshments",
+  "Delegate pack and certificate",
+] as const;
+export const TICKETS_2027 = [
+  { tier: "Early bird", price: "9,000", currency: "KES", note: "Limited release", urgent: true, includes: INCLUDES_2027 },
+  { tier: "Standard", price: "10,000", currency: "KES", note: "Full rate", urgent: false, includes: INCLUDES_2027 },
+] as const;
+/** What the early bird saves, derived from the two prices above. */
+export const EARLY_BIRD_SAVING_2027 = Number(TICKETS_2027[1].price.replace(/,/g, "")) - Number(TICKETS_2027[0].price.replace(/,/g, ""));
+
+/**
  * The ticket price, derived — never typed anywhere else.
  *
  * These live here rather than beside EARLY_BIRD_LABEL only because they read
@@ -1285,7 +1313,7 @@ export const SUMMIT_STARTS = `${DATE_ISO}T${AGENDA_START}:00+03:00`;
 
 export const FAQ = [
   { q: `When is the Africa SME Summit ${NEXT_SUMMIT.year}?`, a: `${NEXT_SUMMIT.label}, at ${NEXT_SUMMIT.venue}, ${NEXT_SUMMIT.place}.${NEXT_SUMMIT.dateConfirmed ? "" : " The exact date is not set yet — it will be announced on this site and sent to everyone on the updates list."}` },
-  { q: "Are tickets on sale?", a: TICKETING_OPEN ? "Yes — tickets are on sale now. Use the ticket button on any page." : "Not yet. Tickets for 2027 have not been released. Join the updates list and you will be told when they open." },
+  { q: "Are tickets on sale?", a: TICKETING_OPEN ? "Yes — tickets are on sale now. Use the ticket button on any page." : `Not yet. The planned 2027 delegate prices are KES ${TICKETS_2027[0].price} for the early bird and KES ${TICKETS_2027[1].price} for a standard ticket. Join the updates list and you will be told the moment booking opens.` },
   { q: `What is the ${NEXT_SUMMIT.year} summit for?`, a: NEXT_SUMMIT.purpose },
   { q: "What happened in 2026?", a: `The 2026 summit took place on ${DATE_LONG} at ${EVENT.venue}. The recap has the photographs, the award winners, what the speakers said and the six commitments made on the day.` },
   { q: `Can I exhibit, sponsor or speak in ${NEXT_SUMMIT.year}?`, a: "Tell us. Stand, partnership and session enquiries are open now through the exhibit, partner and contact pages, and the team will confirm 2027 terms as the date is fixed." },

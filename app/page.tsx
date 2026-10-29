@@ -18,6 +18,7 @@ import EnquiryForm from "@/components/EnquiryForm";
 import {
   EVENT, FAQ, PARTNERS, PHOTOS, NEXT_SUMMIT, SUMMIT_PHOTOS, VENUE_SHORT,
   AWARDS_2026, VOICES_2026, COMMITMENTS_2026, PLAN_2026_2030, DATE_LONG,
+  TICKETS_2027, EARLY_BIRD_SAVING_2027, usdFromKes, USD_NOTE,
 } from "@/lib/event";
 
 /**
@@ -326,6 +327,68 @@ export default function Page() {
             <div className="mt-8">
               <Btn href="/2026" internal tone="onDark">See all {SUMMIT_PHOTOS.length} photos</Btn>
             </div>
+          </div>
+        </section>
+
+        {/* ── Tickets (2027 prices, restored 29 October 2026) ───────────── */}
+        {/* Planned prices only: nothing is on sale yet (TICKETING_OPEN in
+            lib/event.ts), so both buttons go to the updates sign-up. No
+            closing date is shown for the early bird because none has been
+            announced. Prices live in TICKETS_2027. */}
+        <section id="tickets" className="scroll-mt-24 bg-paper tint-indigo">
+          <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-28">
+            <Reveal className="text-center" as="div">
+              <p className="eyebrow mb-5 text-ink/45">Tickets · {NEXT_SUMMIT.year}</p>
+              <h2 className="h-lg mx-auto max-w-2xl text-4xl sm:text-5xl">
+                Book early and save KES {EARLY_BIRD_SAVING_2027.toLocaleString("en-US")}
+              </h2>
+              <p className="lede mx-auto mt-6 max-w-xl text-[18px] text-ink/70">
+                Planned delegate prices for {NEXT_SUMMIT.label}. Booking is not open yet — join the list and you will hear the moment it is.
+              </p>
+            </Reveal>
+            <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2 lg:gap-8">
+              {TICKETS_2027.map((t, i) => (
+                <Reveal
+                  key={t.tier}
+                  as="div"
+                  delay={i * 90}
+                  className={`panel-card flex flex-col p-8 sm:p-10 ${t.urgent ? "bg-ink text-white" : "bg-card"}`}
+                >
+                  <div className="flex items-baseline justify-between gap-4">
+                    <p className={`eyebrow ${t.urgent ? "text-marigold" : "text-ink/45"}`}>{t.tier}</p>
+                    <p className={`font-mono text-[12px] font-semibold ${t.urgent ? "text-marigold" : "text-ink/45"}`}>{t.note}</p>
+                  </div>
+                  <p className={`h-lg mt-6 text-5xl ${t.urgent ? "text-white" : "text-ink"}`}>
+                    <span className="mr-2 align-top text-lg font-normal">{t.currency}</span>
+                    {t.price}
+                  </p>
+                  <p className={`mt-2 text-[16px] ${t.urgent ? "text-white" : "text-ink/70"}`}>≈ {usdFromKes(t.price)}</p>
+                  <ul className={`mt-8 space-y-3 border-t pt-6 ${t.urgent ? "border-line" : "border-rule"}`}>
+                    {t.includes.map((inc) => (
+                      <li key={inc} className={`flex gap-3 text-[16px] ${t.urgent ? "text-white" : "text-ink/70"}`}>
+                        <span className={t.urgent ? "text-marigold" : "text-ink/35"}>✓</span>
+                        {inc}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto pt-9">
+                    <Link
+                      href="/#updates"
+                      className={`inline-flex w-full justify-center rounded-lg px-6 py-3.5 text-[16px] font-medium transition-colors ${
+                        t.urgent ? "bg-gold text-ink hover:brightness-110" : "bg-ink text-white hover:bg-raise"
+                      }`}
+                    >
+                      Get 2027 updates
+                    </Link>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <p className="mt-8 text-center text-[16px] text-ink/60">
+              {USD_NOTE} Exhibiting or sponsoring?{" "}
+              <Link href="/exhibit" className="underline underline-offset-4 hover:text-ink">Exhibit</Link> ·{" "}
+              <Link href="/partner" className="underline underline-offset-4 hover:text-ink">Partner</Link>.
+            </p>
           </div>
         </section>
 
