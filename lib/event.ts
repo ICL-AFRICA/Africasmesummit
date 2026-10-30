@@ -158,7 +158,7 @@ export const NEXT_SUMMIT = {
  * Added 19 October 2026, when the 2026 summit was over and the 2027 one had a
  * month but no date and no ticket listing. Until 2027 tickets exist, every
  * "Get a ticket" button on the site (hero, nav, mobile menu, every page
- * footer, the sticky bar and the ticker) becomes "Get 2027 updates" and goes
+ * footer, the sticky bar and the ticker) becomes "Register" and goes
  * to the sign-up form on the homepage (#updates); the early-bird bars and
  * the ticket prices stop showing; the exhibit and partner booking buttons
  * become enquiries; and the schema.org event carries no price.
@@ -418,11 +418,11 @@ export const TICKET_CTA = `Grab a ticket — ${TICKET_PRICE}`;
  * What every ticket button actually does RIGHT NOW. Components never choose
  * between "ticket" and "updates" themselves — they render <TicketBtn /> (or
  * read this) and the switch above decides. Selling: the price label and the
- * TikoHub listing. Not selling: "Get 2027 updates" and the sign-up form.
+ * TikoHub listing. Not selling: "Register" and the sign-up form.
  */
 export const TICKET_ACTION = TICKETING_OPEN
   ? ({ label: TICKET_CTA, href: EVENT.ticketUrl, internal: false } as const)
-  : ({ label: "Get 2027 updates", href: "/#updates", internal: true } as const);
+  : ({ label: "Register", href: "/#updates", internal: true } as const);
 
 /**
  * Where a stand or sponsorship "Book" button goes. Selling: the TikoHub
@@ -438,7 +438,7 @@ export const RATES_NOTE_2026 =
   `These are the 2026 rates, shown for reference. 2027 terms will be confirmed once the date is fixed — send an enquiry and you will hear first. ${USD_NOTE}`;
 
 /** The nav bar's short form (the nav is the one place the full label does not fit). */
-export const NAV_CTA = TICKETING_OPEN ? "Get ticket" : "Get updates";
+export const NAV_CTA = TICKETING_OPEN ? "Get ticket" : "Register";
 
 /**
  * "KES 5,800" — always the early-bird price, whatever the date.

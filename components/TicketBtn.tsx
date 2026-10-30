@@ -5,7 +5,7 @@ import { TICKET_ACTION } from "@/lib/event";
  * THE ticket button. Every page footer, hero and menu renders this instead of
  * a hand-written <Btn href={EVENT.ticketUrl}>, so the TICKETING_OPEN switch in
  * lib/event.ts changes them all at once: "Get a ticket — KES …" to TikoHub
- * while tickets are on sale, "Get 2027 updates" to the sign-up form on the
+ * while tickets are on sale, "Register" to the sign-up form on the
  * homepage while they are not.
  */
 export default function TicketBtn({

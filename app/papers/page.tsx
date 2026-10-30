@@ -128,7 +128,7 @@ export default function Papers() {
               Includes full delegate access on the day.
             </p>
           </Reveal>
-          <TicketBtn tone="gold">{TICKETING_OPEN ? "Book the papers ticket" : "Get 2027 updates"}</TicketBtn>
+          <TicketBtn tone="gold">{TICKETING_OPEN ? "Book the papers ticket" : "Register"}</TicketBtn>
         </div>
       </section>
       <section className="border-b border-line">
